@@ -1,0 +1,57 @@
+## Intellij
+.idea/
+*.ipr
+*.iml
+*.iws
+
+## Atom Start
+atom.sh
+
+## Gradle
+.gradle
+
+# Build dirs
+build/
+out/
+
+## OS X Resources
+.DS_Store
+
+bin/
+pkg/
+**/vendor/src/
+**/vendor/manifest
+
+## Golang
+
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+*.o
+*.a
+*.so
+
+# Folders
+_obj
+_test
+
+# Architecture specific extensions/prefixes
+*.[568vq]
+[568vq].out
+
+*.cgo1.go
+*.cgo2.c
+_cgo_defun.c
+_cgo_gotypes.go
+_cgo_export.*
+
+_testmain.go
+
+*.exe
+*.test
+*.prof
+
+tags
+.vscode/symbols.json
+.build-cache
+submodules/flogo-cicd/.build-cache
+./Dockerfile
+

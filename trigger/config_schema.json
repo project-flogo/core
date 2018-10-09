@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+
+  "title": "triggers",
+  "type": "object",
+  "properties": {
+    "triggers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "settings": {
+            "type": "object"
+          },
+          "endpoints": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "actionURI": {
+                  "type": "string"
+                },
+                "actionType": {
+                  "type": "string"
+                },
+                "settings": {
+                  "type": "object"
+                }
+              },
+              "required": [
+                "actionType","actionURI"
+              ]
+            }
+          }
+        },
+        "required": [
+          "name",
+          "endpoints"
+        ]
+      }
+    }
+  },
+  "required": [
+    "triggers"
+  ]
+}

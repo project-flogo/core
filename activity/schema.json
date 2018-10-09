@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+
+  "definitions": {
+    "attributeDef": {
+      "title": "attributeDef",
+      "type": "object",
+      "properties": {
+        "name" : { "type": "string" },
+        "type" : { "type": "string" }
+      },
+      "required": ["name", "type"]
+    }
+  },
+
+  "title": "activity",
+  "type": "object",
+  "properties": {
+    "name"        : { "type": "string" },
+    "version"     : { "type": "string" },
+    "description" : { "type": "string" },
+    "inputs": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/attributeDef" }
+    },
+    "outputs": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/attributeDef" }
+    }
+  },
+  "required": ["name", "version", "description"]
+}

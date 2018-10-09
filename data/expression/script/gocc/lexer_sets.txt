@@ -1,0 +1,2000 @@
+Item sets:
+S0{
+	!whitespace : ' ' | '\t' | '\v' | '\f' | '\r' | • '\n'
+	!whitespace : ' ' | '\t' | '\v' | '\f' | • '\r' | '\n'
+	!whitespace : ' ' | '\t' | '\v' | • '\f' | '\r' | '\n'
+	!whitespace : ' ' | '\t' | • '\v' | '\f' | '\r' | '\n'
+	!whitespace : ' ' | • '\t' | '\v' | '\f' | '\r' | '\n'
+	!whitespace : • ' ' | '\t' | '\v' | '\f' | '\r' | '\n'
+	intLit : '0' | •  '1'-'9' {_digit}
+	intLit : • '0' |  '1'-'9' {_digit}
+	floatLit : _decimals '.' [_decimals] [_exponent] | _decimals _exponent | • '.' _decimals [_exponent]
+	floatLit : _decimals '.' [_decimals] [_exponent] | • _decimals _exponent | '.' _decimals [_exponent]
+	floatLit : • _decimals '.' [_decimals] [_exponent] | _decimals _exponent | '.' _decimals [_exponent]
+	stringLit : _dq_string | • _sq_string
+	stringLit : • _dq_string | _sq_string
+	ident : • _ident
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | • '$' _ident '[' _ident ']' [_chunk]
+	ref : '$' '.' _ident [_chunk] | • '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	ref : • '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	functionName : • _letter {_letter | _digit | '.'}
+	|| : • '|' '|'
+	&& : • '&' '&'
+	== : • '=' '='
+	!= : • '!' '='
+	< : • '<'
+	<= : • '<' '='
+	> : • '>'
+	>= : • '>' '='
+	+ : • '+'
+	- : • '-'
+	* : • '*'
+	/ : • '/'
+	% : • '%'
+	! : • '!'
+	( : • '('
+	) : • ')'
+	? : • '?'
+	: : • ':'
+	true : • 't' 'r' 'u' 'e'
+	false : • 'f' 'a' 'l' 's' 'e'
+	nil : • 'n' 'i' 'l'
+	null : • 'n' 'u' 'l' 'l'
+	, : • ','
+	. : • '.'
+	[ : • '['
+	] : • ']'
+	_decimals : • _digit {_digit}
+	_sq_string : • ''' {. | '\' ''' | _escapeChar} '''
+	_dq_string : • '"' {. | '\' '"' | _escapeChar} '"'
+	_ident : • _letter {_letter | _digit}
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+	_digit : •  '0'-'9'
+}
+Transitions:
+	['\t','\t'] -> S1
+	['\n','\n'] -> S1
+	['\v','\v'] -> S1
+	['\f','\f'] -> S1
+	['\r','\r'] -> S1
+	[' ',' '] -> S1
+	['!','!'] -> S2
+	['"','"'] -> S3
+	['$','$'] -> S4
+	['%','%'] -> S5
+	['&','&'] -> S6
+	[''','''] -> S7
+	['(','('] -> S8
+	[')',')'] -> S9
+	['*','*'] -> S10
+	['+','+'] -> S11
+	[',',','] -> S12
+	['-','-'] -> S13
+	['.','.'] -> S14
+	['/','/'] -> S15
+	['0','0'] -> S16
+	['1','9'] -> S17
+	[':',':'] -> S18
+	['<','<'] -> S19
+	['=','='] -> S20
+	['>','>'] -> S21
+	['?','?'] -> S22
+	['A','Z'] -> S23
+	['[','['] -> S24
+	[']',']'] -> S25
+	['_','_'] -> S23
+	['a','e'] -> S23
+	['f','f'] -> S26
+	['g','m'] -> S23
+	['n','n'] -> S27
+	['o','s'] -> S23
+	['t','t'] -> S28
+	['u','z'] -> S23
+	['|','|'] -> S29
+Action: nil
+Symbols classes: {['\t','\t'], ['\n','\n'], ['\v','\v'], ['\f','\f'], ['\r','\r'], [' ',' '], ['!','!'], ['"','"'], ['$','$'], ['%','%'], ['&','&'], [''','''], ['(','('], [')',')'], ['*','*'], ['+','+'], [',',','], ['-','-'], ['.','.'], ['/','/'], ['0','0'], ['1','9'], [':',':'], ['<','<'], ['=','='], ['>','>'], ['?','?'], ['A','Z'], ['[','['], [']',']'], ['_','_'], ['a','e'], ['f','f'], ['g','m'], ['n','n'], ['o','s'], ['t','t'], ['u','z'], ['|','|']}
+
+S1{
+	!whitespace : (' ' | '\t' | '\v' | '\f' | '\r' | '\n') •
+}
+Transitions:
+Action: Ignore("!whitespace")
+Symbols classes: {}
+
+S2{
+	!= : '!' • '='
+	! : '!' •
+}
+Transitions:
+	['=','='] -> S30
+Action: Accept("!")
+Symbols classes: {['=','=']}
+
+S3{
+	_dq_string : '"' {. | '\' '"' | _escapeChar} • '"'
+	_dq_string : '"' {. | '\' '"' | • _escapeChar} '"'
+	_dq_string : '"' {. | • '\' '"' | _escapeChar} '"'
+	_dq_string : '"' {• . | '\' '"' | _escapeChar} '"'
+	stringLit : • _dq_string | _sq_string
+	_escapeChar : '\' 'n' | '\' 'r' | • '\' 't'
+	_escapeChar : '\' 'n' | • '\' 'r' | '\' 't'
+	_escapeChar : • '\' 'n' | '\' 'r' | '\' 't'
+}
+Transitions:
+	['"','"'] -> S31
+	['\','\'] -> S32
+. -> S3
+Action: nil
+Symbols classes: {['"','"'], ['\','\']}
+
+S4{
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' • _ident '[' _ident ']' [_chunk]
+	ref : '$' '.' _ident [_chunk] | '$' • _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	ref : '$' • '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_ident : • _letter {_letter | _digit}
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S33
+	['A','Z'] -> S34
+	['_','_'] -> S34
+	['a','z'] -> S34
+Action: nil
+Symbols classes: {['.','.'], ['A','Z'], ['_','_'], ['a','z']}
+
+S5{
+	% : '%' •
+}
+Transitions:
+Action: Accept("%")
+Symbols classes: {}
+
+S6{
+	&& : '&' • '&'
+}
+Transitions:
+	['&','&'] -> S35
+Action: nil
+Symbols classes: {['&','&']}
+
+S7{
+	_sq_string : ''' {. | '\' ''' | _escapeChar} • '''
+	_sq_string : ''' {. | '\' ''' | • _escapeChar} '''
+	_sq_string : ''' {. | • '\' ''' | _escapeChar} '''
+	_sq_string : ''' {• . | '\' ''' | _escapeChar} '''
+	stringLit : _dq_string | • _sq_string
+	_escapeChar : '\' 'n' | '\' 'r' | • '\' 't'
+	_escapeChar : '\' 'n' | • '\' 'r' | '\' 't'
+	_escapeChar : • '\' 'n' | '\' 'r' | '\' 't'
+}
+Transitions:
+	[''','''] -> S36
+	['\','\'] -> S37
+. -> S7
+Action: nil
+Symbols classes: {[''','''], ['\','\']}
+
+S8{
+	( : '(' •
+}
+Transitions:
+Action: Accept("(")
+Symbols classes: {}
+
+S9{
+	) : ')' •
+}
+Transitions:
+Action: Accept(")")
+Symbols classes: {}
+
+S10{
+	* : '*' •
+}
+Transitions:
+Action: Accept("*")
+Symbols classes: {}
+
+S11{
+	+ : '+' •
+}
+Transitions:
+Action: Accept("+")
+Symbols classes: {}
+
+S12{
+	, : ',' •
+}
+Transitions:
+Action: Accept(",")
+Symbols classes: {}
+
+S13{
+	- : '-' •
+}
+Transitions:
+Action: Accept("-")
+Symbols classes: {}
+
+S14{
+	floatLit : _decimals '.' [_decimals] [_exponent] | _decimals _exponent | '.' • _decimals [_exponent]
+	. : '.' •
+	_decimals : • _digit {_digit}
+	_digit : •  '0'-'9'
+}
+Transitions:
+	['0','9'] -> S38
+Action: Accept(".")
+Symbols classes: {['0','9']}
+
+S15{
+	/ : '/' •
+}
+Transitions:
+Action: Accept("/")
+Symbols classes: {}
+
+S16{
+	intLit : ('0' |  '1'-'9' {_digit}) •
+	_digit :  '0'-'9' •
+	_decimals : _digit {_digit} •
+	_decimals : _digit {• _digit}
+	floatLit : _decimals '.' [_decimals] [_exponent] | _decimals • _exponent | '.' _decimals [_exponent]
+	floatLit : _decimals • '.' [_decimals] [_exponent] | _decimals _exponent | '.' _decimals [_exponent]
+	floatLit : _decimals '.' [_decimals] [_exponent] | • _decimals _exponent | '.' _decimals [_exponent]
+	floatLit : • _decimals '.' [_decimals] [_exponent] | _decimals _exponent | '.' _decimals [_exponent]
+	_digit : •  '0'-'9'
+	_exponent : ('e' | • 'E') ['+' | '-'] _decimals
+	_exponent : (• 'e' | 'E') ['+' | '-'] _decimals
+}
+Transitions:
+	['.','.'] -> S39
+	['0','9'] -> S40
+	['E','E'] -> S41
+	['e','e'] -> S41
+Action: Accept("intLit")
+Symbols classes: {['.','.'], ['0','9'], ['E','E'], ['e','e']}
+
+S17{
+	intLit : ('0' |  '1'-'9' {_digit}) •
+	intLit : '0' |  '1'-'9' {• _digit}
+	_digit :  '0'-'9' •
+	_decimals : _digit {_digit} •
+	_decimals : _digit {• _digit}
+	floatLit : _decimals '.' [_decimals] [_exponent] | _decimals • _exponent | '.' _decimals [_exponent]
+	floatLit : _decimals • '.' [_decimals] [_exponent] | _decimals _exponent | '.' _decimals [_exponent]
+	floatLit : _decimals '.' [_decimals] [_exponent] | • _decimals _exponent | '.' _decimals [_exponent]
+	floatLit : • _decimals '.' [_decimals] [_exponent] | _decimals _exponent | '.' _decimals [_exponent]
+	_digit : •  '0'-'9'
+	_exponent : ('e' | • 'E') ['+' | '-'] _decimals
+	_exponent : (• 'e' | 'E') ['+' | '-'] _decimals
+}
+Transitions:
+	['.','.'] -> S39
+	['0','9'] -> S17
+	['E','E'] -> S41
+	['e','e'] -> S41
+Action: Accept("intLit")
+Symbols classes: {['.','.'], ['0','9'], ['E','E'], ['e','e']}
+
+S18{
+	: : ':' •
+}
+Transitions:
+Action: Accept(":")
+Symbols classes: {}
+
+S19{
+	< : '<' •
+	<= : '<' • '='
+}
+Transitions:
+	['=','='] -> S42
+Action: Accept("<")
+Symbols classes: {['=','=']}
+
+S20{
+	== : '=' • '='
+}
+Transitions:
+	['=','='] -> S43
+Action: nil
+Symbols classes: {['=','=']}
+
+S21{
+	> : '>' •
+	>= : '>' • '='
+}
+Transitions:
+	['=','='] -> S44
+Action: Accept(">")
+Symbols classes: {['=','=']}
+
+S22{
+	? : '?' •
+}
+Transitions:
+Action: Accept("?")
+Symbols classes: {}
+
+S23{
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	functionName : _letter {_letter | _digit | '.'} •
+	functionName : _letter {_letter | _digit | • '.'}
+	functionName : _letter {_letter | • _digit | '.'}
+	functionName : _letter {• _letter | _digit | '.'}
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ident : _ident •
+	ident : • _ident
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S45
+	['0','9'] -> S46
+	['A','Z'] -> S23
+	['_','_'] -> S23
+	['a','z'] -> S23
+Action: Accept("ident")
+Symbols classes: {['.','.'], ['0','9'], ['A','Z'], ['_','_'], ['a','z']}
+
+S24{
+	[ : '[' •
+}
+Transitions:
+Action: Accept("[")
+Symbols classes: {}
+
+S25{
+	] : ']' •
+}
+Transitions:
+Action: Accept("]")
+Symbols classes: {}
+
+S26{
+	false : 'f' • 'a' 'l' 's' 'e'
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	functionName : _letter {_letter | _digit | '.'} •
+	functionName : _letter {_letter | _digit | • '.'}
+	functionName : _letter {_letter | • _digit | '.'}
+	functionName : _letter {• _letter | _digit | '.'}
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ident : _ident •
+	ident : • _ident
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S45
+	['0','9'] -> S46
+	['A','Z'] -> S23
+	['_','_'] -> S23
+	['a','a'] -> S47
+	['b','z'] -> S23
+Action: Accept("ident")
+Symbols classes: {['.','.'], ['0','9'], ['A','Z'], ['_','_'], ['a','a'], ['b','z']}
+
+S27{
+	nil : 'n' • 'i' 'l'
+	null : 'n' • 'u' 'l' 'l'
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	functionName : _letter {_letter | _digit | '.'} •
+	functionName : _letter {_letter | _digit | • '.'}
+	functionName : _letter {_letter | • _digit | '.'}
+	functionName : _letter {• _letter | _digit | '.'}
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ident : _ident •
+	ident : • _ident
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S45
+	['0','9'] -> S46
+	['A','Z'] -> S23
+	['_','_'] -> S23
+	['a','h'] -> S23
+	['i','i'] -> S48
+	['j','t'] -> S23
+	['u','u'] -> S49
+	['v','z'] -> S23
+Action: Accept("ident")
+Symbols classes: {['.','.'], ['0','9'], ['A','Z'], ['_','_'], ['a','h'], ['i','i'], ['j','t'], ['u','u'], ['v','z']}
+
+S28{
+	true : 't' • 'r' 'u' 'e'
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	functionName : _letter {_letter | _digit | '.'} •
+	functionName : _letter {_letter | _digit | • '.'}
+	functionName : _letter {_letter | • _digit | '.'}
+	functionName : _letter {• _letter | _digit | '.'}
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ident : _ident •
+	ident : • _ident
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S45
+	['0','9'] -> S46
+	['A','Z'] -> S23
+	['_','_'] -> S23
+	['a','q'] -> S23
+	['r','r'] -> S50
+	['s','z'] -> S23
+Action: Accept("ident")
+Symbols classes: {['.','.'], ['0','9'], ['A','Z'], ['_','_'], ['a','q'], ['r','r'], ['s','z']}
+
+S29{
+	|| : '|' • '|'
+}
+Transitions:
+	['|','|'] -> S51
+Action: nil
+Symbols classes: {['|','|']}
+
+S30{
+	!= : '!' '=' •
+}
+Transitions:
+Action: Accept("!=")
+Symbols classes: {}
+
+S31{
+	_dq_string : '"' {. | '\' '"' | _escapeChar} '"' •
+	stringLit : (_dq_string | _sq_string) •
+}
+Transitions:
+Action: Accept("stringLit")
+Symbols classes: {}
+
+S32{
+	_dq_string : '"' {. | '\' • '"' | _escapeChar} '"'
+	_escapeChar : '\' 'n' | '\' 'r' | '\' • 't'
+	_escapeChar : '\' 'n' | '\' • 'r' | '\' 't'
+	_escapeChar : '\' • 'n' | '\' 'r' | '\' 't'
+	stringLit : • _dq_string | _sq_string
+	_dq_string : '"' {. | '\' '"' | • _escapeChar} '"'
+}
+Transitions:
+	['"','"'] -> S3
+	['n','n'] -> S52
+	['r','r'] -> S52
+	['t','t'] -> S52
+Action: nil
+Symbols classes: {['"','"'], ['n','n'], ['r','r'], ['t','t']}
+
+S33{
+	ref : '$' '.' • _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_ident : • _letter {_letter | _digit}
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['A','Z'] -> S53
+	['_','_'] -> S53
+	['a','z'] -> S53
+Action: nil
+Symbols classes: {['A','Z'], ['_','_'], ['a','z']}
+
+S34{
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident • '[' _ident ']' [_chunk]
+	ref : ('$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]) •
+	ref : '$' '.' _ident [_chunk] | '$' _ident [• _chunk] | '$' _ident '[' _ident ']' [_chunk]
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' • _ident '[' _ident ']' [_chunk]
+	ref : '$' '.' _ident [_chunk] | '$' • _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_chunk : '.' _ident | '[' _dq_string | • _sq_string ']' | _chunk
+	_chunk : '.' _ident | • '[' _dq_string | _sq_string ']' | _chunk
+	_chunk : • '.' _ident | '[' _dq_string | _sq_string ']' | _chunk
+	_sq_string : • ''' {. | '\' ''' | _escapeChar} '''
+}
+Transitions:
+	[''','''] -> S54
+	['.','.'] -> S55
+	['0','9'] -> S56
+	['A','Z'] -> S34
+	['[','['] -> S57
+	['_','_'] -> S34
+	['a','z'] -> S34
+Action: Accept("ref")
+Symbols classes: {[''','''], ['.','.'], ['0','9'], ['A','Z'], ['[','['], ['_','_'], ['a','z']}
+
+S35{
+	&& : '&' '&' •
+}
+Transitions:
+Action: Accept("&&")
+Symbols classes: {}
+
+S36{
+	_sq_string : ''' {. | '\' ''' | _escapeChar} ''' •
+	stringLit : (_dq_string | _sq_string) •
+}
+Transitions:
+Action: Accept("stringLit")
+Symbols classes: {}
+
+S37{
+	_sq_string : ''' {. | '\' • ''' | _escapeChar} '''
+	_escapeChar : '\' 'n' | '\' 'r' | '\' • 't'
+	_escapeChar : '\' 'n' | '\' • 'r' | '\' 't'
+	_escapeChar : '\' • 'n' | '\' 'r' | '\' 't'
+	stringLit : _dq_string | • _sq_string
+	_sq_string : ''' {. | '\' ''' | • _escapeChar} '''
+}
+Transitions:
+	[''','''] -> S7
+	['n','n'] -> S58
+	['r','r'] -> S58
+	['t','t'] -> S58
+Action: nil
+Symbols classes: {[''','''], ['n','n'], ['r','r'], ['t','t']}
+
+S38{
+	_digit :  '0'-'9' •
+	_decimals : _digit {_digit} •
+	_decimals : _digit {• _digit}
+	floatLit : (_decimals '.' [_decimals] [_exponent] | _decimals _exponent | '.' _decimals [_exponent]) •
+	floatLit : _decimals '.' [_decimals] [_exponent] | _decimals _exponent | '.' _decimals [• _exponent]
+	floatLit : _decimals '.' [_decimals] [_exponent] | _decimals _exponent | '.' • _decimals [_exponent]
+	_digit : •  '0'-'9'
+	_exponent : ('e' | • 'E') ['+' | '-'] _decimals
+	_exponent : (• 'e' | 'E') ['+' | '-'] _decimals
+}
+Transitions:
+	['0','9'] -> S38
+	['E','E'] -> S59
+	['e','e'] -> S59
+Action: Accept("floatLit")
+Symbols classes: {['0','9'], ['E','E'], ['e','e']}
+
+S39{
+	floatLit : (_decimals '.' [_decimals] [_exponent] | _decimals _exponent | '.' _decimals [_exponent]) •
+	floatLit : _decimals '.' [_decimals] [• _exponent] | _decimals _exponent | '.' _decimals [_exponent]
+	floatLit : _decimals '.' [• _decimals] [_exponent] | _decimals _exponent | '.' _decimals [_exponent]
+	_exponent : ('e' | • 'E') ['+' | '-'] _decimals
+	_exponent : (• 'e' | 'E') ['+' | '-'] _decimals
+	_decimals : • _digit {_digit}
+	_digit : •  '0'-'9'
+}
+Transitions:
+	['0','9'] -> S60
+	['E','E'] -> S61
+	['e','e'] -> S61
+Action: Accept("floatLit")
+Symbols classes: {['0','9'], ['E','E'], ['e','e']}
+
+S40{
+	_digit :  '0'-'9' •
+	_decimals : _digit {_digit} •
+	_decimals : _digit {• _digit}
+	floatLit : _decimals '.' [_decimals] [_exponent] | _decimals • _exponent | '.' _decimals [_exponent]
+	floatLit : _decimals • '.' [_decimals] [_exponent] | _decimals _exponent | '.' _decimals [_exponent]
+	floatLit : _decimals '.' [_decimals] [_exponent] | • _decimals _exponent | '.' _decimals [_exponent]
+	floatLit : • _decimals '.' [_decimals] [_exponent] | _decimals _exponent | '.' _decimals [_exponent]
+	_digit : •  '0'-'9'
+	_exponent : ('e' | • 'E') ['+' | '-'] _decimals
+	_exponent : (• 'e' | 'E') ['+' | '-'] _decimals
+}
+Transitions:
+	['.','.'] -> S39
+	['0','9'] -> S40
+	['E','E'] -> S41
+	['e','e'] -> S41
+Action: nil
+Symbols classes: {['.','.'], ['0','9'], ['E','E'], ['e','e']}
+
+S41{
+	_exponent : ('e' | 'E') ['+' | '-'] • _decimals
+	_exponent : ('e' | 'E') ['+' | • '-'] _decimals
+	_exponent : ('e' | 'E') [• '+' | '-'] _decimals
+	floatLit : _decimals '.' [_decimals] [_exponent] | _decimals • _exponent | '.' _decimals [_exponent]
+	_decimals : • _digit {_digit}
+	_digit : •  '0'-'9'
+}
+Transitions:
+	['+','+'] -> S62
+	['-','-'] -> S62
+	['0','9'] -> S63
+Action: nil
+Symbols classes: {['+','+'], ['-','-'], ['0','9']}
+
+S42{
+	<= : '<' '=' •
+}
+Transitions:
+Action: Accept("<=")
+Symbols classes: {}
+
+S43{
+	== : '=' '=' •
+}
+Transitions:
+Action: Accept("==")
+Symbols classes: {}
+
+S44{
+	>= : '>' '=' •
+}
+Transitions:
+Action: Accept(">=")
+Symbols classes: {}
+
+S45{
+	functionName : _letter {_letter | _digit | '.'} •
+	functionName : _letter {_letter | _digit | • '.'}
+	functionName : _letter {_letter | • _digit | '.'}
+	functionName : _letter {• _letter | _digit | '.'}
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S45
+	['0','9'] -> S64
+	['A','Z'] -> S65
+	['_','_'] -> S65
+	['a','z'] -> S65
+Action: Accept("functionName")
+Symbols classes: {['.','.'], ['0','9'], ['A','Z'], ['_','_'], ['a','z']}
+
+S46{
+	_digit :  '0'-'9' •
+	functionName : _letter {_letter | _digit | '.'} •
+	functionName : _letter {_letter | _digit | • '.'}
+	functionName : _letter {_letter | • _digit | '.'}
+	functionName : _letter {• _letter | _digit | '.'}
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ident : _ident •
+	ident : • _ident
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S45
+	['0','9'] -> S46
+	['A','Z'] -> S23
+	['_','_'] -> S23
+	['a','z'] -> S23
+Action: Accept("ident")
+Symbols classes: {['.','.'], ['0','9'], ['A','Z'], ['_','_'], ['a','z']}
+
+S47{
+	false : 'f' 'a' • 'l' 's' 'e'
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	functionName : _letter {_letter | _digit | '.'} •
+	functionName : _letter {_letter | _digit | • '.'}
+	functionName : _letter {_letter | • _digit | '.'}
+	functionName : _letter {• _letter | _digit | '.'}
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ident : _ident •
+	ident : • _ident
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S45
+	['0','9'] -> S46
+	['A','Z'] -> S23
+	['_','_'] -> S23
+	['a','k'] -> S23
+	['l','l'] -> S66
+	['m','z'] -> S23
+Action: Accept("ident")
+Symbols classes: {['.','.'], ['0','9'], ['A','Z'], ['_','_'], ['a','k'], ['l','l'], ['m','z']}
+
+S48{
+	nil : 'n' 'i' • 'l'
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	functionName : _letter {_letter | _digit | '.'} •
+	functionName : _letter {_letter | _digit | • '.'}
+	functionName : _letter {_letter | • _digit | '.'}
+	functionName : _letter {• _letter | _digit | '.'}
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ident : _ident •
+	ident : • _ident
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S45
+	['0','9'] -> S46
+	['A','Z'] -> S23
+	['_','_'] -> S23
+	['a','k'] -> S23
+	['l','l'] -> S67
+	['m','z'] -> S23
+Action: Accept("ident")
+Symbols classes: {['.','.'], ['0','9'], ['A','Z'], ['_','_'], ['a','k'], ['l','l'], ['m','z']}
+
+S49{
+	null : 'n' 'u' • 'l' 'l'
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	functionName : _letter {_letter | _digit | '.'} •
+	functionName : _letter {_letter | _digit | • '.'}
+	functionName : _letter {_letter | • _digit | '.'}
+	functionName : _letter {• _letter | _digit | '.'}
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ident : _ident •
+	ident : • _ident
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S45
+	['0','9'] -> S46
+	['A','Z'] -> S23
+	['_','_'] -> S23
+	['a','k'] -> S23
+	['l','l'] -> S68
+	['m','z'] -> S23
+Action: Accept("ident")
+Symbols classes: {['.','.'], ['0','9'], ['A','Z'], ['_','_'], ['a','k'], ['l','l'], ['m','z']}
+
+S50{
+	true : 't' 'r' • 'u' 'e'
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	functionName : _letter {_letter | _digit | '.'} •
+	functionName : _letter {_letter | _digit | • '.'}
+	functionName : _letter {_letter | • _digit | '.'}
+	functionName : _letter {• _letter | _digit | '.'}
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ident : _ident •
+	ident : • _ident
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S45
+	['0','9'] -> S46
+	['A','Z'] -> S23
+	['_','_'] -> S23
+	['a','t'] -> S23
+	['u','u'] -> S69
+	['v','z'] -> S23
+Action: Accept("ident")
+Symbols classes: {['.','.'], ['0','9'], ['A','Z'], ['_','_'], ['a','t'], ['u','u'], ['v','z']}
+
+S51{
+	|| : '|' '|' •
+}
+Transitions:
+Action: Accept("||")
+Symbols classes: {}
+
+S52{
+	_escapeChar : ('\' 'n' | '\' 'r' | '\' 't') •
+	_dq_string : '"' {. | '\' '"' | _escapeChar} • '"'
+	_dq_string : '"' {. | '\' '"' | • _escapeChar} '"'
+	_dq_string : '"' {. | • '\' '"' | _escapeChar} '"'
+	_dq_string : '"' {• . | '\' '"' | _escapeChar} '"'
+	stringLit : • _dq_string | _sq_string
+	_escapeChar : '\' 'n' | '\' 'r' | • '\' 't'
+	_escapeChar : '\' 'n' | • '\' 'r' | '\' 't'
+	_escapeChar : • '\' 'n' | '\' 'r' | '\' 't'
+}
+Transitions:
+	['"','"'] -> S31
+	['\','\'] -> S32
+. -> S3
+Action: nil
+Symbols classes: {['"','"'], ['\','\']}
+
+S53{
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ref : ('$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]) •
+	ref : '$' '.' _ident [• _chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	ref : '$' '.' • _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_chunk : '.' _ident | '[' _dq_string | • _sq_string ']' | _chunk
+	_chunk : '.' _ident | • '[' _dq_string | _sq_string ']' | _chunk
+	_chunk : • '.' _ident | '[' _dq_string | _sq_string ']' | _chunk
+	_sq_string : • ''' {. | '\' ''' | _escapeChar} '''
+}
+Transitions:
+	[''','''] -> S70
+	['.','.'] -> S71
+	['0','9'] -> S72
+	['A','Z'] -> S53
+	['[','['] -> S73
+	['_','_'] -> S53
+	['a','z'] -> S53
+Action: Accept("ref")
+Symbols classes: {[''','''], ['.','.'], ['0','9'], ['A','Z'], ['[','['], ['_','_'], ['a','z']}
+
+S54{
+	_sq_string : ''' {. | '\' ''' | _escapeChar} • '''
+	_sq_string : ''' {. | '\' ''' | • _escapeChar} '''
+	_sq_string : ''' {. | • '\' ''' | _escapeChar} '''
+	_sq_string : ''' {• . | '\' ''' | _escapeChar} '''
+	_chunk : '.' _ident | '[' _dq_string | • _sq_string ']' | _chunk
+	ref : '$' '.' _ident [_chunk] | '$' _ident [• _chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_escapeChar : '\' 'n' | '\' 'r' | • '\' 't'
+	_escapeChar : '\' 'n' | • '\' 'r' | '\' 't'
+	_escapeChar : • '\' 'n' | '\' 'r' | '\' 't'
+}
+Transitions:
+	[''','''] -> S74
+	['\','\'] -> S75
+. -> S54
+Action: nil
+Symbols classes: {[''','''], ['\','\']}
+
+S55{
+	_chunk : '.' • _ident | '[' _dq_string | _sq_string ']' | _chunk
+	ref : '$' '.' _ident [_chunk] | '$' _ident [• _chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_ident : • _letter {_letter | _digit}
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['A','Z'] -> S76
+	['_','_'] -> S76
+	['a','z'] -> S76
+Action: nil
+Symbols classes: {['A','Z'], ['_','_'], ['a','z']}
+
+S56{
+	_digit :  '0'-'9' •
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident • '[' _ident ']' [_chunk]
+	ref : ('$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]) •
+	ref : '$' '.' _ident [_chunk] | '$' _ident [• _chunk] | '$' _ident '[' _ident ']' [_chunk]
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' • _ident '[' _ident ']' [_chunk]
+	ref : '$' '.' _ident [_chunk] | '$' • _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_chunk : '.' _ident | '[' _dq_string | • _sq_string ']' | _chunk
+	_chunk : '.' _ident | • '[' _dq_string | _sq_string ']' | _chunk
+	_chunk : • '.' _ident | '[' _dq_string | _sq_string ']' | _chunk
+	_sq_string : • ''' {. | '\' ''' | _escapeChar} '''
+}
+Transitions:
+	[''','''] -> S54
+	['.','.'] -> S55
+	['0','9'] -> S56
+	['A','Z'] -> S34
+	['[','['] -> S57
+	['_','_'] -> S34
+	['a','z'] -> S34
+Action: Accept("ref")
+Symbols classes: {[''','''], ['.','.'], ['0','9'], ['A','Z'], ['[','['], ['_','_'], ['a','z']}
+
+S57{
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' • _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' • _dq_string | _sq_string ']' | _chunk
+	ref : '$' '.' _ident [_chunk] | '$' _ident [• _chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_ident : • _letter {_letter | _digit}
+	_dq_string : • '"' {. | '\' '"' | _escapeChar} '"'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['"','"'] -> S77
+	['A','Z'] -> S78
+	['_','_'] -> S78
+	['a','z'] -> S78
+Action: nil
+Symbols classes: {['"','"'], ['A','Z'], ['_','_'], ['a','z']}
+
+S58{
+	_escapeChar : ('\' 'n' | '\' 'r' | '\' 't') •
+	_sq_string : ''' {. | '\' ''' | _escapeChar} • '''
+	_sq_string : ''' {. | '\' ''' | • _escapeChar} '''
+	_sq_string : ''' {. | • '\' ''' | _escapeChar} '''
+	_sq_string : ''' {• . | '\' ''' | _escapeChar} '''
+	stringLit : _dq_string | • _sq_string
+	_escapeChar : '\' 'n' | '\' 'r' | • '\' 't'
+	_escapeChar : '\' 'n' | • '\' 'r' | '\' 't'
+	_escapeChar : • '\' 'n' | '\' 'r' | '\' 't'
+}
+Transitions:
+	[''','''] -> S36
+	['\','\'] -> S37
+. -> S7
+Action: nil
+Symbols classes: {[''','''], ['\','\']}
+
+S59{
+	_exponent : ('e' | 'E') ['+' | '-'] • _decimals
+	_exponent : ('e' | 'E') ['+' | • '-'] _decimals
+	_exponent : ('e' | 'E') [• '+' | '-'] _decimals
+	floatLit : _decimals '.' [_decimals] [_exponent] | _decimals _exponent | '.' _decimals [• _exponent]
+	_decimals : • _digit {_digit}
+	_digit : •  '0'-'9'
+}
+Transitions:
+	['+','+'] -> S79
+	['-','-'] -> S79
+	['0','9'] -> S80
+Action: nil
+Symbols classes: {['+','+'], ['-','-'], ['0','9']}
+
+S60{
+	_digit :  '0'-'9' •
+	_decimals : _digit {_digit} •
+	_decimals : _digit {• _digit}
+	floatLit : (_decimals '.' [_decimals] [_exponent] | _decimals _exponent | '.' _decimals [_exponent]) •
+	floatLit : _decimals '.' [_decimals] [• _exponent] | _decimals _exponent | '.' _decimals [_exponent]
+	floatLit : _decimals '.' [• _decimals] [_exponent] | _decimals _exponent | '.' _decimals [_exponent]
+	_digit : •  '0'-'9'
+	_exponent : ('e' | • 'E') ['+' | '-'] _decimals
+	_exponent : (• 'e' | 'E') ['+' | '-'] _decimals
+}
+Transitions:
+	['0','9'] -> S60
+	['E','E'] -> S61
+	['e','e'] -> S61
+Action: Accept("floatLit")
+Symbols classes: {['0','9'], ['E','E'], ['e','e']}
+
+S61{
+	_exponent : ('e' | 'E') ['+' | '-'] • _decimals
+	_exponent : ('e' | 'E') ['+' | • '-'] _decimals
+	_exponent : ('e' | 'E') [• '+' | '-'] _decimals
+	floatLit : _decimals '.' [_decimals] [• _exponent] | _decimals _exponent | '.' _decimals [_exponent]
+	_decimals : • _digit {_digit}
+	_digit : •  '0'-'9'
+}
+Transitions:
+	['+','+'] -> S81
+	['-','-'] -> S81
+	['0','9'] -> S82
+Action: nil
+Symbols classes: {['+','+'], ['-','-'], ['0','9']}
+
+S62{
+	_exponent : ('e' | 'E') ['+' | '-'] • _decimals
+	floatLit : _decimals '.' [_decimals] [_exponent] | _decimals • _exponent | '.' _decimals [_exponent]
+	_decimals : • _digit {_digit}
+	_digit : •  '0'-'9'
+}
+Transitions:
+	['0','9'] -> S63
+Action: nil
+Symbols classes: {['0','9']}
+
+S63{
+	_digit :  '0'-'9' •
+	_decimals : _digit {_digit} •
+	_decimals : _digit {• _digit}
+	_exponent : ('e' | 'E') ['+' | '-'] _decimals •
+	_exponent : ('e' | 'E') ['+' | '-'] • _decimals
+	floatLit : (_decimals '.' [_decimals] [_exponent] | _decimals _exponent | '.' _decimals [_exponent]) •
+	floatLit : _decimals '.' [_decimals] [_exponent] | _decimals • _exponent | '.' _decimals [_exponent]
+	_digit : •  '0'-'9'
+}
+Transitions:
+	['0','9'] -> S63
+Action: Accept("floatLit")
+Symbols classes: {['0','9']}
+
+S64{
+	_digit :  '0'-'9' •
+	functionName : _letter {_letter | _digit | '.'} •
+	functionName : _letter {_letter | _digit | • '.'}
+	functionName : _letter {_letter | • _digit | '.'}
+	functionName : _letter {• _letter | _digit | '.'}
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S45
+	['0','9'] -> S64
+	['A','Z'] -> S65
+	['_','_'] -> S65
+	['a','z'] -> S65
+Action: Accept("functionName")
+Symbols classes: {['.','.'], ['0','9'], ['A','Z'], ['_','_'], ['a','z']}
+
+S65{
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	functionName : _letter {_letter | _digit | '.'} •
+	functionName : _letter {_letter | _digit | • '.'}
+	functionName : _letter {_letter | • _digit | '.'}
+	functionName : _letter {• _letter | _digit | '.'}
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S45
+	['0','9'] -> S64
+	['A','Z'] -> S65
+	['_','_'] -> S65
+	['a','z'] -> S65
+Action: Accept("functionName")
+Symbols classes: {['.','.'], ['0','9'], ['A','Z'], ['_','_'], ['a','z']}
+
+S66{
+	false : 'f' 'a' 'l' • 's' 'e'
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	functionName : _letter {_letter | _digit | '.'} •
+	functionName : _letter {_letter | _digit | • '.'}
+	functionName : _letter {_letter | • _digit | '.'}
+	functionName : _letter {• _letter | _digit | '.'}
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ident : _ident •
+	ident : • _ident
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S45
+	['0','9'] -> S46
+	['A','Z'] -> S23
+	['_','_'] -> S23
+	['a','r'] -> S23
+	['s','s'] -> S83
+	['t','z'] -> S23
+Action: Accept("ident")
+Symbols classes: {['.','.'], ['0','9'], ['A','Z'], ['_','_'], ['a','r'], ['s','s'], ['t','z']}
+
+S67{
+	nil : 'n' 'i' 'l' •
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	functionName : _letter {_letter | _digit | '.'} •
+	functionName : _letter {_letter | _digit | • '.'}
+	functionName : _letter {_letter | • _digit | '.'}
+	functionName : _letter {• _letter | _digit | '.'}
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ident : _ident •
+	ident : • _ident
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S45
+	['0','9'] -> S46
+	['A','Z'] -> S23
+	['_','_'] -> S23
+	['a','z'] -> S23
+Action: Accept("nil")
+Symbols classes: {['.','.'], ['0','9'], ['A','Z'], ['_','_'], ['a','z']}
+
+S68{
+	null : 'n' 'u' 'l' • 'l'
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	functionName : _letter {_letter | _digit | '.'} •
+	functionName : _letter {_letter | _digit | • '.'}
+	functionName : _letter {_letter | • _digit | '.'}
+	functionName : _letter {• _letter | _digit | '.'}
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ident : _ident •
+	ident : • _ident
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S45
+	['0','9'] -> S46
+	['A','Z'] -> S23
+	['_','_'] -> S23
+	['a','k'] -> S23
+	['l','l'] -> S84
+	['m','z'] -> S23
+Action: Accept("ident")
+Symbols classes: {['.','.'], ['0','9'], ['A','Z'], ['_','_'], ['a','k'], ['l','l'], ['m','z']}
+
+S69{
+	true : 't' 'r' 'u' • 'e'
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	functionName : _letter {_letter | _digit | '.'} •
+	functionName : _letter {_letter | _digit | • '.'}
+	functionName : _letter {_letter | • _digit | '.'}
+	functionName : _letter {• _letter | _digit | '.'}
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ident : _ident •
+	ident : • _ident
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S45
+	['0','9'] -> S46
+	['A','Z'] -> S23
+	['_','_'] -> S23
+	['a','d'] -> S23
+	['e','e'] -> S85
+	['f','z'] -> S23
+Action: Accept("ident")
+Symbols classes: {['.','.'], ['0','9'], ['A','Z'], ['_','_'], ['a','d'], ['e','e'], ['f','z']}
+
+S70{
+	_sq_string : ''' {. | '\' ''' | _escapeChar} • '''
+	_sq_string : ''' {. | '\' ''' | • _escapeChar} '''
+	_sq_string : ''' {. | • '\' ''' | _escapeChar} '''
+	_sq_string : ''' {• . | '\' ''' | _escapeChar} '''
+	_chunk : '.' _ident | '[' _dq_string | • _sq_string ']' | _chunk
+	ref : '$' '.' _ident [• _chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_escapeChar : '\' 'n' | '\' 'r' | • '\' 't'
+	_escapeChar : '\' 'n' | • '\' 'r' | '\' 't'
+	_escapeChar : • '\' 'n' | '\' 'r' | '\' 't'
+}
+Transitions:
+	[''','''] -> S86
+	['\','\'] -> S87
+. -> S70
+Action: nil
+Symbols classes: {[''','''], ['\','\']}
+
+S71{
+	_chunk : '.' • _ident | '[' _dq_string | _sq_string ']' | _chunk
+	ref : '$' '.' _ident [• _chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_ident : • _letter {_letter | _digit}
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['A','Z'] -> S88
+	['_','_'] -> S88
+	['a','z'] -> S88
+Action: nil
+Symbols classes: {['A','Z'], ['_','_'], ['a','z']}
+
+S72{
+	_digit :  '0'-'9' •
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ref : ('$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]) •
+	ref : '$' '.' _ident [• _chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	ref : '$' '.' • _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_chunk : '.' _ident | '[' _dq_string | • _sq_string ']' | _chunk
+	_chunk : '.' _ident | • '[' _dq_string | _sq_string ']' | _chunk
+	_chunk : • '.' _ident | '[' _dq_string | _sq_string ']' | _chunk
+	_sq_string : • ''' {. | '\' ''' | _escapeChar} '''
+}
+Transitions:
+	[''','''] -> S70
+	['.','.'] -> S71
+	['0','9'] -> S72
+	['A','Z'] -> S53
+	['[','['] -> S73
+	['_','_'] -> S53
+	['a','z'] -> S53
+Action: Accept("ref")
+Symbols classes: {[''','''], ['.','.'], ['0','9'], ['A','Z'], ['[','['], ['_','_'], ['a','z']}
+
+S73{
+	_chunk : '.' _ident | '[' • _dq_string | _sq_string ']' | _chunk
+	ref : '$' '.' _ident [• _chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_dq_string : • '"' {. | '\' '"' | _escapeChar} '"'
+}
+Transitions:
+	['"','"'] -> S89
+Action: nil
+Symbols classes: {['"','"']}
+
+S74{
+	_sq_string : ''' {. | '\' ''' | _escapeChar} ''' •
+	_chunk : '.' _ident | '[' _dq_string | _sq_string • ']' | _chunk
+	ref : '$' '.' _ident [_chunk] | '$' _ident [• _chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+}
+Transitions:
+	[']',']'] -> S90
+Action: nil
+Symbols classes: {[']',']']}
+
+S75{
+	_sq_string : ''' {. | '\' • ''' | _escapeChar} '''
+	_escapeChar : '\' 'n' | '\' 'r' | '\' • 't'
+	_escapeChar : '\' 'n' | '\' • 'r' | '\' 't'
+	_escapeChar : '\' • 'n' | '\' 'r' | '\' 't'
+	_chunk : '.' _ident | '[' _dq_string | • _sq_string ']' | _chunk
+	_sq_string : ''' {. | '\' ''' | • _escapeChar} '''
+	ref : '$' '.' _ident [_chunk] | '$' _ident [• _chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+}
+Transitions:
+	[''','''] -> S54
+	['n','n'] -> S91
+	['r','r'] -> S91
+	['t','t'] -> S91
+Action: nil
+Symbols classes: {[''','''], ['n','n'], ['r','r'], ['t','t']}
+
+S76{
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	_chunk : ('.' _ident | '[' _dq_string | _sq_string ']' | _chunk) •
+	_chunk : '.' • _ident | '[' _dq_string | _sq_string ']' | _chunk
+	ref : ('$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]) •
+	ref : '$' '.' _ident [_chunk] | '$' _ident [• _chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['0','9'] -> S92
+	['A','Z'] -> S76
+	['_','_'] -> S76
+	['a','z'] -> S76
+Action: Accept("ref")
+Symbols classes: {['0','9'], ['A','Z'], ['_','_'], ['a','z']}
+
+S77{
+	_dq_string : '"' {. | '\' '"' | _escapeChar} • '"'
+	_dq_string : '"' {. | '\' '"' | • _escapeChar} '"'
+	_dq_string : '"' {. | • '\' '"' | _escapeChar} '"'
+	_dq_string : '"' {• . | '\' '"' | _escapeChar} '"'
+	_chunk : '.' _ident | '[' • _dq_string | _sq_string ']' | _chunk
+	ref : '$' '.' _ident [_chunk] | '$' _ident [• _chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_escapeChar : '\' 'n' | '\' 'r' | • '\' 't'
+	_escapeChar : '\' 'n' | • '\' 'r' | '\' 't'
+	_escapeChar : • '\' 'n' | '\' 'r' | '\' 't'
+}
+Transitions:
+	['"','"'] -> S93
+	['\','\'] -> S94
+. -> S77
+Action: nil
+Symbols classes: {['"','"'], ['\','\']}
+
+S78{
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident • ']' [_chunk]
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' • _ident ']' [_chunk]
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['0','9'] -> S95
+	['A','Z'] -> S78
+	[']',']'] -> S96
+	['_','_'] -> S78
+	['a','z'] -> S78
+Action: nil
+Symbols classes: {['0','9'], ['A','Z'], [']',']'], ['_','_'], ['a','z']}
+
+S79{
+	_exponent : ('e' | 'E') ['+' | '-'] • _decimals
+	floatLit : _decimals '.' [_decimals] [_exponent] | _decimals _exponent | '.' _decimals [• _exponent]
+	_decimals : • _digit {_digit}
+	_digit : •  '0'-'9'
+}
+Transitions:
+	['0','9'] -> S80
+Action: nil
+Symbols classes: {['0','9']}
+
+S80{
+	_digit :  '0'-'9' •
+	_decimals : _digit {_digit} •
+	_decimals : _digit {• _digit}
+	_exponent : ('e' | 'E') ['+' | '-'] _decimals •
+	_exponent : ('e' | 'E') ['+' | '-'] • _decimals
+	floatLit : (_decimals '.' [_decimals] [_exponent] | _decimals _exponent | '.' _decimals [_exponent]) •
+	floatLit : _decimals '.' [_decimals] [_exponent] | _decimals _exponent | '.' _decimals [• _exponent]
+	_digit : •  '0'-'9'
+}
+Transitions:
+	['0','9'] -> S80
+Action: Accept("floatLit")
+Symbols classes: {['0','9']}
+
+S81{
+	_exponent : ('e' | 'E') ['+' | '-'] • _decimals
+	floatLit : _decimals '.' [_decimals] [• _exponent] | _decimals _exponent | '.' _decimals [_exponent]
+	_decimals : • _digit {_digit}
+	_digit : •  '0'-'9'
+}
+Transitions:
+	['0','9'] -> S82
+Action: nil
+Symbols classes: {['0','9']}
+
+S82{
+	_digit :  '0'-'9' •
+	_decimals : _digit {_digit} •
+	_decimals : _digit {• _digit}
+	_exponent : ('e' | 'E') ['+' | '-'] _decimals •
+	_exponent : ('e' | 'E') ['+' | '-'] • _decimals
+	floatLit : (_decimals '.' [_decimals] [_exponent] | _decimals _exponent | '.' _decimals [_exponent]) •
+	floatLit : _decimals '.' [_decimals] [• _exponent] | _decimals _exponent | '.' _decimals [_exponent]
+	_digit : •  '0'-'9'
+}
+Transitions:
+	['0','9'] -> S82
+Action: Accept("floatLit")
+Symbols classes: {['0','9']}
+
+S83{
+	false : 'f' 'a' 'l' 's' • 'e'
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	functionName : _letter {_letter | _digit | '.'} •
+	functionName : _letter {_letter | _digit | • '.'}
+	functionName : _letter {_letter | • _digit | '.'}
+	functionName : _letter {• _letter | _digit | '.'}
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ident : _ident •
+	ident : • _ident
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S45
+	['0','9'] -> S46
+	['A','Z'] -> S23
+	['_','_'] -> S23
+	['a','d'] -> S23
+	['e','e'] -> S97
+	['f','z'] -> S23
+Action: Accept("ident")
+Symbols classes: {['.','.'], ['0','9'], ['A','Z'], ['_','_'], ['a','d'], ['e','e'], ['f','z']}
+
+S84{
+	null : 'n' 'u' 'l' 'l' •
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	functionName : _letter {_letter | _digit | '.'} •
+	functionName : _letter {_letter | _digit | • '.'}
+	functionName : _letter {_letter | • _digit | '.'}
+	functionName : _letter {• _letter | _digit | '.'}
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ident : _ident •
+	ident : • _ident
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S45
+	['0','9'] -> S46
+	['A','Z'] -> S23
+	['_','_'] -> S23
+	['a','z'] -> S23
+Action: Accept("null")
+Symbols classes: {['.','.'], ['0','9'], ['A','Z'], ['_','_'], ['a','z']}
+
+S85{
+	true : 't' 'r' 'u' 'e' •
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	functionName : _letter {_letter | _digit | '.'} •
+	functionName : _letter {_letter | _digit | • '.'}
+	functionName : _letter {_letter | • _digit | '.'}
+	functionName : _letter {• _letter | _digit | '.'}
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ident : _ident •
+	ident : • _ident
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S45
+	['0','9'] -> S46
+	['A','Z'] -> S23
+	['_','_'] -> S23
+	['a','z'] -> S23
+Action: Accept("true")
+Symbols classes: {['.','.'], ['0','9'], ['A','Z'], ['_','_'], ['a','z']}
+
+S86{
+	_sq_string : ''' {. | '\' ''' | _escapeChar} ''' •
+	_chunk : '.' _ident | '[' _dq_string | _sq_string • ']' | _chunk
+	ref : '$' '.' _ident [• _chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+}
+Transitions:
+	[']',']'] -> S90
+Action: nil
+Symbols classes: {[']',']']}
+
+S87{
+	_sq_string : ''' {. | '\' • ''' | _escapeChar} '''
+	_escapeChar : '\' 'n' | '\' 'r' | '\' • 't'
+	_escapeChar : '\' 'n' | '\' • 'r' | '\' 't'
+	_escapeChar : '\' • 'n' | '\' 'r' | '\' 't'
+	_chunk : '.' _ident | '[' _dq_string | • _sq_string ']' | _chunk
+	_sq_string : ''' {. | '\' ''' | • _escapeChar} '''
+	ref : '$' '.' _ident [• _chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+}
+Transitions:
+	[''','''] -> S70
+	['n','n'] -> S98
+	['r','r'] -> S98
+	['t','t'] -> S98
+Action: nil
+Symbols classes: {[''','''], ['n','n'], ['r','r'], ['t','t']}
+
+S88{
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	_chunk : ('.' _ident | '[' _dq_string | _sq_string ']' | _chunk) •
+	_chunk : '.' • _ident | '[' _dq_string | _sq_string ']' | _chunk
+	ref : ('$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]) •
+	ref : '$' '.' _ident [• _chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['0','9'] -> S99
+	['A','Z'] -> S88
+	['_','_'] -> S88
+	['a','z'] -> S88
+Action: Accept("ref")
+Symbols classes: {['0','9'], ['A','Z'], ['_','_'], ['a','z']}
+
+S89{
+	_dq_string : '"' {. | '\' '"' | _escapeChar} • '"'
+	_dq_string : '"' {. | '\' '"' | • _escapeChar} '"'
+	_dq_string : '"' {. | • '\' '"' | _escapeChar} '"'
+	_dq_string : '"' {• . | '\' '"' | _escapeChar} '"'
+	_chunk : '.' _ident | '[' • _dq_string | _sq_string ']' | _chunk
+	ref : '$' '.' _ident [• _chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_escapeChar : '\' 'n' | '\' 'r' | • '\' 't'
+	_escapeChar : '\' 'n' | • '\' 'r' | '\' 't'
+	_escapeChar : • '\' 'n' | '\' 'r' | '\' 't'
+}
+Transitions:
+	['"','"'] -> S93
+	['\','\'] -> S100
+. -> S89
+Action: nil
+Symbols classes: {['"','"'], ['\','\']}
+
+S90{
+	_chunk : ('.' _ident | '[' _dq_string | _sq_string ']' | _chunk) •
+	ref : ('$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]) •
+}
+Transitions:
+Action: Accept("ref")
+Symbols classes: {}
+
+S91{
+	_escapeChar : ('\' 'n' | '\' 'r' | '\' 't') •
+	_sq_string : ''' {. | '\' ''' | _escapeChar} • '''
+	_sq_string : ''' {. | '\' ''' | • _escapeChar} '''
+	_sq_string : ''' {. | • '\' ''' | _escapeChar} '''
+	_sq_string : ''' {• . | '\' ''' | _escapeChar} '''
+	_chunk : '.' _ident | '[' _dq_string | • _sq_string ']' | _chunk
+	ref : '$' '.' _ident [_chunk] | '$' _ident [• _chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_escapeChar : '\' 'n' | '\' 'r' | • '\' 't'
+	_escapeChar : '\' 'n' | • '\' 'r' | '\' 't'
+	_escapeChar : • '\' 'n' | '\' 'r' | '\' 't'
+}
+Transitions:
+	[''','''] -> S74
+	['\','\'] -> S75
+. -> S54
+Action: nil
+Symbols classes: {[''','''], ['\','\']}
+
+S92{
+	_digit :  '0'-'9' •
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	_chunk : ('.' _ident | '[' _dq_string | _sq_string ']' | _chunk) •
+	_chunk : '.' • _ident | '[' _dq_string | _sq_string ']' | _chunk
+	ref : ('$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]) •
+	ref : '$' '.' _ident [_chunk] | '$' _ident [• _chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['0','9'] -> S92
+	['A','Z'] -> S76
+	['_','_'] -> S76
+	['a','z'] -> S76
+Action: Accept("ref")
+Symbols classes: {['0','9'], ['A','Z'], ['_','_'], ['a','z']}
+
+S93{
+	_dq_string : '"' {. | '\' '"' | _escapeChar} '"' •
+	_chunk : ('.' _ident | '[' _dq_string | _sq_string ']' | _chunk) •
+	ref : ('$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]) •
+}
+Transitions:
+Action: Accept("ref")
+Symbols classes: {}
+
+S94{
+	_dq_string : '"' {. | '\' • '"' | _escapeChar} '"'
+	_escapeChar : '\' 'n' | '\' 'r' | '\' • 't'
+	_escapeChar : '\' 'n' | '\' • 'r' | '\' 't'
+	_escapeChar : '\' • 'n' | '\' 'r' | '\' 't'
+	_chunk : '.' _ident | '[' • _dq_string | _sq_string ']' | _chunk
+	_dq_string : '"' {. | '\' '"' | • _escapeChar} '"'
+	ref : '$' '.' _ident [_chunk] | '$' _ident [• _chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+}
+Transitions:
+	['"','"'] -> S77
+	['n','n'] -> S101
+	['r','r'] -> S101
+	['t','t'] -> S101
+Action: nil
+Symbols classes: {['"','"'], ['n','n'], ['r','r'], ['t','t']}
+
+S95{
+	_digit :  '0'-'9' •
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident • ']' [_chunk]
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' • _ident ']' [_chunk]
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['0','9'] -> S95
+	['A','Z'] -> S78
+	[']',']'] -> S96
+	['_','_'] -> S78
+	['a','z'] -> S78
+Action: nil
+Symbols classes: {['0','9'], ['A','Z'], [']',']'], ['_','_'], ['a','z']}
+
+S96{
+	ref : ('$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]) •
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [• _chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_chunk : '.' _ident | '[' _dq_string | • _sq_string ']' | _chunk
+	_chunk : '.' _ident | • '[' _dq_string | _sq_string ']' | _chunk
+	_chunk : • '.' _ident | '[' _dq_string | _sq_string ']' | _chunk
+	_sq_string : • ''' {. | '\' ''' | _escapeChar} '''
+}
+Transitions:
+	[''','''] -> S102
+	['.','.'] -> S103
+	['[','['] -> S104
+Action: Accept("ref")
+Symbols classes: {[''','''], ['.','.'], ['[','[']}
+
+S97{
+	false : 'f' 'a' 'l' 's' 'e' •
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	functionName : _letter {_letter | _digit | '.'} •
+	functionName : _letter {_letter | _digit | • '.'}
+	functionName : _letter {_letter | • _digit | '.'}
+	functionName : _letter {• _letter | _digit | '.'}
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	ident : _ident •
+	ident : • _ident
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['.','.'] -> S45
+	['0','9'] -> S46
+	['A','Z'] -> S23
+	['_','_'] -> S23
+	['a','z'] -> S23
+Action: Accept("false")
+Symbols classes: {['.','.'], ['0','9'], ['A','Z'], ['_','_'], ['a','z']}
+
+S98{
+	_escapeChar : ('\' 'n' | '\' 'r' | '\' 't') •
+	_sq_string : ''' {. | '\' ''' | _escapeChar} • '''
+	_sq_string : ''' {. | '\' ''' | • _escapeChar} '''
+	_sq_string : ''' {. | • '\' ''' | _escapeChar} '''
+	_sq_string : ''' {• . | '\' ''' | _escapeChar} '''
+	_chunk : '.' _ident | '[' _dq_string | • _sq_string ']' | _chunk
+	ref : '$' '.' _ident [• _chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_escapeChar : '\' 'n' | '\' 'r' | • '\' 't'
+	_escapeChar : '\' 'n' | • '\' 'r' | '\' 't'
+	_escapeChar : • '\' 'n' | '\' 'r' | '\' 't'
+}
+Transitions:
+	[''','''] -> S86
+	['\','\'] -> S87
+. -> S70
+Action: nil
+Symbols classes: {[''','''], ['\','\']}
+
+S99{
+	_digit :  '0'-'9' •
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	_chunk : ('.' _ident | '[' _dq_string | _sq_string ']' | _chunk) •
+	_chunk : '.' • _ident | '[' _dq_string | _sq_string ']' | _chunk
+	ref : ('$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]) •
+	ref : '$' '.' _ident [• _chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['0','9'] -> S99
+	['A','Z'] -> S88
+	['_','_'] -> S88
+	['a','z'] -> S88
+Action: Accept("ref")
+Symbols classes: {['0','9'], ['A','Z'], ['_','_'], ['a','z']}
+
+S100{
+	_dq_string : '"' {. | '\' • '"' | _escapeChar} '"'
+	_escapeChar : '\' 'n' | '\' 'r' | '\' • 't'
+	_escapeChar : '\' 'n' | '\' • 'r' | '\' 't'
+	_escapeChar : '\' • 'n' | '\' 'r' | '\' 't'
+	_chunk : '.' _ident | '[' • _dq_string | _sq_string ']' | _chunk
+	_dq_string : '"' {. | '\' '"' | • _escapeChar} '"'
+	ref : '$' '.' _ident [• _chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+}
+Transitions:
+	['"','"'] -> S89
+	['n','n'] -> S105
+	['r','r'] -> S105
+	['t','t'] -> S105
+Action: nil
+Symbols classes: {['"','"'], ['n','n'], ['r','r'], ['t','t']}
+
+S101{
+	_escapeChar : ('\' 'n' | '\' 'r' | '\' 't') •
+	_dq_string : '"' {. | '\' '"' | _escapeChar} • '"'
+	_dq_string : '"' {. | '\' '"' | • _escapeChar} '"'
+	_dq_string : '"' {. | • '\' '"' | _escapeChar} '"'
+	_dq_string : '"' {• . | '\' '"' | _escapeChar} '"'
+	_chunk : '.' _ident | '[' • _dq_string | _sq_string ']' | _chunk
+	ref : '$' '.' _ident [_chunk] | '$' _ident [• _chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_escapeChar : '\' 'n' | '\' 'r' | • '\' 't'
+	_escapeChar : '\' 'n' | • '\' 'r' | '\' 't'
+	_escapeChar : • '\' 'n' | '\' 'r' | '\' 't'
+}
+Transitions:
+	['"','"'] -> S93
+	['\','\'] -> S94
+. -> S77
+Action: nil
+Symbols classes: {['"','"'], ['\','\']}
+
+S102{
+	_sq_string : ''' {. | '\' ''' | _escapeChar} • '''
+	_sq_string : ''' {. | '\' ''' | • _escapeChar} '''
+	_sq_string : ''' {. | • '\' ''' | _escapeChar} '''
+	_sq_string : ''' {• . | '\' ''' | _escapeChar} '''
+	_chunk : '.' _ident | '[' _dq_string | • _sq_string ']' | _chunk
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [• _chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_escapeChar : '\' 'n' | '\' 'r' | • '\' 't'
+	_escapeChar : '\' 'n' | • '\' 'r' | '\' 't'
+	_escapeChar : • '\' 'n' | '\' 'r' | '\' 't'
+}
+Transitions:
+	[''','''] -> S106
+	['\','\'] -> S107
+. -> S102
+Action: nil
+Symbols classes: {[''','''], ['\','\']}
+
+S103{
+	_chunk : '.' • _ident | '[' _dq_string | _sq_string ']' | _chunk
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [• _chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_ident : • _letter {_letter | _digit}
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['A','Z'] -> S108
+	['_','_'] -> S108
+	['a','z'] -> S108
+Action: nil
+Symbols classes: {['A','Z'], ['_','_'], ['a','z']}
+
+S104{
+	_chunk : '.' _ident | '[' • _dq_string | _sq_string ']' | _chunk
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [• _chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_dq_string : • '"' {. | '\' '"' | _escapeChar} '"'
+}
+Transitions:
+	['"','"'] -> S109
+Action: nil
+Symbols classes: {['"','"']}
+
+S105{
+	_escapeChar : ('\' 'n' | '\' 'r' | '\' 't') •
+	_dq_string : '"' {. | '\' '"' | _escapeChar} • '"'
+	_dq_string : '"' {. | '\' '"' | • _escapeChar} '"'
+	_dq_string : '"' {. | • '\' '"' | _escapeChar} '"'
+	_dq_string : '"' {• . | '\' '"' | _escapeChar} '"'
+	_chunk : '.' _ident | '[' • _dq_string | _sq_string ']' | _chunk
+	ref : '$' '.' _ident [• _chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_escapeChar : '\' 'n' | '\' 'r' | • '\' 't'
+	_escapeChar : '\' 'n' | • '\' 'r' | '\' 't'
+	_escapeChar : • '\' 'n' | '\' 'r' | '\' 't'
+}
+Transitions:
+	['"','"'] -> S93
+	['\','\'] -> S100
+. -> S89
+Action: nil
+Symbols classes: {['"','"'], ['\','\']}
+
+S106{
+	_sq_string : ''' {. | '\' ''' | _escapeChar} ''' •
+	_chunk : '.' _ident | '[' _dq_string | _sq_string • ']' | _chunk
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [• _chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+}
+Transitions:
+	[']',']'] -> S90
+Action: nil
+Symbols classes: {[']',']']}
+
+S107{
+	_sq_string : ''' {. | '\' • ''' | _escapeChar} '''
+	_escapeChar : '\' 'n' | '\' 'r' | '\' • 't'
+	_escapeChar : '\' 'n' | '\' • 'r' | '\' 't'
+	_escapeChar : '\' • 'n' | '\' 'r' | '\' 't'
+	_chunk : '.' _ident | '[' _dq_string | • _sq_string ']' | _chunk
+	_sq_string : ''' {. | '\' ''' | • _escapeChar} '''
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [• _chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+}
+Transitions:
+	[''','''] -> S102
+	['n','n'] -> S110
+	['r','r'] -> S110
+	['t','t'] -> S110
+Action: nil
+Symbols classes: {[''','''], ['n','n'], ['r','r'], ['t','t']}
+
+S108{
+	_letter : ( 'a'-'z' |  'A'-'Z' | '_') •
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	_chunk : ('.' _ident | '[' _dq_string | _sq_string ']' | _chunk) •
+	_chunk : '.' • _ident | '[' _dq_string | _sq_string ']' | _chunk
+	ref : ('$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]) •
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [• _chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['0','9'] -> S111
+	['A','Z'] -> S108
+	['_','_'] -> S108
+	['a','z'] -> S108
+Action: Accept("ref")
+Symbols classes: {['0','9'], ['A','Z'], ['_','_'], ['a','z']}
+
+S109{
+	_dq_string : '"' {. | '\' '"' | _escapeChar} • '"'
+	_dq_string : '"' {. | '\' '"' | • _escapeChar} '"'
+	_dq_string : '"' {. | • '\' '"' | _escapeChar} '"'
+	_dq_string : '"' {• . | '\' '"' | _escapeChar} '"'
+	_chunk : '.' _ident | '[' • _dq_string | _sq_string ']' | _chunk
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [• _chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_escapeChar : '\' 'n' | '\' 'r' | • '\' 't'
+	_escapeChar : '\' 'n' | • '\' 'r' | '\' 't'
+	_escapeChar : • '\' 'n' | '\' 'r' | '\' 't'
+}
+Transitions:
+	['"','"'] -> S93
+	['\','\'] -> S112
+. -> S109
+Action: nil
+Symbols classes: {['"','"'], ['\','\']}
+
+S110{
+	_escapeChar : ('\' 'n' | '\' 'r' | '\' 't') •
+	_sq_string : ''' {. | '\' ''' | _escapeChar} • '''
+	_sq_string : ''' {. | '\' ''' | • _escapeChar} '''
+	_sq_string : ''' {. | • '\' ''' | _escapeChar} '''
+	_sq_string : ''' {• . | '\' ''' | _escapeChar} '''
+	_chunk : '.' _ident | '[' _dq_string | • _sq_string ']' | _chunk
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [• _chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_escapeChar : '\' 'n' | '\' 'r' | • '\' 't'
+	_escapeChar : '\' 'n' | • '\' 'r' | '\' 't'
+	_escapeChar : • '\' 'n' | '\' 'r' | '\' 't'
+}
+Transitions:
+	[''','''] -> S106
+	['\','\'] -> S107
+. -> S102
+Action: nil
+Symbols classes: {[''','''], ['\','\']}
+
+S111{
+	_digit :  '0'-'9' •
+	_ident : _letter {_letter | _digit} •
+	_ident : _letter {_letter | • _digit}
+	_ident : _letter {• _letter | _digit}
+	_chunk : ('.' _ident | '[' _dq_string | _sq_string ']' | _chunk) •
+	_chunk : '.' • _ident | '[' _dq_string | _sq_string ']' | _chunk
+	ref : ('$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [_chunk]) •
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [• _chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_digit : •  '0'-'9'
+	_letter :  'a'-'z' |  'A'-'Z' | • '_'
+	_letter :  'a'-'z' | •  'A'-'Z' | '_'
+	_letter : •  'a'-'z' |  'A'-'Z' | '_'
+}
+Transitions:
+	['0','9'] -> S111
+	['A','Z'] -> S108
+	['_','_'] -> S108
+	['a','z'] -> S108
+Action: Accept("ref")
+Symbols classes: {['0','9'], ['A','Z'], ['_','_'], ['a','z']}
+
+S112{
+	_dq_string : '"' {. | '\' • '"' | _escapeChar} '"'
+	_escapeChar : '\' 'n' | '\' 'r' | '\' • 't'
+	_escapeChar : '\' 'n' | '\' • 'r' | '\' 't'
+	_escapeChar : '\' • 'n' | '\' 'r' | '\' 't'
+	_chunk : '.' _ident | '[' • _dq_string | _sq_string ']' | _chunk
+	_dq_string : '"' {. | '\' '"' | • _escapeChar} '"'
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [• _chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+}
+Transitions:
+	['"','"'] -> S109
+	['n','n'] -> S113
+	['r','r'] -> S113
+	['t','t'] -> S113
+Action: nil
+Symbols classes: {['"','"'], ['n','n'], ['r','r'], ['t','t']}
+
+S113{
+	_escapeChar : ('\' 'n' | '\' 'r' | '\' 't') •
+	_dq_string : '"' {. | '\' '"' | _escapeChar} • '"'
+	_dq_string : '"' {. | '\' '"' | • _escapeChar} '"'
+	_dq_string : '"' {. | • '\' '"' | _escapeChar} '"'
+	_dq_string : '"' {• . | '\' '"' | _escapeChar} '"'
+	_chunk : '.' _ident | '[' • _dq_string | _sq_string ']' | _chunk
+	ref : '$' '.' _ident [_chunk] | '$' _ident [_chunk] | '$' _ident '[' _ident ']' [• _chunk]
+	_chunk : '.' _ident | '[' _dq_string | _sq_string ']' | • _chunk
+	_escapeChar : '\' 'n' | '\' 'r' | • '\' 't'
+	_escapeChar : '\' 'n' | • '\' 'r' | '\' 't'
+	_escapeChar : • '\' 'n' | '\' 'r' | '\' 't'
+}
+Transitions:
+	['"','"'] -> S93
+	['\','\'] -> S112
+. -> S109
+Action: nil
+Symbols classes: {['"','"'], ['\','\']}
+

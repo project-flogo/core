@@ -1,0 +1,160 @@
+
+!whitespace : ' ' | '\t' | '\v' | '\f' | '\r' | '\n' ;
+
+_letter     : 'a'-'z' | 'A'-'Z' | '_';
+_digit      : '0'-'9' ;
+
+// -- [ Numerical literals ]
+
+intLit      : '0' | '1'-'9' { _digit } ;
+
+floatLit
+    : _decimals '.' [ _decimals ] [ _exponent ]
+    | _decimals _exponent
+    | '.' _decimals [ _exponent ]
+    ;
+
+_decimals   : _digit { _digit } ;
+_exponent   : ( 'e' | 'E' ) [ '+' | '-' ] _decimals ;
+
+// -- [ String literals ]
+
+_escapeChar : '\\' 'n' | '\\' 'r' | '\\' 't' ;
+
+_dq_string  : '"' { . | '\\' '"' | _escapeChar } '"' ;
+_sq_string  : '\'' { . | '\\' '\'' | _escapeChar } '\'' ;
+
+stringLit   :  _dq_string | _sq_string ;
+
+// -- [ Identifiers ]
+
+_ident : _letter { _letter | _digit } ;
+
+ident : _ident ;
+
+// -- [ Resolvers ]
+
+_resolver
+    : '.'
+    | _ident
+    | _ident '[' _ident ']'
+    ;
+//resolver : _resolver ;
+
+_chunk
+    : '.' _ident
+    | '[' _dq_string | _sq_string ']'
+    | _chunk
+    ;
+
+ref
+    : '$' '.' _ident [ _chunk ]
+    | '$' _ident [ _chunk ]
+    | '$' _ident '[' _ident ']' [ _chunk ]
+    ;
+
+// -- [ Functions ]
+
+functionName : _letter { _letter | _digit | '.' } ;
+
+<< import "github.com/project-flogo/core/data/expression/script/gocc/ast" >>
+
+// --- [ Exprs ]
+
+Fscript
+    : Expr
+    | TernaryExpr
+    ;
+
+Expr
+    : Expr "||" Expr1  << ast.NewBoolExpr($0,$1,$2) >>
+    | Expr1
+    ;
+
+Expr1
+    : Expr1 "&&" Expr2  << ast.NewBoolExpr($0,$1,$2) >>
+    | Expr2
+    ;
+
+Expr2
+    : Expr2 "==" Expr3  << ast.NewCmpExpr($0,$1,$2) >>
+    | Expr2 "!=" Expr3  << ast.NewCmpExpr($0,$1,$2) >>
+    | Expr2 "<"  Expr3  << ast.NewCmpExpr($0,$1,$2) >>
+    | Expr2 "<=" Expr3  << ast.NewCmpExpr($0,$1,$2) >>
+    | Expr2 ">"  Expr3  << ast.NewCmpExpr($0,$1,$2) >>
+    | Expr2 ">=" Expr3  << ast.NewCmpExpr($0,$1,$2) >>
+    | Expr3
+    ;
+
+Expr3
+    : Expr3 "+" Expr4   << ast.NewArithExpr($0,$1,$2) >>
+    | Expr3 "-" Expr4   << ast.NewArithExpr($0,$1,$2) >>
+    | Expr4
+    ;
+
+Expr4
+    : Expr4 "*" Expr5  << ast.NewArithExpr($0,$1,$2) >>
+    | Expr4 "/" Expr5  << ast.NewArithExpr($0,$1,$2) >>
+    | Expr4 "%" Expr5  << ast.NewArithExpr($0,$1,$2) >>
+    | Expr5
+    ;
+
+Expr5
+	: Expr6
+    | "-" Expr5     << ast.NewUnaryExpr($0, $1) >>
+	| "!" Expr5     << ast.NewUnaryExpr($0, $1) >>
+    ;
+
+Expr6
+	: PrimaryExpr
+    | ident "(" Args ")"            << ast.NewFuncExpr($0, $2) >>
+    | functionName "(" Args ")"     << ast.NewFuncExpr($0, $2) >>
+;
+
+PrimaryExpr
+    : Literal
+    //| ident
+    //| functionName
+    | "(" Expr ")"  << $1, nil >>
+    ;
+
+TernaryExpr
+    : Expr "?" Expr ":" Expr    << ast.NewTernaryExpr($0, $2, $4) >>
+    ;
+
+BoolLit
+    : "true"
+    | "false"
+    ;
+
+NilLit
+    : "nil"
+    | "null"
+    ;
+
+Literal
+    : intLit        << ast.NewLiteral("int",$0) >>
+    | floatLit      << ast.NewLiteral("float",$0) >>
+    | stringLit     << ast.NewLiteral("string",$0) >>
+    | BoolLit       << ast.NewLiteral("bool",$0) >>
+    | NilLit        << ast.NewLiteral("nil",$0) >>
+    | ref           << ast.NewRefExpr($0) >>
+    ;
+
+Args
+	: empty
+	| ExprList
+    ;
+
+ExprList
+	: Expr                  << ast.NewExprList($0) >>
+	| ExprList "," Expr     << ast.AppendToExprList($0, $2) >>
+    ;
+
+Selector
+    : "." ident  //<< ast.InitNode(string($1.(*token.Token).Lit), []string{}) >>
+    ;
+
+Index
+    : "[" Expr "]"  << $1, nil >>
+    ;
