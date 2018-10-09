@@ -1,0 +1,28 @@
+{
+  "name": "sample-action",
+  "type": "flogo:action",
+  "version": "0.0.1",
+  "title": "Simple Action",
+  "description": "Sample Action",
+  "homepage": "https://github.com/project-flogo/tree/master/examples/action",
+  "settings": [
+    {
+      "name": "aSetting",
+      "type": "string",
+      "required": true
+    }
+  ],
+  "input": [
+    {
+      "name": "anInput",
+      "type": "string",
+      "required": true
+    }
+  ],
+  "output": [
+    {
+      "name": "anOutput",
+      "type": "string"
+    }
+  ]
+}

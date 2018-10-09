@@ -1,0 +1,35 @@
+{
+  "name": "sample-trigger",
+  "type": "flogo:trigger",
+  "version": "0.0.1",
+  "title": "Sample Trigger",
+  "description": "Sample Trigger",
+  "homepage": "https://github.com/project-flogo/tree/master/examples/trigger",
+  "settings": [
+    {
+      "name": "aSetting",
+      "type": "int",
+      "required": true
+    }
+  ],
+  "output": [
+    {
+      "name": "anOutput",
+      "type": "string"
+    }
+  ],
+  "reply": [
+    {
+      "name": "aReply",
+      "type": "any"
+    }
+  ],
+  "handler": {
+    "settings": [
+      {
+        "name": "aSetting",
+        "type": "string"
+      }
+    ]
+  }
+}

@@ -248,11 +248,13 @@ func (aCtx *activityContext) GetSharedTempData() map[string]interface{} {
 	return nil
 }
 
-func (aCtx *activityContext) GetInputObject(object interface{}, converter activity.InputConverter) error {
-	return nil
+func (aCtx *activityContext) GetInputObject(input data.FromMap) error {
+	err := input.FromMap(aCtx.input)
+	return err
 }
 
-func (aCtx *activityContext) SetOutputObject(object interface{}, converter activity.OutputConverter) error {
+func (aCtx *activityContext) SetOutputObject(output data.ToMap) error {
+	aCtx.output = output.ToMap()
 	return nil
 }
 

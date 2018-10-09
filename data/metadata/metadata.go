@@ -75,7 +75,3 @@ func (md *IOMetadata) UnmarshalJSON(b []byte) error {
 
 	return nil
 }
-
-type ToMap interface {
-	ToMap() map[string]interface{}
-}

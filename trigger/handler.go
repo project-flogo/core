@@ -95,21 +95,21 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData map[string]interfa
 
 	var err error
 
-	var inputs map[string]interface{}
+	var inputMap map[string]interface{}
 
 	if h.actionInputMapper != nil {
 		inScope := data.NewSimpleScope(triggerData, nil)
 
-		inputs, err = h.actionInputMapper.Apply(inScope)
+		inputMap, err = h.actionInputMapper.Apply(inScope)
 		if err != nil {
 			return nil, err
 		}
 	} else {
-		inputs = triggerData
+		inputMap = triggerData
 	}
 
 	newCtx := NewHandlerContext(ctx, h.config)
-	results, err := h.runner.RunAction(newCtx, h.act, inputs)
+	results, err := h.runner.RunAction(newCtx, h.act, inputMap)
 	if err != nil {
 		return nil, err
 	}

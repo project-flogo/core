@@ -25,13 +25,11 @@ type Context interface {
 	// of the data dependent on the activity host implementation
 	GetSharedTempData() map[string]interface{}
 
-	// GetInputObject gets all the activity input as the specified object, the converter is
-	// optional.  If the converter is not specified, a reflection based converter will be used
-	GetInputObject(object interface{}, converter InputConverter) error
+	// GetInputObject gets all the activity input as the specified object.
+	GetInputObject(input data.FromMap) error
 
-	// SetOutputObject sets the activity output as the specified object, the converter is
-	// optional.  If the converter is not specified, a reflection based converter will be used
-	SetOutputObject(object interface{}, converter OutputConverter) error
+	// SetOutputObject sets the activity output as the specified object.
+	SetOutputObject(output data.ToMap) error
 }
 
 type Host interface {
@@ -59,7 +57,3 @@ type Host interface {
 	// GetDetails gets a StringsMap with host specific details/properties, ie. "type":"flow", "id":"2134", etc.
 	GetDetails() data.StringsMap
 }
-
-type OutputConverter func(object interface{}) (map[string]interface{}, error)
-
-type InputConverter func(m map[string]interface{}, object interface{}) error

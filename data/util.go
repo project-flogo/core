@@ -31,3 +31,12 @@ func (d *stringsMapImpl) Iterate(itx func(string, string)) {
 		itx(key, value)
 	}
 }
+
+
+type ToMap interface {
+	ToMap() map[string]interface{}
+}
+
+type FromMap interface {
+	FromMap(values map[string]interface{}) error
+}

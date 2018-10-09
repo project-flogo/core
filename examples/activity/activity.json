@@ -1,0 +1,28 @@
+{
+  "name": "sample-activity",
+  "type": "flogo:activity",
+  "version": "0.0.1",
+  "title": "Sample Activity",
+  "description": "Sample Activity",
+  "homepage": "https://github.com/project-flogo/tree/master/examples/activity",
+  "settings": [
+    {
+      "name": "aSetting",
+      "type": "string",
+      "required": true
+    }
+  ],
+  "input": [
+    {
+      "name": "anInput",
+      "type": "string",
+      "required": true
+    }
+  ],
+  "output": [
+    {
+      "name": "anOutput",
+      "type": "string"
+    }
+  ]
+}
