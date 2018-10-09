@@ -104,7 +104,7 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData map[string]interfa
 		if err != nil {
 			return nil, err
 		}
-	}  else {
+	} else {
 		inputs = triggerData
 	}
 

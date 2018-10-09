@@ -1,18 +1,6 @@
-## Intellij
-.idea/
-*.ipr
-*.iml
-*.iws
 
-## Atom Start
-atom.sh
-
-## Gradle
-.gradle
-
-# Build dirs
-build/
-out/
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
 
 ## OS X Resources
 .DS_Store
@@ -22,12 +10,20 @@ pkg/
 **/vendor/src/
 **/vendor/manifest
 
-## Golang
+# Binaries
+*.exe
+*.test
+*.prof
 
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o
 *.a
 *.so
+
+# Dynamic libs
+*.dll
+*.so
+*.dylib
 
 # Folders
 _obj
@@ -45,9 +41,6 @@ _cgo_export.*
 
 _testmain.go
 
-*.exe
-*.test
-*.prof
 
 tags
 .vscode/symbols.json

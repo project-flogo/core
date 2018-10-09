@@ -6,6 +6,7 @@ import (
 	"github.com/project-flogo/core/data/mapper"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/data/resolve"
+	"github.com/project-flogo/core/support"
 	"reflect"
 	"strconv"
 	"strings"
@@ -76,10 +77,10 @@ func toActionConfig(act *Action) *trigger.ActionConfig {
 	actionCfg.Data = jsonData
 
 	if len(act.inputMappings) > 0 {
-		actionCfg.Input,_ = toMappings(act.inputMappings)
+		actionCfg.Input, _ = toMappings(act.inputMappings)
 	}
 	if len(act.outputMappings) > 0 {
-		actionCfg.Output,_ = toMappings(act.outputMappings)
+		actionCfg.Output, _ = toMappings(act.outputMappings)
 	}
 
 	return actionCfg
@@ -147,7 +148,7 @@ func NewActivity(act activity.Activity, settings ...interface{}) (activity.Activ
 		}
 
 		f := activity.GetFactory(ref)
-		ctx := &initCtx{settings:settingsMap}
+		ctx := &initCtx{settings: settingsMap}
 		return f(ctx)
 	}
 
@@ -178,11 +179,17 @@ func EvalActivity(act activity.Activity, input interface{}) (map[string]interfac
 	}
 
 	if act.Metadata() == nil {
-		//try loading activity with metadata
-		value := reflect.ValueOf(act)
-		value = value.Elem()
-		ref := value.Type().PkgPath()
 
+		//try loading activity with metadata
+
+		var ref string
+		if hr, ok := act.(support.HasRef); ok {
+			ref = hr.Ref()
+		} else {
+			value := reflect.ValueOf(act)
+			value = value.Elem()
+			ref = value.Type().PkgPath()
+		}
 		act = activity.Get(ref)
 	}
 

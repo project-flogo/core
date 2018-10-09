@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/project-flogo/core/support"
 	"reflect"
 
 	"github.com/project-flogo/core/action"
@@ -69,11 +70,17 @@ func (a *App) NewTrigger(trg trigger.Trigger, settings interface{}) *Trigger {
 		}
 	}
 
-	value := reflect.ValueOf(trg)
-	value = value.Elem()
-	ref := value.Type().PkgPath()
+	var ref string
 
-	newTrg := &Trigger{app:a, ref: ref, settings: settingsMap}
+	if hr, ok := trg.(support.HasRef); ok {
+		ref = hr.Ref()
+	} else {
+		value := reflect.ValueOf(trg)
+		value = value.Elem()
+		ref = value.Type().PkgPath()
+	}
+
+	newTrg := &Trigger{app: a, ref: ref, settings: settingsMap}
 	a.triggers = append(a.triggers, newTrg)
 
 	return newTrg
@@ -89,9 +96,15 @@ func (a *App) AddAction(act action.Action, id string, settings interface{}) erro
 		settingsMap = metadata.StructToMap(settings)
 	}
 
-	value := reflect.ValueOf(act)
-	value = value.Elem()
-	ref := value.Type().PkgPath()
+	var ref string
+
+	if hr, ok := act.(support.HasRef); ok {
+		ref = hr.Ref()
+	} else {
+		value := reflect.ValueOf(act)
+		value = value.Elem()
+		ref = value.Type().PkgPath()
+	}
 
 	newAct := &Action{ref: ref, settings: settingsMap}
 	a.actions[id] = newAct
@@ -225,9 +238,15 @@ func NewAction(act action.Action, settings interface{}) (*Action, error) {
 		settingsMap = metadata.StructToMap(settings)
 	}
 
-	value := reflect.ValueOf(act)
-	value = value.Elem()
-	ref := value.Type().PkgPath()
+	var ref string
+
+	if hr, ok := act.(support.HasRef); ok {
+		ref = hr.Ref()
+	} else {
+		value := reflect.ValueOf(act)
+		value = value.Elem()
+		ref = value.Type().PkgPath()
+	}
 
 	newAct := &Action{ref: ref, settings: settingsMap}
 

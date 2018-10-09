@@ -13,3 +13,7 @@ func GetRef(contrib interface{}) string {
 
 	return ref
 }
+
+type HasRef interface {
+	Ref() string
+}

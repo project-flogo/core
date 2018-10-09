@@ -15,16 +15,16 @@ func TestToMappings(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, 3, len(defs))
 
-	v,exists := defs["in1"]
+	v, exists := defs["in1"]
 	assert.True(t, exists)
-	assert.Equal(t, "=b",v)
+	assert.Equal(t, "=b", v)
 
-	v,exists = defs["in2"]
+	v, exists = defs["in2"]
 	assert.True(t, exists)
-	assert.Equal(t, "= $.blah",v)
+	assert.Equal(t, "= $.blah", v)
 
-	v,exists = defs["in3"]
+	v, exists = defs["in3"]
 	assert.True(t, exists)
-	assert.Equal(t, "= $.blah2",v)
+	assert.Equal(t, "= $.blah2", v)
 
 }
