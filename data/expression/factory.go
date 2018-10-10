@@ -45,15 +45,15 @@ func (f *factoryImpl) NewExpr(exprStr string) (Expr, error) {
 		}
 	}
 
+	// template expression
+	if IsTemplateExpr(exprStr) {
+		return NewTemplateExpr(exprStr, f)
+	}
+
 	l, isLiteral := GetLiteral(exprStr)
 
 	if isLiteral {
 		return &literalExpr{val: l}, nil
-	}
-
-	// template expression
-	if IsTemplateExpr(exprStr) {
-		return NewTemplateExpr(exprStr, f)
 	}
 
 	// script expression
@@ -63,7 +63,6 @@ func (f *factoryImpl) NewExpr(exprStr string) (Expr, error) {
 			return nil, fmt.Errorf("unable to compile expression '%s': %s", exprStr, err.Error())
 		}
 		return expr, nil
-
 	}
 
 	return nil, fmt.Errorf("unable to compile expression '%s'", exprStr)

@@ -9,47 +9,54 @@ import (
 // GetLiteral return the literal value if it is a literal
 func GetLiteral(strVal string) (interface{}, bool) {
 
-	var val interface{}
-	var err error
+	if strVal[0] == '=' {
 
-	//check if is integer
-	val, err = strconv.Atoi(strVal)
-	if err == nil {
-		return val, true
-	}
+		newStrVal := strings.TrimSpace(strVal[1:])
 
-	//check if is float
-	val, err = strconv.ParseFloat(strVal, 64)
-	if err == nil {
-		return val, true
-	}
+		var val interface{}
+		var err error
 
-	//check if is string
-	if strVal[0] == '`' && strVal[len(strVal)-1] == '`' {
-		return strVal[1 : len(strVal)-1], true
-	}
-	if strVal[0] == '\'' && strVal[len(strVal)-1] == '\'' {
-		return strVal[1 : len(strVal)-1], true
-	}
-	if strVal[0] == '"' && strVal[len(strVal)-1] == '"' {
-		return strVal[1 : len(strVal)-1], true
-	}
+		//check if is integer
+		_, err = strconv.Atoi(newStrVal)
+		if err == nil {
+			return val, true
+		}
 
-	//check for booleans
-	if strings.EqualFold(strVal, "false") {
-		return false, true
-	}
+		//check if is float
+		val, err = strconv.ParseFloat(newStrVal, 64)
+		if err == nil {
+			return val, true
+		}
 
-	if strings.EqualFold(strVal, "true") {
-		return true, true
-	}
+		//check if is string
+		if newStrVal[0] == '`' && newStrVal[len(newStrVal)-1] == '`' {
+			return newStrVal[1 : len(newStrVal)-1], true
+		}
+		if newStrVal[0] == '\'' && newStrVal[len(newStrVal)-1] == '\'' {
+			return newStrVal[1 : len(newStrVal)-1], true
+		}
+		if newStrVal[0] == '"' && newStrVal[len(newStrVal)-1] == '"' {
+			return newStrVal[1 : len(newStrVal)-1], true
+		}
 
-	//check if is object or array
-	var js interface{}
-	err = json.Unmarshal([]byte(strVal), &js)
-	if err == nil {
-		return js, true
-	}
+		//check for booleans
+		if strings.EqualFold(newStrVal, "false") {
+			return false, true
+		}
 
-	return nil, false
+		if strings.EqualFold(newStrVal, "true") {
+			return true, true
+		}
+
+		//check if is object or array
+		var js interface{}
+		err = json.Unmarshal([]byte(newStrVal), &js)
+		if err == nil {
+			return js, true
+		}
+
+		return nil, false
+	} else {
+		return strVal, true
+	}
 }

@@ -1,9 +1,10 @@
 package string
 
 import (
-	"github.com/project-flogo/fscript/function"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/project-flogo/core/data/expression/function"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestFnConcat_Eval(t *testing.T) {
