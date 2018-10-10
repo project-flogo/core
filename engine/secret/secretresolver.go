@@ -1,4 +1,4 @@
-package engine
+package secret
 
 import (
 	"crypto/aes"
@@ -9,11 +9,15 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"os"
+)
+
+const (
+	EnvKeyDataSecretKey  = "FLOGO_DATA_SECRET_KEY"
+	defaultDataSecretKey = "flogo"
 )
 
 var secretValueHandler SecretValueHandler
-
-const defaultDataSecretKey = "flogo"
 
 // SecretValueDecoder defines method for decoding value
 type SecretValueHandler interface {
@@ -26,12 +30,20 @@ func SetSecretValueHandler(pwdResolver SecretValueHandler) {
 	secretValueHandler = pwdResolver
 }
 
+func GetDataSecretKey() string {
+	key := os.Getenv(EnvKeyDataSecretKey)
+	if len(key) > 0 {
+		return key
+	}
+	return defaultDataSecretKey
+}
+
 // Get secret value handler. If not already set by SetSecretValueHandler(), will return default KeyBasedSecretValueDecoder
 // where decoding key value is expected to be set through FLOGO_DATA_SECRET_KEY environment variable.
 // If key is not set, a default key value(github.com/project-flogo/core/config.DATA_SECRET_KEY_DEFAULT) will be used.
 func GetSecretValueHandler() SecretValueHandler {
 	if secretValueHandler == nil {
-		secretValueHandler = &KeyBasedSecretValueHandler{Key: defaultDataSecretKey}
+		secretValueHandler = &KeyBasedSecretValueHandler{Key: GetDataSecretKey()}
 	}
 	return secretValueHandler
 }

@@ -20,11 +20,11 @@ func TestRegister(t *testing.T) {
 func TestFactory(t *testing.T) {
 	f := &ActionFactory{}
 
-	config := &action.Config{Settings: map[string]interface{}{"aSetting":"test_setting"}}
+	config := &action.Config{Settings: map[string]interface{}{"aSetting": "test_setting"}}
 	act, err := f.New(config)
 
 	assert.Nil(t, err)
-	actInst, ok :=  act.(*Action)
+	actInst, ok := act.(*Action)
 	assert.True(t, ok)
 
 	assert.NotNil(t, actInst.settings)
@@ -34,7 +34,7 @@ func TestFactory(t *testing.T) {
 func TestEval(t *testing.T) {
 
 	act := &Action{}
-	inputMap := map[string]interface{}{"anInput":"test"}
+	inputMap := map[string]interface{}{"anInput": "test"}
 	results, err := act.Run(context.Background(), inputMap)
 	assert.Nil(t, err)
 

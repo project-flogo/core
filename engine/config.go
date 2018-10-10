@@ -17,13 +17,14 @@ const (
 	DefaultAppConfigLocation = "flogo.json"
 	EnvKeyStopEngineOnError  = "FLOGO_ENGINE_STOP_ON_ERROR"
 	DefaultStopEngineOnError = true
-	EnvKeyDataSecretKey      = "FLOGO_DATA_SECRET_KEY"
 	EnvKeyRunnerType         = "FLOGO_RUNNER_TYPE"
 	DefaultRunnerType        = ValueRunnerTypePooled
 	EnvKeyRunnerWorkers      = "FLOGO_RUNNER_WORKERS"
 	DefaultRunnerWorkers     = 5
 	EnvKeyRunnerQueueSize    = "FLOGO_RUNNER_QUEUE"
 	DefaultRunnerQueueSize   = 50
+	EnvAppPropertyOverride   = "FLOGO_APP_PROP_OVERRIDE"
+	EnvAppPropertyProvider   = "FLOGO_APP_PROP_PROVIDER"
 
 	ValueRunnerTypePooled = "POOLED"
 	ValueRunnerTypeDirect = "DIRECT"
@@ -70,12 +71,20 @@ func StopEngineOnError() bool {
 	return b
 }
 
-func GetDataSecretKey() string {
-	key := os.Getenv(EnvKeyDataSecretKey)
+func GetAppPropertyOverride() string {
+	key := os.Getenv(EnvAppPropertyOverride)
 	if len(key) > 0 {
 		return key
 	}
-	return defaultDataSecretKey
+	return ""
+}
+
+func GetAppPropertyProvider() string {
+	key := os.Getenv(EnvAppPropertyProvider)
+	if len(key) > 0 {
+		return key
+	}
+	return ""
 }
 
 //GetRunnerType returns the runner type

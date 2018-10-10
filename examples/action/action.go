@@ -33,7 +33,7 @@ func (f *ActionFactory) New(config *action.Config) (action.Action, error) {
 
 	log.Debugf("Setting: %s", s.ASetting)
 
-	act := &Action{settings:s}
+	act := &Action{settings: s}
 
 	return act, nil
 

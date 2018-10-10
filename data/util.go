@@ -32,7 +32,6 @@ func (d *stringsMapImpl) Iterate(itx func(string, string)) {
 	}
 }
 
-
 type ToMap interface {
 	ToMap() map[string]interface{}
 }

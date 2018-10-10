@@ -93,7 +93,7 @@ func newActionHandler(handler trigger.Handler) dummyOnEvent {
 	return func(data interface{}) {
 
 		strData, _ := coerce.ToString(data)
-		output := &Output{AnOutput:strData}
+		output := &Output{AnOutput: strData}
 
 		results, err := handler.Handle(context.Background(), output.ToMap())
 		if err != nil {

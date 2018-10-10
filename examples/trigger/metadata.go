@@ -13,7 +13,7 @@ type HandlerSettings struct {
 }
 
 type Output struct {
-	AnOutput  string `md:"anOutput"`
+	AnOutput string `md:"anOutput"`
 }
 
 func (o *Output) FromMap(values map[string]interface{}) error {
@@ -47,4 +47,3 @@ func (r *Reply) ToMap() map[string]interface{} {
 		"aReply": r.AReply,
 	}
 }
-

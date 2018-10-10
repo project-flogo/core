@@ -16,9 +16,9 @@ func TestNewEngineErrorNoApp(t *testing.T) {
 
 //TestNewEngineErrorNoAppName
 func TestNewEngineErrorNoAppName(t *testing.T) {
-	app := &app.Config{}
+	appConfig := &app.Config{}
 
-	_, err := New(app)
+	_, err := New(appConfig)
 
 	assert.NotNil(t, err)
 	assert.Equal(t, "no App name provided", err.Error())
@@ -26,9 +26,9 @@ func TestNewEngineErrorNoAppName(t *testing.T) {
 
 //TestNewEngineErrorNoAppVersion
 func TestNewEngineErrorNoAppVersion(t *testing.T) {
-	app := &app.Config{Name: "MyApp"}
+	appConfig := &app.Config{Name: "MyApp"}
 
-	_, err := New(app)
+	_, err := New(appConfig)
 
 	assert.NotNil(t, err)
 	assert.Equal(t, "no App version provided", err.Error())

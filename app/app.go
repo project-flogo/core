@@ -6,7 +6,7 @@ import (
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/app/resource"
-	"github.com/project-flogo/core/data"
+	"github.com/project-flogo/core/data/property"
 	"github.com/project-flogo/core/support/logger"
 	"github.com/project-flogo/core/support/managed"
 	"github.com/project-flogo/core/trigger"
@@ -18,16 +18,16 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 
 	app := &App{}
 
+	properties := make(map[string]interface{}, len(config.Properties))
+	for _, attr := range config.Properties {
+		properties[attr.Name()] = attr.Value()
+	}
+
+	app.propManager = property.NewManager(properties)
+
 	for _, option := range options {
 		option(app)
 	}
-
-	properties := make(map[string]data.TypedValue, len(config.Properties))
-	for _, attr := range config.Properties {
-		properties[attr.Name()] = data.NewTypedValue(attr.Type(), attr.Value()) //todo make attr simple, do type conversion here?
-	}
-
-	app.properties = properties
 
 	resources := make(map[string]*resource.Resource, len(config.Resources))
 	app.resManager = resource.NewManager(resources)
@@ -75,8 +75,14 @@ func ContinueOnError(a *App) error {
 	return nil
 }
 
+func ExternalProperties(providerId string, overrides string, processors ...property.PostProcessor) func(*App) error {
+	return func(a *App) error {
+		return a.propManager.AddExternalProperties(providerId, overrides, processors...)
+	}
+}
+
 type App struct {
-	properties  map[string]data.TypedValue
+	propManager *property.Manager
 	resManager  *resource.Manager
 	actions     map[string]action.Action
 	triggers    map[string]*triggerWrapper
@@ -90,8 +96,8 @@ type triggerWrapper struct {
 	status *managed.StatusInfo
 }
 
-func (a *App) GetProperty(propertyName string) data.TypedValue {
-	return a.properties[propertyName]
+func (a *App) GetProperty(name string) (interface{}, bool) {
+	return a.propManager.GetProperty(name)
 }
 
 func (a *App) GetResource(id string) *resource.Resource {

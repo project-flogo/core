@@ -96,10 +96,3 @@ func (a *Attribute) UnmarshalJSON(data []byte) error {
 
 	return nil
 }
-
-//TODO Remove
-//
-//
-//type TypedValue interface {
-//	GetValue(scope Scope) (interface{}, error)
-//}
