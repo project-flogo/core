@@ -4,8 +4,10 @@ import (
 	"encoding/json"
 
 	"github.com/project-flogo/core/action"
+	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/mapper"
 	"github.com/project-flogo/core/data/metadata"
+	"github.com/project-flogo/core/data/resolve"
 )
 
 // Config is the configuration for a Trigger
@@ -18,12 +20,14 @@ type Config struct {
 
 func (c *Config) FixUp(md *Metadata) error {
 
+	ef := expression.NewFactory(resolve.GetBasicResolver())
+
 	//fix up settings
 	if len(c.Settings) > 0 {
 		var err error
 		mdSettings := md.Settings
 		for name, value := range c.Settings {
-			c.Settings[name], err = metadata.ResolveSettingValue(name, value, mdSettings)
+			c.Settings[name], err = metadata.ResolveSettingValue(name, value, mdSettings, ef)
 			if err != nil {
 				return err
 			}
@@ -38,7 +42,7 @@ func (c *Config) FixUp(md *Metadata) error {
 			var err error
 			mdSettings := md.Settings
 			for name, value := range hc.Settings {
-				hc.Settings[name], err = metadata.ResolveSettingValue(name, value, mdSettings)
+				hc.Settings[name], err = metadata.ResolveSettingValue(name, value, mdSettings, ef)
 				if err != nil {
 					return err
 				}

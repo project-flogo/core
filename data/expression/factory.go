@@ -57,8 +57,8 @@ func (f *factoryImpl) NewExpr(exprStr string) (Expr, error) {
 	}
 
 	// script expression
-	if f.scriptExprFactory != nil && exprStr[0] == '=' {
-		expr, err := f.scriptExprFactory.NewExpr(exprStr[1:])
+	if f.scriptExprFactory != nil {
+		expr, err := f.scriptExprFactory.NewExpr(exprStr)
 		if err != nil {
 			return nil, fmt.Errorf("unable to compile expression '%s': %s", exprStr, err.Error())
 		}

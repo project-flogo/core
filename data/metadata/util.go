@@ -3,8 +3,7 @@ package metadata
 import (
 	"fmt"
 	"github.com/project-flogo/core/data/coerce"
-	"github.com/project-flogo/core/data/resolve"
-	"github.com/project-flogo/core/support/logger"
+	"github.com/project-flogo/core/data/expression"
 	"reflect"
 
 	"github.com/project-flogo/core/data"
@@ -145,14 +144,13 @@ func StructToMap(object interface{}) map[string]interface{} {
 		tag := ft.Tag.Get(metadataTag)
 		details := NewFieldDetails(ft.Name, fv.Type().String(), tag)
 
-		//tv := data.NewTypedValue(details.Type, fv.Interface())
 		values[details.Label] = fv.Interface()
 	}
 
 	return values
 }
 
-func ResolveSettingValue(setting string, value interface{}, settingsMd map[string]data.TypedValue) (interface{}, error) {
+func ResolveSettingValue(setting string, value interface{}, settingsMd map[string]data.TypedValue, ef expression.Factory) (interface{}, error) {
 
 	strVal, ok := value.(string)
 
@@ -165,17 +163,15 @@ func ResolveSettingValue(setting string, value interface{}, settingsMd map[strin
 		}
 	}
 
-	if ok && len(strVal) > 0 && strVal[0] == '$' {
-		v, err := resolve.GetBasicResolver().Resolve(strVal, nil)
-		if err == nil {
+	if ok && len(strVal) > 0 && strVal[0] == '=' && ef != nil {
+		expr, err :=ef.NewExpr(strVal)
+		if err != nil {
+			return nil, err
+		}
 
-			v, err = coerce.ToType(v, toType)
-			if err != nil {
-				return nil, err
-			}
-
-			logger.Debugf("Resolved setting [%s: %s] to : %v", setting, value, v)
-			return v, nil
+		value, err = expr.Eval(nil)
+		if err != nil {
+			return nil, err
 		}
 	}
 

@@ -20,8 +20,8 @@ func (mf *ExprMapperFactory) NewMapper(mappings map[string]interface{}) (Mapper,
 
 	for key, value := range mappings {
 
-		if strVal, ok := value.(string); ok {
-			expr, err := mf.exprFactory.NewExpr(strVal)
+		if strVal, ok := value.(string); ok && len(strVal) > 0 && strVal[0] == '=' {
+			expr, err := mf.exprFactory.NewExpr(strVal[1:])
 			if err != nil {
 				return nil, err
 			}

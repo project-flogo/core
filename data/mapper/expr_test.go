@@ -35,7 +35,7 @@ func TestLiteralMapper(t *testing.T) {
 
 func TestAssignMapper(t *testing.T) {
 
-	mappings := map[string]interface{}{"One": "$.SimpleI", "Two": "$.ObjI.key", "Three": "$.ArrayI[2]", "Four": "$.ParamsI.paramKey"}
+	mappings := map[string]interface{}{"One": "=$.SimpleI", "Two": "=$.ObjI.key", "Three": "=$.ArrayI[2]", "Four": "=$.ParamsI.paramKey", "Five": "$.SimpleI"}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
@@ -61,6 +61,7 @@ func TestAssignMapper(t *testing.T) {
 	assert.Equal(t, 2.0, results["Two"])
 	assert.Equal(t, 3.0, results["Three"])
 	assert.Equal(t, "val4", results["Four"])
+	assert.Equal(t, "$.SimpleI", results["Five"])
 }
 
 func TestExpressionMapperFunction(t *testing.T) {

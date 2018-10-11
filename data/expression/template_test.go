@@ -10,7 +10,7 @@ import (
 type testExprFactory struct {
 }
 
-func (f *testExprFactory) NewExpr(exprStr string) (data.Expr, error) {
+func (f *testExprFactory) NewExpr(exprStr string) (Expr, error) {
 	return &testExpr{str: exprStr}, nil
 }
 

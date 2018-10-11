@@ -57,6 +57,10 @@ func convertMappingValue(mapping *LegacyMapping) (interface{}, error) {
 	strType, _ := toString(mapping.Type)
 	switch strType {
 	case "assign", "1":
+		expr, ok := mapping.Value.(string)
+		if ok {
+			return "=" + expr, nil
+		}
 		return mapping.Value, nil
 	case "literal", "2":
 		return mapping.Value, nil
@@ -65,7 +69,7 @@ func convertMappingValue(mapping *LegacyMapping) (interface{}, error) {
 		if !ok {
 			return nil, fmt.Errorf("invalid expression mapping: '%v'", mapping.Value)
 		}
-		return expr, nil
+		return "=" + expr, nil
 	case "object", "4":
 		return mapping.Value, nil
 	case "array", "5":
