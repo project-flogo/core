@@ -7,7 +7,7 @@
   "triggers": [
     {
       "id": "my_rest_trigger",
-      "ref": "github.com/project-flogo/rest-trg",
+      "ref": "github.com/project-flogo/contrib/trigger/rest",
       "settings": {
         "port": "8888"
       },
@@ -48,7 +48,7 @@
             "id": "log",
             "name": "Log Message",
             "activity": {
-              "ref": "github.com/project-flogo/log-act",
+              "ref": "github.com/project-flogo/contrib/activity/log",
               "input": {
                 "message": "$flow.in",
                 "flowInfo": "false",

@@ -2,8 +2,8 @@ package main
 
 import (
 	// triggers
-	_ "github.com/project-flogo/rest-trg"
+	_ "github.com/project-flogo/contrib/trigger/rest"
 
 	// activities
-	_ "github.com/project-flogo/log-act"
+	_ "github.com/project-flogo/contrib/activity/log"
 )
