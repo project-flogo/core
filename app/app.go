@@ -16,7 +16,7 @@ type Option func(*App) error
 
 func New(config *Config, runner action.Runner, options ...Option) (*App, error) {
 
-	app := &App{}
+	app := &App{stopOnError:true}
 
 	properties := make(map[string]interface{}, len(config.Properties))
 	for _, attr := range config.Properties {

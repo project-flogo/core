@@ -52,7 +52,8 @@ func RunEngine(e Engine) int {
 
 	err := e.Start()
 	if err != nil {
-		fmt.Printf("Failed to start engine due to error: %s\n", err.Error())
+		logger.Error(err)
+		fmt.Printf("Failed to start engine: %s\n", err.Error())
 		os.Exit(1)
 	}
 

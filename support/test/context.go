@@ -4,7 +4,6 @@ import (
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/metadata"
-	"github.com/project-flogo/core/data/resolve"
 )
 
 //todo needs to move to lib
@@ -102,10 +101,6 @@ func (ac *TestActivityHost) Return(returnData map[string]interface{}, err error)
 	ac.ReplyErr = err
 }
 
-func (ac *TestActivityHost) GetResolver() resolve.CompositeResolver {
-	return resolve.GetBasicResolver()
-}
-
 func (ac *TestActivityHost) Name() string {
 	return ""
 }
@@ -114,12 +109,8 @@ func (ac *TestActivityHost) ID() string {
 	return ac.HostId
 }
 
-func (ac *TestActivityHost) WorkingData() data.Scope {
+func (ac *TestActivityHost) Scope() data.Scope {
 	return ac.HostData
-}
-
-func (ac *TestActivityHost) GetDetails() data.StringsMap {
-	return nil
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -140,22 +131,22 @@ type TestActivityContext struct {
 	shared map[string]interface{}
 }
 
-func (c *TestActivityContext) SetInputObject(input data.ToMap) error {
+func (c *TestActivityContext) SetInputObject(input data.StructValue) error {
 	c.inputs = input.ToMap()
 	return nil
 }
 
-func (c *TestActivityContext) GetOutputObject(output data.FromMap) error {
+func (c *TestActivityContext) GetOutputObject(output data.StructValue) error {
 	err := output.FromMap(c.outputs)
 	return err
 }
 
-func (c *TestActivityContext) GetInputObject(input data.FromMap) error {
+func (c *TestActivityContext) GetInputObject(input data.StructValue) error {
 	err := input.FromMap(c.inputs)
 	return err
 }
 
-func (c *TestActivityContext) SetOutputObject(output data.ToMap) error {
+func (c *TestActivityContext) SetOutputObject(output data.StructValue) error {
 	c.outputs = output.ToMap()
 	return nil
 }

@@ -3,10 +3,6 @@ package api
 import (
 	"context"
 	"encoding/json"
-	"github.com/project-flogo/core/data/mapper"
-	"github.com/project-flogo/core/data/metadata"
-	"github.com/project-flogo/core/data/resolve"
-	"github.com/project-flogo/core/support"
 	"reflect"
 	"strconv"
 	"strings"
@@ -15,6 +11,9 @@ import (
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/app"
 	"github.com/project-flogo/core/data"
+	"github.com/project-flogo/core/data/mapper"
+	"github.com/project-flogo/core/data/metadata"
+	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/trigger"
 )
 
@@ -174,7 +173,7 @@ func EvalActivity(act activity.Activity, input interface{}) (map[string]interfac
 
 	if im, ok := input.(map[string]interface{}); ok {
 		inputMap = im
-	} else if tm, ok := input.(metadata.ToMap); ok {
+	} else if tm, ok := input.(data.StructValue); ok {
 		inputMap = tm.ToMap()
 	}
 
@@ -240,20 +239,21 @@ func (aCtx *activityContext) GetInput(name string) interface{} {
 }
 
 // SetOutput implements activity.Context.SetOutput
-func (aCtx *activityContext) SetOutput(name string, value interface{}) {
+func (aCtx *activityContext) SetOutput(name string, value interface{}) error {
 	aCtx.output[name] = value
+	return nil
 }
 
 func (aCtx *activityContext) GetSharedTempData() map[string]interface{} {
 	return nil
 }
 
-func (aCtx *activityContext) GetInputObject(input data.FromMap) error {
+func (aCtx *activityContext) GetInputObject(input data.StructValue) error {
 	err := input.FromMap(aCtx.input)
 	return err
 }
 
-func (aCtx *activityContext) SetOutputObject(output data.ToMap) error {
+func (aCtx *activityContext) SetOutputObject(output data.StructValue) error {
 	aCtx.output = output.ToMap()
 	return nil
 }
@@ -278,14 +278,6 @@ func (aCtx *activityContext) Return(returnData map[string]interface{}, err error
 	// ignore
 }
 
-func (aCtx *activityContext) GetResolver() resolve.CompositeResolver {
-	return resolve.GetBasicResolver()
-}
-
-func (aCtx *activityContext) WorkingData() data.Scope {
-	return nil
-}
-
-func (aCtx *activityContext) GetDetails() data.StringsMap {
+func (aCtx *activityContext) Scope() data.Scope {
 	return nil
 }
