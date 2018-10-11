@@ -13,7 +13,7 @@ import (
 type Handler interface {
 	GetSetting(setting string) (interface{}, bool)
 	Settings() map[string]interface{}
-	Handle(ctx context.Context, triggerData map[string]interface{}) (map[string]interface{}, error)
+	Handle(ctx context.Context, triggerData interface{}) (map[string]interface{}, error)
 }
 
 type handlerImpl struct {
@@ -91,21 +91,31 @@ func (h *handlerImpl) GetSetting(setting string) (interface{}, bool) {
 	return val, exists
 }
 
-func (h *handlerImpl) Handle(ctx context.Context, triggerData map[string]interface{}) (map[string]interface{}, error) {
+func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[string]interface{}, error) {
 
 	var err error
+
+	var triggerValues map[string]interface{}
+
+	if values, ok := triggerData.(map[string]interface{}); ok {
+		triggerValues = values
+	} else if value, ok := triggerData.(data.StructValue); ok {
+		triggerValues = value.ToMap()
+	} else {
+		return nil, fmt.Errorf("Unsupport trigger data: %v", triggerData)
+	}
 
 	var inputMap map[string]interface{}
 
 	if h.actionInputMapper != nil {
-		inScope := data.NewSimpleScope(triggerData, nil)
+		inScope := data.NewSimpleScope(triggerValues, nil)
 
 		inputMap, err = h.actionInputMapper.Apply(inScope)
 		if err != nil {
 			return nil, err
 		}
 	} else {
-		inputMap = triggerData
+		inputMap = triggerValues
 	}
 
 	newCtx := NewHandlerContext(ctx, h.config)

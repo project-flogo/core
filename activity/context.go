@@ -26,10 +26,10 @@ type Context interface {
 	GetSharedTempData() map[string]interface{}
 
 	// GetInputObject gets all the activity input as the specified object.
-	GetInputObject(input data.FromMap) error
+	GetInputObject(input data.StructValue) error
 
 	// SetOutputObject sets the activity output as the specified object.
-	SetOutputObject(output data.ToMap) error
+	SetOutputObject(output data.StructValue) error
 }
 
 type Host interface {

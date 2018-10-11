@@ -1,0 +1,64 @@
+{
+  "name": "_APP_NAME_",
+  "type": "flogo:app",
+  "version": "0.0.1",
+  "description": "My flogo application description",
+  "appModel": "1.0.0",
+  "triggers": [
+    {
+      "id": "my_rest_trigger",
+      "ref": "github.com/project-flogo/rest-trg",
+      "settings": {
+        "port": "8888"
+      },
+      "handlers": [
+        {
+          "settings": {
+            "method": "GET",
+            "path": "/test/:val"
+          },
+          "action": {
+            "ref": "github.com/project-flogo/flow",
+            "settings": {
+              "flowURI": "res://flow:simple_flow"
+            },
+            "input": {
+              "in": "$.pathParams.val"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "id": "flow:simple_flow",
+      "data": {
+        "name": "simple_flow",
+        "metadata": {
+          "input": [
+            { "name": "in", "type": "string",  "value": "test" }
+          ],
+          "output": [
+            { "name": "out", "type": "string" }
+          ]
+        },
+        "tasks": [
+          {
+            "id": "log",
+            "name": "Log Message",
+            "activity": {
+              "ref": "github.com/project-flogo/log-act",
+              "input": {
+                "message": "$flow.in",
+                "flowInfo": "false",
+                "addToFlow": "false"
+              }
+            }
+          }
+        ],
+        "links": []
+      }
+    }
+  ]
+}
