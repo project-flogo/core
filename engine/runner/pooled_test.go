@@ -3,6 +3,7 @@ package runner
 import (
 	"context"
 	"errors"
+	"github.com/project-flogo/core/data/metadata"
 	"testing"
 
 	"github.com/project-flogo/core/action"
@@ -23,7 +24,7 @@ func (m *MockFullAction) Metadata() *action.Metadata {
 	return nil
 }
 
-func (m *MockFullAction) IOMetadata() *data.IOMetadata {
+func (m *MockFullAction) IOMetadata() *metadata.IOMetadata {
 	return nil
 }
 
@@ -45,7 +46,7 @@ func (m *MockResultAction) Metadata() *action.Metadata {
 	return nil
 }
 
-func (m *MockResultAction) IOMetadata() *data.IOMetadata {
+func (m *MockResultAction) IOMetadata() *metadata.IOMetadata {
 	return nil
 }
 

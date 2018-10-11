@@ -3,10 +3,10 @@ package channels
 import (
 	"errors"
 	"fmt"
-
-	"github.com/project-flogo/core/support/logger"
 	"strconv"
 	"strings"
+
+	"github.com/project-flogo/core/support/logger"
 )
 
 var channels = make(map[string]*channelImpl)

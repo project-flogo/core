@@ -3,6 +3,8 @@ package metadata
 import (
 	"fmt"
 	"github.com/project-flogo/core/data/coerce"
+	"github.com/project-flogo/core/data/resolve"
+	"github.com/project-flogo/core/support/logger"
 	"reflect"
 
 	"github.com/project-flogo/core/data"
@@ -148,4 +150,34 @@ func StructToMap(object interface{}) map[string]interface{} {
 	}
 
 	return values
+}
+
+func ResolveSettingValue(setting string, value interface{}, settingsMd map[string]data.TypedValue) (interface{}, error) {
+
+	strVal, ok := value.(string)
+
+	toType := data.TypeUnknown
+
+	if settingsMd != nil {
+		tv := settingsMd[setting]
+		if tv != nil {
+			toType = tv.Type()
+		}
+	}
+
+	if ok && len(strVal) > 0 && strVal[0] == '$' {
+		v, err := resolve.GetBasicResolver().Resolve(strVal, nil)
+		if err == nil {
+
+			v, err = coerce.ToType(v, toType)
+			if err != nil {
+				return nil, err
+			}
+
+			logger.Debugf("Resolved setting [%s: %s] to : %v", setting, value, v)
+			return v, nil
+		}
+	}
+
+	return coerce.ToType(value, toType)
 }

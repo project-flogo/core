@@ -2,9 +2,10 @@ package trigger
 
 import (
 	"encoding/json"
+
 	"github.com/project-flogo/core/action"
-	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/mapper"
+	"github.com/project-flogo/core/data/metadata"
 )
 
 // Config is the configuration for a Trigger
@@ -15,76 +16,45 @@ type Config struct {
 	Handlers []*HandlerConfig       `json:"handlers"`
 }
 
-func (c *Config) FixUp(metadata *Metadata) {
+func (c *Config) FixUp(md *Metadata) error {
 
-	// fix up top-level outputs
-	//for name, value := range c.Output {
-	//
-	//	attr, ok := metadata.Output[name]
-	//
-	//	if ok {
-	//		newValue, err := coerce.ToType(value, attr.Type())
-	//
-	//		if err != nil {
-	//			//todo handle error
-	//		} else {
-	//			c.Output[name] = newValue
-	//		}
-	//	}
-	//}
+	//fix up settings
+	if len(c.Settings) > 0 {
+		var err error
+		mdSettings := md.Settings
+		for name, value := range c.Settings {
+			c.Settings[name], err = metadata.ResolveSettingValue(name, value, mdSettings)
+			if err != nil {
+				return err
+			}
+		}
+	}
 
-	// fix up handler outputs
+	// fix up handler settings
 	for _, hc := range c.Handlers {
-
 		hc.parent = c
 
-		////for backwards compatibility
-		//if hc.ActionId == "" {
-		//	hc.ActionId = strconv.Itoa(time.Now().Nanosecond())
-		//}
-
-		//// fix up outputs
-		//for name, value := range hc.Output {
-		//
-		//	attr, ok := metadata.Output[name]
-		//
-		//	if ok {
-		//		newValue, err := coerce.ToType(value, attr.Type())
-		//
-		//		if err != nil {
-		//			//todo handle error
-		//		} else {
-		//			hc.Output[name] = newValue
-		//		}
-		//	}
-		//}
-	}
-}
-
-func (c *Config) GetSetting(setting string) string {
-
-	//val, exists := data.GetValueWithResolver(c.Settings, setting)
-
-	val, exists := c.Settings[setting]
-	if !exists {
-		return ""
+		if len(hc.Settings) > 0 {
+			var err error
+			mdSettings := md.Settings
+			for name, value := range hc.Settings {
+				hc.Settings[name], err = metadata.ResolveSettingValue(name, value, mdSettings)
+				if err != nil {
+					return err
+				}
+			}
+		}
 	}
 
-	strVal, err := coerce.ToString(val)
-	if err != nil {
-		return ""
-	}
-
-	return strVal
+	return nil
 }
 
 type HandlerConfig struct {
 	parent   *Config
 	Name     string                 `json:"name,omitempty"`
 	Settings map[string]interface{} `json:"settings"`
-	Action   *ActionConfig
+	Action   *ActionConfig          `json:"action"`
 
-	//Output   map[string]interface{} `json:"output"`
 	//handle complex object
 }
 
@@ -98,25 +68,8 @@ type ActionConfig struct {
 	Act action.Action
 }
 
-func (hc *HandlerConfig) GetSetting(setting string) string {
-
-	//val, exists := data.GetValueWithResolver(c.Settings, setting)
-
-	val, exists := hc.Settings[setting]
-	if !exists {
-		return ""
-	}
-
-	strVal, err := coerce.ToString(val)
-	if err != nil {
-		return ""
-	}
-
-	return strVal
-}
-
 // UnmarshalJSON overrides the default UnmarshalJSON for TaskInst
-func (ti *ActionConfig) UnmarshalJSON(d []byte) error {
+func (ac *ActionConfig) UnmarshalJSON(d []byte) error {
 	ser := &struct {
 		Input  map[string]interface{} `json:"input,omitempty"`
 		Output map[string]interface{} `json:"output,omitempty"`
@@ -137,21 +90,21 @@ func (ti *ActionConfig) UnmarshalJSON(d []byte) error {
 		return err
 	}
 
-	ti.Config = &action.Config{}
+	ac.Config = &action.Config{}
 
-	ti.Ref = ser.Ref
-	ti.Id = ser.Id
-	ti.Input = ser.Input
-	ti.Output = ser.Output
-	ti.Settings = ser.Settings
+	ac.Ref = ser.Ref
+	ac.Id = ser.Id
+	ac.Input = ser.Input
+	ac.Output = ser.Output
+	ac.Settings = ser.Settings
 
-	if ti.Settings == nil {
-		ti.Settings = make(map[string]interface{})
+	if ac.Settings == nil {
+		ac.Settings = make(map[string]interface{})
 	}
 
 	if ser.Data != nil {
 		for key, value := range ser.Data {
-			ti.Settings[key] = value
+			ac.Settings[key] = value
 		}
 	}
 
@@ -160,19 +113,19 @@ func (ti *ActionConfig) UnmarshalJSON(d []byte) error {
 		return err
 	}
 
-	if ti.Input == nil {
-		ti.Input = input
+	if ac.Input == nil {
+		ac.Input = input
 	} else {
 		for key, value := range input {
-			ti.Input[key] = value
+			ac.Input[key] = value
 		}
 	}
 
-	if ti.Output == nil {
-		ti.Output = output
+	if ac.Output == nil {
+		ac.Output = output
 	} else {
 		for key, value := range output {
-			ti.Output[key] = value
+			ac.Output[key] = value
 		}
 	}
 

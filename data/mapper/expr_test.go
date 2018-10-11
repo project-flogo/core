@@ -114,7 +114,7 @@ func TestExpressionMapperTernaryExpr(t *testing.T) {
 	inputValues2["SimpleI"] = "FLOGO2"
 
 	scope = data.NewSimpleScope(inputValues2, nil)
-	results, err =  mapper.Apply(scope)
+	results, err = mapper.Apply(scope)
 	assert.Nil(t, err)
 	assert.Equal(t, "Bye bye !", results["SimpleO"])
 }
@@ -199,7 +199,6 @@ func BenchmarkExpressionMapperFunction(b *testing.B) {
 		}
 	}
 }
-
 
 func BenchmarkExpressionMapperConditionExpr(b *testing.B) {
 

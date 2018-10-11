@@ -6,7 +6,6 @@ import (
 	"github.com/project-flogo/core/data/metadata"
 )
 
-//todo needs to move to lib
 // NewTestActivityContext creates a new TestActivityContext
 func NewTestActivityContext(md *activity.Metadata) *TestActivityContext {
 
@@ -26,11 +25,6 @@ func NewTestActivityContext(md *activity.Metadata) *TestActivityContext {
 // NewTestActivityContextWithAction creates a new TestActivityContext
 func NewTestActivityContextWithAction(md *activity.Metadata, activityHost *TestActivityHost) *TestActivityContext {
 
-	//fd := &TestFlowDetails{
-	//	FlowIDVal:   "1",
-	//	FlowNameVal: "Test Flow",
-	//}
-
 	tc := &TestActivityContext{
 		metadata:     md,
 		activityHost: activityHost,
@@ -48,30 +42,6 @@ func NewTestActivityContextWithAction(md *activity.Metadata, activityHost *TestA
 	}
 
 	return tc
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// TestFlowDetails
-
-// TestFlowDetails simple FlowDetails for use in testing
-type TestFlowDetails struct {
-	FlowIDVal   string
-	FlowNameVal string
-}
-
-// ID implements activity.FlowDetails.ID
-func (fd *TestFlowDetails) ID() string {
-	return fd.FlowIDVal
-}
-
-// Name implements activity.FlowDetails.Name
-func (fd *TestFlowDetails) Name() string {
-	return fd.FlowNameVal
-}
-
-// ReplyHandler implements activity.FlowDetails.ReplyHandler
-func (fd *TestFlowDetails) ReplyHandler() activity.ReplyHandler {
-	return nil
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -118,9 +88,7 @@ func (ac *TestActivityHost) Scope() data.Scope {
 
 // TestActivityContext is a dummy ActivityContext to assist in testing
 type TestActivityContext struct {
-	//details      activity.FlowDetails
-	TaskNameVal string
-	//Attrs        map[string]*data.Attribute
+	TaskNameVal  string
 	activityHost activity.Host
 
 	metadata *activity.Metadata
@@ -188,9 +156,9 @@ func (c *TestActivityContext) GetInput(name string) interface{} {
 }
 
 // SetOutput implements activity.Context.SetOutput
-func (c *TestActivityContext) SetOutput(name string, value interface{}) {
-
+func (c *TestActivityContext) SetOutput(name string, value interface{}) error {
 	c.outputs[name] = value
+	return nil
 }
 
 // GetOutput implements activity.Context.GetOutput

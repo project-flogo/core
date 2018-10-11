@@ -7,11 +7,9 @@ import (
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/mapper"
-	"github.com/project-flogo/core/data/resolve"
 )
 
 type Handler interface {
-	GetSetting(setting string) (interface{}, bool)
 	Settings() map[string]interface{}
 	Handle(ctx context.Context, triggerData interface{}) (map[string]interface{}, error)
 }
@@ -20,41 +18,19 @@ type handlerImpl struct {
 	runner action.Runner
 	act    action.Action
 
-	outputMd map[string]data.TypedValue
-	replyMd  map[string]data.TypedValue
-
 	config *HandlerConfig
-
-	settings map[string]interface{}
 
 	actionInputMapper  mapper.Mapper
 	actionOutputMapper mapper.Mapper
 }
 
 func (h *handlerImpl) Settings() map[string]interface{} {
-	return h.settings
+	return h.config.Settings
 }
 
-func NewHandler(trigger Trigger, config *HandlerConfig, act action.Action, mf mapper.Factory, runner action.Runner) (Handler, error) {
+func NewHandler(config *HandlerConfig, act action.Action, mf mapper.Factory, runner action.Runner) (Handler, error) {
 
-	handler := &handlerImpl{config: config, act: act, outputMd: trigger.Metadata().Output, replyMd: trigger.Metadata().Reply, runner: runner}
-
-	cr := resolve.GetBasicResolver()
-
-	handler.settings = make(map[string]interface{}, len(config.Settings))
-	for key, value := range config.Settings {
-
-		if toResolve, ok := value.(string); ok {
-			//static resolution
-			newValue, err := cr.Resolve(toResolve, nil)
-			if err != nil {
-				return nil, err
-			}
-			handler.settings[key] = newValue
-		} else {
-			handler.settings[key] = value
-		}
-	}
+	handler := &handlerImpl{config: config, act: act, runner: runner}
 
 	var err error
 
@@ -82,7 +58,7 @@ func (h *handlerImpl) GetSetting(setting string) (interface{}, bool) {
 		return nil, false
 	}
 
-	val, exists := h.settings[setting]
+	val, exists := h.config.Settings[setting]
 
 	if !exists {
 		val, exists = h.config.parent.Settings[setting]
@@ -102,7 +78,7 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 	} else if value, ok := triggerData.(data.StructValue); ok {
 		triggerValues = value.ToMap()
 	} else {
-		return nil, fmt.Errorf("Unsupport trigger data: %v", triggerData)
+		return nil, fmt.Errorf("unsupport trigger data: %v", triggerData)
 	}
 
 	var inputMap map[string]interface{}

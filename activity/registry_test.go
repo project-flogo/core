@@ -19,8 +19,8 @@ func (m *MockActivity) Metadata() *Metadata {
 	return m.metadata
 }
 
-func NewMockActivity(id string) *MockActivity {
-	return &MockActivity{metadata: &Metadata{ID: id}}
+func NewMockActivity() *MockActivity {
+	return &MockActivity{metadata: &Metadata{}}
 }
 
 //TestRegisterNilActivity
@@ -31,8 +31,9 @@ func TestRegisterNilActivity(t *testing.T) {
 	defer func() { activities = orig }()
 
 	err := registerNil()
-	assert.NotNil(t, err)
-	assert.Equal(t, "cannot register 'nil' activity", err.Error())
+	if assert.NotNil(t, err) {
+		assert.Equal(t, "cannot register 'nil' activity", err.Error())
+	}
 }
 
 func registerNil() (err error) {
@@ -46,8 +47,8 @@ func registerNil() (err error) {
 		}
 	}()
 
-	Register(nil)
-	return nil
+	err = Register(nil)
+	return err
 }
 
 //TestRegisterDupActivity
@@ -58,8 +59,9 @@ func TestRegisterDupActivity(t *testing.T) {
 	defer func() { activities = orig }()
 
 	err := registerDup()
-	assert.NotNil(t, err)
-	assert.Equal(t, "activity already registered: github.com/mock", err.Error())
+	if assert.NotNil(t, err) {
+		assert.Equal(t, "activity already registered: github.com/project-flogo/core/activity", err.Error())
+	}
 }
 
 func registerDup() (err error) {
@@ -73,10 +75,10 @@ func registerDup() (err error) {
 		}
 	}()
 
-	act := NewMockActivity("github.com/mock")
+	act := NewMockActivity()
 	Register(act)
-	Register(act)
-	return nil
+	err = Register(act)
+	return err
 }
 
 //TestRegisterActivityOk
@@ -90,7 +92,7 @@ func TestRegisterActivityOk(t *testing.T) {
 		assert.Nil(t, r)
 	}()
 
-	act := NewMockActivity("github.com/mock")
+	act := NewMockActivity()
 	Register(act)
 	assert.Equal(t, 1, len(activities))
 }
@@ -106,10 +108,14 @@ func TestGetFactoriesOk(t *testing.T) {
 		assert.Nil(t, r)
 	}()
 
-	act := NewMockActivity("github.com/mock")
-	Register(act)
+	act := NewMockActivity()
+	Register(act, testFactory)
 
 	// Get factory
-	as := Activities()
-	assert.Equal(t, 1, len(as))
+	f := GetFactory("github.com/project-flogo/core/activity")
+	assert.NotNil(t, f)
+}
+
+func testFactory(ctx InitContext) (Activity, error) {
+	return nil, nil
 }

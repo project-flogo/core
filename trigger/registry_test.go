@@ -1,7 +1,6 @@
 package trigger
 
 import (
-	//"context"
 	"testing"
 
 	"github.com/project-flogo/core/action"
@@ -11,11 +10,20 @@ import (
 type MockFactory struct {
 }
 
-func (f *MockFactory) New(config *Config) Trigger {
-	return &MockTrigger{}
+func (f *MockFactory) Metadata() *Metadata {
+	return nil
+}
+
+func (f *MockFactory) New(config *Config) (Trigger, error) {
+	return &MockTrigger{}, nil
 }
 
 type MockTrigger struct {
+}
+
+func (t *MockTrigger) Initialize(ctx InitContext) error {
+	//ignore
+	return nil
 }
 
 func (t *MockTrigger) Init(actionRunner action.Runner) {
@@ -27,17 +35,17 @@ func (t *MockTrigger) Stop() error         { return nil }
 func (t *MockTrigger) Metadata() *Metadata { return nil }
 
 //TestRegisterFactoryEmptyRef
-func TestRegisterFactoryEmptyRef(t *testing.T) {
+func TestRegisterNilTrigger(t *testing.T) {
 
 	orig := triggerFactories
 	triggerFactories = make(map[string]Factory)
 	defer func() { triggerFactories = orig }()
 
 	// Register factory
-	err := LegacyRegister("", nil)
+	err := Register(nil, nil)
 
 	assert.NotNil(t, err)
-	assert.Equal(t, "'ref' must be specified when registering a trigger factory", err.Error())
+	assert.Equal(t, "'trigger' must be specified when registering", err.Error())
 }
 
 //TestRegisterFactoryNilFactory
@@ -48,10 +56,10 @@ func TestRegisterFactoryNilFactory(t *testing.T) {
 	defer func() { triggerFactories = orig }()
 
 	// Register factory
-	err := LegacyRegister("github.com/mock", nil)
+	err := Register(&MockTrigger{}, nil)
 
 	assert.NotNil(t, err)
-	assert.Equal(t, "cannot register 'nil' trigger factory", err.Error())
+	assert.Equal(t, "cannot register trigger with 'nil' trigger factory", err.Error())
 }
 
 //TestAddFactoryDuplicated
@@ -64,13 +72,13 @@ func TestAddFactoryDuplicated(t *testing.T) {
 	f := &MockFactory{}
 
 	// Register factory: this time should pass
-	err := LegacyRegister("github.com/mock", f)
+	err := Register(&MockTrigger{}, f)
 	assert.Nil(t, err)
 
 	// Register factory: this time should fail, duplicated
-	err = LegacyRegister("github.com/mock", f)
+	err = Register(&MockTrigger{}, f)
 	assert.NotNil(t, err)
-	assert.Equal(t, "trigger factory already registered for ref 'github.com/mock'", err.Error())
+	assert.Equal(t, "trigger already registered for ref 'github.com/project-flogo/core/trigger'", err.Error())
 }
 
 //TestAddFactoryOk

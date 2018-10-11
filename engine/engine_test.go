@@ -1,9 +1,10 @@
 package engine
 
 import (
+	"testing"
+
 	"github.com/project-flogo/core/app"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 //TestNewEngineErrorNoApp

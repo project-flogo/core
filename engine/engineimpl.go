@@ -1,8 +1,9 @@
 package engine
 
 import (
-	"errors"
 	"fmt"
+	"strings"
+
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/app"
 	"github.com/project-flogo/core/engine/channels"
@@ -11,7 +12,6 @@ import (
 	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/support/logger"
 	"github.com/project-flogo/core/support/managed"
-	"strings"
 )
 
 // engineImpl is the type for the Default Engine Implementation
@@ -25,13 +25,13 @@ type engineImpl struct {
 // New creates a new Engine
 func New(appConfig *app.Config) (Engine, error) {
 	if appConfig == nil {
-		return nil, errors.New("no App configuration provided")
+		return nil, fmt.Errorf("no App configuration provided")
 	}
 	if len(appConfig.Name) == 0 {
-		return nil, errors.New("no App name provided")
+		return nil, fmt.Errorf("no App name provided")
 	}
 	if len(appConfig.Version) == 0 {
-		return nil, errors.New("no App version provided")
+		return nil, fmt.Errorf("no App version provided")
 	}
 
 	engine := &engineImpl{}

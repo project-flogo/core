@@ -12,8 +12,8 @@ import (
 )
 
 var log = logger.GetLogger("main-engine")
-var cpuProfile = flag.String("cpuprofile", "", "Writes CPU profiling for the current process to the specified file")
-var memProfile = flag.String("memprofile", "", "Writes memory profiling for the current process to the specified file")
+var cpuProfile = flag.String("cpuprofile", "", "Writes CPU profile to the specified file")
+var memProfile = flag.String("memprofile", "", "Writes memory profile to the specified file")
 
 var (
 	configProvider engine.AppConfigProvider

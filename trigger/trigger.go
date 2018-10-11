@@ -9,9 +9,6 @@ import (
 type Trigger interface {
 	managed.Managed
 
-	// Metadata returns the metadata of the trigger
-	Metadata() *Metadata
-
 	// Initialize is called to initialize the Trigger
 	Initialize(ctx InitContext) error
 }
@@ -25,6 +22,9 @@ type InitContext interface {
 
 // Factory is used to create new instances of a trigger
 type Factory interface {
+
+	// Metadata returns the metadata of the trigger
+	Metadata() *Metadata
 
 	// New create a new Trigger
 	New(config *Config) (Trigger, error)

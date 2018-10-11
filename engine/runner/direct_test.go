@@ -3,6 +3,7 @@ package runner
 import (
 	"context"
 	"errors"
+	"github.com/project-flogo/core/data/metadata"
 	"testing"
 
 	"github.com/project-flogo/core/action"
@@ -15,7 +16,7 @@ type MockAsyncAction struct {
 	mock.Mock
 }
 
-func (m *MockAsyncAction) IOMetadata() *data.IOMetadata {
+func (m *MockAsyncAction) IOMetadata() *metadata.IOMetadata {
 	return nil
 }
 

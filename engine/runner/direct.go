@@ -55,36 +55,6 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 	}
 }
 
-//// Execute implements action.Runner.Execute
-//func (runner *DirectRunner) Execute(ctx context.Context, act action.Action, inputs map[string]*data.Attribute) (results map[string]*data.Attribute, err error) {
-//
-//	if act == nil {
-//		return nil, errors.New("Action not specified")
-//	}
-//
-//	md := action.GetMetadata(act)
-//
-//	if !md.Async {
-//		syncAct := act.(action.SyncAction)
-//		return syncAct.Run(ctx, inputs)
-//	} else {
-//		asyncAct := act.(action.AsyncAction)
-//
-//		handler := &SyncResultHandler{done: make(chan bool, 1)}
-//
-//		err = asyncAct.Run(ctx, inputs, handler)
-//
-//		if err != nil {
-//			return nil, err
-//		}
-//
-//		<-handler.done
-//
-//		return handler.Result()
-//	}
-//
-//}
-
 // SyncResultHandler simple result handler to use in synchronous case
 type SyncResultHandler struct {
 	done       chan bool

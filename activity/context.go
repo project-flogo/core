@@ -49,5 +49,4 @@ type Host interface {
 
 	// Scope returns the scope for the Host's data
 	Scope() data.Scope
-
 }

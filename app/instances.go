@@ -51,6 +51,8 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 			return nil, fmt.Errorf("Trigger Factory '%s' not registered", tConfig.Ref)
 		}
 
+		tConfig.FixUp(triggerFactory.Metadata())
+
 		trg, err := triggerFactory.New(tConfig)
 
 		if err != nil {
@@ -60,8 +62,6 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 		if trg == nil {
 			return nil, fmt.Errorf("cannot create Trigger nil for id '%s'", tConfig.Id)
 		}
-
-		tConfig.FixUp(trg.Metadata())
 
 		initCtx := &initContext{handlers: make([]trigger.Handler, 0, len(tConfig.Handlers))}
 
@@ -97,7 +97,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 				}
 			}
 
-			handler, err := trigger.NewHandler(trg, hConfig, act, mapperFactory, runner)
+			handler, err := trigger.NewHandler(hConfig, act, mapperFactory, runner)
 			if err != nil {
 				return nil, err
 			}

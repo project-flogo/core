@@ -1,9 +1,8 @@
 package sample
 
 import (
-	"github.com/project-flogo/core/data/metadata"
-
 	"github.com/project-flogo/core/activity"
+	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/support/logger"
 )
 
