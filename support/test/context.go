@@ -3,11 +3,12 @@ package test
 import (
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data"
+	"github.com/project-flogo/core/data/mapper"
 	"github.com/project-flogo/core/data/metadata"
 )
 
-// NewTestActivityContext creates a new TestActivityContext
-func NewTestActivityContext(md *activity.Metadata) *TestActivityContext {
+// NewActivityContext creates a new TestActivityContext
+func NewActivityContext(md *activity.Metadata) *TestActivityContext {
 
 	input := map[string]data.TypedValue{"Input1": data.NewTypedValue(data.TypeString, "")}
 	output := map[string]data.TypedValue{"Output1": data.NewTypedValue(data.TypeString, "")}
@@ -19,11 +20,11 @@ func NewTestActivityContext(md *activity.Metadata) *TestActivityContext {
 		HostData:   data.NewSimpleScope(nil, nil),
 	}
 
-	return NewTestActivityContextWithAction(md, ac)
+	return NewActivityContextWithAction(md, ac)
 }
 
-// NewTestActivityContextWithAction creates a new TestActivityContext
-func NewTestActivityContextWithAction(md *activity.Metadata, activityHost *TestActivityHost) *TestActivityContext {
+// NewActivityContextWithAction creates a new TestActivityContext
+func NewActivityContextWithAction(md *activity.Metadata, activityHost *TestActivityHost) *TestActivityContext {
 
 	tc := &TestActivityContext{
 		metadata:     md,
@@ -42,6 +43,31 @@ func NewTestActivityContextWithAction(md *activity.Metadata, activityHost *TestA
 	}
 
 	return tc
+}
+
+func NewActivityInitContext(settings interface{}, f mapper.Factory) activity.InitContext {
+
+	var settingVals map[string]interface{}
+
+	if sm, ok := settings.(map[string]interface{}); ok {
+		settingVals = sm
+	} else {
+		settingVals = metadata.StructToMap(settings)
+	}
+
+	return &TestActivityInitContext{settings:settingVals,factory:f}
+}
+type TestActivityInitContext struct {
+	settings map[string]interface{}
+	factory mapper.Factory
+}
+
+func (ic *TestActivityInitContext) Settings() map[string]interface{} {
+	return ic.settings
+}
+
+func (ic *TestActivityInitContext) MapperFactory() mapper.Factory {
+	return ic.factory
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

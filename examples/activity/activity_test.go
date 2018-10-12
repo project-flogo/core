@@ -19,7 +19,7 @@ func TestRegister(t *testing.T) {
 func TestEval(t *testing.T) {
 
 	act := &Activity{}
-	tc := test.NewTestActivityContext(act.Metadata())
+	tc := test.NewActivityContext(act.Metadata())
 	input := &Input{AnInput: "test"}
 	tc.SetInputObject(input)
 

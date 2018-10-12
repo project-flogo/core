@@ -34,15 +34,29 @@ func (d *FieldDetails) AllowedToString() string {
 func (d *FieldDetails) Validate(value interface{}) error {
 	valid := true
 
+	if d.Required {
+		if value == nil || value == "" {
+			valid = false
+		}
+	}
+
 	if len(d.Allowed) > 0 {
 
 		valid = false
 		for _, av := range d.Allowed {
 			//todo handler error
 			allowedValue, _ := coerce.ToType(av, d.Type)
-			if value == allowedValue {
-				valid = true
-				break
+			if d.Type == data.TypeString {
+				strVal, ok := value.(string)
+				if ok && strings.EqualFold(strVal, av) {
+					valid = true
+					break
+				}
+			} else {
+				if value == allowedValue {
+					valid = true
+					break
+				}
 			}
 		}
 	}
