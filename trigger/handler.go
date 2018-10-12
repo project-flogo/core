@@ -10,6 +10,7 @@ import (
 )
 
 type Handler interface {
+	Name() string
 	Settings() map[string]interface{}
 	Handle(ctx context.Context, triggerData interface{}) (map[string]interface{}, error)
 }
@@ -22,6 +23,10 @@ type handlerImpl struct {
 
 	actionInputMapper  mapper.Mapper
 	actionOutputMapper mapper.Mapper
+}
+
+func (h *handlerImpl) Name() string {
+	return h.config.Name
 }
 
 func (h *handlerImpl) Settings() map[string]interface{} {
@@ -73,7 +78,9 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 
 	var triggerValues map[string]interface{}
 
-	if values, ok := triggerData.(map[string]interface{}); ok {
+	if triggerData == nil {
+
+	} else if values, ok := triggerData.(map[string]interface{}); ok {
 		triggerValues = values
 	} else if value, ok := triggerData.(data.StructValue); ok {
 		triggerValues = value.ToMap()
