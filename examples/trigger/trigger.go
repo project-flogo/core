@@ -36,6 +36,10 @@ func (*Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 	return &Trigger{id: config.Id, settings: s}, nil
 }
 
+func (f *Factory) Metadata() *trigger.Metadata {
+	return triggerMd
+}
+
 // Metadata implements trigger.Trigger.Metadata
 func (t *Trigger) Metadata() *trigger.Metadata {
 	return triggerMd
