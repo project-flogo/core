@@ -2,10 +2,12 @@ package trigger
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/data"
+	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/mapper"
 )
 
@@ -15,14 +17,17 @@ type Handler interface {
 	Handle(ctx context.Context, triggerData interface{}) (map[string]interface{}, error)
 }
 
-type handlerImpl struct {
-	runner action.Runner
-	act    action.Action
-
-	config *HandlerConfig
-
+type actImpl struct {
+	act                action.Action
+	condition          expression.Expr
 	actionInputMapper  mapper.Mapper
 	actionOutputMapper mapper.Mapper
+}
+
+type handlerImpl struct {
+	runner action.Runner
+	config *HandlerConfig
+	acts   []actImpl
 }
 
 func (h *handlerImpl) Name() string {
@@ -33,24 +38,36 @@ func (h *handlerImpl) Settings() map[string]interface{} {
 	return h.config.Settings
 }
 
-func NewHandler(config *HandlerConfig, act action.Action, mf mapper.Factory, runner action.Runner) (Handler, error) {
+func NewHandler(config *HandlerConfig, acts []action.Action, mf mapper.Factory, ef expression.Factory, runner action.Runner) (Handler, error) {
 
-	handler := &handlerImpl{config: config, act: act, runner: runner}
+	handler := &handlerImpl{config: config, acts: make([]actImpl, len(acts)), runner: runner}
 
 	var err error
 
 	//todo we could filter inputs/outputs based on the metadata, maybe make this an option
-	if len(config.Action.Input) != 0 {
-		handler.actionInputMapper, err = mf.NewMapper(config.Action.Input)
-		if err != nil {
-			return nil, err
-		}
-	}
+	for i, act := range acts {
+		handler.acts[i].act = act
 
-	if len(config.Action.Output) != 0 {
-		handler.actionOutputMapper, err = mf.NewMapper(config.Action.Output)
-		if err != nil {
-			return nil, err
+		if config.Actions[i].If != "" {
+			condition, err := ef.NewExpr(config.Actions[i].If)
+			if err != nil {
+				return nil, err
+			}
+			handler.acts[i].condition = condition
+		}
+
+		if len(config.Actions[i].Input) != 0 {
+			handler.acts[i].actionInputMapper, err = mf.NewMapper(config.Actions[i].Input)
+			if err != nil {
+				return nil, err
+			}
+		}
+
+		if len(config.Actions[i].Output) != 0 {
+			handler.acts[i].actionOutputMapper, err = mf.NewMapper(config.Actions[i].Output)
+			if err != nil {
+				return nil, err
+			}
 		}
 	}
 
@@ -88,12 +105,40 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 		return nil, fmt.Errorf("unsupport trigger data: %v", triggerData)
 	}
 
+	var act actImpl
+	scope := data.NewSimpleScope(triggerValues, nil)
+	for _, v := range h.acts {
+		if v.condition == nil {
+			act = v
+			break
+		}
+		val, err := v.condition.Eval(scope)
+		if err != nil {
+			return nil, err
+		}
+		if val == nil {
+			return nil, errors.New("expression has nil result")
+		}
+		condition, ok := val.(bool)
+		if !ok {
+			return nil, errors.New("expression has a non-bool result")
+		}
+		if condition {
+			act = v
+			break
+		}
+	}
+
+	if act.act == nil {
+		return nil, errors.New("no action to execute")
+	}
+
 	var inputMap map[string]interface{}
 
-	if h.actionInputMapper != nil {
+	if act.actionInputMapper != nil {
 		inScope := data.NewSimpleScope(triggerValues, nil)
 
-		inputMap, err = h.actionInputMapper.Apply(inScope)
+		inputMap, err = act.actionInputMapper.Apply(inScope)
 		if err != nil {
 			return nil, err
 		}
@@ -102,14 +147,14 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 	}
 
 	newCtx := NewHandlerContext(ctx, h.config)
-	results, err := h.runner.RunAction(newCtx, h.act, inputMap)
+	results, err := h.runner.RunAction(newCtx, act.act, inputMap)
 	if err != nil {
 		return nil, err
 	}
 
-	if h.actionOutputMapper != nil {
+	if act.actionOutputMapper != nil {
 		outScope := data.NewSimpleScope(results, nil)
-		retValue, err := h.actionOutputMapper.Apply(outScope)
+		retValue, err := act.actionOutputMapper.Apply(outScope)
 
 		return retValue, err
 	} else {
@@ -118,5 +163,5 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 }
 
 func (h *handlerImpl) String() string {
-	return fmt.Sprintf("Handler[action:%s]", h.config.Action.Ref)
+	return fmt.Sprintf("Handler")
 }

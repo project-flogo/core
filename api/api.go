@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/project-flogo/core/support"
 	"reflect"
 
 	"github.com/project-flogo/core/action"
@@ -13,6 +12,7 @@ import (
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/engine"
+	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/trigger"
 )
 
@@ -34,8 +34,9 @@ type Trigger struct {
 
 // Handler is the structure that defines the handler for a Trigger
 type Handler struct {
+	app      *App
 	settings map[string]interface{}
-	action   *Action
+	actions  []*Action
 	name     string
 }
 
@@ -48,6 +49,7 @@ type Action struct {
 	ref            string
 	act            action.Action
 	settings       map[string]interface{}
+	condition      string
 	inputMappings  []string
 	outputMappings []string
 }
@@ -160,21 +162,10 @@ func (t *Trigger) NewHandler(settings interface{}, handlerAction interface{}) (*
 		settingsMap = metadata.StructToMap(settings)
 	}
 
-	newHandler := &Handler{settings: settingsMap}
-
-	if f, ok := handlerAction.(func(ctx context.Context, inputs map[string]interface{}) (map[string]interface{}, error)); ok {
-		newAct := &Action{act: NewProxyAction(f)}
-		newHandler.action = newAct
-	} else if act, ok := handlerAction.(*Action); ok {
-		newHandler.action = act
-	} else if actionId, ok := handlerAction.(string); ok {
-		_, exists := t.app.actions[actionId]
-		if !exists {
-			return nil, fmt.Errorf("unknown action with id: %s", actionId)
-		}
-		newHandler.action = &Action{id: actionId}
+	newHandler := &Handler{
+		app:      t.app,
+		settings: settingsMap,
 	}
-
 	t.handlers = append(t.handlers, newHandler)
 
 	return newHandler, nil
@@ -185,19 +176,48 @@ func (t *Trigger) Handlers() []*Handler {
 	return t.handlers
 }
 
+// NewAction adds a new Action to the Handler
+func (h *Handler) NewAction(handlerAction interface{}) (action *Action, err error) {
+	switch v := handlerAction.(type) {
+	case HandlerFunc:
+		action = &Action{act: NewProxyAction(v)}
+	case *Action:
+		action = v
+	case string:
+		_, exists := h.app.actions[v]
+		if !exists {
+			return nil, fmt.Errorf("unknown action with id: %s", v)
+		}
+		action = &Action{id: v}
+	}
+	h.actions = append(h.actions, action)
+	return action, nil
+}
+
 // Settings gets the Handler's settings
 func (h *Handler) Settings() map[string]interface{} {
 	return h.settings
 }
 
 // Actions gets the Actions of the Handler
-func (h *Handler) Action() *Action {
-	return h.action
+func (h *Handler) Actions() []*Action {
+	return h.actions
 }
 
 // Settings gets the settings of the Action
 func (a *Action) Settings() map[string]interface{} {
 	return a.settings
+}
+
+// SetCondition sets the conditional expression which determines
+// if the action is executed
+func (a *Action) SetCondition(condition string) {
+	a.condition = condition
+}
+
+// Condition returns the condition
+func (a *Action) Condition() string {
+	return a.condition
 }
 
 // SetInputMappings sets the input mappings for the Action, which maps

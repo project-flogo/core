@@ -57,7 +57,7 @@ type HandlerConfig struct {
 	parent   *Config
 	Name     string                 `json:"name,omitempty"`
 	Settings map[string]interface{} `json:"settings"`
-	Action   *ActionConfig          `json:"action"`
+	Actions  []*ActionConfig        `json:"actions"`
 
 	//handle complex object
 }
@@ -65,7 +65,7 @@ type HandlerConfig struct {
 // ActionConfig is the configuration for the Action
 type ActionConfig struct {
 	*action.Config
-
+	If     string                 `json:"if,omitempty"`
 	Input  map[string]interface{} `json:"input,omitempty"`
 	Output map[string]interface{} `json:"output,omitempty"`
 
@@ -75,6 +75,7 @@ type ActionConfig struct {
 // UnmarshalJSON overrides the default UnmarshalJSON for TaskInst
 func (ac *ActionConfig) UnmarshalJSON(d []byte) error {
 	ser := &struct {
+		If     string                 `json:"if,omitempty"`
 		Input  map[string]interface{} `json:"input,omitempty"`
 		Output map[string]interface{} `json:"output,omitempty"`
 
@@ -98,6 +99,7 @@ func (ac *ActionConfig) UnmarshalJSON(d []byte) error {
 
 	ac.Ref = ser.Ref
 	ac.Id = ser.Id
+	ac.If = ser.If
 	ac.Input = ser.Input
 	ac.Output = ser.Output
 	ac.Settings = ser.Settings
