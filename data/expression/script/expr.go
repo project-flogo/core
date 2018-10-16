@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/project-flogo/core/data/expression"
+	_ "github.com/project-flogo/core/data/expression/function/builtin"
 	"github.com/project-flogo/core/data/expression/script/gocc/ast"
 	"github.com/project-flogo/core/data/expression/script/gocc/errors"
 	"github.com/project-flogo/core/data/expression/script/gocc/lexer"

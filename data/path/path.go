@@ -7,7 +7,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/oliveagle/jsonpath"
 	"github.com/project-flogo/core/data/coerce"
 )
 
@@ -60,9 +59,6 @@ func GetValue(value interface{}, path string) (interface{}, error) {
 		} else {
 			return nil, fmt.Errorf("unable to evaluate path: %s", path)
 		}
-	} else if strings.HasPrefix(path, "[`") {
-		jpath := strings.TrimSuffix(strings.TrimPrefix(path, "[`"), "`]")
-		newVal, err = jsonpath.JsonPathLookup(value, jpath)
 	} else if strings.HasPrefix(path, "[") {
 		//if objVal, ok := value.(*ComplexObject); ok {
 		//	newVal, newPath, err = getSetArrayValue(objVal.Value, path, nil, false)

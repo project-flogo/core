@@ -125,24 +125,17 @@ const testJsonData = `{
 }`
 
 func TestJsonExpr(t *testing.T) {
-	expr, err := factory.NewExpr("$.foo[`$.store.book[?(@.price == 22.99)].price[0]`]")
-	assert.Nil(t, err)
-	assert.NotNil(t, expr)
-
 	var data interface{}
-	err = json.Unmarshal([]byte(testJsonData), &data)
+	err := json.Unmarshal([]byte(testJsonData), &data)
 	assert.Nil(t, err)
 
 	scope := newScope(map[string]interface{}{"foo": data})
-	v, err := expr.Eval(scope)
-	assert.Nil(t, err)
-	assert.Equal(t, 22.99, v)
 
-	expr, err = factory.NewExpr("$.foo.store.book[0].price")
+	expr, err := factory.NewExpr("$.foo.store.book[0].price")
 	assert.Nil(t, err)
 	assert.NotNil(t, expr)
 
-	v, err = expr.Eval(scope)
+	v, err := expr.Eval(scope)
 	assert.Nil(t, err)
 	assert.Equal(t, 8.95, v)
 }

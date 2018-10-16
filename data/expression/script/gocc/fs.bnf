@@ -24,7 +24,7 @@ _dq_string  : '"' { . | '\\' '"' | _escapeChar } '"' ;
 _sq_string  : '\'' { . | '\\' '\'' | _escapeChar } '\'' ;
 _lit_string : '`' { . } '`' ;
 
-stringLit   :  _dq_string | _sq_string ;
+stringLit   :  _dq_string | _sq_string | _lit_string ;
 
 // -- [ Identifiers ]
 

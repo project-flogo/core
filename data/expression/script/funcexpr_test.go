@@ -3,13 +3,10 @@ package script
 import (
 	"testing"
 
-	_ "github.com/project-flogo/core/data/expression/script/function/functions/number"
-	_ "github.com/project-flogo/core/data/expression/script/function/functions/string"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestBuiltinFuncExpr(t *testing.T) {
-
 	expr, err := factory.NewExpr(`len("test")`)
 	assert.Nil(t, err)
 
@@ -19,7 +16,7 @@ func TestBuiltinFuncExpr(t *testing.T) {
 	assert.Equal(t, 4, v)
 }
 
-func TestFuncExprNoSpace(t *testing.T) {
+/*func TestFuncExprNoSpace(t *testing.T) {
 	expr, err := factory.NewExpr(`string.concat("a","b")`)
 	assert.Nil(t, err)
 	v, err := expr.Eval(nil)
@@ -47,4 +44,4 @@ func TestFuncExprNestedMultiSpace(t *testing.T) {
 	assert.Nil(t, err)
 
 	assert.Equal(t, "This is Flogo", v.(string))
-}
+}*/
