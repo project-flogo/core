@@ -88,27 +88,12 @@ func (a *App) NewTrigger(trg trigger.Trigger, settings interface{}) *Trigger {
 	return newTrg
 }
 
-func (a *App) AddAction(act action.Action, id string, settings interface{}) error {
+func (a *App) AddAction(id string, act action.Action, settings interface{}) error {
 
-	var settingsMap map[string]interface{}
-
-	if settings, ok := settings.(map[string]interface{}); ok {
-		settingsMap = settings
-	} else {
-		settingsMap = metadata.StructToMap(settings)
+	newAct, err := newAction(act, settings)
+	if err != nil {
+		return err
 	}
-
-	var ref string
-
-	if hr, ok := act.(support.HasRef); ok {
-		ref = hr.Ref()
-	} else {
-		value := reflect.ValueOf(act)
-		value = value.Elem()
-		ref = value.Type().PkgPath()
-	}
-
-	newAct := &Action{ref: ref, settings: settingsMap}
 	a.actions[id] = newAct
 
 	return nil
@@ -152,7 +137,7 @@ func (t *Trigger) Settings() map[string]interface{} {
 }
 
 // NewHandler adds a new Handler to the Trigger
-func (t *Trigger) NewHandler(settings interface{}, handlerAction interface{}) (*Handler, error) {
+func (t *Trigger) NewHandler(settings interface{}) (*Handler, error) {
 
 	var settingsMap map[string]interface{}
 
@@ -177,21 +162,27 @@ func (t *Trigger) Handlers() []*Handler {
 }
 
 // NewAction adds a new Action to the Handler
-func (h *Handler) NewAction(handlerAction interface{}) (action *Action, err error) {
+func (h *Handler) NewAction(handlerAction interface{}, settings ...interface{}) (act *Action, err error) {
 	switch v := handlerAction.(type) {
 	case HandlerFunc:
-		action = &Action{act: NewProxyAction(v)}
-	case *Action:
-		action = v
+		act = &Action{act: NewProxyAction(v)}
+	case action.Action:
+		if len(settings) > 0 {
+			act, err = newAction(v, settings)
+		} else {
+			act, err = newAction(v, nil)
+		}
 	case string:
 		_, exists := h.app.actions[v]
 		if !exists {
 			return nil, fmt.Errorf("unknown action with id: %s", v)
 		}
-		action = &Action{id: v}
+		act = &Action{id: v}
+	default:
+		return nil, fmt.Errorf("cannot create action from specified object: %+v", handlerAction)
 	}
-	h.actions = append(h.actions, action)
-	return action, nil
+	h.actions = append(h.actions, act)
+	return act, nil
 }
 
 // Settings gets the Handler's settings
@@ -248,7 +239,7 @@ func NewEngine(a *App) (engine.Engine, error) {
 	return engine.New(appConfig)
 }
 
-func NewAction(act action.Action, settings interface{}) (*Action, error) {
+func newAction(act action.Action, settings interface{}) (*Action, error) {
 
 	var settingsMap map[string]interface{}
 
