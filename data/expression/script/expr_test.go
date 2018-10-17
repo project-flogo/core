@@ -1,11 +1,11 @@
 package script
 
 import (
+	"encoding/json"
 	"fmt"
 	"testing"
 
 	"github.com/project-flogo/core/data"
-	"github.com/project-flogo/core/data/expr"
 	"github.com/project-flogo/core/data/resolve"
 	"github.com/stretchr/testify/assert"
 )
@@ -84,6 +84,60 @@ func TestLitExprRef(t *testing.T) {
 	v, err := expr.Eval(scope)
 	assert.Nil(t, err)
 	assert.Equal(t, "bar", v)
+}
+
+const testJsonData = `{
+    "store": {
+        "book": [
+            {
+                "category": "reference",
+                "author": "Nigel Rees",
+                "title": "Sayings of the Century",
+                "price": 8.95
+            },
+            {
+                "category": "fiction",
+                "author": "Evelyn Waugh",
+                "title": "Sword of Honour",
+                "price": 12.99
+            },
+            {
+                "category": "fiction",
+                "author": "Herman Melville",
+                "title": "Moby Dick",
+                "isbn": "0-553-21311-3",
+                "price": 8.99
+            },
+            {
+                "category": "fiction",
+                "author": "J. R. R. Tolkien",
+                "title": "The Lord of the Rings",
+                "isbn": "0-395-19395-8",
+                "price": 22.99
+            }
+        ],
+        "bicycle": {
+            "color": "red",
+            "price": 19.95
+        }
+    },
+    "expensive": 10
+}`
+
+func TestJsonExpr(t *testing.T) {
+	var data interface{}
+	err := json.Unmarshal([]byte(testJsonData), &data)
+	assert.Nil(t, err)
+
+	scope := newScope(map[string]interface{}{"foo": data})
+
+	expr, err := factory.NewExpr("$.foo.store.book[0].price")
+	assert.Nil(t, err)
+	assert.NotNil(t, expr)
+
+	v, err := expr.Eval(scope)
+	assert.Nil(t, err)
+	assert.Equal(t, 8.95, v)
 }
 
 func TestLitExprStaticRef(t *testing.T) {
@@ -624,8 +678,7 @@ func BenchmarkLit(b *testing.B) {
 func BenchmarkLit2(b *testing.B) {
 	var r interface{}
 
-	f := expression.NewExprFactory(nil, nil)
-	expr, _ := f.NewExpr(`123`)
+	expr, _ := factory.NewExpr(`123`)
 
 	for n := 0; n < b.N; n++ {
 
@@ -658,8 +711,8 @@ func (TestScope) SetValue(name string, value interface{}) error {
 type TestResolver struct {
 }
 
-func (*TestResolver) GetResolverInfo() *data.ResolverInfo {
-	return data.NewResolverInfo(false, false)
+func (*TestResolver) GetResolverInfo() *resolve.ResolverInfo {
+	return resolve.NewResolverInfo(false, false)
 }
 
 func (*TestResolver) Resolve(scope data.Scope, item string, field string) (interface{}, error) {
@@ -676,12 +729,11 @@ func (*TestResolver) Resolve(scope data.Scope, item string, field string) (inter
 type TestStaticResolver struct {
 }
 
-func (*TestStaticResolver) GetResolverInfo() *data.ResolverInfo {
-	return data.NewResolverInfo(true, false)
+func (*TestStaticResolver) GetResolverInfo() *resolve.ResolverInfo {
+	return resolve.NewResolverInfo(true, false)
 }
 
 func (*TestStaticResolver) Resolve(scope data.Scope, item string, field string) (interface{}, error) {
-
 	if field == "foo" {
 		return "bar", nil
 	}

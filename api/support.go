@@ -52,7 +52,11 @@ func toTriggerConfig(id string, trg *Trigger) *trigger.Config {
 	var handlerConfigs []*trigger.HandlerConfig
 	for _, handler := range trg.Handlers() {
 		h := &trigger.HandlerConfig{Settings: handler.Settings()}
-		h.Action = toActionConfig(handler.Action())
+		actions := handler.Actions()
+		h.Actions = make([]*trigger.ActionConfig, len(actions))
+		for i, action := range actions {
+			h.Actions[i] = toActionConfig(action)
+		}
 		handlerConfigs = append(handlerConfigs, h)
 	}
 
@@ -75,6 +79,7 @@ func toActionConfig(act *Action) *trigger.ActionConfig {
 	jsonData, _ := json.Marshal(act.Settings())
 	actionCfg.Data = jsonData
 
+	actionCfg.If = act.condition
 	if len(act.inputMappings) > 0 {
 		actionCfg.Input, _ = toMappings(act.inputMappings)
 	}

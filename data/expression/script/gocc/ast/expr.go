@@ -2,11 +2,11 @@ package ast
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/coerce"
-	"github.com/project-flogo/core/data/expression/script/gocc/token"
 	"github.com/project-flogo/core/data/resolve"
-	"strings"
 )
 
 type Expr interface {
@@ -95,9 +95,12 @@ func (e *exprTernary) Eval(scope data.Scope) (interface{}, error) {
 	}
 }
 
-func NewRefExpr(refNode interface{}) (Expr, error) {
-
-	ref := strings.TrimSpace(string(refNode.(*token.Token).Lit)) //todo is trim overkill
+func NewRefExpr(refNode ...interface{}) (Expr, error) {
+	expr, err := Concat(refNode...)
+	if err != nil {
+		return nil, err
+	}
+	ref := strings.TrimSpace(string(expr.Lit)) //todo is trim overkill
 	return &exprRef{ref: ref}, nil
 }
 

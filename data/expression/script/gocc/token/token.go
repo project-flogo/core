@@ -89,11 +89,10 @@ var TokMap = TokenMap{
 		"floatLit",
 		"stringLit",
 		"ref",
+		"selector",
+		"index",
 		"empty",
 		",",
-		".",
-		"[",
-		"]",
 	},
 
 	idMap: map[string]Type{
@@ -127,10 +126,9 @@ var TokMap = TokenMap{
 		"floatLit":     27,
 		"stringLit":    28,
 		"ref":          29,
-		"empty":        30,
-		",":            31,
-		".":            32,
-		"[":            33,
-		"]":            34,
+		"selector":     30,
+		"index":        31,
+		"empty":        32,
+		",":            33,
 	},
 }

@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/project-flogo/core/action"
+	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/mapper"
 	"github.com/project-flogo/core/data/resolve"
 	"github.com/project-flogo/core/support/managed"
@@ -37,6 +38,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 	triggers := make(map[string]*triggerWrapper)
 
 	mapperFactory := mapper.NewFactory(resolve.GetBasicResolver())
+	expressionFactory := expression.NewFactory(resolve.GetBasicResolver())
 
 	for _, tConfig := range tConfigs {
 
@@ -68,36 +70,37 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 		//create handlers for that trigger and init
 		for _, hConfig := range tConfig.Handlers {
 
-			var act action.Action
+			var acts []action.Action
 			var err error
 
 			//use action if already associated with Handler
-			if hConfig.Action.Act != nil {
-				act = hConfig.Action.Act
-			} else {
-
-				if hConfig.Action.Id != "" {
-
-					act, exists = a.actions[hConfig.Action.Id]
-					if act == nil {
-						return nil, fmt.Errorf("shared Action '%s' does not exists", hConfig.Action.Id)
-					}
-
+			for _, act := range hConfig.Actions {
+				if act.Act != nil {
+					acts = append(acts, act.Act)
 				} else {
-					//create the action
-					actionFactory := action.GetFactory(hConfig.Action.Ref)
-					if actionFactory == nil {
-						return nil, fmt.Errorf("Action Factory '%s' not registered", hConfig.Action.Ref)
-					}
+					if id := act.Id; id != "" {
+						act, _ := a.actions[id]
+						if act == nil {
+							return nil, fmt.Errorf("shared Action '%s' does not exists", id)
+						}
+						acts = append(acts, act)
+					} else {
+						//create the action
+						actionFactory := action.GetFactory(act.Ref)
+						if actionFactory == nil {
+							return nil, fmt.Errorf("Action Factory '%s' not registered", act.Ref)
+						}
 
-					act, err = actionFactory.New(hConfig.Action.Config)
-					if err != nil {
-						return nil, err
+						act, err := actionFactory.New(act.Config)
+						if err != nil {
+							return nil, err
+						}
+						acts = append(acts, act)
 					}
 				}
 			}
 
-			handler, err := trigger.NewHandler(hConfig, act, mapperFactory, runner)
+			handler, err := trigger.NewHandler(hConfig, acts, mapperFactory, expressionFactory, runner)
 			if err != nil {
 				return nil, err
 			}

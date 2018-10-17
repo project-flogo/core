@@ -1,5 +1,4 @@
-
-!whitespace : ' ' | '\t' | '\v' | '\f' | '\r' | '\n' ;
+!whitespace : ' ' | '\t' | '\v' | '\f' | '\r' | '\n';
 
 _letter     : 'a'-'z' | 'A'-'Z' | '_';
 _digit      : '0'-'9' ;
@@ -23,8 +22,9 @@ _escapeChar : '\\' 'n' | '\\' 'r' | '\\' 't' ;
 
 _dq_string  : '"' { . | '\\' '"' | _escapeChar } '"' ;
 _sq_string  : '\'' { . | '\\' '\'' | _escapeChar } '\'' ;
+_lit_string : '`' { . } '`' ;
 
-stringLit   :  _dq_string | _sq_string ;
+stringLit   :  _dq_string | _sq_string | _lit_string ;
 
 // -- [ Identifiers ]
 
@@ -34,24 +34,9 @@ ident : _ident ;
 
 // -- [ Resolvers ]
 
-_resolver
-    : '.'
-    | _ident
-    | _ident '[' _ident ']'
-    ;
-//resolver : _resolver ;
-
-_chunk
-    : '.' _ident
-    | '[' _dq_string | _sq_string ']'
-    | _chunk
-    ;
-
-ref
-    : '$' '.' _ident [ _chunk ]
-    | '$' _ident [ _chunk ]
-    | '$' _ident '[' _ident ']' [ _chunk ]
-    ;
+ref : '$' [ _ident ];
+selector : '.' _ident ;
+index : '[' ( _dq_string | _sq_string | _lit_string | _decimals ) ']' ;
 
 // -- [ Functions ]
 
@@ -138,23 +123,22 @@ Literal
     | stringLit     << ast.NewLiteral("string",$0) >>
     | BoolLit       << ast.NewLiteral("bool",$0) >>
     | NilLit        << ast.NewLiteral("nil",$0) >>
-    | ref           << ast.NewRefExpr($0) >>
+    | ref Ref       << ast.NewRefExpr($0, $1) >>
+    ;
+
+Ref
+    : selector       << ast.Concat($0) >>
+    | index          << ast.Concat($0) >>
+    | Ref selector   << ast.Concat($0, $1) >>
+    | Ref index      << ast.Concat($0, $1) >>
     ;
 
 Args
 	: empty
 	| ExprList
-    ;
+  ;
 
 ExprList
 	: Expr                  << ast.NewExprList($0) >>
 	| ExprList "," Expr     << ast.AppendToExprList($0, $2) >>
-    ;
-
-Selector
-    : "." ident  //<< ast.InitNode(string($1.(*token.Token).Lit), []string{}) >>
-    ;
-
-Index
-    : "[" Expr "]"  << $1, nil >>
-    ;
+  ;
