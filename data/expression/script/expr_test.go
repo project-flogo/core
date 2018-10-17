@@ -675,18 +675,6 @@ func BenchmarkLit(b *testing.B) {
 	result = r
 }
 
-func BenchmarkLit2(b *testing.B) {
-	var r interface{}
-
-	expr, _ := factory.NewExpr(`123`)
-
-	for n := 0; n < b.N; n++ {
-
-		r, _ = expr.Eval(nil)
-	}
-	result = r
-}
-
 /////////////////////////
 // Resolver Helpers
 
