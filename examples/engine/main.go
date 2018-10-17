@@ -34,7 +34,7 @@ func main() {
 
 	e, err := engine.NewFromConfigProvider(configProvider)
 	if err != nil {
-		log.Errorf("Failed to create engine instance due to error: %s", err.Error())
+		log.Errorf("Failed to create engine: %s", err.Error())
 		os.Exit(1)
 	}
 

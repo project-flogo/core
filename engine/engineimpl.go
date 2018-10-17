@@ -107,6 +107,8 @@ func (e *engineImpl) Start() error {
 
 	logger.SetDefaultLogger("engine")
 
+	logger.Info("Starting app [ %s ] with version [ %s ]", e.flogoApp.Name(), e.flogoApp.Version())
+
 	logger.Info("Engine Starting...")
 
 	logger.Info("Starting Services...")

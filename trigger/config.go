@@ -2,7 +2,6 @@ package trigger
 
 import (
 	"encoding/json"
-
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/mapper"
@@ -60,6 +59,31 @@ type HandlerConfig struct {
 	Actions  []*ActionConfig        `json:"actions"`
 
 	//handle complex object
+}
+
+// UnmarshalJSON overrides the default UnmarshalJSON for TaskInst
+func (hc *HandlerConfig) UnmarshalJSON(d []byte) error {
+	ser := &struct {
+		Name     string                 `json:"name,omitempty"`
+		Settings map[string]interface{} `json:"settings"`
+		Actions  []*ActionConfig        `json:"actions"`
+		Action   *ActionConfig          `json:"action"`
+	}{}
+
+	if err := json.Unmarshal(d, ser); err != nil {
+		return err
+	}
+
+	hc.Name = ser.Name
+	hc.Settings = ser.Settings
+
+	if ser.Action != nil {
+		hc.Actions = []*ActionConfig{ser.Action}
+	} else {
+		hc.Actions = ser.Actions
+	}
+
+	return nil
 }
 
 // ActionConfig is the configuration for the Action

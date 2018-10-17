@@ -73,6 +73,10 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 			var acts []action.Action
 			var err error
 
+			if len(hConfig.Actions) == 0 {
+				return nil, fmt.Errorf("trigger '%s' has a handler with no action", tConfig.Id)
+			}
+
 			//use action if already associated with Handler
 			for _, act := range hConfig.Actions {
 				if act.Act != nil {

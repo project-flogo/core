@@ -16,7 +16,7 @@ type Option func(*App) error
 
 func New(config *Config, runner action.Runner, options ...Option) (*App, error) {
 
-	app := &App{stopOnError: true}
+	app := &App{stopOnError: true, name: config.Name, version: config.Version}
 
 	properties := make(map[string]interface{}, len(config.Properties))
 	for _, attr := range config.Properties {
@@ -60,7 +60,7 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 
 	app.triggers, err = app.createTriggers(config.Triggers, runner)
 	if err != nil {
-		return nil, fmt.Errorf("error Creating trigger instances - %s", err.Error())
+		return nil, fmt.Errorf("error creating trigger instances - %s", err.Error())
 	}
 
 	for _, option := range options {
@@ -82,6 +82,8 @@ func ExternalProperties(providerId string, overrides string, processors ...prope
 }
 
 type App struct {
+	name        string
+	version     string
 	propManager *property.Manager
 	resManager  *resource.Manager
 	actions     map[string]action.Action
@@ -106,6 +108,14 @@ func (a *App) GetResource(id string) *resource.Resource {
 
 func (a *App) ResourceManager() *resource.Manager {
 	return a.resManager
+}
+
+func (a *App) Name() interface{} {
+	return a.name
+}
+
+func (a *App) Version() interface{} {
+	return a.version
 }
 
 // TriggerStatuses gets the status information for the triggers
