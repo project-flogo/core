@@ -170,7 +170,7 @@ func (h *Handler) NewAction(handlerAction interface{}, settings ...interface{}) 
 		act = &Action{act: NewProxyAction(v)}
 	case action.Action:
 		if len(settings) > 0 {
-			act, err = newAction(v, settings)
+			act, err = newAction(v, settings[0])
 		} else {
 			act, err = newAction(v, nil)
 		}
