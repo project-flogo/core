@@ -164,6 +164,8 @@ func (t *Trigger) Handlers() []*Handler {
 // NewAction adds a new Action to the Handler
 func (h *Handler) NewAction(handlerAction interface{}, settings ...interface{}) (act *Action, err error) {
 	switch v := handlerAction.(type) {
+	case HandlerFunc:
+		act = &Action{act: NewProxyAction(v)}
 	case func(ctx context.Context, inputs map[string]interface{}) (map[string]interface{}, error):
 		act = &Action{act: NewProxyAction(v)}
 	case action.Action:
