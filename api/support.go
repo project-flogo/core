@@ -66,7 +66,9 @@ func toTriggerConfig(id string, trg *Trigger) *trigger.Config {
 
 // toActionConfig converts Action to the core Action configuration model
 func toActionConfig(act *Action) *trigger.ActionConfig {
-	actionCfg := &trigger.ActionConfig{}
+	actionCfg := &trigger.ActionConfig{
+		Config: &action.Config{},
+	}
 
 	if act.act != nil {
 		actionCfg.Act = act.act
