@@ -32,6 +32,7 @@ func LoadAppConfig(flogoJson string, compressed bool) (*app.Config, error) {
 	var jsonBytes []byte
 
 	if flogoJson == "" {
+
 		// a json string wasn't provided, so lets lookup the file in path
 		configPath := GetFlogoConfigPath()
 

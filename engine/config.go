@@ -2,6 +2,7 @@ package engine
 
 import (
 	"os"
+	"path/filepath"
 	"strconv"
 
 	"github.com/project-flogo/core/engine/runner"
@@ -38,6 +39,14 @@ func GetFlogoConfigPath() string {
 	if len(flogoConfigPathEnv) > 0 {
 		return flogoConfigPathEnv
 	}
+
+	if _, err := os.Stat(DefaultAppConfigLocation); err != nil {
+		upDirConfig := filepath.Join("..", DefaultAppConfigLocation)
+		if _, err := os.Stat(upDirConfig); err == nil {
+			return upDirConfig
+		}
+	}
+
 	return DefaultAppConfigLocation
 }
 
