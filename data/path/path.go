@@ -43,7 +43,10 @@ func GetValue(value interface{}, path string) (interface{}, error) {
 				newPath = path[npIdx:]
 				f := val.FieldByName(fieldName)
 				if !f.IsValid() {
-					return nil, nil
+					if newPath == "" {
+						return nil, nil
+					}
+					return nil, errors.New("Invalid path '" + path + "'. path not found.")
 				}
 
 				newVal = f.Interface()

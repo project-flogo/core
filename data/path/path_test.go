@@ -87,17 +87,20 @@ func TestGetValue(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, "bar", newVal)
 
-	multiLevel = map[string]interface{}{
-		"test": &Test{
-			Data: map[string]interface{}{
-				"foo": "bar",
-			},
-		},
-	}
 	path = ".test.data.foo"
 	newVal, err = GetValue(multiLevel, path)
 	assert.Nil(t, err)
 	assert.Equal(t, "bar", newVal)
+
+	path = ".test.gah.foo"
+	newVal, err = GetValue(multiLevel, path)
+	assert.NotNil(t, err)
+	assert.Nil(t, newVal)
+
+	path = ".test.gah"
+	newVal, err = GetValue(multiLevel, path)
+	assert.Nil(t, err)
+	assert.Nil(t, newVal)
 }
 
 func TestSetValue(t *testing.T) {
