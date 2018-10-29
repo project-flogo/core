@@ -7,6 +7,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+type Test struct {
+	Data map[string]interface{}
+}
+
 func TestGetValue(t *testing.T) {
 	// Resolution of Old Trigger expression
 
@@ -71,6 +75,32 @@ func TestGetValue(t *testing.T) {
 	assert.Nil(t, err)
 	//todo check if map
 
+	multiLevel := map[string]interface{}{
+		"test": &Test{
+			Data: map[string]interface{}{
+				"foo": "bar",
+			},
+		},
+	}
+	path = ".test.Data.foo"
+	newVal, err = GetValue(multiLevel, path)
+	assert.Nil(t, err)
+	assert.Equal(t, "bar", newVal)
+
+	path = ".test.data.foo"
+	newVal, err = GetValue(multiLevel, path)
+	assert.Nil(t, err)
+	assert.Equal(t, "bar", newVal)
+
+	path = ".test.gah.foo"
+	newVal, err = GetValue(multiLevel, path)
+	assert.NotNil(t, err)
+	assert.Nil(t, newVal)
+
+	path = ".test.gah"
+	newVal, err = GetValue(multiLevel, path)
+	assert.Nil(t, err)
+	assert.Nil(t, newVal)
 }
 
 func TestSetValue(t *testing.T) {
