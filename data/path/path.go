@@ -227,7 +227,7 @@ func getSetParamsValue(params map[string]string, path string, value interface{},
 	val, found := params[key]
 
 	if !found {
-		return nil, "", errors.New("Invalid path '" + path + "'. path not found.")
+		return "", "", nil
 	}
 
 	return val, "", nil
@@ -273,7 +273,7 @@ func getSetMapParamsValue(params map[string]string, path string, value interface
 	val, found := params[key]
 
 	if !found {
-		return nil, "", errors.New("Invalid path '" + path + "'. path not found.")
+		return "", "", nil
 	}
 
 	return val, "", nil
