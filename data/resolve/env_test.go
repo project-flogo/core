@@ -24,6 +24,6 @@ func TestEnvResolver_Resolve(t *testing.T) {
 
 	env, _ := os.LookupEnv("NONEXISTANT_ENV_123")
 	v, err = resolver.Resolve(nil, "NONEXISTANT_ENV_123", "")
-	assert.Nil(t, err)
+	assert.NotNil(t, err)
 	assert.Equal(t, env, v)
 }
