@@ -11,7 +11,7 @@ import (
 var (
 	activities        = make(map[string]Activity)
 	activityFactories = make(map[string]Factory)
-	activityLoggers = make(map[string]log.Logger)
+	activityLoggers   = make(map[string]log.Logger)
 )
 
 var activityLogger = log.ChildLogger(log.RootLogger(), "activity")

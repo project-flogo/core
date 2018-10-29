@@ -10,7 +10,7 @@ import (
 
 var (
 	triggerFactories = make(map[string]Factory)
-	triggerLoggers = make(map[string]log.Logger)
+	triggerLoggers   = make(map[string]log.Logger)
 )
 
 var triggerLogger = log.ChildLogger(log.RootLogger(), "trigger")

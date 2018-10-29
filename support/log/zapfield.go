@@ -7,10 +7,8 @@ import (
 	"go.uber.org/zap"
 )
 
-type Field = interface{}
-
 func Binary(key string, val []byte) Field {
-	return zap.Binary(key,val)
+	return zap.Binary(key, val)
 }
 
 func Bool(key string, val bool) Field {

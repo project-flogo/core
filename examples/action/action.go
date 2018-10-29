@@ -8,7 +8,6 @@ import (
 	"github.com/project-flogo/core/data/metadata"
 )
 
-
 func init() {
 	action.Register(&Action{}, &ActionFactory{})
 }

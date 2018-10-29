@@ -5,7 +5,6 @@ import (
 	"github.com/project-flogo/core/data/metadata"
 )
 
-
 func init() {
 	activity.Register(&Activity{}) //activity.Register(&Activity{}, New) to create instances using factory method 'New'
 }

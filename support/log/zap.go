@@ -1,78 +1,80 @@
 package log
 
 import (
+	"fmt"
+
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
-type loggerImpl struct {
+type zapLoggerImpl struct {
 	loggerLevel *zap.AtomicLevel
-	zapLogger   *zap.SugaredLogger
+	mainLogger  *zap.SugaredLogger
 	traceLogger *zap.SugaredLogger
 }
 
-func (l *loggerImpl) DebugEnabled() bool {
+func (l *zapLoggerImpl) DebugEnabled() bool {
 	return l.loggerLevel.Enabled(zapcore.DebugLevel)
 }
 
-func (l *loggerImpl) TraceEnabled() bool {
+func (l *zapLoggerImpl) TraceEnabled() bool {
 	return false
 }
 
-func (l *loggerImpl) Trace(args ...interface{}) {
+func (l *zapLoggerImpl) Trace(args ...interface{}) {
 	panic("implement me")
 }
 
-func (l *loggerImpl) Debug(args ...interface{}) {
-	l.zapLogger.Debug(args...)
+func (l *zapLoggerImpl) Debug(args ...interface{}) {
+	l.mainLogger.Debug(args...)
 }
 
-func (l *loggerImpl) Info(args ...interface{}) {
-	l.zapLogger.Info(args...)
+func (l *zapLoggerImpl) Info(args ...interface{}) {
+	l.mainLogger.Info(args...)
 }
 
-func (l *loggerImpl) Warn(args ...interface{}) {
-	l.zapLogger.Warn(args...)
+func (l *zapLoggerImpl) Warn(args ...interface{}) {
+	l.mainLogger.Warn(args...)
 }
 
-func (l *loggerImpl) Error(args ...interface{}) {
-	l.zapLogger.Error(args...)
+func (l *zapLoggerImpl) Error(args ...interface{}) {
+	l.mainLogger.Error(args...)
 }
 
-func (l *loggerImpl) Tracef(template string, args ...interface{}) {
+func (l *zapLoggerImpl) Tracef(template string, args ...interface{}) {
 	panic("implement me")
 }
 
-func (l *loggerImpl) Debugf(template string, args ...interface{}) {
-	l.zapLogger.Debugf(template, args...)
+func (l *zapLoggerImpl) Debugf(template string, args ...interface{}) {
+	l.mainLogger.Debugf(template, args...)
 }
 
-func (l *loggerImpl) Infof(template string, args ...interface{}) {
-	l.zapLogger.Infof(template, args...)
+func (l *zapLoggerImpl) Infof(template string, args ...interface{}) {
+	l.mainLogger.Infof(template, args...)
 }
 
-func (l *loggerImpl) Warnf(template string, args ...interface{}) {
-	l.zapLogger.Warnf(template, args...)
+func (l *zapLoggerImpl) Warnf(template string, args ...interface{}) {
+	l.mainLogger.Warnf(template, args...)
 }
 
-func (l *loggerImpl) Errorf(template string, args ...interface{}) {
-	l.zapLogger.Errorf(template, args...)
+func (l *zapLoggerImpl) Errorf(template string, args ...interface{}) {
+	l.mainLogger.Errorf(template, args...)
 }
 
-func (l *loggerImpl) Structured() StructuredLogger {
-	return &structuredLoggerImpl{zl:l.zapLogger.Desugar()}
+func (l *zapLoggerImpl) Structured() StructuredLogger {
+	return &zapStructuredLoggerImpl{zl: l.mainLogger.Desugar()}
 }
 
-type structuredLoggerImpl struct {
+type zapStructuredLoggerImpl struct {
 	lvl *zap.AtomicLevel
 	zl  *zap.Logger
 }
 
-func (l *structuredLoggerImpl) Trace(msg string, fields ...Field) {
+func (l *zapStructuredLoggerImpl) Trace(msg string, fields ...Field) {
 	panic("implement me")
 }
 
-func (l *structuredLoggerImpl) Debug(msg string, fields ...Field) {
+func (l *zapStructuredLoggerImpl) Debug(msg string, fields ...Field) {
 
 	fs := make([]zap.Field, len(fields))
 	for i, f := range fields {
@@ -82,7 +84,7 @@ func (l *structuredLoggerImpl) Debug(msg string, fields ...Field) {
 	l.zl.Debug(msg, fs...)
 }
 
-func (l *structuredLoggerImpl) Info(msg string, fields ...Field) {
+func (l *zapStructuredLoggerImpl) Info(msg string, fields ...Field) {
 	fs := make([]zap.Field, len(fields))
 	for i, f := range fields {
 		fs[i] = f.(zap.Field)
@@ -91,7 +93,7 @@ func (l *structuredLoggerImpl) Info(msg string, fields ...Field) {
 	l.zl.Info(msg, fs...)
 }
 
-func (l *structuredLoggerImpl) Warn(msg string, fields ...Field) {
+func (l *zapStructuredLoggerImpl) Warn(msg string, fields ...Field) {
 	fs := make([]zap.Field, len(fields))
 	for i, f := range fields {
 		fs[i] = f.(zap.Field)
@@ -100,11 +102,107 @@ func (l *structuredLoggerImpl) Warn(msg string, fields ...Field) {
 	l.zl.Warn(msg, fs...)
 }
 
-func (l *structuredLoggerImpl) Error(msg string, fields ...Field) {
+func (l *zapStructuredLoggerImpl) Error(msg string, fields ...Field) {
 	fs := make([]zap.Field, len(fields))
 	for i, f := range fields {
 		fs[i] = f.(zap.Field)
 	}
 
 	l.zl.Error(msg, fs...)
+}
+
+func setZapLogLevel(logger Logger, level Level) {
+	impl, ok := logger.(*zapLoggerImpl)
+
+	if ok {
+		zapLevel := toZapLogLevel(level)
+		impl.loggerLevel.SetLevel(zapLevel)
+	}
+}
+
+func toZapLogLevel(level Level) zapcore.Level {
+	switch level {
+	case LevelDebug:
+		return zapcore.DebugLevel
+	case LevelInfo:
+		return zapcore.InfoLevel
+	case LevelWarn:
+		return zapcore.WarnLevel
+	case LevelError:
+		return zapcore.ErrorLevel
+	}
+
+	return zapcore.InfoLevel
+}
+
+func newZapRootLogger(name string, format Format) Logger {
+	zl, lvl, _ := newZapLogger(format)
+
+	if name == "" {
+		return &zapLoggerImpl{loggerLevel: lvl, mainLogger: zl.Sugar()}
+	} else {
+		return &zapLoggerImpl{loggerLevel: lvl, mainLogger: zl.Named(name).Sugar()}
+	}
+}
+
+func newZapLogger(logFormat Format) (*zap.Logger, *zap.AtomicLevel, error) {
+	cfg := zap.NewProductionConfig()
+	cfg.DisableCaller = true
+
+	eCfg := cfg.EncoderConfig
+	eCfg.TimeKey = "timestamp"
+	eCfg.EncodeTime = zapcore.ISO8601TimeEncoder
+
+	if logFormat == FormatConsole {
+		eCfg.EncodeLevel = zapcore.CapitalLevelEncoder
+		cfg.Encoding = "console"
+		eCfg.EncodeName = nameEncoder
+	}
+
+	cfg.EncoderConfig = eCfg
+
+	lvl := cfg.Level
+	zl, err := cfg.Build(zap.AddCallerSkip(1))
+
+	return zl, &lvl, err
+}
+
+func nameEncoder(loggerName string, enc zapcore.PrimitiveArrayEncoder) {
+	enc.AppendString("[" + loggerName + "] -")
+}
+
+func newZapChildLogger(logger Logger, name string) (Logger, error) {
+
+	impl, ok := logger.(*zapLoggerImpl)
+
+	if ok {
+		zapLogger := impl.mainLogger
+		newZl := zapLogger.Named(name)
+
+		return &zapLoggerImpl{loggerLevel: impl.loggerLevel, mainLogger: newZl}, nil
+	} else {
+		return nil, fmt.Errorf("unable to create child logger")
+	}
+}
+
+func newZapChildLoggerWithFields(logger Logger, fields ...Field) (Logger, error) {
+
+	impl, ok := logger.(*zapLoggerImpl)
+
+	if ok {
+		zapLogger := impl.mainLogger
+		newZl := zapLogger.With(fields...)
+
+		return &zapLoggerImpl{loggerLevel: impl.loggerLevel, mainLogger: newZl}, nil
+	} else {
+		return nil, fmt.Errorf("unable to create child logger")
+	}
+}
+
+func zapSync(logger Logger) {
+	impl, ok := logger.(*zapLoggerImpl)
+
+	if ok {
+		impl.mainLogger.Sync()
+	}
 }

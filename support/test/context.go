@@ -58,11 +58,12 @@ func NewActivityInitContext(settings interface{}, f mapper.Factory) activity.Ini
 		settingVals = metadata.StructToMap(settings)
 	}
 
-	return &TestActivityInitContext{settings:settingVals,factory:f}
+	return &TestActivityInitContext{settings: settingVals, factory: f}
 }
+
 type TestActivityInitContext struct {
 	settings map[string]interface{}
-	factory mapper.Factory
+	factory  mapper.Factory
 }
 
 func (ic *TestActivityInitContext) Settings() map[string]interface{} {

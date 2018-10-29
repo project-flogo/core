@@ -1,8 +1,6 @@
 package log
 
 import (
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
 	"os"
 	"strings"
 )
@@ -26,7 +24,6 @@ const (
 
 	FormatConsole Format = iota
 	FormatJson
-
 )
 
 type Logger interface {
@@ -56,23 +53,15 @@ type StructuredLogger interface {
 	Error(msg string, fields ...Field)
 }
 
-var	(
-	rootLogger Logger
+type Field = interface{}
 
+var (
+	rootLogger Logger
 	ctxLogging bool
-	rootLogLevel zapcore.Level
-	logFormat = DefaultLogFormat
 )
 
-
 func init() {
-
 	configureLogging()
-
-	zl, lvl, _ := newZapLogger()
-	lvl.SetLevel(rootLogLevel)
-
-	rootLogger = &loggerImpl{loggerLevel: lvl, zapLogger: zl.Named("flogo").Sugar()}
 }
 
 func CtxLoggingEnabled() bool {
@@ -83,96 +72,63 @@ func RootLogger() Logger {
 	return rootLogger
 }
 
-func SetLogLevel(level Level, logger Logger) {
+func SetLogLevel(logger Logger, level Level) {
+	setZapLogLevel(logger, level)
+}
 
-	impl := logger.(*loggerImpl)
+func ChildLogger(logger Logger, name string) Logger {
 
-	switch level {
-	case LevelDebug:
-		impl.loggerLevel.SetLevel(zapcore.DebugLevel)
-	case LevelInfo:
-		impl.loggerLevel.SetLevel(zapcore.InfoLevel)
-	case LevelWarn:
-		impl.loggerLevel.SetLevel(zapcore.WarnLevel)
-	case LevelError:
-		impl.loggerLevel.SetLevel(zapcore.ErrorLevel)
+	childLogger, err := newZapChildLogger(logger, name)
+	if err != nil {
+		rootLogger.Warnf("unable to create child logger named: %s - %s", name, err.Error())
+		childLogger = logger
 	}
+
+	return childLogger
 }
 
-func ChildLogger(l Logger, name string) Logger {
+func ChildLoggerWithFields(logger Logger, fields ...Field) Logger {
+	childLogger, err := newZapChildLoggerWithFields(logger, fields...)
+	if err != nil {
+		rootLogger.Warnf("unable to create child logger with fields: %s", err.Error())
+		childLogger = logger
+	}
 
-	impl := l.(*loggerImpl)
-
-	zapLogger := impl.zapLogger
-	newZl := zapLogger.Named(name)
-
-	return &loggerImpl{loggerLevel: impl.loggerLevel, zapLogger: newZl}
-}
-
-func ChildLoggerWith(l Logger, fields ...Field) Logger {
-
-	impl := l.(*loggerImpl)
-
-	zapLogger := impl.zapLogger
-	newZl := zapLogger.With(fields...)
-
-	return &loggerImpl{loggerLevel: impl.loggerLevel, zapLogger: newZl}
+	return childLogger
 }
 
 func Sync() {
-	impl := rootLogger.(*loggerImpl)
-	impl.zapLogger.Sync()
+	zapSync(rootLogger)
 }
 
-func newZapLogger() (*zap.Logger, *zap.AtomicLevel, error) {
-	cfg := zap.NewProductionConfig()
-	cfg.DisableCaller = true
-
-	eCfg := cfg.EncoderConfig
-	eCfg.TimeKey = "timestamp"
-	eCfg.EncodeTime = zapcore.ISO8601TimeEncoder
-
-	if logFormat == FormatConsole {
-		eCfg.EncodeLevel = zapcore.CapitalLevelEncoder
-		cfg.Encoding = "console"
-		eCfg.EncodeName = nameEncoder
-	}
-
-	cfg.EncoderConfig = eCfg
-
-	lvl := cfg.Level
-	zl, err := cfg.Build(zap.AddCallerSkip(1))
-
-	return zl, &lvl, err
-}
-
-func configureLogging()  {
+func configureLogging() {
 	envLogCtx := os.Getenv(EnvKeyLogCtx)
 	if strings.ToLower(envLogCtx) == "true" {
 		ctxLogging = true
 	}
 
+	rootLogLevel := DefaultLogLevel
+
 	envLogLevel := strings.ToUpper(os.Getenv(EnvKeyLogLevel))
 	switch envLogLevel {
 	case "DEBUG":
-		rootLogLevel = zapcore.DebugLevel
+		rootLogLevel = LevelDebug
 	case "INFO":
-		rootLogLevel = zapcore.InfoLevel
+		rootLogLevel = LevelInfo
 	case "WARN":
-		rootLogLevel = zapcore.WarnLevel
+		rootLogLevel = LevelWarn
 	case "ERROR":
-		rootLogLevel = zapcore.ErrorLevel
+		rootLogLevel = LevelError
 	default:
-		rootLogLevel = zapcore.InfoLevel
+		rootLogLevel = DefaultLogLevel
 	}
 
+	logFormat := DefaultLogFormat
 	envLogFormat := strings.ToUpper(os.Getenv(EnvKeyLogFormat))
 	if envLogFormat == "JSON" {
 		logFormat = FormatJson
 	}
-}
 
-
-func nameEncoder(loggerName string, enc zapcore.PrimitiveArrayEncoder) {
-	enc.AppendString("[" + loggerName + "] -")
+	rootLogger = newZapRootLogger("flogo", logFormat)
+	SetLogLevel(rootLogger, rootLogLevel)
 }

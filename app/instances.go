@@ -68,11 +68,11 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 		logger := trigger.GetLogger(tConfig.Ref)
 
 		if log.CtxLoggingEnabled() {
-			logger = log.ChildLoggerWith(logger, log.String("triggerId", tConfig.Id))
+			logger = log.ChildLoggerWithFields(logger, log.String("triggerId", tConfig.Id))
 		}
 
 		log.ChildLogger(logger, tConfig.Id)
-		initCtx := &initContext{logger:logger, handlers: make([]trigger.Handler, 0, len(tConfig.Handlers))}
+		initCtx := &initContext{logger: logger, handlers: make([]trigger.Handler, 0, len(tConfig.Handlers))}
 
 		//create handlers for that trigger and init
 		for _, hConfig := range tConfig.Handlers {
@@ -142,4 +142,3 @@ func (ctx *initContext) GetHandlers() []trigger.Handler {
 func (ctx *initContext) Logger() log.Logger {
 	return ctx.logger
 }
-
