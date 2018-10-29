@@ -6,6 +6,7 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
+	"unicode"
 
 	"github.com/project-flogo/core/data/coerce"
 )
@@ -38,13 +39,14 @@ func GetValue(value interface{}, path string) (interface{}, error) {
 
 			if val.Kind() == reflect.Struct {
 				fieldName, npIdx := getObjectKey(path[1:])
+				fieldName = NormalizeFieldName(fieldName)
 				newPath = path[npIdx:]
 				f := val.FieldByName(fieldName)
-				if f.IsValid() {
-					return f.Interface(), nil
+				if !f.IsValid() {
+					return nil, nil
 				}
 
-				return nil, nil
+				newVal = f.Interface()
 			} else {
 				return nil, fmt.Errorf("unable to evaluate path: %s", path)
 			}
@@ -74,6 +76,12 @@ func GetValue(value interface{}, path string) (interface{}, error) {
 		return nil, err
 	}
 	return GetValue(newVal, newPath)
+}
+
+func NormalizeFieldName(name string) string {
+	symbols := []rune(name)
+	symbols[0] = unicode.ToUpper(symbols[0])
+	return string(symbols)
 }
 
 func SetValue(attrValue interface{}, path string, value interface{}) error {
