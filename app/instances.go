@@ -68,7 +68,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 		logger := trigger.GetLogger(tConfig.Ref)
 
 		if log.CtxLoggingEnabled() {
-			logger = log.ChildLoggerWith(logger, log.String("id", tConfig.Id))
+			logger = log.ChildLoggerWith(logger, log.String("triggerId", tConfig.Id))
 		}
 
 		log.ChildLogger(logger, tConfig.Id)

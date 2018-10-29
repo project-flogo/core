@@ -174,5 +174,5 @@ func configureLogging()  {
 
 
 func nameEncoder(loggerName string, enc zapcore.PrimitiveArrayEncoder) {
-	enc.AppendString("[" + loggerName + "]")
+	enc.AppendString("[" + loggerName + "] -")
 }
