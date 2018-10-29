@@ -5,12 +5,8 @@ import (
 
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/metadata"
-	"github.com/project-flogo/core/support/logger"
 	"github.com/project-flogo/core/trigger"
 )
-
-// log is the default package logger
-var log = logger.GetLogger("trigger-sample")
 
 var triggerMd = trigger.NewMetadata(&Settings{}, &HandlerSettings{}, &Output{}, &Reply{})
 
@@ -47,8 +43,10 @@ func (t *Trigger) Metadata() *trigger.Metadata {
 
 func (t *Trigger) Initialize(ctx trigger.InitContext) error {
 
+	logger := ctx.Logger()
+
 	aSetting := t.settings.ASetting
-	log.Debug("Trigger setting 'aSetting' = %s", aSetting)
+	logger.Debug("Setting 'aSetting' = %s", aSetting)
 
 	// Init handlers
 	for _, handler := range ctx.GetHandlers() {
@@ -61,7 +59,7 @@ func (t *Trigger) Initialize(ctx trigger.InitContext) error {
 
 		//init handler using setting
 		aSetting := s.ASetting
-		log.Debug("Handler setting 'aSetting' = %s", aSetting)
+		logger.Debug("Handler setting 'aSetting' = %s", aSetting)
 
 		registerDummyEventHandler(aSetting, newActionHandler(handler))
 	}

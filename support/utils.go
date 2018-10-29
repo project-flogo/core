@@ -7,17 +7,17 @@ import (
 	"runtime/debug"
 	"strings"
 
-	"github.com/project-flogo/core/support/logger"
+	"github.com/project-flogo/core/support/log"
 )
 
 // HandlePanic helper method to handle panics
 func HandlePanic(name string, err *error) {
 	if r := recover(); r != nil {
 
-		logger.Warnf("%s: PANIC Occurred  : %v\n", name, r)
+		log.RootLogger().Warnf("%s: PANIC Occurred  : %v\n", name, r)
 
 		// todo: useful for debugging
-		logger.Debugf("StackTrace: %s", debug.Stack())
+		log.RootLogger().Debugf("StackTrace: %s", debug.Stack())
 
 		if err != nil {
 			*err = fmt.Errorf("%v", r)

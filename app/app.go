@@ -7,7 +7,7 @@ import (
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/app/resource"
 	"github.com/project-flogo/core/data/property"
-	"github.com/project-flogo/core/support/logger"
+	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/support/managed"
 	"github.com/project-flogo/core/trigger"
 )
@@ -134,6 +134,8 @@ func (a *App) Start() error {
 		return fmt.Errorf("app already started")
 	}
 
+	logger := log.RootLogger()
+
 	// Start the triggers
 	logger.Info("Starting Triggers...")
 
@@ -173,6 +175,8 @@ func (a *App) Start() error {
 }
 
 func (a *App) Stop() error {
+
+	logger := log.RootLogger()
 
 	logger.Info("Stopping Triggers...")
 

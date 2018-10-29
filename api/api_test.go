@@ -3,7 +3,7 @@ package api
 import (
 	"context"
 	"github.com/project-flogo/core/data"
-	"github.com/project-flogo/core/support/logger"
+	"github.com/project-flogo/core/support/log"
 	"testing"
 )
 
@@ -54,6 +54,6 @@ func TestTrigger_NewFuncHandler(t *testing.T) {
 }
 
 func LogMessage(ctx context.Context, inputs map[string]*data.Attribute) (map[string]*data.Attribute, error) {
-	logger.Infof("#v", inputs)
+	log.RootLogger().Infof("#v", inputs)
 	return nil, nil
 }

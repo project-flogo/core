@@ -6,14 +6,9 @@ import (
 	"strconv"
 
 	"github.com/project-flogo/core/engine/runner"
-	"github.com/project-flogo/core/support/logger"
 )
 
 const (
-	EnvKeyLogDateFormat      = "FLOGO_LOG_DTFORMAT"
-	DefaultLogDateFormat     = "2006-01-02 15:04:05.000"
-	EnvKeyLogLevel           = "FLOGO_LOG_LEVEL"
-	DefaultLogLevel          = "INFO"
 	EnvKeyAppConfigLocation  = "FLOGO_CONFIG_PATH"
 	DefaultAppConfigLocation = "flogo.json"
 	EnvKeyStopEngineOnError  = "FLOGO_ENGINE_STOP_ON_ERROR"
@@ -30,8 +25,6 @@ const (
 	ValueRunnerTypePooled = "POOLED"
 	ValueRunnerTypeDirect = "DIRECT"
 )
-
-var defaultLogLevel = DefaultLogLevel
 
 //GetFlogoConfigPath returns the flogo config path
 func GetFlogoConfigPath() string {
@@ -50,26 +43,26 @@ func GetFlogoConfigPath() string {
 	return DefaultAppConfigLocation
 }
 
-func SetDefaultLogLevel(logLevel string) {
-	defaultLogLevel = logLevel
-}
-
-//GetLogLevel returns the log level
-func GetLogLevel() string {
-	logLevelEnv := os.Getenv(EnvKeyLogLevel)
-	if len(logLevelEnv) > 0 {
-		return logLevelEnv
-	}
-	return defaultLogLevel
-}
-
-func GetLogDateTimeFormat() string {
-	logLevelEnv := os.Getenv(EnvKeyLogDateFormat)
-	if len(logLevelEnv) > 0 {
-		return logLevelEnv
-	}
-	return DefaultLogDateFormat
-}
+//func SetDefaultLogLevel(logLevel string) {
+//	defaultLogLevel = logLevel
+//}
+//
+////GetLogLevel returns the log level
+//func GetLogLevel() string {
+//	logLevelEnv := os.Getenv(EnvKeyLogLevel)
+//	if len(logLevelEnv) > 0 {
+//		return logLevelEnv
+//	}
+//	return defaultLogLevel
+//}
+//
+//func GetLogDateTimeFormat() string {
+//	logLevelEnv := os.Getenv(EnvKeyLogDateFormat)
+//	if len(logLevelEnv) > 0 {
+//		return logLevelEnv
+//	}
+//	return DefaultLogDateFormat
+//}
 
 func StopEngineOnError() bool {
 	stopEngineOnError := os.Getenv(EnvKeyStopEngineOnError)
@@ -137,7 +130,7 @@ func NewPooledRunnerConfig() *runner.PooledConfig {
 }
 
 type Config struct {
-	LogLevel          string
+	//LogLevel          string
 	StopEngineOnError bool
 	RunnerType        string
 }
@@ -145,7 +138,7 @@ type Config struct {
 func ConfigViaEnv(e *engineImpl) {
 
 	config := &Config{}
-	config.LogLevel = GetLogLevel()
+	//config.LogLevel = GetLogLevel()
 	config.RunnerType = GetRunnerType()
 	config.StopEngineOnError = StopEngineOnError()
 
@@ -153,6 +146,6 @@ func ConfigViaEnv(e *engineImpl) {
 }
 
 func DirectRunner(e *engineImpl) {
-	logger.Debugf("Using 'DIRECT' Action Runner")
+	e.logger.Debugf("Using 'DIRECT' Action Runner")
 	e.actionRunner = runner.NewDirect()
 }

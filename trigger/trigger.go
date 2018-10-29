@@ -1,6 +1,7 @@
 package trigger
 
 import (
+	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/support/managed"
 )
 
@@ -15,6 +16,9 @@ type Trigger interface {
 
 // InitContext is the initialization context for the trigger instance
 type InitContext interface {
+
+	// Logger the logger for the trigger
+	Logger() log.Logger
 
 	// GetHandlers gets the handlers associated with the trigger
 	GetHandlers() []Handler

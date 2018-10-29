@@ -2,9 +2,9 @@ package action
 
 import (
 	"fmt"
+	"github.com/project-flogo/core/support/log"
 
 	"github.com/project-flogo/core/support"
-	"github.com/project-flogo/core/support/logger"
 )
 
 var (
@@ -27,7 +27,7 @@ func Register(action Action, f Factory) error {
 		return fmt.Errorf("action already registered: %s", ref)
 	}
 
-	logger.Debugf("Registering action [ %s ]", ref)
+	log.RootLogger().Debugf("Registering action: %s", ref)
 
 	actionFactories[ref] = f
 
@@ -49,7 +49,7 @@ func LegacyRegister(ref string, f Factory) error {
 		return fmt.Errorf("action already registered: %s", ref)
 	}
 
-	logger.Debugf("Registering action [ %s ]", ref)
+	log.RootLogger().Debugf("Registering legacy action: %s", ref)
 
 	actionFactories[ref] = f
 

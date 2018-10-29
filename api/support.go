@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"encoding/json"
+	"github.com/project-flogo/core/support/log"
 	"reflect"
 	"strconv"
 	"strings"
@@ -173,6 +174,10 @@ func (ctx *initCtx) MapperFactory() mapper.Factory {
 	return nil
 }
 
+func (ctx *initCtx) Logger() log.Logger {
+	return log.RootLogger()
+}
+
 // EvalActivity evaluates the specified activity using the provided inputs
 func EvalActivity(act activity.Activity, input interface{}) (map[string]interface{}, error) {
 
@@ -252,6 +257,10 @@ func (aCtx *activityContext) SetOutput(name string, value interface{}) error {
 }
 
 func (aCtx *activityContext) GetSharedTempData() map[string]interface{} {
+	return nil
+}
+
+func (aCtx *activityContext) Logger() log.Logger {
 	return nil
 }
 

@@ -2,15 +2,19 @@ package activity
 
 import (
 	"fmt"
+	"path"
 
 	"github.com/project-flogo/core/support"
-	"github.com/project-flogo/core/support/logger"
+	"github.com/project-flogo/core/support/log"
 )
 
 var (
 	activities        = make(map[string]Activity)
 	activityFactories = make(map[string]Factory)
+	activityLoggers = make(map[string]log.Logger)
 )
+
+var activityLogger = log.ChildLogger(log.RootLogger(), "activity")
 
 func Register(activity Activity, f ...Factory) error {
 
@@ -24,12 +28,14 @@ func Register(activity Activity, f ...Factory) error {
 		return fmt.Errorf("activity already registered: %s", ref)
 	}
 
-	logger.Debugf("Registering activity [ %s ]", ref)
+	log.RootLogger().Debugf("Registering activity: %s", ref)
 
 	activities[ref] = activity
+	name := path.Base(ref) //todo should probably get this from the descriptor? or on registration provide a short name
+	activityLoggers[ref] = log.ChildLogger(activityLogger, name)
 
 	if len(f) > 1 {
-		logger.Debugf("Only one factory can be associated with activity [ %s ]", ref)
+		log.RootLogger().Warnf("Only one factory can be associated with activity: %s", ref)
 	}
 
 	if len(f) == 1 {
@@ -54,7 +60,7 @@ func LegacyRegister(ref string, activity Activity) error {
 		return fmt.Errorf("activity already registered: %s", ref)
 	}
 
-	logger.Debugf("Registering trigger [ %s ]", ref)
+	log.RootLogger().Debugf("Registering legacy activity: %s", ref)
 
 	activities[ref] = activity
 
@@ -73,4 +79,9 @@ func Get(ref string) Activity {
 // GetFactory gets activity factory by ref
 func GetFactory(ref string) Factory {
 	return activityFactories[ref]
+}
+
+// GetLogger gets activity logger by ref
+func GetLogger(ref string) log.Logger {
+	return activityLoggers[ref]
 }

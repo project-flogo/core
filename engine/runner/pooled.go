@@ -3,10 +3,10 @@ package runner
 import (
 	"context"
 	"errors"
-	"github.com/project-flogo/core/support"
 
 	"github.com/project-flogo/core/action"
-	"github.com/project-flogo/core/support/logger"
+	"github.com/project-flogo/core/support"
+	"github.com/project-flogo/core/support/log"
 )
 
 // PooledRunner is a action runner that queues and runs a action in a worker pool
@@ -16,6 +16,7 @@ type PooledRunner struct {
 	numWorkers  int
 	workers     []*ActionWorker
 	active      bool
+	logger      log.Logger
 
 	directRunner *DirectRunner
 }
@@ -36,11 +37,16 @@ func NewPooled(config *PooledConfig) *PooledRunner {
 	pooledRunner.numWorkers = config.NumWorkers
 	pooledRunner.workQueue = make(chan ActionWorkRequest, config.WorkQueueSize)
 
+	//todo should this be root logger or engine logger?
+	pooledRunner.logger = log.RootLogger()
+
 	return &pooledRunner
 }
 
 // Start will start the engine, by starting all of its workers
 func (runner *PooledRunner) Start() error {
+
+	logger := runner.logger
 
 	if !runner.active {
 
@@ -87,7 +93,7 @@ func (runner *PooledRunner) Stop() error {
 		runner.active = false
 
 		for _, worker := range runner.workers {
-			logger.Debug("Stopping worker", worker.ID)
+			runner.logger.Debug("Stopping worker", worker.ID)
 			worker.Stop()
 		}
 	}
@@ -97,6 +103,8 @@ func (runner *PooledRunner) Stop() error {
 
 // Execute implements action.Runner.Execute
 func (runner *PooledRunner) RunAction(ctx context.Context, act action.Action, inputs map[string]interface{}) (results map[string]interface{}, err error) {
+
+	logger := runner.logger
 
 	if act == nil {
 		return nil, errors.New("Action not specified")

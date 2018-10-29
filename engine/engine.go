@@ -8,7 +8,7 @@ import (
 	"syscall"
 
 	"github.com/project-flogo/core/app"
-	"github.com/project-flogo/core/support/logger"
+	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/support/managed"
 )
 
@@ -52,7 +52,7 @@ func RunEngine(e Engine) int {
 
 	err := e.Start()
 	if err != nil {
-		logger.Error(err)
+		log.RootLogger().Error(err)
 		fmt.Printf("Failed to start engine: %s\n", err.Error())
 		os.Exit(1)
 	}
@@ -82,7 +82,7 @@ func setupSignalHandling() chan int {
 		case syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT:
 			exitChan <- 0
 		default:
-			logger.Debug("Unknown signal.")
+			log.RootLogger().Debugf("Unknown signal.")
 			exitChan <- 1
 		}
 	}

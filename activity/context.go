@@ -3,9 +3,10 @@ package activity
 import (
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/metadata"
+	"github.com/project-flogo/core/support/log"
 )
 
-// Context describes the execution context for an Activity.
+// Context describes the execution context for an LogActivity.
 // It provides access to attributes, task and Flow information.
 type Context interface {
 	// ActivityHost gets the "host" under with the activity is executing
@@ -29,13 +30,16 @@ type Context interface {
 	// GetSharedTempData get shared temporary data for activity, lifespan
 	// of the data dependent on the activity host implementation
 	GetSharedTempData() map[string]interface{}
+
+	// Logger the logger for the activity
+	Logger() log.Logger
 }
 
 type Host interface {
-	// ID returns the ID of the Activity Host
+	// ID returns the ID of the LogActivity Host
 	ID() string
 
-	// Name the name of the Activity Host
+	// Name the name of the LogActivity Host
 	Name() string
 
 	// IOMetadata get the input/output metadata of the activity host

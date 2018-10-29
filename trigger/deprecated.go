@@ -3,8 +3,8 @@ package trigger
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/project-flogo/core/support/logger"
 
+	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/data"
 )
 
@@ -23,7 +23,7 @@ func LegacyRegister(ref string, f Factory) error {
 		return fmt.Errorf("trigger already registered for ref '%s'", ref)
 	}
 
-	logger.Debugf("Registering trigger [ %s ]", ref)
+	log.RootLogger().Debugf("Registering legacy trigger [ %s ]", ref)
 
 	triggerFactories[ref] = f
 

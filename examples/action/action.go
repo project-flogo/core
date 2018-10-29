@@ -2,13 +2,12 @@ package sample
 
 import (
 	"context"
+	"github.com/project-flogo/core/support/log"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/data/metadata"
-	"github.com/project-flogo/core/support/logger"
 )
 
-var log = logger.GetLogger("action-sample")
 
 func init() {
 	action.Register(&Action{}, &ActionFactory{})
@@ -31,7 +30,7 @@ func (f *ActionFactory) New(config *action.Config) (action.Action, error) {
 		return nil, err
 	}
 
-	log.Debugf("Setting: %s", s.ASetting)
+	log.RootLogger().Debugf("Setting: %s", s.ASetting)
 
 	act := &Action{settings: s}
 
@@ -62,7 +61,7 @@ func (a *Action) Run(ctx context.Context, inputValues map[string]interface{}) (m
 		return nil, err
 	}
 
-	log.Info("Input: %s", input.AnInput)
+	log.RootLogger().Infof("Input: %s", input.AnInput)
 
 	output := &Output{AnOutput: input.AnInput}
 

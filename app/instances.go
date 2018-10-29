@@ -2,11 +2,11 @@ package app
 
 import (
 	"fmt"
-
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/mapper"
 	"github.com/project-flogo/core/data/resolve"
+	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/support/managed"
 	"github.com/project-flogo/core/trigger"
 )
@@ -65,7 +65,14 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 			return nil, fmt.Errorf("cannot create Trigger nil for id '%s'", tConfig.Id)
 		}
 
-		initCtx := &initContext{handlers: make([]trigger.Handler, 0, len(tConfig.Handlers))}
+		logger := trigger.GetLogger(tConfig.Ref)
+
+		if log.CtxLoggingEnabled() {
+			logger = log.ChildLoggerWith(logger, log.String("id", tConfig.Id))
+		}
+
+		log.ChildLogger(logger, tConfig.Id)
+		initCtx := &initContext{logger:logger, handlers: make([]trigger.Handler, 0, len(tConfig.Handlers))}
 
 		//create handlers for that trigger and init
 		for _, hConfig := range tConfig.Handlers {
@@ -125,8 +132,14 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 
 type initContext struct {
 	handlers []trigger.Handler
+	logger   log.Logger
 }
 
 func (ctx *initContext) GetHandlers() []trigger.Handler {
 	return ctx.handlers
 }
+
+func (ctx *initContext) Logger() log.Logger {
+	return ctx.logger
+}
+

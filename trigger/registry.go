@@ -2,14 +2,18 @@ package trigger
 
 import (
 	"fmt"
+	"github.com/project-flogo/core/support/log"
+	"path"
 
 	"github.com/project-flogo/core/support"
-	"github.com/project-flogo/core/support/logger"
 )
 
 var (
 	triggerFactories = make(map[string]Factory)
+	triggerLoggers = make(map[string]log.Logger)
 )
+
+var triggerLogger = log.ChildLogger(log.RootLogger(), "trigger")
 
 func Register(trigger Trigger, f Factory) error {
 
@@ -24,12 +28,15 @@ func Register(trigger Trigger, f Factory) error {
 	ref := support.GetRef(trigger)
 
 	if triggerFactories[ref] != nil {
-		return fmt.Errorf("trigger already registered for ref '%s'", ref)
+		return fmt.Errorf("trigger already registered for ref %s", ref)
 	}
 
-	logger.Debugf("Registering trigger [ %s ]", ref)
+	log.RootLogger().Debugf("Registering trigger: %s", ref)
 
 	triggerFactories[ref] = f
+
+	triggerName := path.Base(ref) //todo get this from the descriptor or register trigger with name as well
+	triggerLoggers[ref] = log.ChildLogger(triggerLogger, triggerName)
 
 	return nil
 }
@@ -41,4 +48,8 @@ func GetFactory(ref string) Factory {
 func Factories() map[string]Factory {
 	//todo return copy
 	return triggerFactories
+}
+
+func GetLogger(ref string) log.Logger {
+	return triggerLoggers[ref]
 }

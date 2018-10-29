@@ -3,10 +3,8 @@ package sample
 import (
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data/metadata"
-	"github.com/project-flogo/core/support/logger"
 )
 
-var log = logger.GetLogger("activity-sample")
 
 func init() {
 	activity.Register(&Activity{}) //activity.Register(&Activity{}, New) to create instances using factory method 'New'
@@ -23,7 +21,7 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 		return nil, err
 	}
 
-	log.Debugf("Setting: %s", s.ASetting)
+	ctx.Logger().Debugf("Setting: %s", s.ASetting)
 
 	act := &Activity{} //add aSetting to instance
 
@@ -48,7 +46,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return false, err
 	}
 
-	log.Info("Input: %s", input.AnInput)
+	ctx.Logger().Info("Input: %s", input.AnInput)
 
 	output := &Output{AnOutput: input.AnInput}
 	err = ctx.SetOutputObject(output)

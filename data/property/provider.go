@@ -2,7 +2,7 @@ package property
 
 import (
 	"fmt"
-	"github.com/project-flogo/core/support/logger"
+	"github.com/project-flogo/core/support/log"
 )
 
 var (
@@ -31,7 +31,7 @@ func RegisterProvider(id string, provider Provider) error {
 		return fmt.Errorf("provider already registered: %s", id)
 	}
 
-	logger.Debugf("Registering provider [ %s ]", id)
+	log.RootLogger().Debugf("Registering provider [ %s ]", id)
 
 	providers[id] = provider
 

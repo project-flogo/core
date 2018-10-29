@@ -2,7 +2,7 @@ package property
 
 import (
 	"encoding/json"
-	"github.com/project-flogo/core/support/logger"
+	"github.com/project-flogo/core/support/log"
 	"io/ioutil"
 	"strings"
 )
@@ -84,7 +84,7 @@ func loadExternalProperties(provider Provider, overrides string) (map[string]int
 					value := strings.TrimSpace(kv[1])
 					props[key] = value
 				} else {
-					logger.Warnf("'%s' is not valid override value. It must be in PropName=PropValue format.", pair)
+					log.RootLogger().Warnf("'%s' is not valid override value. It must be in PropName=PropValue format.", pair)
 				}
 			}
 		}

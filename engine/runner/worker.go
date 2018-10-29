@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/project-flogo/core/action"
-	"github.com/project-flogo/core/support/logger"
+	"github.com/project-flogo/core/support/log"
 )
 
 // Based off: http://nesv.github.io/golang/2014/02/25/worker-queues-in-go.html
@@ -69,6 +69,10 @@ func NewWorker(id int, runner *DirectRunner, workerQueue chan chan ActionWorkReq
 // Start function "starts" the worker by starting a goroutine, that is
 // an infinite "for-select" loop.  This is where all the request are handled
 func (w ActionWorker) Start() {
+
+	//todo should this be engine logger
+	logger := log.RootLogger()
+
 	go func() {
 		for {
 			// Add ourselves into the worker queue.

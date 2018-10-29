@@ -10,7 +10,7 @@ import (
 	"github.com/project-flogo/core/engine/runner"
 	"github.com/project-flogo/core/engine/secret"
 	"github.com/project-flogo/core/support"
-	"github.com/project-flogo/core/support/logger"
+	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/support/managed"
 )
 
@@ -20,6 +20,7 @@ type engineImpl struct {
 	flogoApp       *app.App
 	actionRunner   action.Runner
 	serviceManager *support.ServiceManager
+	logger         log.Logger
 }
 
 // New creates a new Engine
@@ -35,12 +36,15 @@ func New(appConfig *app.Config) (Engine, error) {
 	}
 
 	engine := &engineImpl{}
+	logger := log.ChildLogger(log.RootLogger(), "engine")
+	engine.logger = logger
+	//log.SetLogLevel(log.DebugLevel, logger)
 
 	if engine.config == nil {
 		config := &Config{}
 		config.StopEngineOnError = true
 		config.RunnerType = DefaultRunnerType
-		config.LogLevel = DefaultLogLevel
+		//config.LogLevel = DefaultLogLevel
 
 		engine.config = config
 	}
@@ -105,9 +109,9 @@ func (e *engineImpl) App() *app.App {
 //Start initializes and starts the Triggers and initializes the Actions
 func (e *engineImpl) Start() error {
 
-	logger.SetDefaultLogger("engine")
+	logger := e.logger
 
-	logger.Info("Starting app [ %s ] with version [ %s ]", e.flogoApp.Name(), e.flogoApp.Version())
+	logger.Infof("Starting app [ %s ] with version [ %s ]", e.flogoApp.Name(), e.flogoApp.Version())
 
 	logger.Info("Engine Starting...")
 
@@ -156,6 +160,9 @@ func (e *engineImpl) Start() error {
 }
 
 func (e *engineImpl) Stop() error {
+
+	logger := e.logger
+
 	logger.Info("Engine Stopping...")
 
 	if channels.Count() > 0 {
@@ -195,5 +202,7 @@ func (e *engineImpl) Stop() error {
 	}
 
 	logger.Info("Engine Stopped")
+	log.Sync()
+
 	return nil
 }

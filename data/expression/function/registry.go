@@ -2,7 +2,7 @@ package function
 
 import (
 	"fmt"
-	"github.com/project-flogo/core/support/logger"
+	"github.com/project-flogo/core/support/log"
 )
 
 var (
@@ -19,7 +19,7 @@ func Register(function Function) error {
 		return fmt.Errorf("function '%s' already registered", function.Name())
 	}
 
-	logger.Debugf("Registering function [ %s ]", function.Name())
+	log.RootLogger().Debugf("Registering function: %s", function.Name())
 
 	functions[function.Name()] = function
 

@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/project-flogo/core/support/logger"
+	"github.com/project-flogo/core/support/log"
 )
 
 var channels = make(map[string]*channelImpl)
@@ -61,7 +61,7 @@ func Start() error {
 			}
 			return fmt.Errorf("failed to start channel '%s', error: %s", channel.name, err.Error())
 		}
-		logger.Debugf("Started Engine Channel: %s", channel.name)
+		log.RootLogger().Debugf("Started Engine Channel: %s", channel.name)
 		started = append(started, channel)
 	}
 
@@ -72,7 +72,7 @@ func Stop() error {
 	for _, channel := range channels {
 		err := channel.Stop()
 		if err != nil {
-			logger.Warnf("error stopping channel '%s', error: %s", channel.name, err.Error())
+			log.RootLogger().Warnf("error stopping channel '%s', error: %s", channel.name, err.Error())
 		}
 	}
 
@@ -155,7 +155,7 @@ func Decode(channelDescriptor string) (string, int) {
 	if idx > 0 {
 		bSize, err := strconv.Atoi(channelDescriptor[idx+1:])
 		if err != nil {
-			logger.Warnf("invalid channel buffer size '%s', defaulting to buffer size of %d", channelDescriptor[idx+1:], buffSize)
+			log.RootLogger().Warnf("invalid channel buffer size '%s', defaulting to buffer size of %d", channelDescriptor[idx+1:], buffSize)
 		} else {
 			buffSize = bSize
 		}

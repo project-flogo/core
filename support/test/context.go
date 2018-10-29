@@ -5,7 +5,10 @@ import (
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/mapper"
 	"github.com/project-flogo/core/data/metadata"
+	"github.com/project-flogo/core/support/log"
 )
+
+var logger = log.ChildLogger(log.RootLogger(), "test")
 
 // NewActivityContext creates a new TestActivityContext
 func NewActivityContext(md *activity.Metadata) *TestActivityContext {
@@ -15,7 +18,7 @@ func NewActivityContext(md *activity.Metadata) *TestActivityContext {
 
 	ac := &TestActivityHost{
 		HostId:     "1",
-		HostRef:    "github.com/TIBCOSoftware/flogo-contrib/action/flow",
+		HostRef:    "github.com/project-flogo/flow",
 		IoMetadata: &metadata.IOMetadata{Input: input, Output: output},
 		HostData:   data.NewSimpleScope(nil, nil),
 	}
@@ -68,6 +71,10 @@ func (ic *TestActivityInitContext) Settings() map[string]interface{} {
 
 func (ic *TestActivityInitContext) MapperFactory() mapper.Factory {
 	return ic.factory
+}
+
+func (ic *TestActivityInitContext) Logger() log.Logger {
+	return logger
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -205,4 +212,8 @@ func (c *TestActivityContext) GetSharedTempData() map[string]interface{} {
 		c.shared = make(map[string]interface{})
 	}
 	return c.shared
+}
+
+func (c *TestActivityContext) Logger() log.Logger {
+	return nil
 }

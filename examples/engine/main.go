@@ -3,15 +3,14 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/project-flogo/core/support/log"
 	"os"
 	"runtime"
 	"runtime/pprof"
 
 	"github.com/project-flogo/core/engine"
-	"github.com/project-flogo/core/support/logger"
 )
 
-var log = logger.GetLogger("main-engine")
 var cpuProfile = flag.String("cpuprofile", "", "Writes CPU profile to the specified file")
 var memProfile = flag.String("memprofile", "", "Writes memory profile to the specified file")
 
@@ -34,7 +33,7 @@ func main() {
 
 	e, err := engine.NewFromConfigProvider(configProvider)
 	if err != nil {
-		log.Errorf("Failed to create engine: %s", err.Error())
+		log.RootLogger().Errorf("Failed to create engine: %s", err.Error())
 		os.Exit(1)
 	}
 
