@@ -13,18 +13,20 @@ const (
 	EnvKeyLogDateFormat  = "FLOGO_LOG_DTFORMAT"
 	DefaultLogDateFormat = "2006-01-02 15:04:05.000"
 	EnvKeyLogLevel       = "FLOGO_LOG_LEVEL"
-	DefaultLogLevel      = LevelInfo
+	DefaultLogLevel      = InfoLevel
 	EnvKeyLogFormat      = "FLOGO_LOG_FORMAT"
 	DefaultLogFormat     = FormatConsole
 
-	LevelDebug Level = iota
-	LevelInfo
-	LevelWarn
-	LevelError
+	TraceLevel Level = iota
+	DebugLevel
+	InfoLevel
+	WarnLevel
+	ErrorLevel
 
 	FormatConsole Format = iota
 	FormatJson
 )
+
 
 type Logger interface {
 	DebugEnabled() bool
@@ -46,7 +48,6 @@ type Logger interface {
 }
 
 type StructuredLogger interface {
-	Trace(msg string, fields ...Field)
 	Debug(msg string, fields ...Field)
 	Info(msg string, fields ...Field)
 	Warn(msg string, fields ...Field)
@@ -101,6 +102,8 @@ func Sync() {
 	zapSync(rootLogger)
 }
 
+var traceEnabled = false
+
 func configureLogging() {
 	envLogCtx := os.Getenv(EnvKeyLogCtx)
 	if strings.ToLower(envLogCtx) == "true" {
@@ -111,14 +114,17 @@ func configureLogging() {
 
 	envLogLevel := strings.ToUpper(os.Getenv(EnvKeyLogLevel))
 	switch envLogLevel {
+	case "TRACE":
+		rootLogLevel = DebugLevel
+		traceEnabled = true
 	case "DEBUG":
-		rootLogLevel = LevelDebug
+		rootLogLevel = DebugLevel
 	case "INFO":
-		rootLogLevel = LevelInfo
+		rootLogLevel = InfoLevel
 	case "WARN":
-		rootLogLevel = LevelWarn
+		rootLogLevel = WarnLevel
 	case "ERROR":
-		rootLogLevel = LevelError
+		rootLogLevel = ErrorLevel
 	default:
 		rootLogLevel = DefaultLogLevel
 	}

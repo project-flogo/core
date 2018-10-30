@@ -2,15 +2,15 @@ package log
 
 import (
 	"fmt"
-
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
+var traceLogger *zap.SugaredLogger
+
 type zapLoggerImpl struct {
 	loggerLevel *zap.AtomicLevel
 	mainLogger  *zap.SugaredLogger
-	traceLogger *zap.SugaredLogger
 }
 
 func (l *zapLoggerImpl) DebugEnabled() bool {
@@ -18,11 +18,11 @@ func (l *zapLoggerImpl) DebugEnabled() bool {
 }
 
 func (l *zapLoggerImpl) TraceEnabled() bool {
-	return false
+	return traceEnabled && l.loggerLevel.Enabled(zapcore.DebugLevel)
 }
 
 func (l *zapLoggerImpl) Trace(args ...interface{}) {
-	panic("implement me")
+	traceLogger.Debug(args...)
 }
 
 func (l *zapLoggerImpl) Debug(args ...interface{}) {
@@ -42,7 +42,7 @@ func (l *zapLoggerImpl) Error(args ...interface{}) {
 }
 
 func (l *zapLoggerImpl) Tracef(template string, args ...interface{}) {
-	panic("implement me")
+	traceLogger.Debugf(template, args...)
 }
 
 func (l *zapLoggerImpl) Debugf(template string, args ...interface{}) {
@@ -68,10 +68,6 @@ func (l *zapLoggerImpl) Structured() StructuredLogger {
 type zapStructuredLoggerImpl struct {
 	lvl *zap.AtomicLevel
 	zl  *zap.Logger
-}
-
-func (l *zapStructuredLoggerImpl) Trace(msg string, fields ...Field) {
-	panic("implement me")
 }
 
 func (l *zapStructuredLoggerImpl) Debug(msg string, fields ...Field) {
@@ -122,13 +118,13 @@ func setZapLogLevel(logger Logger, level Level) {
 
 func toZapLogLevel(level Level) zapcore.Level {
 	switch level {
-	case LevelDebug:
+	case DebugLevel, TraceLevel:
 		return zapcore.DebugLevel
-	case LevelInfo:
+	case InfoLevel:
 		return zapcore.InfoLevel
-	case LevelWarn:
+	case WarnLevel:
 		return zapcore.WarnLevel
-	case LevelError:
+	case ErrorLevel:
 		return zapcore.ErrorLevel
 	}
 
@@ -136,13 +132,22 @@ func toZapLogLevel(level Level) zapcore.Level {
 }
 
 func newZapRootLogger(name string, format Format) Logger {
+
 	zl, lvl, _ := newZapLogger(format)
 
+	var rootLogger Logger
 	if name == "" {
-		return &zapLoggerImpl{loggerLevel: lvl, mainLogger: zl.Sugar()}
+		rootLogger = &zapLoggerImpl{loggerLevel: lvl, mainLogger: zl.Sugar()}
 	} else {
-		return &zapLoggerImpl{loggerLevel: lvl, mainLogger: zl.Named(name).Sugar()}
+		rootLogger = &zapLoggerImpl{loggerLevel: lvl, mainLogger: zl.Named(name).Sugar()}
 	}
+
+	if traceEnabled {
+		tl, _, _ := newZapTraceLogger(format)
+		traceLogger = tl.Sugar()
+	}
+
+	return rootLogger
 }
 
 func newZapLogger(logFormat Format) (*zap.Logger, *zap.AtomicLevel, error) {
@@ -165,6 +170,32 @@ func newZapLogger(logFormat Format) (*zap.Logger, *zap.AtomicLevel, error) {
 	zl, err := cfg.Build(zap.AddCallerSkip(1))
 
 	return zl, &lvl, err
+}
+
+func newZapTraceLogger(logFormat Format) (*zap.Logger, *zap.AtomicLevel, error) {
+	cfg := zap.NewProductionConfig()
+	eCfg := cfg.EncoderConfig
+	eCfg.TimeKey = "timestamp"
+	eCfg.EncodeTime = zapcore.ISO8601TimeEncoder
+
+	if logFormat == FormatConsole {
+		eCfg.EncodeLevel = zapcore.CapitalLevelEncoder
+		cfg.Encoding = "console"
+		eCfg.EncodeName = nameEncoder
+		eCfg.EncodeLevel = traceLevelEncoder
+	}
+
+	cfg.EncoderConfig = eCfg
+
+	lvl := cfg.Level
+	lvl.SetLevel(zapcore.DebugLevel)
+	zl, err := cfg.Build(zap.AddCallerSkip(1))
+
+	return zl, &lvl, err
+}
+
+func traceLevelEncoder(l zapcore.Level, enc zapcore.PrimitiveArrayEncoder) {
+	enc.AppendString("[TRACE]")
 }
 
 func nameEncoder(loggerName string, enc zapcore.PrimitiveArrayEncoder) {
