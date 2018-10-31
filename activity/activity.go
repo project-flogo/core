@@ -2,7 +2,6 @@ package activity
 
 import (
 	"github.com/project-flogo/core/data/mapper"
-	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/support/log"
 )
 
@@ -32,19 +31,9 @@ type InitContext interface {
 	Logger() log.Logger
 }
 
-// HasDynamicMd is an optional interface that can be implemented by an activity.  If implemented,
-// DynamicMd() will be invoked to determine the inputs/outputs of the activity instead of
-// relying on the static information from the Activity's Metadata
-type HasDynamicMd interface {
-
-	// DynamicMd get the input/output metadata
-	DynamicMd(ctx Context) (*metadata.IOMetadata, error)
-}
-
 type Details struct {
 	IsReturn  bool
 	IsReply   bool
-	DynamicIO bool
 }
 
 type HasDetails interface {
