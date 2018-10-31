@@ -27,7 +27,6 @@ const (
 	FormatJson
 )
 
-
 type Logger interface {
 	DebugEnabled() bool
 	TraceEnabled() bool

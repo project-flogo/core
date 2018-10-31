@@ -32,8 +32,8 @@ type InitContext interface {
 }
 
 type Details struct {
-	IsReturn  bool
-	IsReply   bool
+	IsReturn bool
+	IsReply  bool
 }
 
 type HasDetails interface {
