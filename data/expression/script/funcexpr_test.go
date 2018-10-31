@@ -78,3 +78,11 @@ func (fnConcat) Eval(params ...interface{}) (interface{}, error) {
 
 	return "", fmt.Errorf("fnConcat function must have at least two arguments")
 }
+
+func TestFuncExprSingleQuote(t *testing.T) {
+	expr, err := factory.NewExpr("tstring.concat('abc','def')")
+	assert.Nil(t, err)
+	v, err := expr.Eval(nil)
+	assert.Nil(t, err)
+	assert.Equal(t, "abcdef", v)
+}

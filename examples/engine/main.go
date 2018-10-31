@@ -3,12 +3,13 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/project-flogo/core/support/log"
 	"os"
 	"runtime"
 	"runtime/pprof"
 
+	_ "github.com/project-flogo/core/data/expression/script"
 	"github.com/project-flogo/core/engine"
+	"github.com/project-flogo/core/support/log"
 )
 
 var cpuProfile = flag.String("cpuprofile", "", "Writes CPU profile to the specified file")

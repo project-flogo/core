@@ -6,7 +6,7 @@ import (
 	"github.com/project-flogo/core/support/log"
 )
 
-// Context describes the execution context for an LogActivity.
+// Context describes the execution context for an Activity.
 // It provides access to attributes, task and Flow information.
 type Context interface {
 	// ActivityHost gets the "host" under with the activity is executing
@@ -36,10 +36,10 @@ type Context interface {
 }
 
 type Host interface {
-	// ID returns the ID of the LogActivity Host
+	// ID returns the ID of the Activity Host
 	ID() string
 
-	// Name the name of the LogActivity Host
+	// Name the name of the Activity Host
 	Name() string
 
 	// IOMetadata get the input/output metadata of the activity host

@@ -7,8 +7,8 @@ import (
 )
 
 func init() {
-	activity.Register(NewLogActivity())
-	activity.Register(NewCounterActivity())
+	activity.LegacyRegister("testlog", NewLogActivity())
+	activity.LegacyRegister("testcounter", NewCounterActivity())
 }
 
 type TestLogActivity struct {

@@ -63,6 +63,8 @@ func LegacyRegister(ref string, activity Activity) error {
 	log.RootLogger().Debugf("Registering legacy activity: %s", ref)
 
 	activities[ref] = activity
+	name := path.Base(ref) //todo should probably get this from the descriptor? or on registration provide a short name
+	activityLoggers[ref] = log.ChildLogger(activityLogger, name)
 
 	return nil
 }

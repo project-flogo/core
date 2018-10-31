@@ -6,13 +6,13 @@ import (
 	"github.com/project-flogo/core/support/log"
 )
 
-// LogActivity is an interface for defining a custom LogActivity Execution
+// Activity is an interface for defining a custom Activity Execution
 type Activity interface {
 
 	// Metadata returns the metadata of the activity
 	Metadata() *Metadata
 
-	// Eval is called when an LogActivity is being evaluated.  Returning true indicates
+	// Eval is called when an Activity is being evaluated.  Returning true indicates
 	// that the task is done.
 	Eval(ctx Context) (done bool, err error)
 }
@@ -34,7 +34,7 @@ type InitContext interface {
 
 // HasDynamicMd is an optional interface that can be implemented by an activity.  If implemented,
 // DynamicMd() will be invoked to determine the inputs/outputs of the activity instead of
-// relying on the static information from the LogActivity's Metadata
+// relying on the static information from the Activity's Metadata
 type HasDynamicMd interface {
 
 	// DynamicMd get the input/output metadata
