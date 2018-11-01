@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/project-flogo/core/data/coerce"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/data"
@@ -144,6 +145,17 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 		}
 	} else {
 		inputMap = triggerValues
+	}
+
+	ioMd := act.act.IOMetadata()
+
+	for name, tv := range ioMd.Input {
+		if val, ok  := inputMap[name]; ok {
+			inputMap[name], err = coerce.ToType(val, tv.Type())
+			if err != nil {
+				return nil, err
+			}
+		}
 	}
 
 	newCtx := NewHandlerContext(ctx, h.config)
