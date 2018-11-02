@@ -6,6 +6,7 @@ import "encoding/json"
 type Config struct {
 	//inline action
 	Ref      string                 `json:"ref"`
+	Type     string                 `json:"type"` //an alias to the ref, can be used if imported
 	Settings map[string]interface{} `json:"settings"`
 
 	//referenced action

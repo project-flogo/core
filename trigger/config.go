@@ -12,6 +12,7 @@ import (
 // Config is the configuration for a Trigger
 type Config struct {
 	Id       string                 `json:"id"`
+	Type     string                 `json:"type"` //an alias to the ref, can be used if imported
 	Ref      string                 `json:"ref"`
 	Settings map[string]interface{} `json:"settings"`
 	Handlers []*HandlerConfig       `json:"handlers"`
@@ -104,6 +105,7 @@ func (ac *ActionConfig) UnmarshalJSON(d []byte) error {
 		Output map[string]interface{} `json:"output,omitempty"`
 
 		Ref      string                 `json:"ref"`
+		Type     string                 `json:"type"`
 		Settings map[string]interface{} `json:"settings"`
 
 		//referenced action
@@ -122,6 +124,7 @@ func (ac *ActionConfig) UnmarshalJSON(d []byte) error {
 	ac.Config = &action.Config{}
 
 	ac.Ref = ser.Ref
+	ac.Type = ser.Type
 	ac.Id = ser.Id
 	ac.If = ser.If
 	ac.Input = ser.Input

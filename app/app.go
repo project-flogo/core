@@ -2,11 +2,15 @@ package app
 
 import (
 	"fmt"
+	"path"
 	"runtime/debug"
+	"strings"
 
 	"github.com/project-flogo/core/action"
+	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/app/resource"
 	"github.com/project-flogo/core/data/property"
+	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/support/managed"
 	"github.com/project-flogo/core/trigger"
@@ -17,6 +21,10 @@ type Option func(*App) error
 func New(config *Config, runner action.Runner, options ...Option) (*App, error) {
 
 	app := &App{stopOnError: true, name: config.Name, version: config.Version}
+
+	for _, anImport := range config.Imports {
+		registerImport(anImport)
+	}
 
 	properties := make(map[string]interface{}, len(config.Properties))
 	for _, attr := range config.Properties {
@@ -190,4 +198,49 @@ func (a *App) Stop() error {
 
 	//a.active = false - this will allow restart
 	return nil
+}
+
+func registerImport(anImport string) error {
+
+	parts := strings.Split(anImport, " ")
+
+	var alias string
+	var ref string
+	numParts := len(parts)
+	if numParts == 1 {
+		ref = parts[0]
+		alias = path.Base(ref)
+	} else if numParts == 2 {
+		alias = parts[0]
+		ref = parts[1]
+	} else {
+		return fmt.Errorf("invalid import %s", anImport)
+	}
+
+	if alias == "" || ref == "" {
+		return fmt.Errorf("invalid import %s", anImport)
+	}
+
+	ct := getContribType(ref)
+	if ct == "" {
+		return fmt.Errorf("invalid import, contribution '%s' not registered", anImport)
+	}
+
+	log.RootLogger().Debugf("Registering type alias '%s' for %s [%s]", alias, ct, ref)
+
+	support.RegisterAlias(ct, alias, ref)
+	return nil
+}
+
+func getContribType(ref string) string {
+
+	if activity.Get(ref) != nil {
+		return "activity"
+	} else if action.GetFactory(ref) != nil {
+		return "action"
+	} else if trigger.GetFactory(ref) != nil {
+		return "trigger"
+	} else {
+		return ""
+	}
 }

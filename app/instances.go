@@ -6,6 +6,7 @@ import (
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/mapper"
 	"github.com/project-flogo/core/data/resolve"
+	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/support/managed"
 	"github.com/project-flogo/core/trigger"
@@ -16,6 +17,14 @@ func (a *App) createSharedActions(actionConfigs []*action.Config) (map[string]ac
 	actions := make(map[string]action.Action)
 
 	for _, config := range actionConfigs {
+
+		if config.Ref == "" {
+			var ok bool
+			config.Ref, ok =support.GetAliasRef("action", config.Type)
+			if !ok {
+				return nil, fmt.Errorf("Action type '%s' not registered", config.Type)
+			}
+		}
 
 		actionFactory := action.GetFactory(config.Ref)
 		if actionFactory == nil {
@@ -45,6 +54,14 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 		_, exists := triggers[tConfig.Id]
 		if exists {
 			return nil, fmt.Errorf("Trigger with id '%s' already registered, trigger ids have to be unique", tConfig.Id)
+		}
+
+		if tConfig.Ref == "" {
+			var ok bool
+			tConfig.Ref, ok =support.GetAliasRef("trigger", tConfig.Type)
+			if !ok {
+				return nil, fmt.Errorf("Trigger type '%s' not registered", tConfig.Type)
+			}
 		}
 
 		triggerFactory := trigger.GetFactory(tConfig.Ref)
@@ -97,6 +114,15 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 						acts = append(acts, act)
 					} else {
 						//create the action
+
+						if act.Ref == "" {
+							var ok bool
+							act.Ref, ok =support.GetAliasRef("action", act.Type)
+							if !ok {
+								return nil, fmt.Errorf("Action type '%s' not registered", act.Type)
+							}
+						}
+
 						actionFactory := action.GetFactory(act.Ref)
 						if actionFactory == nil {
 							return nil, fmt.Errorf("Action Factory '%s' not registered", act.Ref)
