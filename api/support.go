@@ -3,10 +3,11 @@ package api
 import (
 	"context"
 	"encoding/json"
-	"github.com/project-flogo/core/support/log"
 	"reflect"
 	"strconv"
 	"strings"
+
+	"github.com/project-flogo/core/support/log"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/activity"
@@ -261,7 +262,7 @@ func (aCtx *activityContext) GetSharedTempData() map[string]interface{} {
 }
 
 func (aCtx *activityContext) Logger() log.Logger {
-	return nil
+	return log.RootLogger()
 }
 
 func (aCtx *activityContext) GetInputObject(input data.StructValue) error {
