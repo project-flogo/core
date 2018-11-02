@@ -262,7 +262,7 @@ func (aCtx *activityContext) GetSharedTempData() map[string]interface{} {
 }
 
 func (aCtx *activityContext) Logger() log.Logger {
-	return log.RootLogger()
+	return log.ChildLogger(log.RootLogger(), "activity")
 }
 
 func (aCtx *activityContext) GetInputObject(input data.StructValue) error {
