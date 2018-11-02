@@ -12,11 +12,11 @@ import (
 	"github.com/project-flogo/core/support/log"
 )
 
-var cpuProfile = flag.String("cpuprofile", "", "Writes CPU profile to the specified file")
-var memProfile = flag.String("memprofile", "", "Writes memory profile to the specified file")
-
 var (
-	configProvider engine.AppConfigProvider
+	cpuProfile = flag.String("cpuprofile", "", "Writes CPU profile to the specified file")
+	memProfile = flag.String("memprofile", "", "Writes memory profile to the specified file")
+	cfgJson string
+	cfgCompressed bool
 )
 
 func main() {
@@ -32,7 +32,13 @@ func main() {
 		defer pprof.StopCPUProfile()
 	}
 
-	e, err := engine.NewFromConfigProvider(configProvider)
+	cfg, err := engine.LoadAppConfig(cfgJson, cfgCompressed)
+	if err != nil {
+		log.RootLogger().Errorf("Failed to create engine: %s", err.Error())
+		os.Exit(1)
+	}
+
+	e, err := engine.New(cfg)
 	if err != nil {
 		log.RootLogger().Errorf("Failed to create engine: %s", err.Error())
 		os.Exit(1)
