@@ -1,8 +1,9 @@
-package embedded
+package main
 
 import (
 	"os"
 
+	_ "github.com/project-flogo/core/data/expression/script"
 	"github.com/project-flogo/core/engine"
 	"github.com/project-flogo/core/support/log"
 )
@@ -21,7 +22,7 @@ func init() {
 		os.Exit(1)
 	}
 
-	_, err = engine.New(cfg)
+	_, err = engine.New(cfg, engine.DirectRunner)
 	if err != nil {
 		log.RootLogger().Errorf("Failed to create engine: %s", err.Error())
 		os.Exit(1)

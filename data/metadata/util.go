@@ -164,7 +164,7 @@ func ResolveSettingValue(setting string, value interface{}, settingsMd map[strin
 	}
 
 	if ok && len(strVal) > 0 && strVal[0] == '=' && ef != nil {
-		expr, err := ef.NewExpr(strVal)
+		expr, err := ef.NewExpr(strVal[1:])
 		if err != nil {
 			return nil, err
 		}

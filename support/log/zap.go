@@ -22,7 +22,9 @@ func (l *zapLoggerImpl) TraceEnabled() bool {
 }
 
 func (l *zapLoggerImpl) Trace(args ...interface{}) {
-	traceLogger.Debug(args...)
+	if traceEnabled {
+		traceLogger.Debug(args...)
+	}
 }
 
 func (l *zapLoggerImpl) Debug(args ...interface{}) {
@@ -42,7 +44,9 @@ func (l *zapLoggerImpl) Error(args ...interface{}) {
 }
 
 func (l *zapLoggerImpl) Tracef(template string, args ...interface{}) {
-	traceLogger.Debugf(template, args...)
+	if traceEnabled {
+		traceLogger.Debugf(template, args...)
+	}
 }
 
 func (l *zapLoggerImpl) Debugf(template string, args ...interface{}) {

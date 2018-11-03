@@ -137,3 +137,25 @@ func configureLogging() {
 	rootLogger = newZapRootLogger("flogo", logFormat)
 	SetLogLevel(rootLogger, rootLogLevel)
 }
+
+func ToLogLevel(lvlStr string) Level {
+
+	lvl := DefaultLogLevel
+
+	switch lvlStr {
+	case "TRACE":
+		lvl = DebugLevel
+	case "DEBUG":
+		lvl = DebugLevel
+	case "INFO":
+		lvl = InfoLevel
+	case "WARN":
+		lvl = WarnLevel
+	case "ERROR":
+		lvl = ErrorLevel
+	default:
+		lvl = DefaultLogLevel
+	}
+
+	return lvl
+}

@@ -23,8 +23,10 @@ type engineImpl struct {
 	logger         log.Logger
 }
 
+type Option func(*engineImpl)
+
 // New creates a new Engine
-func New(appConfig *app.Config) (Engine, error) {
+func New(appConfig *app.Config, options... Option) (Engine, error) {
 	if appConfig == nil {
 		return nil, fmt.Errorf("no App configuration provided")
 	}
@@ -47,6 +49,10 @@ func New(appConfig *app.Config) (Engine, error) {
 		//config.LogLevel = DefaultLogLevel
 
 		engine.config = config
+	}
+
+	for _, option := range options {
+		option(engine)
 	}
 
 	//add engine channels - todo should these be moved to app
