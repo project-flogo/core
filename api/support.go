@@ -178,6 +178,8 @@ func (ctx *initCtx) Logger() log.Logger {
 	return log.RootLogger()
 }
 
+var activityLogger = log.ChildLogger(log.RootLogger(), "activity")
+
 // EvalActivity evaluates the specified activity using the provided inputs
 func EvalActivity(act activity.Activity, input interface{}) (map[string]interface{}, error) {
 
@@ -188,6 +190,8 @@ func EvalActivity(act activity.Activity, input interface{}) (map[string]interfac
 	} else if tm, ok := input.(data.StructValue); ok {
 		inputMap = tm.ToMap()
 	}
+
+	logger := activityLogger
 
 	if act.Metadata() == nil {
 
@@ -202,13 +206,17 @@ func EvalActivity(act activity.Activity, input interface{}) (map[string]interfac
 			ref = value.Type().PkgPath()
 		}
 		act = activity.Get(ref)
+		l := activity.GetLogger(ref)
+		if l != nil {
+			logger = l
+		}
 	}
 
 	if act.Metadata() == nil {
 		//return error
 	}
 
-	ac := &activityContext{input: make(map[string]interface{}), output: make(map[string]interface{})}
+	ac := &activityContext{input: make(map[string]interface{}), output: make(map[string]interface{}), logger:logger}
 
 	for key, value := range inputMap {
 		ac.input[key] = value
@@ -229,6 +237,7 @@ func EvalActivity(act activity.Activity, input interface{}) (map[string]interfac
 type activityContext struct {
 	input  map[string]interface{}
 	output map[string]interface{}
+	logger log.Logger
 }
 
 func (aCtx *activityContext) ActivityHost() activity.Host {
@@ -261,7 +270,7 @@ func (aCtx *activityContext) GetSharedTempData() map[string]interface{} {
 }
 
 func (aCtx *activityContext) Logger() log.Logger {
-	return nil
+	return aCtx.logger
 }
 
 func (aCtx *activityContext) GetInputObject(input data.StructValue) error {
