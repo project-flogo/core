@@ -1,0 +1,111 @@
+{
+  "name": "swagger",
+  "type": "flogo:app",
+  "version": "1.0.0",
+  "description": "This is a simple proxy.",
+  "properties": null,
+  "channels": null,
+  "triggers": [
+    {
+      "name": "flogo-rest",
+      "id": "MyProxy",
+      "ref": "github.com/project-flogo/core/swagger",
+      "description": "Simple REST Trigger",
+      "settings": {
+        "port": "9096"
+      },
+      "handlers": [
+        {
+          "settings": {
+            "method": "GET",
+            "path": "/pets"
+          },
+          "actions": [
+            {
+              "id": "microgateway:jwt"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "id": "microgateway:jwt",
+      "compressed": false,
+      "data": {
+        "name": "Pets",
+        "steps": [
+          {
+            "service": "jwtService",
+            "input": {
+              "token": "=$.payload.headers.Authorization"
+            }
+          },
+          {
+            "service": "PetStorePets",
+            "input": {
+              "pathParams.petId": "=$.jwtService.outputs.token.claims.id"
+            }
+          }
+        ],
+        "responses": [
+          {
+            "if": "$.jwtService.outputs.valid == false",
+            "error": true,
+            "output": {
+              "code": 401,
+              "data": {
+                "error": "=$.PetStorePets.outputs"
+              }
+            }
+          },
+          {
+            "if": "$.jwtService.outputs.valid == true",
+            "error": false,
+            "output": {
+              "code": 200,
+              "data": {
+                "error": "JWT token is valid",
+                "pet": "=$.PetStorePets.outputs.result"
+              }
+            }
+          }
+        ],
+        "services": [
+          {
+            "name": "jwtService",
+            "description": "Validating JWT token to access Petstore service",
+            "ref": "github.com/project-flogo/microgateway/activity/jwt",
+            "settings": {
+              "signingMethod": "HMAC",
+              "key": "qwertyuiopasdfghjklzxcvbnm789101",
+              "aud": "www.mashling.io",
+              "iss": "Mashling",
+              "sub": "tempuser@mail.com"
+            }
+          },
+          {
+            "name": "PetStorePets",
+            "description": "Get pets by ID from the petstore",
+            "ref": "github.com/project-flogo/contrib/activity/rest",
+            "settings": {
+              "uri": "https://petstore.swagger.io/v2/pet/:petId",
+              "method": "GET"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "actions": [
+    {
+      "ref": "github.com/project-flogo/microgateway",
+      "settings": {
+        "uri": "microgateway:jwt"
+      },
+      "id": "microgateway:jwt",
+      "metadata": null
+    }
+  ]
+}
