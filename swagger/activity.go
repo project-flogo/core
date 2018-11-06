@@ -131,7 +131,7 @@ func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 	}
 	fmt.Println("Before return")
 	return string(byteArray[:]), nil*/
-	fmt.Println("App name :", appConfig.Name())
+	fmt.Println("App name :", appConfig.Name)
 	fmt.Println("Description :", appConfig.Description)
 	fmt.Println("Version :", appConfig.Version)
 	return Generate(hostname, appConfig.Name, appConfig.Description, appConfig.Version, endpoints)
