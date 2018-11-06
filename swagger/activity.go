@@ -50,7 +50,10 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 		port = DefaultPort
 	}
 
-	response := Swagger("hostname",config)
+	response,err := Swagger("hostname",config)
+	if err != nil {
+		return nil, err
+	}
 
 	mux := http.NewServeMux()
 	server := &http.Server{
@@ -91,7 +94,7 @@ func (t *Trigger) Stop() error {
 	return nil
 }
 
-func Swagger(hostname string, config *trigger.Config) string {
+func Swagger(hostname string, config *trigger.Config) (string, error) {
 	var endpoints []Endpoint
 	var appConfig *app.Config
 	if config.Ref == "github.com/project-flogo/contrib/trigger/rest" {
@@ -117,9 +120,9 @@ func Swagger(hostname string, config *trigger.Config) string {
 	}
 	byteArray,err := Generate(hostname, appConfig.Name, appConfig.Description, appConfig.Version, endpoints)
 	if err != nil {
-		return string(err)
+		return nil,err
 	}
-	return string(byteArray[:])
+	return string(byteArray[:]), nil
 }
 
 
