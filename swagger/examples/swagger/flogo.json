@@ -37,54 +37,14 @@
         "name": "Pets",
         "steps": [
           {
-            "service": "jwtService",
-            "input": {
-              "token": "=$.payload.headers.Authorization"
-            }
-          },
-          {
             "service": "PetStorePets",
             "input": {
               "pathParams.petId": "=$.jwtService.outputs.token.claims.id"
             }
           }
         ],
-        "responses": [
-          {
-            "if": "$.jwtService.outputs.valid == false",
-            "error": true,
-            "output": {
-              "code": 401,
-              "data": {
-                "error": "=$.PetStorePets.outputs"
-              }
-            }
-          },
-          {
-            "if": "$.jwtService.outputs.valid == true",
-            "error": false,
-            "output": {
-              "code": 200,
-              "data": {
-                "error": "JWT token is valid",
-                "pet": "=$.PetStorePets.outputs.result"
-              }
-            }
-          }
-        ],
+        "responses": [],
         "services": [
-          {
-            "name": "jwtService",
-            "description": "Validating JWT token to access Petstore service",
-            "ref": "github.com/project-flogo/microgateway/activity/jwt",
-            "settings": {
-              "signingMethod": "HMAC",
-              "key": "qwertyuiopasdfghjklzxcvbnm789101",
-              "aud": "www.mashling.io",
-              "iss": "Mashling",
-              "sub": "tempuser@mail.com"
-            }
-          },
           {
             "name": "PetStorePets",
             "description": "Get pets by ID from the petstore",
