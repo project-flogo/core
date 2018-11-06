@@ -96,7 +96,7 @@ func (t *Trigger) Stop() error {
 func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 	fmt.Println("Inside Swagger")
 	var endpoints []Endpoint
-	appConfig := *api.Properties()
+	appConfig := *api.App.properties
 	fmt.Println("Details : ",appConfig)
 	if config.Ref == "github.com/project-flogo/contrib/trigger/rest" {
 		for _, handler := range config.Handlers{
