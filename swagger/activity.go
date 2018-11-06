@@ -69,7 +69,7 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 }
 
 func (t *Trigger) SwaggerHandler(w http.ResponseWriter, req *http.Request) {
-		io.WriteString(w, "{\"response\":\"Ping successful\"}\n")
+		io.WriteString(w, t.response)
 }
 
 // Start implements util.Managed.Start
