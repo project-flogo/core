@@ -4,17 +4,15 @@ import(
 	"fmt"
 	"bytes"
 	"context"
-	"encoding/json"
 	"io"
 	"net/http"
-	"net/url"
 	"strconv"
-	"strings"
 
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/trigger"
 )
+
 var triggerMd = trigger.NewMetadata(&Settings{}, &HandlerSettings{})
 const DefaultPort = "9096"
 
@@ -30,6 +28,15 @@ func (*Factory) Metadata() *trigger.Metadata {
 	return triggerMd
 }
 
+// Trigger is the swagger trigger
+type Trigger struct {
+	metadata 	*trigger.Metadata
+	settings 	*Settings
+	config   	*trigger.Config
+	Server 		*http.Server
+	logger 		log.Logger
+	response	string
+}
 
 // New implements trigger.Factory.New
 func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {

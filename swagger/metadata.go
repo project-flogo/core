@@ -11,16 +11,6 @@ type Endpoint struct {
 	EndDelim    rune   `md:"end_delim"`
 }
 
-// Trigger is the swagger trigger
-type Trigger struct {
-	metadata 	*trigger.Metadata
-	settings 	*Settings
-	config   	*trigger.Config
-	Server 		*http.Server
-	logger 		log.Logger
-	response	string
-}
-
 
 type Settings struct {
 	Port int `md:"port,required"`
