@@ -2,8 +2,6 @@ package swagger
 
 import(
 	"fmt"
-	"bytes"
-	"context"
 	"io"
 	"net/http"
 	"strconv"
