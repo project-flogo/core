@@ -9,7 +9,7 @@ import(
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/trigger"
-	"github.com/project-flogo/core/engine"
+	"github.com/project-flogo/core/api"
 )
 
 var triggerMd = trigger.NewMetadata(&Settings{}, &HandlerSettings{})
@@ -96,7 +96,8 @@ func (t *Trigger) Stop() error {
 func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 	fmt.Println("Inside Swagger")
 	var endpoints []Endpoint
-	appConfig := *engine.engineImpl.flogoApp
+	appConfig := *api.Properties()
+	fmt.Println("Details : ",appConfig)
 	if config.Ref == "github.com/project-flogo/contrib/trigger/rest" {
 		for _, handler := range config.Handlers{
 			fmt.Println("Inside Swagger : for")
@@ -131,9 +132,9 @@ func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 	}
 	fmt.Println("Before return")
 	return string(byteArray[:]), nil*/
-	fmt.Println("App name :", appConfig.name)
+	fmt.Println("App name :", appConfig.Name())
 	//fmt.Println("Description :", appConfig.Description)
-	fmt.Println("Version :", appConfig.version)
+	fmt.Println("Version :", appConfig.Version())
 	return Generate(hostname, appConfig.Name, appConfig.Description, appConfig.Version, endpoints)
 }
 
