@@ -105,7 +105,7 @@ func Swagger(hostname string, config *trigger.Config) string {
 			switch config.Ref {
 			case "github.com/project-flogo/contrib/trigger/rest":
 				beginDelim = ':'
-				endDelim = "/"
+				endDelim = '/'
 			default:
 				beginDelim = '{'
 				endDelim = '}'
@@ -117,7 +117,7 @@ func Swagger(hostname string, config *trigger.Config) string {
 	}
 	byteArray,err := Generate(hostname, appConfig.Name, appConfig.Description, appConfig.Version, endpoints)
 	if err != nil {
-		return err
+		return string(err)
 	}
 	return string(byteArray[:])
 }
