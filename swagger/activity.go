@@ -50,11 +50,9 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 		port = DefaultPort
 	}
 	fmt.Println("Calling Swagger")
-	response,err := Swagger("hostname",config)
+	response,_ := Swagger("hostname",config)
 	fmt.Println("After Swagger")
-	if err != nil {
-		return nil, err
-	}
+
 
 	mux := http.NewServeMux()
 	server := &http.Server{
@@ -95,7 +93,7 @@ func (t *Trigger) Stop() error {
 	return nil
 }
 
-func Swagger(hostname string, config *trigger.Config) (string, error) {
+func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 	fmt.Println("Inside Swagger")
 	var endpoints []Endpoint
 	var appConfig *app.Config
@@ -126,13 +124,14 @@ func Swagger(hostname string, config *trigger.Config) (string, error) {
 		}
 	}
 	fmt.Println("Before Generate")
-	byteArray,error := Generate(hostname, appConfig.Name, appConfig.Description, appConfig.Version, endpoints)
+	/*byteArray,error := Generate(hostname, appConfig.Name, appConfig.Description, appConfig.Version, endpoints)
 	if error != nil {
 		fmt.Println("Inside error")
 		return "",error
 	}
 	fmt.Println("Before return")
-	return string(byteArray[:]), nil
+	return string(byteArray[:]), nil*/
+	return Generate(hostname, appConfig.Name, appConfig.Description, appConfig.Version, endpoints)
 }
 
 
