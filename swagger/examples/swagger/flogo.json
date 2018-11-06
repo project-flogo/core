@@ -10,9 +10,9 @@
       "name": "flogo-rest",
       "id": "MyProxy",
       "ref": "github.com/project-flogo/core/swagger",
-      "description": "Simple REST Trigger",
       "settings": {
-        "port": "9096"
+        "port": "9096",
+        "description": "Simple REST Trigger"
       },
       "handlers": [
         {

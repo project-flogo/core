@@ -9,6 +9,7 @@ import(
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/trigger"
+	"github.com/project-flogo/core/app"
 )
 
 var triggerMd = trigger.NewMetadata(&Settings{}, &HandlerSettings{})
@@ -49,6 +50,8 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 		port = DefaultPort
 	}
 
+	response := Swagger("hostname",config)
+
 	mux := http.NewServeMux()
 	server := &http.Server{
 		Addr:    ":" + port,
@@ -57,11 +60,10 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 	trigger := &Trigger{
 		metadata: f.Metadata(),
 		config:   config,
-		response: string("Hello this is test for swagger"),
+		response: string(response),
 		Server: server,
 	}
 	mux.HandleFunc("/swagger", trigger.SwaggerHandler)
-	//response := Swagger("hostname",config)
 
 	return trigger, nil
 }
@@ -89,38 +91,36 @@ func (t *Trigger) Stop() error {
 	return nil
 }
 
-/*func Swagger(hostname string, config *trigger.Config) string {
+func Swagger(hostname string, config *trigger.Config) string {
+	var endpoints []Endpoint
+	var appConfig *app.Config
 	if config.Ref == "github.com/project-flogo/contrib/trigger/rest" {
-		fmt.Print
+		for _, handler := range config.Handlers{
+			var endpoint Endpoint
+			endpoint.Name = config.Id
+			endpoint.Method = handler.Settings["method"].(string)
+			endpoint.Path = handler.Settings["path"].(string)
+			endpoint.Description = config.Settings["description"].(string)
+			var beginDelim, endDelim rune
+			switch config.Ref {
+			case "github.com/project-flogo/contrib/trigger/rest":
+				beginDelim = ':'
+				endDelim = "/"
+			default:
+				beginDelim = '{'
+				endDelim = '}'
+			}
+			endpoint.BeginDelim = beginDelim
+			endpoint.EndDelim = endDelim
+			endpoints = append(endpoints, endpoint)
+		}
 	}
-
-}*/
-
-
-/*if trigger.Ref == "github.com/TIBCOSoftware/flogo-contrib/trigger/rest"  {
-for _, handler := range trigger.Handlers {
-var endpoint swagger.Endpoint
-endpoint.Name = trigger.Name
-endpoint.Method = handler.Settings["method"].(string)
-endpoint.Path = handler.Settings["path"].(string)
-endpoint.Description = trigger.Description
-var beginDelim, endDelim rune
-switch trigger.Type {
-case "github.com/TIBCOSoftware/flogo-contrib/trigger/rest":
-beginDelim = ':'
-endDelim = '/'
-case "github.com/TIBCOSoftware/mashling/ext/flogo/trigger/gorillamuxtrigger":
-beginDelim = '{'
-endDelim = '}'
-default:
-beginDelim = '{'
-endDelim = '}'
+	byteArray,err := Generate(hostname, appConfig.Name, appConfig.Description, appConfig.Version, endpoints)
+	if err != nil {
+		return err
+	}
+	return string(byteArray[:])
 }
-endpoint.BeginDelim = beginDelim
-endpoint.EndDelim = endDelim
-endpoints = append(endpoints, endpoint)
-}
-}*/
 
 
 func (t *Trigger) Initialize(ctx trigger.InitContext) error {
