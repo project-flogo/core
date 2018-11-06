@@ -120,7 +120,7 @@ func Swagger(hostname string, config *trigger.Config) (string, error) {
 	}
 	byteArray,err := Generate(hostname, appConfig.Name, appConfig.Description, appConfig.Version, endpoints)
 	if err != nil {
-		return nil,err
+		return "",err
 	}
 	return string(byteArray[:]), nil
 }
