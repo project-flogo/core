@@ -49,8 +49,9 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 	if len(port) == 0 {
 		port = DefaultPort
 	}
-
+	fmt.Println("Calling Swagger")
 	response,err := Swagger("hostname",config)
+	fmt.Println("After Swagger")
 	if err != nil {
 		return nil, err
 	}
@@ -95,15 +96,21 @@ func (t *Trigger) Stop() error {
 }
 
 func Swagger(hostname string, config *trigger.Config) (string, error) {
+	fmt.Println("Inside Swagger")
 	var endpoints []Endpoint
 	var appConfig *app.Config
 	if config.Ref == "github.com/project-flogo/contrib/trigger/rest" {
 		for _, handler := range config.Handlers{
+			fmt.Println("Inside Swagger : for")
 			var endpoint Endpoint
 			endpoint.Name = config.Id
+			fmt.Println("ID")
 			endpoint.Method = handler.Settings["method"].(string)
+			fmt.Println("Method")
 			endpoint.Path = handler.Settings["path"].(string)
+			fmt.Println("Path")
 			endpoint.Description = config.Settings["description"].(string)
+			fmt.Println("Description")
 			var beginDelim, endDelim rune
 			switch config.Ref {
 			case "github.com/project-flogo/contrib/trigger/rest":
@@ -118,10 +125,13 @@ func Swagger(hostname string, config *trigger.Config) (string, error) {
 			endpoints = append(endpoints, endpoint)
 		}
 	}
+	fmt.Println("Before Generate")
 	byteArray,err := Generate(hostname, appConfig.Name, appConfig.Description, appConfig.Version, endpoints)
 	if err != nil {
+		fmt.Println("Inside error")
 		return "",err
 	}
+	fmt.Println("Before return")
 	return string(byteArray[:]), nil
 }
 
