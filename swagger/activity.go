@@ -95,7 +95,6 @@ func (t *Trigger) Stop() error {
 func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 	fmt.Println("Inside Swagger")
 	var endpoints []Endpoint
-	fmt.Println("Details : ",appConfig)
 	if config.Ref == "github.com/project-flogo/contrib/trigger/rest" {
 		for _, handler := range config.Handlers{
 			fmt.Println("Inside Swagger : for")
@@ -123,16 +122,19 @@ func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 		}
 	}
 	fmt.Println("Before Generate")
+	configurations, _ := config.AppConfig.GetAppConfig()
+	fmt.Println(configurations)
 	/*byteArray,error := Generate(hostname, appConfig.Name, appConfig.Description, appConfig.Version, endpoints)
 	if error != nil {
 		fmt.Println("Inside error")
 		return "",error
 	}
+
 	fmt.Println("Before return")
 	return string(byteArray[:]), nil*/
-	fmt.Println("App name :", config.AppConfig.Name)
+	//fmt.Println("App name :", config.AppConfig.Name)
 	//fmt.Println("Description :", appConfig.Description)
-	fmt.Println("Version :", config.Appconfig.Version)
+	//fmt.Println("Version :", config.Appconfig.Version)
 	return Generate(hostname, appConfig.Name, appConfig.Description, appConfig.Version, endpoints)
 }
 
