@@ -43,15 +43,12 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Printf("%+v\n", config)
 	port := strconv.Itoa(config.Settings["port"].(int))
 	if len(port) == 0 {
 		port = DefaultPort
 	}
-	fmt.Println("Calling Swagger")
-	response,_ := Swagger("hostname",config)
-	fmt.Println("After Swagger")
 
+	response,_ := Swagger("hostname",config)
 
 	mux := http.NewServeMux()
 	server := &http.Server{
@@ -93,21 +90,14 @@ func (t *Trigger) Stop() error {
 }
 
 func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
-	fmt.Println("Inside Swagger")
 	var endpoints []Endpoint
-	if config.Ref == "github.com/project-flogo/core/swagger" {
+	if config.Ref == "github.com/project-flogo/contrib/trigger/rest" || config.Ref == "github.com/project-flogo/core/swagger"{
 		for _, handler := range config.Handlers{
-
-			fmt.Println("Inside Swagger : ", handler)
 			var endpoint Endpoint
 			endpoint.Name = config.Id
-			fmt.Println("ID : ",endpoint.Name)
 			endpoint.Method = handler.Settings["method"].(string)
-			fmt.Println("Method : ",endpoint.Method)
 			endpoint.Path = handler.Settings["path"].(string)
-			fmt.Println("Path : ",endpoint.Path)
 			endpoint.Description = config.Settings["description"].(string)
-			fmt.Println("Description :",endpoint.Description)
 			var beginDelim, endDelim rune
 			switch config.Ref {
 			case "github.com/project-flogo/contrib/trigger/rest":
