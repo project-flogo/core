@@ -121,13 +121,7 @@ func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 			endpoints = append(endpoints, endpoint)
 		}
 	}
-	fmt.Println("Before Generate")
-	byteArray,err := Generate(hostname, config.AppConfig["Name"], config.AppConfig["Version"], config.AppConfig["Description"], endpoints)
-	if err != nil {
-		fmt.Println("Inside error")
-		return "",err
-	}
-	return string(byteArray[:]),nil
+	return Generate(hostname, config.AppConfig["Name"], config.AppConfig["Version"], config.AppConfig["Description"], endpoints)
 }
 
 
