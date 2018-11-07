@@ -9,7 +9,6 @@ import(
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/trigger"
-	"github.com/project-flogo/core/engine"
 )
 
 var triggerMd = trigger.NewMetadata(&Settings{}, &HandlerSettings{})
