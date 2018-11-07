@@ -122,19 +122,12 @@ func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 		}
 	}
 	fmt.Println("Before Generate")
-	/*byteArray,error := Generate(hostname, appConfig.Name, appConfig.Description, appConfig.Version, endpoints)
-	if error != nil {
+	byteArray,err := Generate(hostname, config.AppConfig["Name"], config.AppConfig["Version"], config.AppConfig["Description"], endpoints)
+	if err != nil {
 		fmt.Println("Inside error")
-		return "",error
+		return "",err
 	}
-
-	fmt.Println("Before return")
-	return string(byteArray[:]), nil*/
-	//fmt.Println("App name :", config.AppConfig.Name)
-	//fmt.Println("Description :", appConfig.Description)
-	//fmt.Println("Version :", config.Appconfig.Version)
-	//return Generate(hostname, appConfig.Name, appConfig.Description, appConfig.Version, endpoints)
-	return Generate(hostname, "", "", "", endpoints)
+	return string(byteArray[:]),nil
 }
 
 
