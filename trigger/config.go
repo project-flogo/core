@@ -17,7 +17,7 @@ type Config struct {
 	Ref      string                 `json:"ref"`
 	Settings map[string]interface{} `json:"settings"`
 	Handlers []*HandlerConfig       `json:"handlers"`
-	AppConfig *app.App		`json:"appconfig"`
+	AppConfig *app.Config		`json:"appconfig"`
 }
 
 func (c *Config) FixUp(md *Metadata) error {
