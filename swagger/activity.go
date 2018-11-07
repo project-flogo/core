@@ -95,7 +95,7 @@ func (t *Trigger) Stop() error {
 func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 	fmt.Println("Inside Swagger")
 	var endpoints []Endpoint
-	if config.Type == "github.com/project-flogo/contrib/trigger/rest" {
+	if config.Type == "github.com/project-flogo/core/swagger" {
 		for _, handler := range config.Handlers{
 
 			fmt.Println("Inside Swagger : ", handler)
