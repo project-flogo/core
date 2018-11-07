@@ -91,27 +91,30 @@ func (t *Trigger) Stop() error {
 
 func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 	var endpoints []Endpoint
-	if config.Ref == "github.com/project-flogo/contrib/trigger/rest" || config.Ref == "github.com/project-flogo/core/swagger"{
-		for _, handler := range config.Handlers{
-			var endpoint Endpoint
-			endpoint.Name = config.Id
-			endpoint.Method = handler.Settings["method"].(string)
-			endpoint.Path = handler.Settings["path"].(string)
-			endpoint.Description = config.Settings["description"].(string)
-			var beginDelim, endDelim rune
-			switch config.Ref {
-			case "github.com/project-flogo/contrib/trigger/rest":
-				beginDelim = ':'
-				endDelim = '/'
-			default:
-				beginDelim = '{'
-				endDelim = '}'
+	fmt.Println("%+v\n", config.AppConfig)
+	//for _, trigger := range config.AppConfig["Triggers"] {
+		if config.Ref == "github.com/project-flogo/contrib/trigger/rest" || config.Ref == "github.com/project-flogo/core/swagger" {
+			for _, handler := range config.Handlers {
+				var endpoint Endpoint
+				endpoint.Name = config.Id
+				endpoint.Method = handler.Settings["method"].(string)
+				endpoint.Path = handler.Settings["path"].(string)
+				endpoint.Description = config.Settings["description"].(string)
+				var beginDelim, endDelim rune
+				switch config.Ref {
+				case "github.com/project-flogo/contrib/trigger/rest":
+					beginDelim = ':'
+					endDelim = '/'
+				default:
+					beginDelim = '{'
+					endDelim = '}'
+				}
+				endpoint.BeginDelim = beginDelim
+				endpoint.EndDelim = endDelim
+				endpoints = append(endpoints, endpoint)
 			}
-			endpoint.BeginDelim = beginDelim
-			endpoint.EndDelim = endDelim
-			endpoints = append(endpoints, endpoint)
 		}
-	}
+	//}
 	return Generate(hostname, config.AppConfig["Name"], config.AppConfig["Version"], config.AppConfig["Description"], endpoints)
 }
 
