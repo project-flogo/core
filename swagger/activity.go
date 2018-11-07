@@ -123,8 +123,6 @@ func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 		}
 	}
 	fmt.Println("Before Generate")
-	configurations:= *engine.AppConfigProvider.GetAppConfig()
-	fmt.Println(configurations)
 	/*byteArray,error := Generate(hostname, appConfig.Name, appConfig.Description, appConfig.Version, endpoints)
 	if error != nil {
 		fmt.Println("Inside error")
@@ -136,7 +134,8 @@ func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 	//fmt.Println("App name :", config.AppConfig.Name)
 	//fmt.Println("Description :", appConfig.Description)
 	//fmt.Println("Version :", config.Appconfig.Version)
-	return Generate(hostname, appConfig.Name, appConfig.Description, appConfig.Version, endpoints)
+	//return Generate(hostname, appConfig.Name, appConfig.Description, appConfig.Version, endpoints)
+	return Generate(hostname, "", "", "", endpoints)
 }
 
 

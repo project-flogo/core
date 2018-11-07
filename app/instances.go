@@ -48,13 +48,16 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 
 	mapperFactory := mapper.NewFactory(resolve.GetBasicResolver())
 	expressionFactory := expression.NewFactory(resolve.GetBasicResolver())
-
 	for _, tConfig := range tConfigs {
 
 		_, exists := triggers[tConfig.Id]
 		if exists {
 			return nil, fmt.Errorf("Trigger with id '%s' already registered, trigger ids have to be unique", tConfig.Id)
 		}
+
+		//adding map to get app details
+		tConfig.AppConfig = map[string]string{"Name": a.name, "Version": a.version, "Description": *Config.Version}
+
 
 		if tConfig.Ref == "" {
 			var ok bool
