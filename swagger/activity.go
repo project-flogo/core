@@ -9,6 +9,7 @@ import(
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/trigger"
+	"github.com/project-flogo/core/engine"
 )
 
 var triggerMd = trigger.NewMetadata(&Settings{}, &HandlerSettings{})
@@ -122,7 +123,7 @@ func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 		}
 	}
 	fmt.Println("Before Generate")
-	configurations, _ := config.AppConfig.GetAppConfig()
+	configurations:= *engine.AppConfigProvider.GetAppConfig()
 	fmt.Println(configurations)
 	/*byteArray,error := Generate(hostname, appConfig.Name, appConfig.Description, appConfig.Version, endpoints)
 	if error != nil {

@@ -7,7 +7,7 @@ import (
 	"github.com/project-flogo/core/data/mapper"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/data/resolve"
-	"github.com/project-flogo/core/engine"
+	//"github.com/project-flogo/core/engine"
 )
 
 // Config is the configuration for a Trigger
@@ -17,7 +17,7 @@ type Config struct {
 	Ref      string                 	`json:"ref"`
 	Settings map[string]interface{} 	`json:"settings"`
 	Handlers []*HandlerConfig       	`json:"handlers"`
-	AppConfig *engine.AppConfigProvider	`json:"appconfig"`
+	//AppConfig *engine.AppConfigProvider	`json:"appconfig"`
 }
 
 func (c *Config) FixUp(md *Metadata) error {
