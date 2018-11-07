@@ -97,16 +97,17 @@ func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 	var endpoints []Endpoint
 	if config.Ref == "github.com/project-flogo/contrib/trigger/rest" {
 		for _, handler := range config.Handlers{
-			fmt.Println("Inside Swagger : for")
+
+			fmt.Println("Inside Swagger : ", handler)
 			var endpoint Endpoint
 			endpoint.Name = config.Id
-			fmt.Println("ID")
+			fmt.Println("ID : ",endpoint.Name)
 			endpoint.Method = handler.Settings["method"].(string)
-			fmt.Println("Method")
+			fmt.Println("Method : ",endpoint.Method)
 			endpoint.Path = handler.Settings["path"].(string)
-			fmt.Println("Path")
+			fmt.Println("Path : ",endpoint.Path)
 			endpoint.Description = config.Settings["description"].(string)
-			fmt.Println("Description")
+			fmt.Println("Description :",endpoint.Description)
 			var beginDelim, endDelim rune
 			switch config.Ref {
 			case "github.com/project-flogo/contrib/trigger/rest":

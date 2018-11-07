@@ -10,6 +10,7 @@ import (
 // Generate generates a Swagger 2.0 document based off of the provided endpoints.
 func Generate(host string, name string, description string, version string, endpoints []Endpoint) ([]byte, error) {
 	fmt.Println("Inside Generate")
+	fmt.Println("endpoints received:", endpoints)
 	paths := map[string]interface{}{}
 
 	for _, endpoint := range endpoints {
