@@ -20,7 +20,7 @@ type Option func(*App) error
 
 func New(config *Config, runner action.Runner, options ...Option) (*App, error) {
 
-	app := &App{stopOnError: true, name: config.Name, version: config.Version}
+	app := &App{stopOnError: true, name: config.Name, version: config.Version, description: config.Description}
 
 	for _, anImport := range config.Imports {
 		registerImport(anImport)
@@ -92,6 +92,7 @@ func ExternalProperties(providerId string, overrides string, processors ...prope
 type App struct {
 	name        string
 	version     string
+	description string
 	propManager *property.Manager
 	resManager  *resource.Manager
 	actions     map[string]action.Action

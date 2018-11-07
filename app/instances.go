@@ -56,7 +56,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 		}
 
 		//adding map to get app details
-		tConfig.AppConfig = map[string]string{"Name": a.name, "Version": a.version, "Description": *Config.Version}
+		tConfig.AppConfig = map[string]string{"Name": a.name, "Version": a.version, "Description": a.description}
 
 
 		if tConfig.Ref == "" {
