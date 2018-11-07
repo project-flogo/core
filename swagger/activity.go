@@ -115,7 +115,7 @@ func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 			}
 		}
 	//}
-	return Generate(hostname, config.AppConfig["Name"], config.AppConfig["Version"], config.AppConfig["Description"], endpoints)
+	return Generate(hostname, config.AppConfig["Name"].(string), config.AppConfig["Version"].(string), config.AppConfig["Description"].(string), endpoints)
 }
 
 
