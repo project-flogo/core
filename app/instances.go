@@ -50,7 +50,8 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 	expressionFactory := expression.NewFactory(resolve.GetBasicResolver())
 	for _, tConfig := range tConfigs {
 
-		tConfig.AppConfig = map[string]interface{}{"Name": a.name, "Version": a.version, "Description": a.description}
+		tConfig.AppConfig = map[string]interface{}{"Name": a.name, "Version": a.version, "Description": a.description,
+								"Trigger": make(map[string]interface{})}
 
 		_, exists := triggers[tConfig.Id]
 		if exists {
