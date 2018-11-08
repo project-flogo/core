@@ -107,6 +107,7 @@ func Swagger(hostname string, config *trigger.Config, triggerName string) ([]byt
 					endpoint.Method = handler.Settings["method"].(string)
 					endpoint.Path = handler.Settings["path"].(string)
 					endpoint.Description = tConfig.Settings["description"].(string)
+					hostname = hostname + tConfig.Settings["port"].(string)
 					var beginDelim, endDelim rune
 					switch tConfig.Ref {
 					case "github.com/project-flogo/contrib/trigger/rest":
@@ -123,7 +124,7 @@ func Swagger(hostname string, config *trigger.Config, triggerName string) ([]byt
 			}
 		}
 	}
-	return Generate(hostname+tConfig.Settings["port"].(string), config.AppConfig["Name"].(string), config.AppConfig["Version"].(string), config.AppConfig["Description"].(string), endpoints)
+	return Generate(hostname, config.AppConfig["Name"].(string), config.AppConfig["Version"].(string), config.AppConfig["Description"].(string), endpoints)
 }
 
 
