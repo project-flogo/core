@@ -92,18 +92,19 @@ func (t *Trigger) Stop() error {
 func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 	var endpoints []Endpoint
 	fmt.Println("details: \n")
-	fmt.Println("%+v\n", config.AppConfig["Trigger"])
-	//var triggerMap = config.AppConfig["Trigger"]
-	//for _, trigger := range config.AppConfig["Trigger"] {
-		if config.Ref == "github.com/project-flogo/contrib/trigger/rest" || config.Ref == "github.com/project-flogo/core/swagger" {
-			for _, handler := range config.Handlers {
+	for _, tConfig := range config.AppConfig["Trigger"] {
+		fmt.Println("%+v\n", tConfig)
+		//var triggerMap = config.AppConfig["Trigger"]
+		//for _, trigger := range config.AppConfig["Trigger"] {
+		if tConfig.Ref == "github.com/project-flogo/contrib/trigger/rest" || tConfig.Ref == "github.com/project-flogo/core/swagger" {
+			for _, handler := range tConfig.Handlers {
 				var endpoint Endpoint
-				endpoint.Name = config.Id
+				endpoint.Name = tConfig.Id
 				endpoint.Method = handler.Settings["method"].(string)
 				endpoint.Path = handler.Settings["path"].(string)
-				endpoint.Description = config.Settings["description"].(string)
+				endpoint.Description = tConfig.Settings["description"].(string)
 				var beginDelim, endDelim rune
-				switch config.Ref {
+				switch tConfig.Ref {
 				case "github.com/project-flogo/contrib/trigger/rest":
 					beginDelim = ':'
 					endDelim = '/'
@@ -116,6 +117,7 @@ func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 				endpoints = append(endpoints, endpoint)
 			}
 		}
+	}
 	//}
 	return Generate(hostname, config.AppConfig["Name"].(string), config.AppConfig["Version"].(string), config.AppConfig["Description"].(string), endpoints)
 }
