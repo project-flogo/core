@@ -92,7 +92,7 @@ func (t *Trigger) Stop() error {
 func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 	var endpoints []Endpoint
 	fmt.Println("details: \n")
-	for _, tConfig := range config.AppConfig["Trigger"] {
+	for _, tConfig := range config.AppConfig["Trigger"].([]*trigger.Config) {
 		fmt.Println("%+v\n", tConfig)
 		//var triggerMap = config.AppConfig["Trigger"]
 		//for _, trigger := range config.AppConfig["Trigger"] {
