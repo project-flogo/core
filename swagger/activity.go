@@ -68,7 +68,7 @@ func (t *Trigger) SwaggerHandler(w http.ResponseWriter, req *http.Request) {
 
 	//mux := t.Server["Handler"]
 	//vars := mux.Vars(req)
-	fmt.Println("%+v\n",trigger.Server)
+	fmt.Println("%+v\n",t.Server)
 	hostName, err := os.Hostname()
 	if err != nil {
 		fmt.Errorf("Error in getting hostname:", err)
