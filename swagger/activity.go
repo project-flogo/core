@@ -59,7 +59,7 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 		response: "",
 		Server: server,
 	}
-	mux.HandleFunc("/swagger/", trigger.SwaggerHandler)
+	mux.HandleFunc("//swagger", trigger.SwaggerHandler)
 
 	return trigger, nil
 }
