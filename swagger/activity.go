@@ -9,6 +9,7 @@ import(
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/trigger"
+	"github.com/gorilla/mux"
 )
 
 var triggerMd = trigger.NewMetadata(&Settings{}, &HandlerSettings{})
@@ -48,10 +49,11 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 		port = DefaultPort
 	}
 
-	mux := http.NewServeMux()
+	//mux := http.NewServeMux()
+	newMux := mux.NewRouter()
 	server := &http.Server{
 		Addr:    ":" + port,
-		Handler: mux,
+		Handler: newMux,
 	}
 	trigger := &Trigger{
 		metadata: f.Metadata(),
@@ -59,7 +61,7 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 		response: "",
 		Server: server,
 	}
-	mux.HandleFunc(`/$/swagger/`, trigger.SwaggerHandler)
+	newMux.HandleFunc("/{triggerName}/swagger/", trigger.SwaggerHandler)
 
 	return trigger, nil
 }
