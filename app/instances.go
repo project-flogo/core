@@ -45,7 +45,6 @@ func (a *App) createSharedActions(actionConfigs []*action.Config) (map[string]ac
 func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (map[string]*triggerWrapper, error) {
 
 	triggers := make(map[string]*triggerWrapper)
-	fmt.Println("%+v\n", tConfigs)
 	mapperFactory := mapper.NewFactory(resolve.GetBasicResolver())
 	expressionFactory := expression.NewFactory(resolve.GetBasicResolver())
 	for _, tConfig := range tConfigs {
@@ -154,7 +153,6 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 		}
 
 		triggers[tConfig.Id] = &triggerWrapper{ref: tConfig.Ref, trg: trg, status: &managed.StatusInfo{Name: tConfig.Id}}
-		//tConfig.AppConfig["Trigger"] = map[string]interface{}{tConfig.Id : tConfig}
 	}
 	return triggers, nil
 }

@@ -91,11 +91,7 @@ func (t *Trigger) Stop() error {
 
 func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 	var endpoints []Endpoint
-	fmt.Println("details: \n")
 	for _, tConfig := range config.AppConfig["Trigger"].([]*trigger.Config) {
-		fmt.Println("%+v\n", tConfig)
-		//var triggerMap = config.AppConfig["Trigger"]
-		//for _, trigger := range config.AppConfig["Trigger"] {
 		if tConfig.Ref == "github.com/project-flogo/contrib/trigger/rest" || tConfig.Ref == "github.com/project-flogo/core/swagger" {
 			for _, handler := range tConfig.Handlers {
 				var endpoint Endpoint
@@ -118,7 +114,6 @@ func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 			}
 		}
 	}
-	//}
 	return Generate(hostname, config.AppConfig["Name"].(string), config.AppConfig["Version"].(string), config.AppConfig["Description"].(string), endpoints)
 }
 
