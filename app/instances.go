@@ -153,7 +153,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 		}
 
 		triggers[tConfig.Id] = &triggerWrapper{ref: tConfig.Ref, trg: trg, status: &managed.StatusInfo{Name: tConfig.Id}}
-		tConfig.AppConfig["Trigger"] = map[string]interface{}{tConfig.Id.(string) : tConfig}
+		tConfig.AppConfig["Trigger"] = map[string]interface{}{tConfig.Id : tConfig}
 	}
 	return triggers, nil
 }
