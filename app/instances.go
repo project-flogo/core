@@ -45,13 +45,13 @@ func (a *App) createSharedActions(actionConfigs []*action.Config) (map[string]ac
 func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (map[string]*triggerWrapper, error) {
 
 	triggers := make(map[string]*triggerWrapper)
-	fmt.Println("Inside app :", a.triggers)
+	fmt.Println("%+v\n", tConfigs)
 	mapperFactory := mapper.NewFactory(resolve.GetBasicResolver())
 	expressionFactory := expression.NewFactory(resolve.GetBasicResolver())
 	for _, tConfig := range tConfigs {
 
 		tConfig.AppConfig = map[string]interface{}{"Name": a.name, "Version": a.version, "Description": a.description,
-								"Trigger": a.triggers}
+								"Trigger": tConfigs}
 
 		_, exists := triggers[tConfig.Id]
 		if exists {
