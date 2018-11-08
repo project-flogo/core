@@ -91,8 +91,10 @@ func (t *Trigger) Stop() error {
 
 func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
 	var endpoints []Endpoint
-	fmt.Println("%+v\n", config.AppConfig)
-	//for _, trigger := range config.AppConfig["Triggers"] {
+	fmt.Println("details: \n")
+	fmt.Println("%+v\n", config.AppConfig["Trigger"])
+	//var triggerMap = config.AppConfig["Trigger"]
+	//for _, trigger := range config.AppConfig["Trigger"] {
 		if config.Ref == "github.com/project-flogo/contrib/trigger/rest" || config.Ref == "github.com/project-flogo/core/swagger" {
 			for _, handler := range config.Handlers {
 				var endpoint Endpoint

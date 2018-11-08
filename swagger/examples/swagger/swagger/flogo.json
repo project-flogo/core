@@ -1,0 +1,101 @@
+{
+  "name": "swagger",
+  "type": "flogo:app",
+  "version": "1.0.0",
+  "description": "This is a simple proxy.",
+  "properties": null,
+  "channels": null,
+  "triggers": [
+    {
+      "name": "swagger",
+      "id": "swagdocs",
+      "ref": "github.com/project-flogo/core/swagger",
+      "settings": {
+        "port": "1234",
+        "description": "Simple swagger doc Trigger"
+      },
+      "handlers": [
+        {
+          "settings": {
+            "method": "GET",
+            "path": "/swagger"
+          },
+          "actions": [
+            {
+              "id": "swaggertrigger"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "flogo-rest",
+      "id": "MyProxy",
+      "ref": "github.com/project-flogo/contrib/trigger/rest",
+      "settings": {
+        "port": "9096",
+        "description": "Simple REST Trigger"
+      },
+      "handlers": [
+        {
+          "settings": {
+            "method": "GET",
+            "path": "/pets"
+          },
+          "actions": [
+            {
+              "id": "microgateway:jwt"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "id": "microgateway:jwt",
+      "compressed": false,
+      "data": {
+        "name": "Pets",
+        "steps": [
+          {
+            "service": "PetStorePets",
+            "input": {
+              "pathParams.petId": "1"
+            }
+          }
+        ],
+        "responses": [],
+        "services": [
+          {
+            "name": "PetStorePets",
+            "description": "Get pets by ID from the petstore",
+            "ref": "github.com/project-flogo/contrib/activity/rest",
+            "settings": {
+              "uri": "https://petstore.swagger.io/v2/pet/:petId",
+              "method": "GET"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "actions": [
+    {
+      "ref": "github.com/project-flogo/microgateway",
+      "settings": {
+        "uri": "microgateway:jwt"
+      },
+      "id": "swaggertrigger",
+      "metadata": null
+    },
+    {
+      "ref": "github.com/project-flogo/microgateway",
+      "settings": {
+        "uri": "microgateway:jwt"
+      },
+      "id": "microgateway:jwt",
+      "metadata": null
+    }
+  ]
+}
