@@ -68,9 +68,9 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 
 func (t *Trigger) SwaggerHandler(w http.ResponseWriter, req *http.Request) {
 
-	//mux := t.Server["Handler"]
-	//vars := mux.Vars(req)
-	fmt.Println("%+v\n",t.Server)
+	mux := t.Server.Handler
+	vars := mux.Vars("triggerName")
+	fmt.Println(vars)
 	hostName, err := os.Hostname()
 	if err != nil {
 		fmt.Errorf("Error in getting hostname:", err)
