@@ -73,7 +73,7 @@ func (t *Trigger) SwaggerHandler(w http.ResponseWriter, req *http.Request) {
 		fmt.Errorf("Error in getting hostname:", err)
 	}
 	triggerName := vars["triggerName"]
-	response,_ := Swagger(hostName+t.Server.Addr,t.config,triggerName)
+	response,_ := Swagger(hostName,t.config,triggerName)
 	io.WriteString(w, string(response))
 }
 
@@ -123,7 +123,7 @@ func Swagger(hostname string, config *trigger.Config, triggerName string) ([]byt
 			}
 		}
 	}
-	return Generate(hostname, config.AppConfig["Name"].(string), config.AppConfig["Version"].(string), config.AppConfig["Description"].(string), endpoints)
+	return Generate(hostname+tConfig.Settings["port"].(string), config.AppConfig["Name"].(string), config.AppConfig["Version"].(string), config.AppConfig["Description"].(string), endpoints)
 }
 
 
