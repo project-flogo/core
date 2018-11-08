@@ -5,7 +5,7 @@ import(
 	"io"
 	"net/http"
 	"strconv"
-
+	"os"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/trigger"
@@ -47,8 +47,11 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 	if len(port) == 0 {
 		port = DefaultPort
 	}
-
-	response,_ := Swagger("hostname",config)
+	hostName, err := os.Hostname()
+	if err != nil {
+		return nil, err
+	}
+	response,_ := Swagger(hostName,config)
 
 	mux := http.NewServeMux()
 	server := &http.Server{
