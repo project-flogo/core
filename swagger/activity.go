@@ -47,11 +47,6 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 	if len(port) == 0 {
 		port = DefaultPort
 	}
-	hostName, err := os.Hostname()
-	if err != nil {
-		return nil, err
-	}
-	response,_ := Swagger(hostName,config)
 
 	mux := http.NewServeMux()
 	server := &http.Server{
@@ -61,16 +56,23 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 	trigger := &Trigger{
 		metadata: f.Metadata(),
 		config:   config,
-		response: string(response),
+		response: "",
 		Server: server,
 	}
-	mux.HandleFunc("/swagger", trigger.SwaggerHandler)
+	mux.HandleFunc("/{triggerName}/swagger", trigger.SwaggerHandler)
 
 	return trigger, nil
 }
 
 func (t *Trigger) SwaggerHandler(w http.ResponseWriter, req *http.Request) {
-		io.WriteString(w, t.response)
+	vars := t.Server.Handler.Vars(req)
+	hostName, err := os.Hostname()
+	if err != nil {
+		return nil, err
+	}
+	triggerName := vars["triggerName"]
+	response,_ := Swagger(hostName,t.config,triggerName)
+	io.WriteString(w, string(response))
 }
 
 // Start implements util.Managed.Start
@@ -92,28 +94,30 @@ func (t *Trigger) Stop() error {
 	return nil
 }
 
-func Swagger(hostname string, config *trigger.Config) ([]byte, error) {
+func Swagger(hostname string, config *trigger.Config, triggerName string) ([]byte, error) {
 	var endpoints []Endpoint
 	for _, tConfig := range config.AppConfig["Trigger"].([]*trigger.Config) {
-		if tConfig.Ref == "github.com/project-flogo/contrib/trigger/rest" || tConfig.Ref == "github.com/project-flogo/core/swagger" {
-			for _, handler := range tConfig.Handlers {
-				var endpoint Endpoint
-				endpoint.Name = tConfig.Id
-				endpoint.Method = handler.Settings["method"].(string)
-				endpoint.Path = handler.Settings["path"].(string)
-				endpoint.Description = tConfig.Settings["description"].(string)
-				var beginDelim, endDelim rune
-				switch tConfig.Ref {
-				case "github.com/project-flogo/contrib/trigger/rest":
-					beginDelim = ':'
-					endDelim = '/'
-				default:
-					beginDelim = '{'
-					endDelim = '}'
+		if tConfig.Id == "" || tConfig.Id == triggerName {
+			if tConfig.Ref == "github.com/project-flogo/contrib/trigger/rest" || tConfig.Ref == "github.com/project-flogo/core/swagger" {
+				for _, handler := range tConfig.Handlers {
+					var endpoint Endpoint
+					endpoint.Name = tConfig.Id
+					endpoint.Method = handler.Settings["method"].(string)
+					endpoint.Path = handler.Settings["path"].(string)
+					endpoint.Description = tConfig.Settings["description"].(string)
+					var beginDelim, endDelim rune
+					switch tConfig.Ref {
+					case "github.com/project-flogo/contrib/trigger/rest":
+						beginDelim = ':'
+						endDelim = '/'
+					default:
+						beginDelim = '{'
+						endDelim = '}'
+					}
+					endpoint.BeginDelim = beginDelim
+					endpoint.EndDelim = endDelim
+					endpoints = append(endpoints, endpoint)
 				}
-				endpoint.BeginDelim = beginDelim
-				endpoint.EndDelim = endDelim
-				endpoints = append(endpoints, endpoint)
 			}
 		}
 	}
