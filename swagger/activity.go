@@ -65,7 +65,8 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 }
 
 func (t *Trigger) SwaggerHandler(w http.ResponseWriter, req *http.Request) {
-	vars := t.Server.Handler.Vars(req)
+	mux := t.Server.Handler
+	vars := mux.Vars(req)
 	hostName, err := os.Hostname()
 	if err != nil {
 		return nil, err
