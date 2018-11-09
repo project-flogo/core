@@ -65,8 +65,8 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 }
 
 func (t *Trigger) SwaggerHandler(w http.ResponseWriter, req *http.Request) {
-	vars := strings.Split(req.URL.Path, '/')
-	if(vars == nil || vars[2] == nil || len(vars) > 2){
+	vars := strings.Split(req.URL.Path, "/")
+	if(vars == nil || vars[2] == "" || len(vars) > 2){
 		fmt.Errorf("Error in URL:")
 	}
 	triggerName := vars[2]
