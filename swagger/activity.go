@@ -69,7 +69,7 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 func (t *Trigger) DefaultSwaggerHandler(w http.ResponseWriter, req *http.Request) {
 	hostName, err := os.Hostname()
 	if err != nil {
-		fmt.Errorf("Error in getting hostname:", err)
+		fmt.Errorf("Error in getting hostname: ", err)
 	}
 	response, _ := Swagger(hostName, t.config, "")
 	io.WriteString(w, string(response))
@@ -77,17 +77,17 @@ func (t *Trigger) DefaultSwaggerHandler(w http.ResponseWriter, req *http.Request
 
 func (t *Trigger) SwaggerHandler(w http.ResponseWriter, req *http.Request) {
 	var response []byte
-	match, _ := regexp.MatchString("/swagger/[A-Za-z0-9]+$", req.URL.Path)
+	match, _ := regexp.MatchString("/swagger/[A-Za-z0-9]$", req.URL.Path)
 	if(match) {
 		vars := strings.Split(req.URL.Path, "/")
 		triggerName := vars[2]
 		hostName, err := os.Hostname()
 		if err != nil {
-			fmt.Errorf("Error in getting hostname:", err)
+			fmt.Errorf("Error in getting hostname: ", err)
 		}
 		response, _ = Swagger(hostName, t.config, triggerName)
 	}else{
-		response = []byte("404 page not found")
+		response = []byte("404 page not found\n")
 	}
 	io.WriteString(w, string(response))
 }
