@@ -77,7 +77,7 @@ func (t *Trigger) DefaultSwaggerHandler(w http.ResponseWriter, req *http.Request
 
 func (t *Trigger) SwaggerHandler(w http.ResponseWriter, req *http.Request) {
 	var response []byte
-	match, _ := regexp.MatchString("/swagger/[A-Za-z0-9]$", req.URL.Path)
+	match, _ := regexp.MatchString("/swagger/[A-Za-z0-9]+$", req.URL.Path)
 	if(match) {
 		vars := strings.Split(req.URL.Path, "/")
 		triggerName := vars[2]
