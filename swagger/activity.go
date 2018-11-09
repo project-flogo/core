@@ -66,7 +66,7 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 	return trigger, nil
 }
 
-func (t *Trigger) SwaggerHandler(w http.ResponseWriter, req *http.Request) {
+func (t *Trigger) DefaultSwaggerHandler(w http.ResponseWriter, req *http.Request) {
 	hostName, err := os.Hostname()
 	if err != nil {
 		fmt.Errorf("Error in getting hostname:", err)
