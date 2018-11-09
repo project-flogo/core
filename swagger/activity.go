@@ -62,12 +62,22 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 		Server: server,
 	}
 	mux.HandleFunc("/swagger/", trigger.SwaggerHandler)
+	mux.HandleFunc("/swagger", trigger.DefaultSwaggerHandler)
 	return trigger, nil
 }
 
 func (t *Trigger) SwaggerHandler(w http.ResponseWriter, req *http.Request) {
+	hostName, err := os.Hostname()
+	if err != nil {
+		fmt.Errorf("Error in getting hostname:", err)
+	}
+	response, _ := Swagger(hostName, t.config, "")
+	io.WriteString(w, string(response))
+}
+
+func (t *Trigger) SwaggerHandler(w http.ResponseWriter, req *http.Request) {
 	var response []byte
-	match, _ := regexp.MatchString("/swagger[/]?[A-Za-z0-9]*$", req.URL.Path)
+	match, _ := regexp.MatchString("/swagger/[A-Za-z0-9]+$", req.URL.Path)
 	if(match) {
 		vars := strings.Split(req.URL.Path, "/")
 		triggerName := vars[2]
