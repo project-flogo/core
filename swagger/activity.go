@@ -77,7 +77,7 @@ func (t *Trigger) SwaggerHandler(w http.ResponseWriter, req *http.Request) {
 		}
 		response, _ = Swagger(hostName, t.config, triggerName)
 	}else{
-		response = "404 page not found"
+		response = []byte("404 page not found")
 	}
 	io.WriteString(w, string(response))
 }

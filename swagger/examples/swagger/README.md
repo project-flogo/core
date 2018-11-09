@@ -18,9 +18,9 @@ bin/swagger
 
 Then open another terminal and run:
 ```
-###  Format : curl http://localhost:1234/<triggerName>/swagger ###
+###  Format : curl http://localhost:1234/swagger/<triggerName> ###
 
-curl http://localhost:1234/swagdocs/swagger
+curl http://localhost:1234/swagger/swagdocs
 ```
 
 You should then see something like:
@@ -56,7 +56,7 @@ You should then see something like:
 ```
 #####
 ```
-curl http://localhost:1234/MyProxy/swagger
+curl http://localhost:1234/swagger/MyProxy
 ```
 
 You should then see something like:
