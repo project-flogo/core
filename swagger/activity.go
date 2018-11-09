@@ -5,11 +5,11 @@ import(
 	"io"
 	"net/http"
 	"strconv"
+	"strings"
 	"os"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/trigger"
-	"github.com/gorilla/mux"
 )
 
 var triggerMd = trigger.NewMetadata(&Settings{}, &HandlerSettings{})
@@ -49,11 +49,10 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 		port = DefaultPort
 	}
 
-	//mux := http.NewServeMux()
-	newMux := mux.NewRouter()
+	mux := http.NewServeMux()
 	server := &http.Server{
 		Addr:    ":" + port,
-		Handler: newMux,
+		Handler: mux,
 	}
 	trigger := &Trigger{
 		metadata: f.Metadata(),
@@ -61,18 +60,20 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 		response: "",
 		Server: server,
 	}
-	newMux.HandleFunc("/{triggerName}/swagger", trigger.SwaggerHandler)
-
+	mux.HandleFunc("/swagger/", trigger.SwaggerHandler)
 	return trigger, nil
 }
 
 func (t *Trigger) SwaggerHandler(w http.ResponseWriter, req *http.Request) {
-	vars := mux.Vars(req)
+	vars := strings.Split(req.URL.Path, '/')
+	if(vars == nil || vars[2] == nil || len(vars) > 2){
+		fmt.Errorf("Error in URL:")
+	}
+	triggerName := vars[2]
 	hostName, err := os.Hostname()
 	if err != nil {
 		fmt.Errorf("Error in getting hostname:", err)
 	}
-	triggerName := vars["triggerName"]
 	response,_ := Swagger(hostName,t.config,triggerName)
 	io.WriteString(w, string(response))
 }
