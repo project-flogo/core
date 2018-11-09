@@ -18,7 +18,7 @@
         {
           "settings": {
             "method": "GET",
-            "path": "/swagger"
+            "path": "/<triggerName>/swagger"
           },
           "actions": [
             {

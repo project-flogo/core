@@ -107,7 +107,7 @@ func Swagger(hostname string, config *trigger.Config, triggerName string) ([]byt
 					endpoint.Method = handler.Settings["method"].(string)
 					endpoint.Path = handler.Settings["path"].(string)
 					endpoint.Description = tConfig.Settings["description"].(string)
-					hostname = hostname + strconv.Itoa(tConfig.Settings["port"].(int))
+					hostname = hostname + ": "+strconv.Itoa(tConfig.Settings["port"].(int))
 					var beginDelim, endDelim rune
 					switch tConfig.Ref {
 					case "github.com/project-flogo/contrib/trigger/rest":
