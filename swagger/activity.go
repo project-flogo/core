@@ -7,6 +7,7 @@ import(
 	"strconv"
 	"strings"
 	"os"
+	"regexp"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/trigger"
@@ -65,16 +66,19 @@ func (f *Factory) New(config *trigger.Config) (trigger.Trigger, error) {
 }
 
 func (t *Trigger) SwaggerHandler(w http.ResponseWriter, req *http.Request) {
-	vars := strings.Split(req.URL.Path, "/")
-	if(vars == nil || vars[2] == "" || len(vars) > 2){
-		fmt.Errorf("Error in URL:")
+	var response string
+	match, _ := regexp.MatchString("/swagger[/]?[A-Za-z0-9]*$", req.URL.Path)
+	if(match) {
+		vars := strings.Split(req.URL.Path, "/")
+		triggerName := vars[2]
+		hostName, err := os.Hostname()
+		if err != nil {
+			fmt.Errorf("Error in getting hostname:", err)
+		}
+		response, _ = Swagger(hostName, t.config, triggerName)
+	}else{
+		response = "404 page not found"
 	}
-	triggerName := vars[2]
-	hostName, err := os.Hostname()
-	if err != nil {
-		fmt.Errorf("Error in getting hostname:", err)
-	}
-	response,_ := Swagger(hostName,t.config,triggerName)
 	io.WriteString(w, string(response))
 }
 
