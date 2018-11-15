@@ -90,7 +90,7 @@ func (hc *HandlerConfig) UnmarshalJSON(d []byte) error {
 
 // ActionConfig is the configuration for the Action
 type ActionConfig struct {
-	*action.Config
+	Config *action.Config
 	If     string                 `json:"if,omitempty"`
 	Input  map[string]interface{} `json:"input,omitempty"`
 	Output map[string]interface{} `json:"output,omitempty"`
