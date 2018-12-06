@@ -111,7 +111,11 @@ func MapToStruct(m map[string]interface{}, object interface{}, validate bool) er
 					return err
 				}
 
-				fv.Set(reflect.ValueOf(val))
+				if IsZeroOfUnderlyingType(val) {
+					fv.Set(reflect.Zero(fv.Type()))
+				} else {
+					fv.Set(reflect.ValueOf(val))
+				}
 			} else {
 				if validate && details.Required {
 					return fmt.Errorf("field '%s' is required", details.Label)
@@ -176,4 +180,8 @@ func ResolveSettingValue(setting string, value interface{}, settingsMd map[strin
 	}
 
 	return coerce.ToType(value, toType)
+}
+
+func IsZeroOfUnderlyingType(x interface{}) bool {
+	return x == nil || x == reflect.Zero(reflect.TypeOf(x)).Interface()
 }

@@ -104,7 +104,7 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 	} else if value, ok := triggerData.(data.StructValue); ok {
 		triggerValues = value.ToMap()
 	} else {
-		return nil, fmt.Errorf("unsupport trigger data: %v", triggerData)
+		return nil, fmt.Errorf("unsupported trigger data: %v", triggerData)
 	}
 
 	var act actImpl
