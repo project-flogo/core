@@ -83,9 +83,9 @@ func ContinueOnError(a *App) error {
 	return nil
 }
 
-func ExternalProperties(providerId string, overrides string, processors ...property.PostProcessor) func(*App) error {
+func FinalizeProperties(useExternalResolvers bool, processors ...property.PostProcessor) func(*App) error {
 	return func(a *App) error {
-		return a.propManager.AddExternalProperties(providerId, overrides, processors...)
+		return a.propManager.Finalize(useExternalResolvers, processors...)
 	}
 }
 
