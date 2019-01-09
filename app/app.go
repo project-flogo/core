@@ -32,6 +32,7 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 	}
 
 	app.propManager = property.NewManager(properties)
+	property.SetDefaultManager(app.propManager)
 
 	for _, option := range options {
 		option(app)
