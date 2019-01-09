@@ -2,6 +2,7 @@ package engine
 
 import (
 	"fmt"
+	"github.com/project-flogo/core/data/property"
 	"strings"
 
 	"github.com/project-flogo/core/action"
@@ -88,13 +89,19 @@ func New(appConfig *app.Config, options... Option) (Engine, error) {
 		appOptions = append(appOptions, app.ContinueOnError)
 	}
 
-	propProvider := GetAppPropertyProvider()
-	propOverride := GetAppPropertyOverride()
+	propResolvers := GetAppPropertyValueResolvers()
+	enableExternalPropResolution := false
+	if len(propResolvers) > 0 {
+			err := property.EnableExternalResolvers(propResolvers)
+		if err != nil {
+			return nil, err
+		}
 
-	if len(propOverride) > 0 {
-		option := app.ExternalProperties(propProvider, propOverride, secret.PropertyProcessor, EnvPropertyProcessor)
-		appOptions = append(appOptions, option)
+		enableExternalPropResolution = true
 	}
+
+	option := app.FinalizeProperties(enableExternalPropResolution, secret.PropertyProcessor)
+	appOptions = append(appOptions, option)
 
 	flogoApp, err := app.New(appConfig, engine.actionRunner, appOptions...)
 	if err != nil {
