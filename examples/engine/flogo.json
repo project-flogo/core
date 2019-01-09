@@ -23,7 +23,7 @@
               "flowURI": "res://flow:simple_flow"
             },
             "input": {
-              "in": "$.pathParams.val"
+              "in": "=$.pathParams.val"
             }
           }
         }
@@ -50,7 +50,7 @@
             "activity": {
               "ref": "github.com/project-flogo/contrib/activity/log",
               "input": {
-                "message": "$flow.in",
+                "message": "=$flow.in",
                 "flowInfo": "false",
                 "addToFlow": "false"
               }
