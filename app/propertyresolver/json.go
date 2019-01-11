@@ -43,6 +43,10 @@ func init() {
 					logger.Errorf("Can not read - %s due to error - %v", filePath, e)
 					panic("")
 				}
+
+				for k, v := range props {
+					preload[k] = v
+				}
 			}
 		}
 	}
