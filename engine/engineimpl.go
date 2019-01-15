@@ -27,7 +27,7 @@ type engineImpl struct {
 type Option func(*engineImpl)
 
 // New creates a new Engine
-func New(appConfig *app.Config, options... Option) (Engine, error) {
+func New(appConfig *app.Config, options ...Option) (Engine, error) {
 	if appConfig == nil {
 		return nil, fmt.Errorf("no App configuration provided")
 	}
@@ -92,7 +92,7 @@ func New(appConfig *app.Config, options... Option) (Engine, error) {
 	propResolvers := GetAppPropertyValueResolvers()
 	enableExternalPropResolution := false
 	if len(propResolvers) > 0 {
-			err := property.EnableExternalResolvers(propResolvers)
+		err := property.EnableExternalResolvers(propResolvers)
 		if err != nil {
 			return nil, err
 		}
@@ -100,7 +100,14 @@ func New(appConfig *app.Config, options... Option) (Engine, error) {
 		enableExternalPropResolution = true
 	}
 
-	option := app.FinalizeProperties(enableExternalPropResolution, secret.PropertyProcessor)
+	// properties post processors (external properties resolver if enabled, secret property replacer)
+	var postProcessors []property.PostProcessor
+	if enableExternalPropResolution {
+		postProcessors = append(postProcessors, property.ExternalPropertyResolverProcessor)
+	}
+	postProcessors = append(postProcessors, secret.PropertyProcessor)
+
+	option := app.FinalizeProperties(postProcessors...)
 	appOptions = append(appOptions, option)
 
 	flogoApp, err := app.New(appConfig, engine.actionRunner, appOptions...)

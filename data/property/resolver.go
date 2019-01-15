@@ -23,7 +23,6 @@ func RegisterExternalResolver(resolverType string, resolver ExternalResolver) er
 
 	logger := log.RootLogger()
 
-
 	if resolverType == "" {
 		return fmt.Errorf("'resolverType' must be specified when registering external property resolver")
 	}
@@ -72,4 +71,21 @@ func ResolveExternally(propertyName string) (interface{}, bool) {
 	}
 
 	return nil, false
+}
+
+func ExternalPropertyResolverProcessor(properties map[string]interface{}) error {
+
+	logger := log.RootLogger()
+
+	for name := range properties {
+		newVal, found := ResolveExternally(name)
+
+		if !found {
+			logger.Warnf("Property '%s' could not be resolved using external resolver(s) '%s'. Using default value.", name)
+		} else {
+			properties[name] = newVal
+		}
+	}
+
+	return nil
 }

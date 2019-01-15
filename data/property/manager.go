@@ -1,9 +1,5 @@
 package property
 
-import (
-	"github.com/project-flogo/core/support/log"
-)
-
 func init() {
 	SetDefaultManager(NewManager(make(map[string]interface{})))
 }
@@ -33,21 +29,7 @@ func (m *Manager) GetProperty(name string) (interface{}, bool) {
 	return val, exists
 }
 
-func (m *Manager) Finalize(useExternalResolvers bool, processors ...PostProcessor) error {
-
-	logger := log.RootLogger()
-
-	if useExternalResolvers {
-		for name := range m.properties {
-			newVal, found := ResolveExternally(name)
-
-			if !found {
-				logger.Warnf("Property '%s' could not be resolved using external resolver(s) '%s'. Using default value.", name)
-			} else {
-				m.properties[name] = newVal
-			}
-		}
-	}
+func (m *Manager) Finalize(processors ...PostProcessor) error {
 
 	for _, processor := range processors {
 		processor(m.properties)
