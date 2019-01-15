@@ -4,6 +4,11 @@
   "version": "0.0.1",
   "description": "My flogo application description",
   "appModel": "1.0.0",
+  "imports": [
+    "github.com/project-flogo/contrib/activity/log",
+    "github.com/project-flogo/contrib/trigger/rest",
+    "github.com/project-flogo/flow"
+  ],
   "triggers": [
     {
       "id": "my_rest_trigger",
