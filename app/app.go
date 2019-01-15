@@ -34,10 +34,6 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 	app.propManager = property.NewManager(properties)
 	property.SetDefaultManager(app.propManager)
 
-	for _, option := range options {
-		option(app)
-	}
-
 	resources := make(map[string]*resource.Resource, len(config.Resources))
 	app.resManager = resource.NewManager(resources)
 
@@ -84,9 +80,9 @@ func ContinueOnError(a *App) error {
 	return nil
 }
 
-func FinalizeProperties(useExternalResolvers bool, processors ...property.PostProcessor) func(*App) error {
+func FinalizeProperties(processors ...property.PostProcessor) func(*App) error {
 	return func(a *App) error {
-		return a.propManager.Finalize(useExternalResolvers, processors...)
+		return a.propManager.Finalize(processors...)
 	}
 }
 
