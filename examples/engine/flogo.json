@@ -12,7 +12,7 @@
   "triggers": [
     {
       "id": "my_rest_trigger",
-      "ref": "github.com/project-flogo/contrib/trigger/rest",
+      "type": "rest",
       "settings": {
         "port": "8888"
       },
@@ -23,7 +23,7 @@
             "path": "/test/:val"
           },
           "action": {
-            "ref": "github.com/project-flogo/flow",
+            "type": "flow",
             "settings": {
               "flowURI": "res://flow:simple_flow"
             },
@@ -53,7 +53,7 @@
             "id": "log",
             "name": "Log Message",
             "activity": {
-              "ref": "github.com/project-flogo/contrib/activity/log",
+              "type": "log",
               "input": {
                 "message": "=$flow.in",
                 "flowInfo": "false",
