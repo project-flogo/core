@@ -2,11 +2,11 @@ package metadata
 
 import (
 	"fmt"
-	"github.com/project-flogo/core/data/coerce"
-	"github.com/project-flogo/core/data/expression"
 	"reflect"
 
 	"github.com/project-flogo/core/data"
+	"github.com/project-flogo/core/data/coerce"
+	"github.com/project-flogo/core/data/expression"
 )
 
 const metadataTag = "md"
@@ -183,5 +183,13 @@ func ResolveSettingValue(setting string, value interface{}, settingsMd map[strin
 }
 
 func IsZeroOfUnderlyingType(x interface{}) bool {
-	return x == nil || x == reflect.Zero(reflect.TypeOf(x)).Interface()
+	if x == nil {
+		return true
+	}
+	typ := reflect.TypeOf(x)
+	zero := reflect.Zero(typ).Interface()
+	if typ.Comparable() {
+		return x == zero
+	}
+	return reflect.DeepEqual(x, zero)
 }
