@@ -22,15 +22,17 @@
             "method": "GET",
             "path": "/test/:val"
           },
-          "action": {
-            "type": "flow",
-            "settings": {
-              "flowURI": "res://flow:simple_flow"
-            },
-            "input": {
-              "in": "=$.pathParams.val"
-            }
-          }
+          "actions": [
+            {
+              "type": "flow",
+              "settings": {
+                "flowURI": "res://flow:simple_flow"
+              },
+              "input": {
+                "in": "=$.pathParams.val"
+              }
+	    }
+	  ]
         }
       ]
     }
