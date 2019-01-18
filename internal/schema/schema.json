@@ -1,0 +1,288 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "required": [
+        "name",
+        "type",
+        "version",
+        "description",
+        "imports",
+        "properties",
+        "channels",
+        "triggers",
+        "resources",
+        "actions"
+    ],
+    "properties": {
+        "actions": {
+            "items": {
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "$ref": "#/definitions/action.Config"
+            },
+            "type": "array"
+        },
+        "channels": {
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "description": {
+            "type": "string"
+        },
+        "imports": {
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "name": {
+            "type": "string"
+        },
+        "properties": {
+            "items": {
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "$ref": "#/definitions/data.Attribute"
+            },
+            "type": "array"
+        },
+        "resources": {
+            "items": {
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "$ref": "#/definitions/resource.Config"
+            },
+            "type": "array"
+        },
+        "triggers": {
+            "items": {
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "$ref": "#/definitions/trigger.Config"
+            },
+            "type": "array"
+        },
+        "type": {
+            "type": "string"
+        },
+        "version": {
+            "type": "string"
+        }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "definitions": {
+        ".": {
+            "required": [
+                "name",
+                "type",
+                "version",
+                "description",
+                "imports",
+                "properties",
+                "channels",
+                "triggers",
+                "resources",
+                "actions"
+            ],
+            "properties": {
+                "actions": {
+                    "items": {
+                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "$ref": "#/definitions/action.Config"
+                    },
+                    "type": "array"
+                },
+                "channels": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "imports": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "properties": {
+                    "items": {
+                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "$ref": "#/definitions/data.Attribute"
+                    },
+                    "type": "array"
+                },
+                "resources": {
+                    "items": {
+                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "$ref": "#/definitions/resource.Config"
+                    },
+                    "type": "array"
+                },
+                "triggers": {
+                    "items": {
+                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "$ref": "#/definitions/trigger.Config"
+                    },
+                    "type": "array"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "type": "object"
+        },
+        "action.Config": {
+            "required": [
+                "ref",
+                "type",
+                "settings",
+                "id",
+                "data"
+            ],
+            "properties": {
+                "data": {
+                    "type": "object"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "ref": {
+                    "type": "string"
+                },
+                "settings": {
+                    "type": "object"
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "type": "object"
+        },
+        "data.Attribute": {
+            "additionalProperties": false,
+            "type": "object"
+        },
+        "resource.Config": {
+            "required": [
+                "id",
+                "data"
+            ],
+            "properties": {
+                "data": {
+                    "type": "object"
+                },
+                "id": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "type": "object"
+        },
+        "trigger.ActionConfig": {
+            "required": [
+                "ref",
+                "type",
+                "settings",
+                "id",
+                "data",
+                "Act"
+            ],
+            "properties": {
+                "Act": {
+                    "additionalProperties": true,
+                    "type": "object"
+                },
+                "data": {
+                    "type": "object"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "if": {
+                    "type": "string"
+                },
+                "input": {
+                    "type": "object"
+                },
+                "output": {
+                    "type": "object"
+                },
+                "ref": {
+                    "type": "string"
+                },
+                "settings": {
+                    "type": "object"
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "type": "object"
+        },
+        "trigger.Config": {
+            "required": [
+                "id",
+                "type",
+                "ref",
+                "settings",
+                "handlers"
+            ],
+            "properties": {
+                "handlers": {
+                    "items": {
+                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "$ref": "#/definitions/trigger.HandlerConfig"
+                    },
+                    "type": "array"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "ref": {
+                    "type": "string"
+                },
+                "settings": {
+                    "type": "object"
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "type": "object"
+        },
+        "trigger.HandlerConfig": {
+            "required": [
+                "settings",
+                "actions"
+            ],
+            "properties": {
+                "actions": {
+                    "items": {
+                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "$ref": "#/definitions/trigger.ActionConfig"
+                    },
+                    "type": "array"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "settings": {
+                    "type": "object"
+                }
+            },
+            "additionalProperties": false,
+            "type": "object"
+        }
+    }
+}
