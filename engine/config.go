@@ -20,7 +20,7 @@ const (
 	EnvKeyRunnerQueueSize    = "FLOGO_RUNNER_QUEUE"
 	DefaultRunnerQueueSize   = 50
 
-	EnvAppPropertyResolvers  = "FLOGO_APP_PROP_RESOLVERS"
+	EnvAppPropertyResolvers  = "FLOGO_APP_PROPS_RESOLVERS"
 
 	ValueRunnerTypePooled = "POOLED"
 	ValueRunnerTypeDirect = "DIRECT"
