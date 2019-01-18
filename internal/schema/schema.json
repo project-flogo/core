@@ -5,12 +5,7 @@
         "type",
         "version",
         "description",
-        "imports",
-        "properties",
-        "channels",
-        "triggers",
-        "resources",
-        "actions"
+        "appModel"
     ],
     "properties": {
         "actions": {
@@ -19,6 +14,9 @@
                 "$ref": "#/definitions/action.Config"
             },
             "type": "array"
+        },
+        "appModel": {
+            "type": "string"
         },
         "channels": {
             "items": {
@@ -75,12 +73,7 @@
                 "type",
                 "version",
                 "description",
-                "imports",
-                "properties",
-                "channels",
-                "triggers",
-                "resources",
-                "actions"
+                "appModel"
             ],
             "properties": {
                 "actions": {
@@ -89,6 +82,9 @@
                         "$ref": "#/definitions/action.Config"
                     },
                     "type": "array"
+                },
+                "appModel": {
+                    "type": "string"
                 },
                 "channels": {
                     "items": {
@@ -140,13 +136,6 @@
             "type": "object"
         },
         "action.Config": {
-            "required": [
-                "ref",
-                "type",
-                "settings",
-                "id",
-                "data"
-            ],
             "properties": {
                 "data": {
                     "type": "object"
@@ -188,19 +177,7 @@
             "type": "object"
         },
         "trigger.ActionConfig": {
-            "required": [
-                "ref",
-                "type",
-                "settings",
-                "id",
-                "data",
-                "Act"
-            ],
             "properties": {
-                "Act": {
-                    "additionalProperties": true,
-                    "type": "object"
-                },
                 "data": {
                     "type": "object"
                 },
@@ -232,8 +209,6 @@
         "trigger.Config": {
             "required": [
                 "id",
-                "type",
-                "ref",
                 "settings",
                 "handlers"
             ],
