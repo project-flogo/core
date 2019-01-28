@@ -216,5 +216,5 @@ func (c *TestActivityContext) GetSharedTempData() map[string]interface{} {
 }
 
 func (c *TestActivityContext) Logger() log.Logger {
-	return nil
+	return logger
 }
