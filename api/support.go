@@ -161,7 +161,7 @@ func NewActivity(act activity.Activity, settings ...interface{}) (activity.Activ
 			ctx := &initCtx{settings: settingsMap}
 			return f(ctx)
 		}
-			
+		return nil, nil		
 	}
 }
 
