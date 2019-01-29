@@ -141,25 +141,28 @@ func NewActivity(act activity.Activity, settings ...interface{}) (activity.Activ
 
 	ref := activity.GetRef(act)
 
-	if len(settings) == 0 {
+   	if f := activity.GetFactory(ref); f == nil {
+
 		return activity.Get(ref), nil
-	} else {
-
-		inSettings := settings[0]
-
-		var settingsMap map[string]interface{}
-		if im, ok := inSettings.(map[string]interface{}); ok {
-			settingsMap = im
-		} else {
-			settingsMap = metadata.StructToMap(settings)
+	}else {
+		if len(settings) != 0{
+			
+			inSettings := settings[0]
+			
+			var settingsMap map[string]interface{}
+			if im, ok := inSettings.(map[string]interface{}); ok {
+				settingsMap = im
+			} else {
+				settingsMap = metadata.StructToMap(inSettings)
+			}
+			
+			
+			f := activity.GetFactory(ref)
+			ctx := &initCtx{settings: settingsMap}
+			return f(ctx)
 		}
-
-		f := activity.GetFactory(ref)
-		ctx := &initCtx{settings: settingsMap}
-		return f(ctx)
+			
 	}
-
-	return nil, nil
 }
 
 type initCtx struct {
