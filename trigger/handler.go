@@ -2,8 +2,10 @@ package trigger
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
+	"reflect"
 
 	"github.com/project-flogo/core/data/coerce"
 
@@ -165,6 +167,18 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 		return nil, err
 	}
 
+	//backward compatible, the type might be *data.ComplexObject from flogo-lib or project-flogo
+	for k, v := range results {
+		if reflect.TypeOf(v).String() == "*data.ComplexObject" {
+			//Convert to new package complex object
+			vv , _ :=	json.Marshal(v)
+			obj , err := coerce.CoerceToComplexObject(string(vv))
+			if err != nil {
+				return nil, err
+			}
+			results[k]=obj.Value
+		}
+	}
 	if act.actionOutputMapper != nil {
 		outScope := data.NewSimpleScope(results, nil)
 		retValue, err := act.actionOutputMapper.Apply(outScope)

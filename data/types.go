@@ -103,7 +103,6 @@ func ToTypeEnum(typeStr string) (Type, error) {
 
 // GetType get the Type of the supplied value
 func GetType(val interface{}) (Type, error) {
-
 	switch t := val.(type) {
 	case string:
 		return TypeString, nil
@@ -135,6 +134,8 @@ func GetType(val interface{}) (Type, error) {
 	case map[string]string:
 		return TypeParams, nil
 	case ComplexObject:
+		return TypeComplexObject, nil
+	case *ComplexObject:
 		return TypeComplexObject, nil
 	default:
 		return TypeUnknown, fmt.Errorf("unable to determine type of %#v", t)

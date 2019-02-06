@@ -183,5 +183,8 @@ func ResolveSettingValue(setting string, value interface{}, settingsMd map[strin
 }
 
 func IsZeroOfUnderlyingType(x interface{}) bool {
+	if x != nil {
+		return false
+	}
 	return x == nil || x == reflect.Zero(reflect.TypeOf(x)).Interface()
 }

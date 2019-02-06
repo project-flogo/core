@@ -15,11 +15,21 @@ func NewFactory(resolver resolve.CompositeResolver) Factory {
 	return &ExprMapperFactory{exprFactory: exprFactory}
 }
 
-func (mf *ExprMapperFactory) NewMapper(mappings map[string]interface{}) (Mapper, error) {
-	exprMappings := make(map[string]expression.Expr, len(mappings))
+func (mf *ExprMapperFactory) NewMapper(attrs map[string]interface{}) (Mapper, error) {
 
-	for key, value := range mappings {
-
+	exprMappings := make(map[string]expression.Expr)
+	for key, value := range attrs {
+		if objV, ok := value.(data.TypedValue); ok {
+			if objV != nil {
+				if comp, ok := objV.Value().(*data.ComplexObject); ok {
+					if comp == nil || comp.Value == "" || comp.Value == "{}" {
+						continue
+					}
+				}
+			} else {
+				continue
+			}
+		}
 		if strVal, ok := value.(string); ok && len(strVal) > 0 && strVal[0] == '=' {
 			expr, err := mf.exprFactory.NewExpr(strVal[1:])
 			if err != nil {
@@ -30,6 +40,9 @@ func (mf *ExprMapperFactory) NewMapper(mappings map[string]interface{}) (Mapper,
 			exprMappings[key] = expression.NewLiteralExpr(value)
 		}
 	}
+	if len(exprMappings) <= 0 {
+		return nil, nil
+	}
 
 	return &ExprMapper{mappings: exprMappings}, nil
 }
@@ -39,7 +52,6 @@ type ExprMapper struct {
 }
 
 func (m *ExprMapper) Apply(inputScope data.Scope) (map[string]interface{}, error) {
-
 	output := make(map[string]interface{}, len(m.mappings))
 	for key, expr := range m.mappings {
 		val, err := expr.Eval(inputScope)
