@@ -16,6 +16,11 @@ func NewFactory(resolver resolve.CompositeResolver) Factory {
 }
 
 func (mf *ExprMapperFactory) NewMapper(mappings map[string]interface{}) (Mapper, error) {
+
+	if len(mappings) == 0 {
+		return nil, nil
+	}
+
 	exprMappings := make(map[string]expression.Expr, len(mappings))
 
 	for key, value := range mappings {
