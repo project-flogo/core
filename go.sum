@@ -1,3 +1,5 @@
+github.com/TIBCOSoftware/flogo-lib v0.5.8 h1:JX6PcxtyJbya++sKiWhFRADA6UnkSRS/INuTPzOMF0Y=
+github.com/TIBCOSoftware/flogo-lib v0.5.8/go.mod h1:AE7tfFBvQNemM61frHCwTJYBWC9+iXohXyqrApe6xj4=
 github.com/carlescere/scheduler v0.0.0-20170109141437-ee74d2f83d82/go.mod h1:tyA14J0sA3Hph4dt+AfCjPrYR13+vVodshQSM7km9qw=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
