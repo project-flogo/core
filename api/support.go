@@ -6,6 +6,7 @@ import (
 	"github.com/project-flogo/core/support/log"
 	"reflect"
 	"strconv"
+	
 	"strings"
 
 	"github.com/project-flogo/core/action"
@@ -148,7 +149,7 @@ func NewActivity(act activity.Activity, settings ...interface{}) (activity.Activ
 		if len(settings) != 0{
 			
 			inSettings := settings[0]
-			
+		
 			var settingsMap map[string]interface{}
 			if im, ok := inSettings.(map[string]interface{}); ok {
 				settingsMap = im
@@ -163,6 +164,8 @@ func NewActivity(act activity.Activity, settings ...interface{}) (activity.Activ
 		}
 			
 	}
+	return nil, nil
+
 }
 
 type initCtx struct {
