@@ -3,8 +3,8 @@ package log
 import (
 	"fmt"
 
-	"github.com/project-flogo/core/support/log/zapconfig"
-	"github.com/project-flogo/core/support/log/zapcores"
+	"github.com/nareshkumarthota/core/support/log/zapconfig"
+	"github.com/nareshkumarthota/core/support/log/zapcores"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
