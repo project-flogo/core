@@ -6,7 +6,6 @@ import (
 )
 
 type Level int
-type Format int
 
 const (
 	EnvKeyLogCtx         = "FLOGO_LOG_CTX"
@@ -14,17 +13,12 @@ const (
 	DefaultLogDateFormat = "2006-01-02 15:04:05.000"
 	EnvKeyLogLevel       = "FLOGO_LOG_LEVEL"
 	DefaultLogLevel      = InfoLevel
-	EnvKeyLogFormat      = "FLOGO_LOG_FORMAT"
-	DefaultLogFormat     = FormatConsole
 
 	TraceLevel Level = iota
 	DebugLevel
 	InfoLevel
 	WarnLevel
 	ErrorLevel
-
-	FormatConsole Format = iota
-	FormatJson
 )
 
 type Logger interface {
@@ -128,13 +122,7 @@ func configureLogging() {
 		rootLogLevel = DefaultLogLevel
 	}
 
-	logFormat := DefaultLogFormat
-	envLogFormat := strings.ToUpper(os.Getenv(EnvKeyLogFormat))
-	if envLogFormat == "JSON" {
-		logFormat = FormatJson
-	}
-
-	rootLogger = newZapRootLogger("flogo", logFormat)
+	rootLogger = newZapRootLogger("flogo")
 	SetLogLevel(rootLogger, rootLogLevel)
 }
 
