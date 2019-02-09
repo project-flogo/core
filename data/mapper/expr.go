@@ -7,18 +7,23 @@ import (
 )
 
 type ExprMapperFactory struct {
-	exprFactory expression.Factory
+	exprFactory  expression.Factory
+	arrayFactory ArrayMapperFactory
 }
 
 func NewFactory(resolver resolve.CompositeResolver) Factory {
 	exprFactory := expression.NewFactory(resolver)
-	return &ExprMapperFactory{exprFactory: exprFactory}
+	arrayFactory := ArrayMapperFactory{exprFactory}
+	return &ExprMapperFactory{exprFactory: exprFactory, arrayFactory: arrayFactory}
 }
 
 func (mf *ExprMapperFactory) NewMapper(attrs map[string]interface{}) (Mapper, error) {
 
 	exprMappings := make(map[string]expression.Expr)
 	for key, value := range attrs {
+		if value == nil {
+			continue
+		}
 		if objV, ok := value.(data.TypedValue); ok {
 			if objV != nil {
 				if comp, ok := objV.Value().(*data.ComplexObject); ok {
@@ -36,6 +41,12 @@ func (mf *ExprMapperFactory) NewMapper(attrs map[string]interface{}) (Mapper, er
 				return nil, err
 			}
 			exprMappings[key] = expr
+		} else if IsArrayMapping(value) {
+			arrayExpr, err := mf.arrayFactory.NewArrayExpr(value)
+			if err != nil {
+				return nil, err
+			}
+			exprMappings[key] = arrayExpr
 		} else {
 			exprMappings[key] = expression.NewLiteralExpr(value)
 		}
