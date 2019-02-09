@@ -48,6 +48,17 @@ func (c *Config) FixUp(md *Metadata) error {
 				}
 			}
 		}
+
+		if len(hc.Outputs) > 0 {
+			var err error
+			for name, value := range hc.Outputs {
+				hc.Outputs[name], err = metadata.ResolveSettingValue(name, value, md.Output, ef)
+				if err != nil {
+					return err
+				}
+			}
+		}
+
 	}
 
 	return nil
@@ -60,6 +71,8 @@ type HandlerConfig struct {
 	Actions  []*ActionConfig        `json:"actions"`
 
 	//handle complex object
+	//Deprecated
+	Outputs map[string]interface{} `json:"outputs"`
 }
 
 // UnmarshalJSON overrides the default UnmarshalJSON for TaskInst
@@ -69,6 +82,7 @@ func (hc *HandlerConfig) UnmarshalJSON(d []byte) error {
 		Settings map[string]interface{} `json:"settings"`
 		Actions  []*ActionConfig        `json:"actions"`
 		Action   *ActionConfig          `json:"action"`
+		Outputs  map[string]interface{} `json:"outputs"`
 	}{}
 
 	if err := json.Unmarshal(d, ser); err != nil {
@@ -84,6 +98,7 @@ func (hc *HandlerConfig) UnmarshalJSON(d []byte) error {
 		hc.Actions = ser.Actions
 	}
 
+	hc.Outputs = ser.Outputs
 	return nil
 }
 

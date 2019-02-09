@@ -2,15 +2,11 @@ package trigger
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
-	"reflect"
-
-	"github.com/project-flogo/core/data/coerce"
-
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/data"
+	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/mapper"
 )
@@ -19,6 +15,7 @@ type Handler interface {
 	Name() string
 	Settings() map[string]interface{}
 	Handle(ctx context.Context, triggerData interface{}) (map[string]interface{}, error)
+	Outputs() map[string]interface{}
 }
 
 type actImpl struct {
@@ -40,6 +37,10 @@ func (h *handlerImpl) Name() string {
 
 func (h *handlerImpl) Settings() map[string]interface{} {
 	return h.config.Settings
+}
+
+func (h *handlerImpl) Outputs() map[string]interface{} {
+	return h.config.Outputs
 }
 
 func NewHandler(config *HandlerConfig, acts []action.Action, mf mapper.Factory, ef expression.Factory, runner action.Runner) (Handler, error) {
@@ -146,6 +147,7 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 		if err != nil {
 			return nil, err
 		}
+
 	} else {
 		inputMap = triggerValues
 	}
@@ -153,9 +155,13 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 	if ioMd := act.act.IOMetadata(); ioMd != nil {
 		for name, tv := range ioMd.Input {
 			if val, ok := inputMap[name]; ok {
-				inputMap[name], err = coerce.ToType(val, tv.Type())
-				if err != nil {
-					return nil, err
+				if tv.Type() == data.TypeComplexObject && !data.IsComplexObjectType(val) {
+					inputMap[name] = &data.ComplexObject{Value: val}
+				} else {
+					inputMap[name], err = coerce.ToType(val, tv.Type())
+					if err != nil {
+						return nil, err
+					}
 				}
 			}
 		}
