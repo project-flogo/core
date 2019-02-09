@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"reflect"
 	"strconv"
 	"strings"
 )
@@ -196,4 +197,11 @@ type TypeConverter func(value interface{}, toType Type) (interface{}, error)
 type ComplexObject struct {
 	Metadata string      `json:"metadata"`
 	Value    interface{} `json:"value"`
+}
+
+func IsComplexObjectType(value interface{}) bool {
+	if reflect.TypeOf(value).String() == "*data.ComplexObject" {
+		return true
+	}
+	return false
 }

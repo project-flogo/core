@@ -2,6 +2,7 @@ package resolve
 
 import (
 	"fmt"
+	"reflect"
 	"strings"
 
 	"github.com/project-flogo/core/data"
@@ -179,7 +180,10 @@ func (r *resolution) GetValue(scope data.Scope) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-
+	//Make sure to handle complex type
+	if data.IsComplexObjectType(value) {
+		value = getComplexObjectValue(value)
+	}
 	if r.details.Path != "" {
 		value, err = path.GetValue(value, r.details.Path)
 		if err != nil {
@@ -188,4 +192,9 @@ func (r *resolution) GetValue(scope data.Scope) (interface{}, error) {
 	}
 
 	return value, nil
+}
+
+func getComplexObjectValue(value interface{}) interface{} {
+	complx := reflect.ValueOf(value).Elem()
+	return complx.FieldByName("Value").Interface()
 }
