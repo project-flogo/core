@@ -2,7 +2,6 @@ package trigger
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/project-flogo/core/action"
@@ -10,7 +9,6 @@ import (
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/mapper"
-	"reflect"
 )
 
 type Handler interface {
@@ -157,6 +155,7 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 	if ioMd := act.act.IOMetadata(); ioMd != nil {
 		for name, tv := range ioMd.Input {
 			if val, ok := inputMap[name]; ok {
+				//Take value as complex object value because the return only value for mapper.
 				if tv.Type() == data.TypeComplexObject && !data.IsComplexObjectType(val) {
 					inputMap[name] = &data.ComplexObject{Value: val}
 				} else {
@@ -177,14 +176,8 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 
 	//backward compatible, the type might be *data.ComplexObject from flogo-lib or project-flogo
 	for k, v := range results {
-		if reflect.TypeOf(v).String() == "*data.ComplexObject" {
-			//Convert to new package complex object
-			vv, _ := json.Marshal(v)
-			obj, err := coerce.CoerceToComplexObject(string(vv))
-			if err != nil {
-				return nil, err
-			}
-			results[k] = obj.Value
+		if data.IsComplexObjectType(v) {
+			results[k] = data.GetComplexObjectValue(v)
 		}
 	}
 	if act.actionOutputMapper != nil {

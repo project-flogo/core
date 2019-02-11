@@ -25,34 +25,34 @@ func (mf *ExprMapperFactory) NewMapper(mappings map[string]interface{}) (Mapper,
 
 	exprMappings := make(map[string]expression.Expr)
 	for key, value := range mappings {
-		if value == nil {
-			continue
-		}
-		if objV, ok := value.(data.TypedValue); ok {
-			if objV != nil {
-				if comp, ok := objV.Value().(*data.ComplexObject); ok {
-					if comp == nil || comp.Value == "" || comp.Value == "{}" {
-						continue
+		if value != nil {
+
+			//To compatible with legacy, skip empty complex object fields
+			if objV, ok := value.(data.TypedValue); ok {
+				if objV != nil {
+					if comp, ok := objV.Value().(*data.ComplexObject); ok {
+						if comp == nil || comp.Value == "" || comp.Value == "{}" {
+							continue
+						}
 					}
 				}
+			}
+
+			if strVal, ok := value.(string); ok && len(strVal) > 0 && strVal[0] == '=' {
+				expr, err := mf.exprFactory.NewExpr(strVal[1:])
+				if err != nil {
+					return nil, err
+				}
+				exprMappings[key] = expr
+			} else if IsArrayMapping(value) {
+				arrayExpr, err := mf.arrayFactory.NewArrayExpr(value)
+				if err != nil {
+					return nil, err
+				}
+				exprMappings[key] = arrayExpr
 			} else {
-				continue
+				exprMappings[key] = expression.NewLiteralExpr(value)
 			}
-		}
-		if strVal, ok := value.(string); ok && len(strVal) > 0 && strVal[0] == '=' {
-			expr, err := mf.exprFactory.NewExpr(strVal[1:])
-			if err != nil {
-				return nil, err
-			}
-			exprMappings[key] = expr
-		} else if IsArrayMapping(value) {
-			arrayExpr, err := mf.arrayFactory.NewArrayExpr(value)
-			if err != nil {
-				return nil, err
-			}
-			exprMappings[key] = arrayExpr
-		} else {
-			exprMappings[key] = expression.NewLiteralExpr(value)
 		}
 	}
 	if len(exprMappings) <= 0 {

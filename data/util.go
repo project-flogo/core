@@ -1,5 +1,7 @@
 package data
 
+import "reflect"
+
 type StringsMap interface {
 	Get(key string) string
 
@@ -35,4 +37,9 @@ func (d *stringsMapImpl) Iterate(itx func(string, string)) {
 type StructValue interface {
 	ToMap() map[string]interface{}
 	FromMap(values map[string]interface{}) error
+}
+
+func GetComplexObjectValue(value interface{}) interface{} {
+	complx := reflect.ValueOf(value).Elem()
+	return complx.FieldByName("Value").Interface()
 }
