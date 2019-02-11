@@ -104,7 +104,7 @@ func (am *ArrayMapperFactory) NewArrayExpr(value interface{}) (expression.Expr, 
 
 func isArrayMapping(ref string) bool {
 	if ref != "" {
-		return strings.HasPrefix(ref, "$.") || strings.HasPrefix(ref, "$$")
+		return strings.HasPrefix(ref, "$.")
 	}
 	return false
 }
