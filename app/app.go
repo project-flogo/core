@@ -34,6 +34,10 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 	app.propManager = property.NewManager(properties)
 	property.SetDefaultManager(app.propManager)
 
+	for _, option := range options {
+		option(app)
+	}
+
 	resources := make(map[string]*resource.Resource, len(config.Resources))
 	app.resManager = resource.NewManager(resources)
 
@@ -66,10 +70,6 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 	app.triggers, err = app.createTriggers(config.Triggers, runner)
 	if err != nil {
 		return nil, fmt.Errorf("error creating trigger instances - %s", err.Error())
-	}
-
-	for _, option := range options {
-		option(app)
 	}
 
 	return app, nil

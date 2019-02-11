@@ -17,10 +17,14 @@ func NewFactory(resolver resolve.CompositeResolver) Factory {
 	return &ExprMapperFactory{exprFactory: exprFactory, arrayFactory: arrayFactory}
 }
 
-func (mf *ExprMapperFactory) NewMapper(attrs map[string]interface{}) (Mapper, error) {
+func (mf *ExprMapperFactory) NewMapper(mappings map[string]interface{}) (Mapper, error) {
+
+	if len(mappings) == 0 {
+		return nil, nil
+	}
 
 	exprMappings := make(map[string]expression.Expr)
-	for key, value := range attrs {
+	for key, value := range mappings {
 		if value == nil {
 			continue
 		}
