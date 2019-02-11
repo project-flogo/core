@@ -2,6 +2,7 @@ package trigger
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/project-flogo/core/action"
@@ -9,6 +10,7 @@ import (
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/mapper"
+	"reflect"
 )
 
 type Handler interface {
@@ -177,12 +179,12 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 	for k, v := range results {
 		if reflect.TypeOf(v).String() == "*data.ComplexObject" {
 			//Convert to new package complex object
-			vv , _ :=	json.Marshal(v)
-			obj , err := coerce.CoerceToComplexObject(string(vv))
+			vv, _ := json.Marshal(v)
+			obj, err := coerce.CoerceToComplexObject(string(vv))
 			if err != nil {
 				return nil, err
 			}
-			results[k]=obj.Value
+			results[k] = obj.Value
 		}
 	}
 	if act.actionOutputMapper != nil {
