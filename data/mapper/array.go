@@ -12,9 +12,8 @@ import (
 )
 
 const (
-	PRIMITIVE = "primitive"
-	FOREACH   = "foreach"
-	NEWARRAY  = "NEWARRAY"
+	FOREACH  = "foreach"
+	NEWARRAY = "NEWARRAY"
 )
 
 type ArrayMapperFactory struct {
