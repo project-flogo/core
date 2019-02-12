@@ -8,12 +8,12 @@ import (
 
 type ExprMapperFactory struct {
 	exprFactory  expression.Factory
-	arrayFactory ArrayMapperFactory
+	arrayFactory expression.Factory
 }
 
 func NewFactory(resolver resolve.CompositeResolver) Factory {
 	exprFactory := expression.NewFactory(resolver)
-	arrayFactory := ArrayMapperFactory{exprFactory}
+	arrayFactory := NewArrayMapperFactory(exprFactory)
 	return &ExprMapperFactory{exprFactory: exprFactory, arrayFactory: arrayFactory}
 }
 
@@ -33,7 +33,7 @@ func (mf *ExprMapperFactory) NewMapper(mappings map[string]interface{}) (Mapper,
 				}
 				exprMappings[key] = expr
 			} else if IsArrayMapping(value) {
-				arrayExpr, err := mf.arrayFactory.NewArrayExpr(value)
+				arrayExpr, err := mf.arrayFactory.(*ArrayMapperFactory).NewAnyExpr(value)
 				if err != nil {
 					return nil, err
 				}

@@ -20,6 +20,10 @@ type ArrayMapperFactory struct {
 	exprFactory expression.Factory
 }
 
+func NewArrayMapperFactory(exprFactory expression.Factory) expression.Factory {
+	return &ArrayMapperFactory{exprFactory: exprFactory}
+}
+
 type ArrayMapping struct {
 	From   interface{}     `json:"from"`
 	To     string          `json:"to"`
@@ -93,12 +97,16 @@ func (a *ArrayMapping) Validate() error {
 	return nil
 }
 
-func (am *ArrayMapperFactory) NewArrayExpr(value interface{}) (expression.Expr, error) {
+func (am *ArrayMapperFactory) NewAnyExpr(value interface{}) (expression.Expr, error) {
 	aMapping, err := ParseArrayMapping(value)
 	if err != nil {
 		return nil, fmt.Errorf("parsing array mapping failed %s", err)
 	}
 	return &ArrayExpr{arrayMappings: aMapping, exprFactory: am.exprFactory}, nil
+}
+
+func (am *ArrayMapperFactory) NewExpr(value string) (expression.Expr, error) {
+	return am.NewAnyExpr(value)
 }
 
 func isArrayMapping(ref string) bool {
