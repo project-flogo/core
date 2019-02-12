@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/project-flogo/core/data/resolve"
-	"github.com/project-flogo/core/support/log"
 )
 
 var scriptFactoryCreator FactoryCreatorFunc
@@ -30,8 +29,6 @@ type factoryImpl struct {
 }
 
 func (f *factoryImpl) NewExpr(exprStr string) (Expr, error) {
-	logger := log.RootLogger()
-	logger.Infof("Expr is ......", exprStr)
 
 	if resolve.IsResolveExpr(exprStr) {
 
