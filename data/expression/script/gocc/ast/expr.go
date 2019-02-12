@@ -51,6 +51,15 @@ func NewTernaryExpr(ifNode, thenNode, elseNode interface{}) (Expr, error) {
 	return &exprTernary{ifExpr: ifExpr, thenExpr: thenExpr, elseExpr: elseExpr}, nil
 }
 
+func NewTernaryArgument(first interface{}) (Expr, error) {
+	switch t := first.(type) {
+	case Expr:
+		return t, nil
+	default:
+		return nil, fmt.Errorf("unsupported ternary type %+v", first)
+	}
+}
+
 type exprTernary struct {
 	ifExpr, thenExpr, elseExpr Expr
 }

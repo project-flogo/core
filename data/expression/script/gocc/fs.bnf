@@ -104,11 +104,16 @@ PrimaryExpr
     ;
 
 TernaryExpr
-    : Expr "?" Expr ":" Expr    << ast.NewTernaryExpr($0, $2, $4) >>
+    : TernaryArgument "?" TernaryArgument ":" TernaryArgument        <<ast.NewTernaryExpr($0, $2, $4)>>
     ;
 
-BoolLit
-    : "true"
+TernaryArgument
+     :  Expr
+     |  TernaryExpr
+     | "(" TernaryExpr ")"                                      <<ast.NewTernaryArgument($1)>>
+     ;
+
+BoolLit    : "true"
     | "false"
     ;
 
