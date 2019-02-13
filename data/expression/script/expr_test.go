@@ -3,6 +3,7 @@ package script
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 	"testing"
 
 	"github.com/project-flogo/core/data"
@@ -659,6 +660,74 @@ func TestTernaryExpr(t *testing.T) {
 	v, err = expr.Eval(nil)
 	assert.Nil(t, err)
 	assert.Equal(t, 40, v)
+}
+
+func TestExpression(t *testing.T) {
+
+	scope := data.NewSimpleScope(map[string]interface{}{"queryParams": map[string]interface{}{"id": "helloworld"}}, nil)
+	factory := NewExprFactory(resolve.GetBasicResolver())
+	os.Setenv("name", "flogo")
+	os.Setenv("address", "tibco")
+
+	testcases := make(map[string]interface{})
+	testcases[`1>2?tstring.concat("sss","ddddd"):"fff"`] = "fff"
+	testcases[`1<2?"helloworld":"fff"`] = "helloworld"
+	testcases["200>100?true:false"] = true
+	testcases["1 + 2 * 3 + 2 * 6"] = 19
+	testcases[`tstring.length($.queryParams.id) == 0 ? "Query Id cannot be null" : tstring.length($.queryParams.id)`] = 10
+	testcases[`tstring.length("helloworld")>11?"helloworld":"fff"`] = "fff"
+	testcases["123==456"] = false
+	testcases["123==123"] = true
+	testcases[`tstring.concat("123","456")=="123456"`] = true
+	testcases[`tstring.concat("123","456") == tstring.concat("12","3456")`] = true
+	testcases[`("dddddd" == "dddd3dd") && ("133" == "123")`] = false
+	testcases[`tstring.length("helloworld") == 10`] = true
+	testcases[`tstring.length("helloworld") > 10`] = false
+	testcases[`tstring.length("helloworld") >= 10`] = true
+	testcases[`tstring.length("helloworld") < 10`] = false
+	testcases[`tstring.length("helloworld") >= 10`] = true
+	testcases[`(tstring.length("sea") == 3) == true`] = true
+
+	testcases[`(1&&1)==(1&&1)`] = true
+	testcases[`(true && true) == false`] = false
+	testcases[`nil==nil`] = true
+
+	//Nested Ternary
+	testcases[`(tstring.length("1234") == 4 ? true : false) ? (2 >1 ? (3>2?"Yes":"nono"):"No") : "false"`] = "Yes"
+	testcases[`(4 == 4 ? true : false) ? "yes" : "no"`] = "yes"
+	testcases[`(4 == 4 ? true : false) ? 4 < 3 ? "good" :"false" : "no"`] = "false"
+	testcases[`4 > 3 ? 6<4 ?  "good2" : "false2" : "false"`] = "false2"
+	testcases[`4 > 5 ? 6<4 ?  "good2" : "false2" : 3>2?"ok":"notok"`] = "ok"
+
+	//Int vs float
+	testcases[`1 == 1.23`] = false
+	testcases[`1 < 1.23`] = true
+	testcases[`1.23 == 1`] = false
+	testcases[`1.23 > 1`] = true
+
+	//Operator
+	testcases[`1 + 2 * 3 + 2 * 6 / 2`] = 13
+	testcases[` 1 + 4 * 5 + -6 `] = 15
+	testcases[` 2 < 3 && 5 > 4 && 6 < 7 && 56 > 44`] = true
+	testcases[` 2 < 3 && 5 > 4 ||  6 < 7 && 56 < 44`] = true
+	testcases[`3-2`] = 1
+	testcases[`3 - 2`] = 1
+	testcases[`3+-2`] = 1
+	testcases[`3- -2`] = 5
+
+	//testcases[`tstring.length("helloworld")>11?$env[name]:$env[address]`] = "tibco"
+	//testcases[`$env[name] != nil`] = true
+	//testcases[`$env[name] == "flogo"`] = true
+
+	for k, v := range testcases {
+		vv, err := factory.NewExpr(k)
+		assert.Nil(t, err)
+		result, err := vv.Eval(scope)
+		assert.Nil(t, err)
+		if !assert.ObjectsAreEqual(v, result) {
+			assert.Fail(t, fmt.Sprintf("test expr [%s] failed, expected [%+v] but actual [%+v]", k, v, result))
+		}
+	}
 }
 
 var result interface{}

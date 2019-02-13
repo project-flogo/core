@@ -3,6 +3,7 @@ package script
 import (
 	"bytes"
 	"fmt"
+	"github.com/project-flogo/core/data/resolve"
 	"testing"
 
 	"github.com/project-flogo/core/data"
@@ -51,6 +52,25 @@ func TestFuncExprNestedMultiSpace(t *testing.T) {
 	assert.Equal(t, "This is Flogo", v.(string))
 }
 
+func TestFunctionWithRef(t *testing.T) {
+
+	scope := data.NewSimpleScope(map[string]interface{}{"queryParams": map[string]interface{}{"id": "flogo"}}, nil)
+	factory := NewExprFactory(resolve.GetBasicResolver())
+	testcases := make(map[string]interface{})
+	testcases[`tstring.concat("This", " is ", $.queryParams.id)`] = "This is flogo"
+
+	for k, v := range testcases {
+		vv, err := factory.NewExpr(k)
+		assert.Nil(t, err)
+		result, err := vv.Eval(scope)
+		assert.Nil(t, err)
+		if !assert.ObjectsAreEqual(v, result) {
+			assert.Fail(t, fmt.Sprintf("test function [%s] failed, expected [%+v] but actual [%+v]", k, v, result))
+		}
+	}
+
+}
+
 func init() {
 	function.Register(&fnConcat{})
 }
@@ -85,4 +105,24 @@ func TestFuncExprSingleQuote(t *testing.T) {
 	v, err := expr.Eval(nil)
 	assert.Nil(t, err)
 	assert.Equal(t, "abcdef", v)
+}
+
+func init() {
+	function.Register(&tLength{})
+}
+
+type tLength struct {
+}
+
+func (tLength) Name() string {
+	return "tstring.length"
+}
+
+func (tLength) Sig() (paramTypes []data.Type, isVariadic bool) {
+	return []data.Type{data.TypeString}, false
+}
+
+func (tLength) Eval(params ...interface{}) (interface{}, error) {
+	p := params[0].(string)
+	return len(p), nil
 }
