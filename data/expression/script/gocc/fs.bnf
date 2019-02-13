@@ -36,7 +36,7 @@ ident : _ident ;
 
 ref : '$' [ _ident ];
 selector : '.' _ident ;
-index : '[' ( _dq_string | _sq_string | _lit_string | _decimals ) ']' ;
+index : '[' ( _dq_string | _sq_string | _lit_string | _decimals | _ident) ']' ;
 
 // -- [ Functions ]
 
