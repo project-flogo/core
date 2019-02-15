@@ -2,6 +2,7 @@ package engine
 
 import (
 	"fmt"
+	"github.com/project-flogo/core/data/property"
 	"strings"
 
 	"github.com/project-flogo/core/action"
@@ -26,7 +27,7 @@ type engineImpl struct {
 type Option func(*engineImpl)
 
 // New creates a new Engine
-func New(appConfig *app.Config, options... Option) (Engine, error) {
+func New(appConfig *app.Config, options ...Option) (Engine, error) {
 	if appConfig == nil {
 		return nil, fmt.Errorf("no App configuration provided")
 	}
@@ -45,7 +46,7 @@ func New(appConfig *app.Config, options... Option) (Engine, error) {
 	if engine.config == nil {
 		config := &Config{}
 		config.StopEngineOnError = true
-		config.RunnerType = DefaultRunnerType
+		config.RunnerType = GetRunnerType()
 		//config.LogLevel = DefaultLogLevel
 
 		engine.config = config
@@ -88,13 +89,26 @@ func New(appConfig *app.Config, options... Option) (Engine, error) {
 		appOptions = append(appOptions, app.ContinueOnError)
 	}
 
-	propProvider := GetAppPropertyProvider()
-	propOverride := GetAppPropertyOverride()
+	propResolvers := GetAppPropertyValueResolvers()
+	enableExternalPropResolution := false
+	if len(propResolvers) > 0 {
+		err := property.EnableExternalResolvers(propResolvers)
+		if err != nil {
+			return nil, err
+		}
 
-	if len(propOverride) > 0 {
-		option := app.ExternalProperties(propProvider, propOverride, secret.PropertyProcessor, EnvPropertyProcessor)
-		appOptions = append(appOptions, option)
+		enableExternalPropResolution = true
 	}
+
+	// properties post processors (external properties resolver if enabled, secret property replacer)
+	var postProcessors []property.PostProcessor
+	if enableExternalPropResolution {
+		postProcessors = append(postProcessors, property.ExternalPropertyResolverProcessor)
+	}
+	postProcessors = append(postProcessors, secret.PropertyProcessor)
+
+	option := app.FinalizeProperties(postProcessors...)
+	appOptions = append(appOptions, option)
 
 	flogoApp, err := app.New(appConfig, engine.actionRunner, appOptions...)
 	if err != nil {

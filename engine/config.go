@@ -19,8 +19,8 @@ const (
 	DefaultRunnerWorkers     = 5
 	EnvKeyRunnerQueueSize    = "FLOGO_RUNNER_QUEUE"
 	DefaultRunnerQueueSize   = 50
-	EnvAppPropertyOverride   = "FLOGO_APP_PROP_OVERRIDE"
-	EnvAppPropertyProvider   = "FLOGO_APP_PROP_PROVIDER"
+
+	EnvAppPropertyResolvers  = "FLOGO_APP_PROPS_RESOLVERS"
 
 	ValueRunnerTypePooled = "POOLED"
 	ValueRunnerTypeDirect = "DIRECT"
@@ -73,16 +73,8 @@ func StopEngineOnError() bool {
 	return b
 }
 
-func GetAppPropertyOverride() string {
-	key := os.Getenv(EnvAppPropertyOverride)
-	if len(key) > 0 {
-		return key
-	}
-	return ""
-}
-
-func GetAppPropertyProvider() string {
-	key := os.Getenv(EnvAppPropertyProvider)
+func GetAppPropertyValueResolvers() string {
+	key := os.Getenv(EnvAppPropertyResolvers)
 	if len(key) > 0 {
 		return key
 	}

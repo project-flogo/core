@@ -11,7 +11,7 @@ import (
 
 const (
 	NoState    = -1
-	NumStates  = 88
+	NumStates  = 90
 	NumSymbols = 81
 )
 

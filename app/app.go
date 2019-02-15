@@ -32,6 +32,7 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 	}
 
 	app.propManager = property.NewManager(properties)
+	property.SetDefaultManager(app.propManager)
 
 	for _, option := range options {
 		option(app)
@@ -71,10 +72,6 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 		return nil, fmt.Errorf("error creating trigger instances - %s", err.Error())
 	}
 
-	for _, option := range options {
-		option(app)
-	}
-
 	return app, nil
 }
 
@@ -83,9 +80,9 @@ func ContinueOnError(a *App) error {
 	return nil
 }
 
-func ExternalProperties(providerId string, overrides string, processors ...property.PostProcessor) func(*App) error {
+func FinalizeProperties(processors ...property.PostProcessor) func(*App) error {
 	return func(a *App) error {
-		return a.propManager.AddExternalProperties(providerId, overrides, processors...)
+		return a.propManager.Finalize(processors...)
 	}
 }
 

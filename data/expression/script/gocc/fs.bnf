@@ -36,7 +36,7 @@ ident : _ident ;
 
 ref : '$' [ _ident ];
 selector : '.' _ident ;
-index : '[' ( _dq_string | _sq_string | _lit_string | _decimals ) ']' ;
+index : '[' ( _dq_string | _sq_string | _lit_string | _decimals | _ident) ']' ;
 
 // -- [ Functions ]
 
@@ -104,11 +104,16 @@ PrimaryExpr
     ;
 
 TernaryExpr
-    : Expr "?" Expr ":" Expr    << ast.NewTernaryExpr($0, $2, $4) >>
+    : TernaryArgument "?" TernaryArgument ":" TernaryArgument        <<ast.NewTernaryExpr($0, $2, $4)>>
     ;
 
-BoolLit
-    : "true"
+TernaryArgument
+     :  Expr
+     |  TernaryExpr
+     | "(" TernaryExpr ")"                                      <<ast.NewTernaryArgument($1)>>
+     ;
+
+BoolLit    : "true"
     | "false"
     ;
 

@@ -2,11 +2,11 @@ package metadata
 
 import (
 	"fmt"
-	"github.com/project-flogo/core/data/coerce"
-	"github.com/project-flogo/core/data/expression"
 	"reflect"
 
 	"github.com/project-flogo/core/data"
+	"github.com/project-flogo/core/data/coerce"
+	"github.com/project-flogo/core/data/expression"
 )
 
 const metadataTag = "md"
@@ -111,7 +111,11 @@ func MapToStruct(m map[string]interface{}, object interface{}, validate bool) er
 					return err
 				}
 
-				fv.Set(reflect.ValueOf(val))
+				if IsZeroOfUnderlyingType(val) {
+					fv.Set(reflect.Zero(fv.Type()))
+				} else {
+					fv.Set(reflect.ValueOf(val))
+				}
 			} else {
 				if validate && details.Required {
 					return fmt.Errorf("field '%s' is required", details.Label)
@@ -176,4 +180,16 @@ func ResolveSettingValue(setting string, value interface{}, settingsMd map[strin
 	}
 
 	return coerce.ToType(value, toType)
+}
+
+func IsZeroOfUnderlyingType(x interface{}) bool {
+	if x == nil {
+		return true
+	}
+	typ := reflect.TypeOf(x)
+	zero := reflect.Zero(typ).Interface()
+	if typ.Comparable() {
+		return x == zero
+	}
+	return reflect.DeepEqual(x, zero)
 }
