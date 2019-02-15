@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	EnvKeyAppConfigLocation = "FLOGO_CONFIG_PATH"
-	//DefaultAppConfigLocation = "flogo.json"
+	EnvKeyAppConfigLocation  = "FLOGO_CONFIG_PATH"
+	DefaultAppConfigLocation = "flogo.json"
 	EnvKeyStopEngineOnError  = "FLOGO_ENGINE_STOP_ON_ERROR"
 	DefaultStopEngineOnError = true
 	EnvKeyRunnerType         = "FLOGO_RUNNER_TYPE"
@@ -31,9 +31,6 @@ var DefaultAppConfigLocation string
 //GetFlogoConfigPath returns the flogo config path
 func GetFlogoConfigPath() string {
 
-	if DefaultAppConfigLocation == "" {
-		DefaultAppConfigLocation = "flogo.json"
-	}
 	flogoConfigPathEnv := os.Getenv(EnvKeyAppConfigLocation)
 	if len(flogoConfigPathEnv) > 0 {
 		return flogoConfigPathEnv
