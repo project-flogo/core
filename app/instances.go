@@ -45,16 +45,18 @@ func (a *App) createSharedActions(actionConfigs []*action.Config) (map[string]ac
 func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (map[string]*triggerWrapper, error) {
 
 	triggers := make(map[string]*triggerWrapper)
-
 	mapperFactory := mapper.NewFactory(resolve.GetBasicResolver())
 	expressionFactory := expression.NewFactory(resolve.GetBasicResolver())
-
 	for _, tConfig := range tConfigs {
+
+		tConfig.AppConfig = map[string]interface{}{"Name": a.name, "Version": a.version, "Description": a.description,
+								"Trigger": tConfigs}
 
 		_, exists := triggers[tConfig.Id]
 		if exists {
 			return nil, fmt.Errorf("Trigger with id '%s' already registered, trigger ids have to be unique", tConfig.Id)
 		}
+
 
 		if tConfig.Ref == "" {
 			var ok bool
@@ -152,7 +154,6 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 
 		triggers[tConfig.Id] = &triggerWrapper{ref: tConfig.Ref, trg: trg, status: &managed.StatusInfo{Name: tConfig.Id}}
 	}
-
 	return triggers, nil
 }
 

@@ -11,11 +11,12 @@ import (
 
 // Config is the configuration for a Trigger
 type Config struct {
-	Id       string                 `json:"id"`
-	Type     string                 `json:"type"` //an alias to the ref, can be used if imported
-	Ref      string                 `json:"ref"`
-	Settings map[string]interface{} `json:"settings"`
-	Handlers []*HandlerConfig       `json:"handlers"`
+	Id       string                 	`json:"id"`
+	Type     string                 	`json:"type"` //an alias to the ref, can be used if imported
+	Ref      string                 	`json:"ref"`
+	Settings map[string]interface{} 	`json:"settings"`
+	Handlers []*HandlerConfig       	`json:"handlers"`
+	AppConfig map[string]interface{} 	`json:"appconfig"`
 }
 
 func (c *Config) FixUp(md *Metadata) error {
