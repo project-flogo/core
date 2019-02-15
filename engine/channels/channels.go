@@ -75,7 +75,7 @@ func Stop() error {
 			log.RootLogger().Warnf("error stopping channel '%s', error: %s", channel.name, err.Error())
 		}
 	}
-
+	channels = make(map[string]*channelImpl)
 	active = false
 
 	return nil
