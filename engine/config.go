@@ -26,8 +26,6 @@ const (
 	ValueRunnerTypeDirect = "DIRECT"
 )
 
-var DefaultAppConfigLocation string
-
 //GetFlogoConfigPath returns the flogo config path
 func GetFlogoConfigPath() string {
 
