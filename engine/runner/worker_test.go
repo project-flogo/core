@@ -2,9 +2,10 @@ package runner
 
 import (
 	"errors"
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"testing"
 )
 
 //TestWorkerInvalidRequestType worker returns error for invalid request type
@@ -36,7 +37,7 @@ func TestWorkerErrorInAction(t *testing.T) {
 	rc := make(chan *ActionResult)
 
 	action := new(MockFullAction)
-	action.On("Run", nil, mock.AnythingOfType("map[string]*data.Attribute"), mock.AnythingOfType("*runner.AsyncResultHandler")).Return(errors.New("Error in action"))
+	action.On("Run", nil, mock.AnythingOfType("map[string]interface {}"), mock.AnythingOfType("*runner.AsyncResultHandler")).Return(errors.New("Error in action"))
 
 	actionData := &ActionData{arc: rc, action: action}
 
@@ -61,7 +62,7 @@ func TestWorkerStartOk(t *testing.T) {
 	rc := make(chan *ActionResult)
 
 	action := new(MockResultAction)
-	action.On("Run", nil, mock.AnythingOfType("map[string]*data.Attribute"), mock.AnythingOfType("*runner.AsyncResultHandler")).Return(nil)
+	action.On("Run", nil, mock.AnythingOfType("map[string]interface {}"), mock.AnythingOfType("*runner.AsyncResultHandler")).Return(nil)
 
 	actionData := &ActionData{arc: rc, action: action}
 
@@ -76,8 +77,8 @@ func TestWorkerStartOk(t *testing.T) {
 
 	assert.Nil(t, result.err)
 	assert.NotNil(t, result)
-	assert.Equal(t, 200, result.results["code"].Value())
-	assert.Equal(t, "mock", result.results["data"].Value())
+	assert.Equal(t, 200, result.results["code"])
+	assert.Equal(t, "mock", result.results["data"])
 }
 
 func createDefaultWorker() ActionWorker {

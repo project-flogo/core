@@ -15,7 +15,7 @@ const (
 	ENV_PUBLISH_AUDIT_EVENTS_KEY = "FLOGO_PUBLISH_AUDIT_EVENTS"
 )
 
-type EventListener interface {
+type Listener interface {
 	// Returns name of the listener
 	Name() string
 
@@ -23,7 +23,7 @@ type EventListener interface {
 	HandleEvent(*EventContext) error
 }
 
-var eventListeners = make(map[string][]EventListener)
+var eventListeners = make(map[string][]Listener)
 
 // Buffered channel
 var eventQueue = make(chan *EventContext, 100)
@@ -35,7 +35,7 @@ var publishEventsEnabled = PublishAuditEvents()
 var lock = &sync.RWMutex{}
 
 // Registers listener for given event types
-func RegisterEventListener(evtListener EventListener, eventTypes []string) error {
+func RegisterListener(evtListener Listener, eventTypes []string) error {
 	if evtListener == nil {
 		return errors.New("Event listener must not nil")
 	}
@@ -56,7 +56,7 @@ func RegisterEventListener(evtListener EventListener, eventTypes []string) error
 
 // Unregister event listener for given event types .
 // To unregister from all event types, set eventTypes to nil
-func UnRegisterEventListener(name string, eventTypes []string) {
+func UnRegisterListener(name string, eventTypes []string) {
 
 	if name == "" {
 		return
