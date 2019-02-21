@@ -3,6 +3,7 @@ package script
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 	"testing"
 
 	"github.com/project-flogo/core/data"
@@ -10,7 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var resolver = resolve.NewCompositeResolver(map[string]resolve.Resolver{"static": &TestStaticResolver{}, ".": &TestResolver{}})
+var resolver = resolve.NewCompositeResolver(map[string]resolve.Resolver{"static": &TestStaticResolver{}, ".": &TestResolver{}, "env": &resolve.EnvResolver{}})
 var factory = NewExprFactory(resolver)
 
 func TestLitExprInt(t *testing.T) {
@@ -143,6 +144,18 @@ func TestJsonExpr(t *testing.T) {
 func TestLitExprStaticRef(t *testing.T) {
 
 	expr, err := factory.NewExpr(`$static.foo`)
+	assert.Nil(t, err)
+	assert.NotNil(t, expr)
+
+	v, err := expr.Eval(nil)
+	assert.Nil(t, err)
+	assert.Equal(t, "bar", v)
+}
+
+func TestEnvResolve(t *testing.T) {
+
+	os.Setenv("FOO","bar")
+	expr, err := factory.NewExpr(`$env[FOO]`)
 	assert.Nil(t, err)
 	assert.NotNil(t, expr)
 
