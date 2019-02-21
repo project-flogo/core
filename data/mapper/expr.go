@@ -13,7 +13,7 @@ type ExprMapperFactory struct {
 
 func NewFactory(resolver resolve.CompositeResolver) Factory {
 	exprFactory := expression.NewFactory(resolver)
-	arrayFactory := NewArrayMapperFactory(exprFactory)
+	arrayFactory := NewObjectMapperFactory(exprFactory)
 	return &ExprMapperFactory{exprFactory: exprFactory, arrayFactory: arrayFactory}
 }
 
@@ -26,19 +26,25 @@ func (mf *ExprMapperFactory) NewMapper(mappings map[string]interface{}) (Mapper,
 	exprMappings := make(map[string]expression.Expr)
 	for key, value := range mappings {
 		if value != nil {
-			if strVal, ok := value.(string); ok && len(strVal) > 0 && strVal[0] == '=' {
-				expr, err := mf.exprFactory.NewExpr(strVal[1:])
+			switch t := value.(type) {
+			case string:
+				if len(t) > 0 && t[0] == '=' {
+					expr, err := mf.exprFactory.NewExpr(t[1:])
+					if err != nil {
+						return nil, err
+					}
+					exprMappings[key] = expr
+				} else {
+					exprMappings[key] = expression.NewLiteralExpr(value)
+				}
+
+			case map[string]interface{}:
+				objectExpr, err := NewObjectMapperFactory(mf.exprFactory).(*ObjectMapperFactory).NewObjectMapper(t)
 				if err != nil {
 					return nil, err
 				}
-				exprMappings[key] = expr
-			} else if IsArrayMapping(value) {
-				arrayExpr, err := mf.arrayFactory.(*ArrayMapperFactory).NewAnyExpr(value)
-				if err != nil {
-					return nil, err
-				}
-				exprMappings[key] = arrayExpr
-			} else {
+				exprMappings[key] = objectExpr
+			default:
 				exprMappings[key] = expression.NewLiteralExpr(value)
 			}
 		}
