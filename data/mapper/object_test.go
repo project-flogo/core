@@ -24,6 +24,7 @@ func TestObjectMappingWithFunction(t *testing.T) {
 	arrayMapping := make(map[string]interface{})
 	err := json.Unmarshal([]byte(mappingValue), &arrayMapping)
 	assert.Nil(t, err)
+	assert.False(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"addresses": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
@@ -53,6 +54,7 @@ func TestObjectMappingWithArray(t *testing.T) {
 	arrayMapping := make(map[string]interface{})
 	err := json.Unmarshal([]byte(mappingValue), &arrayMapping)
 	assert.Nil(t, err)
+	assert.False(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"addresses": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
@@ -94,13 +96,13 @@ func TestRootObjectArray(t *testing.T) {
 	var arrayValue interface{}
 	err := json.Unmarshal([]byte(arrayData), &arrayValue)
 	assert.Nil(t, err)
-
 	attrs := map[string]interface{}{"field": arrayValue}
 	scope := data.NewSimpleScope(attrs, nil)
 
 	var arrayMapping interface{}
 	err = json.Unmarshal([]byte(mappingValue), &arrayMapping)
 	assert.Nil(t, err)
+	assert.False(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"target": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
@@ -121,6 +123,7 @@ func TestRootLiteralArray(t *testing.T) {
 	var arrayMapping interface{}
 	err := json.Unmarshal([]byte(mappingValue), &arrayMapping)
 	assert.Nil(t, err)
+	assert.True(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"target": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
@@ -157,6 +160,7 @@ func TestRootLiteralArrayMapping(t *testing.T) {
 	var arrayMapping interface{}
 	err = json.Unmarshal([]byte(mappingValue), &arrayMapping)
 	assert.Nil(t, err)
+	assert.False(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"target": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
@@ -192,6 +196,8 @@ func TestRootLiteralNumberArrayMapping(t *testing.T) {
 	var arrayMapping interface{}
 	err = json.Unmarshal([]byte(mappingValue), &arrayMapping)
 	assert.Nil(t, err)
+	assert.False(t, IsLiteral(arrayMapping))
+
 	mappings := map[string]interface{}{"target": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
@@ -232,6 +238,8 @@ func TestRootArrayMapping(t *testing.T) {
 	var arrayMapping interface{}
 	err = json.Unmarshal([]byte(mappingValue), &arrayMapping)
 	assert.Nil(t, err)
+	assert.False(t, IsLiteral(arrayMapping))
+
 	mappings := map[string]interface{}{"target": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
@@ -253,6 +261,8 @@ func TestStringStringMap(t *testing.T) {
 	arrayMapping := make(map[string]interface{})
 	err := json.Unmarshal([]byte(mappingValue), &arrayMapping)
 	assert.Nil(t, err)
+	assert.True(t, IsLiteral(arrayMapping))
+
 	mappings := map[string]interface{}{"target": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
@@ -329,6 +339,7 @@ func TestArrayMappingWithNest(t *testing.T) {
 	arrayMapping := make(map[string]interface{})
 	err := json.Unmarshal([]byte(mappingValue), &arrayMapping)
 	assert.Nil(t, err)
+	assert.False(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"addresses": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
@@ -390,6 +401,7 @@ func TestArrayMappingWithFunction(t *testing.T) {
 	arrayMapping := make(map[string]interface{})
 	err := json.Unmarshal([]byte(mappingValue), &arrayMapping)
 	assert.Nil(t, err)
+	assert.False(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"addresses": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
@@ -465,6 +477,8 @@ func TestArrayMappingWithFunction3Level(t *testing.T) {
 	arrayMapping := make(map[string]interface{})
 	err = json.Unmarshal([]byte(mappingValue), &arrayMapping)
 	assert.Nil(t, err)
+	assert.False(t, IsLiteral(arrayMapping))
+
 	mappings := map[string]interface{}{"addresses": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)

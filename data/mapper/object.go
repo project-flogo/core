@@ -240,13 +240,6 @@ func newForeach(foreachpath string, exprF expression.Factory) *foreach {
 	return foreach
 }
 
-func isExpr(value interface{}) bool {
-	if strVal, ok := value.(string); ok && len(strVal) > 0 && (strVal[0] == '=') {
-		return true
-	}
-	return false
-}
-
 func newLoopScope(arrayItem interface{}, indexName string, scope data.Scope) data.Scope {
 	if len(indexName) <= 0 {
 		return data.NewSimpleScope(arrayItem.(map[string]interface{}), scope)
