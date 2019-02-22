@@ -12,7 +12,7 @@ const (
 )
 
 var publishEventsEnabled = PublishEnabled()
-var publisherRoutineStarted = false
+var publisherRunning = false
 var shutdown = make(chan bool)
 
 // Buffered channel
@@ -21,7 +21,7 @@ var eventQueue = make(chan *Context, 100)
 //TODO channel to be passed to actions
 // Puts event with given type and data on the channel
 func Post(eventType string, event interface{}) {
-	if publishEventsEnabled && publisherRoutineStarted && HasListener(eventType) {
+	if publishEventsEnabled && publisherRunning && HasListener(eventType) {
 		evtCtx := &Context{event: event, eventType: eventType}
 		// Put event on the queue
 		eventQueue <- evtCtx
@@ -29,16 +29,16 @@ func Post(eventType string, event interface{}) {
 }
 
 func startPublisherRoutine() {
-	if publisherRoutineStarted {
+	if publisherRunning {
 		return
 	}
 
 	go publishEvents()
-	publisherRoutineStarted = true
+	publisherRunning = true
 }
 
 func stopPublisherRoutine() {
-	if !publisherRoutineStarted {
+	if !publisherRunning {
 		return
 	}
 
@@ -61,7 +61,7 @@ func stopPublisherRoutine() {
 
 func publishEvents() {
 	defer func() {
-		publisherRoutineStarted = false
+		publisherRunning = false
 	}()
 
 	for {

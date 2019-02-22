@@ -10,6 +10,8 @@ import (
 var emitters = make(map[string]*Emitter)
 var emittersMutex = &sync.RWMutex{}
 
+//todo do we need to dynamically add/remove listeners at runtime? If not, we can remove all locking
+
 // Registers listener for given event types
 func RegisterListener(name string, listener Listener, eventTypes []string) error {
 	if name == "" {
