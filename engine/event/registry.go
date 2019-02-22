@@ -7,7 +7,7 @@ import (
 	"github.com/project-flogo/core/support/log"
 )
 
-var typeEmitters = make(map[string]*TypeEmitter)
+var emitters = make(map[string]*Emitter)
 var emittersMutex = &sync.RWMutex{}
 
 // Registers listener for given event types
@@ -27,10 +27,10 @@ func RegisterListener(name string, listener Listener, eventTypes []string) error
 	emittersMutex.Lock()
 
 	for _, eType := range eventTypes {
-		emitter, ok := typeEmitters[eType]
+		emitter, ok := emitters[eType]
 		if !ok {
-			emitter = &TypeEmitter{eventType: eType, mutex: &sync.RWMutex{}, listeners: make(map[string]Listener)}
-			typeEmitters[eType] = emitter
+			emitter = &Emitter{eventType: eType, mutex: &sync.RWMutex{}, listeners: make(map[string]Listener)}
+			emitters[eType] = emitter
 		}
 		emitter.RegisterListener(name, listener)
 		log.RootLogger().Debugf("Event listener - '%s' successfully registered for event type - '%s'", name, eType)
@@ -74,7 +74,7 @@ func UnRegisterListener(name string, eventTypes []string) {
 func HasListener(eventType string) bool {
 
 	emittersMutex.RLock()
-	emitter, ok := typeEmitters[eventType]
+	emitter, ok := emitters[eventType]
 	emittersMutex.RUnlock()
 
 	if ok {

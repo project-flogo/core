@@ -8,15 +8,14 @@ import (
 	"github.com/project-flogo/core/support/log"
 )
 
-var emitters = make(map[string]*TypeEmitter)
 
-type TypeEmitter struct {
+type Emitter struct {
 	mutex     *sync.RWMutex
 	eventType string
 	listeners map[string]Listener
 }
 
-func (te *TypeEmitter) RegisterListener(name string, listener Listener) error {
+func (te *Emitter) RegisterListener(name string, listener Listener) error {
 	if name == "" {
 		return errors.New("event listener name must be specified")
 	}
@@ -32,7 +31,7 @@ func (te *TypeEmitter) RegisterListener(name string, listener Listener) error {
 	return nil
 }
 
-func (te *TypeEmitter) HasListeners() bool {
+func (te *Emitter) HasListeners() bool {
 	te.mutex.RLock()
 	hasListeners := len(te.listeners) > 0
 	te.mutex.RUnlock()
@@ -40,7 +39,7 @@ func (te *TypeEmitter) HasListeners() bool {
 	return hasListeners
 }
 
-func (te *TypeEmitter) UnRegisterListener(name string) error {
+func (te *Emitter) UnRegisterListener(name string) error {
 	if name == "" {
 		return errors.New("event listener name must be specified")
 	}
@@ -52,7 +51,7 @@ func (te *TypeEmitter) UnRegisterListener(name string) error {
 	return nil
 }
 
-func (te *TypeEmitter) Publish(evtCtx *Context) {
+func (te *Emitter) Publish(evtCtx *Context) {
 
 	listenerName := ""
 
