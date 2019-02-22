@@ -41,7 +41,7 @@ _cgo_export.*
 
 _testmain.go
 
-
+.vscode/
 tags
 .vscode/symbols.json
 .build-cache

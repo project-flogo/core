@@ -97,11 +97,12 @@ func (w ActionWorker) Start() {
 					handler := &AsyncResultHandler{result: make(chan *ActionResult), done: make(chan bool, 1)}
 
 					if syncAct, ok := actionData.action.(action.SyncAction); ok {
+
 						results, err := syncAct.Run(actionData.context, actionData.inputs)
 						logger.Debugf("Action-Worker-%d: Received result: %v", w.ID, results)
 						actionData.arc <- &ActionResult{results: results, err: err}
-					} else if asyncAct, ok := actionData.action.(action.AsyncAction); ok {
 
+					} else if asyncAct, ok := actionData.action.(action.AsyncAction); ok {
 						err := asyncAct.Run(actionData.context, actionData.inputs, handler)
 
 						if err != nil {
@@ -109,6 +110,7 @@ func (w ActionWorker) Start() {
 							// error so just return
 							actionData.arc <- &ActionResult{err: err}
 						} else {
+
 							done := false
 
 							replied := false
@@ -130,6 +132,8 @@ func (w ActionWorker) Start() {
 								}
 							}
 						}
+					} else {
+						actionData.arc <- &ActionResult{err: fmt.Errorf("unsupported action: %v", actionData.action)}
 					}
 
 					logger.Debugf("Action-Worker-%d: Completed Request", w.ID)

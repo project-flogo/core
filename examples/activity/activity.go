@@ -42,7 +42,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	input := &Input{}
 	err = ctx.GetInputObject(input)
 	if err != nil {
-		return false, err
+		return true, err
 	}
 
 	ctx.Logger().Info("Input: %s", input.AnInput)
@@ -50,7 +50,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	output := &Output{AnOutput: input.AnInput}
 	err = ctx.SetOutputObject(output)
 	if err != nil {
-		return false, err
+		return true, err
 	}
 
 	return true, nil

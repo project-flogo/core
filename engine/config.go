@@ -20,7 +20,7 @@ const (
 	EnvKeyRunnerQueueSize    = "FLOGO_RUNNER_QUEUE"
 	DefaultRunnerQueueSize   = 50
 
-	EnvAppPropertyResolvers  = "FLOGO_APP_PROPS_RESOLVERS"
+	EnvAppPropertyResolvers = "FLOGO_APP_PROP_RESOLVERS"
 
 	ValueRunnerTypePooled = "POOLED"
 	ValueRunnerTypeDirect = "DIRECT"
@@ -28,6 +28,7 @@ const (
 
 //GetFlogoConfigPath returns the flogo config path
 func GetFlogoConfigPath() string {
+
 	flogoConfigPathEnv := os.Getenv(EnvKeyAppConfigLocation)
 	if len(flogoConfigPathEnv) > 0 {
 		return flogoConfigPathEnv
