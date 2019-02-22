@@ -1,6 +1,5 @@
 package event
 
-
 type Listener interface {
 	// Called when matching event occurs
 	HandleEvent(*Context) error

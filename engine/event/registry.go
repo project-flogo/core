@@ -29,7 +29,7 @@ func RegisterListener(name string, listener Listener, eventTypes []string) error
 	for _, eType := range eventTypes {
 		emitter, ok := typeEmitters[eType]
 		if !ok {
-			emitter = &TypeEmitter{eventType:eType, mutex:&sync.RWMutex{}, listeners:make(map[string]Listener)}
+			emitter = &TypeEmitter{eventType: eType, mutex: &sync.RWMutex{}, listeners: make(map[string]Listener)}
 			typeEmitters[eType] = emitter
 		}
 		emitter.RegisterListener(name, listener)
@@ -71,7 +71,6 @@ func UnRegisterListener(name string, eventTypes []string) {
 	stopPublisherRoutine()
 }
 
-
 func HasListener(eventType string) bool {
 
 	emittersMutex.RLock()
@@ -84,5 +83,3 @@ func HasListener(eventType string) bool {
 
 	return false
 }
-
-

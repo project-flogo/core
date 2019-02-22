@@ -2,17 +2,17 @@ package event
 
 import (
 	"errors"
-	"github.com/project-flogo/core/support/log"
 	"runtime/debug"
 	"sync"
-)
 
+	"github.com/project-flogo/core/support/log"
+)
 
 var emitters = make(map[string]*TypeEmitter)
 
 type TypeEmitter struct {
-	mutex  *sync.RWMutex
-	eventType  string
+	mutex     *sync.RWMutex
+	eventType string
 	listeners map[string]Listener
 }
 
@@ -51,7 +51,6 @@ func (te *TypeEmitter) UnRegisterListener(name string) error {
 
 	return nil
 }
-
 
 func (te *TypeEmitter) Publish(evtCtx *Context) {
 
