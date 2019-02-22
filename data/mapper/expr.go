@@ -7,14 +7,14 @@ import (
 )
 
 type ExprMapperFactory struct {
-	exprFactory  expression.Factory
-	arrayFactory expression.Factory
+	exprFactory   expression.Factory
+	objectFactory expression.Factory
 }
 
 func NewFactory(resolver resolve.CompositeResolver) Factory {
 	exprFactory := expression.NewFactory(resolver)
-	arrayFactory := NewObjectMapperFactory(exprFactory)
-	return &ExprMapperFactory{exprFactory: exprFactory, arrayFactory: arrayFactory}
+	objMapperFactory := NewObjectMapperFactory(exprFactory)
+	return &ExprMapperFactory{exprFactory: exprFactory, objectFactory: objMapperFactory}
 }
 
 func (mf *ExprMapperFactory) NewMapper(mappings map[string]interface{}) (Mapper, error) {
