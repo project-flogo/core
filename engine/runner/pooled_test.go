@@ -3,11 +3,11 @@ package runner
 import (
 	"context"
 	"errors"
-	"github.com/project-flogo/core/data/metadata"
 	"testing"
 
+	"github.com/project-flogo/core/data/metadata"
+
 	"github.com/project-flogo/core/action"
-	"github.com/project-flogo/core/data"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -28,7 +28,7 @@ func (m *MockFullAction) IOMetadata() *metadata.IOMetadata {
 	return nil
 }
 
-func (m *MockFullAction) Run(context context.Context, inputs map[string]*data.Attribute, handler action.ResultHandler) error {
+func (m *MockFullAction) Run(context context.Context, inputs map[string]interface{}, handler action.ResultHandler) error {
 	args := m.Called(context, inputs, handler)
 	return args.Error(0)
 }
@@ -50,15 +50,12 @@ func (m *MockResultAction) IOMetadata() *metadata.IOMetadata {
 	return nil
 }
 
-func (m *MockResultAction) Run(context context.Context, inputs map[string]*data.Attribute, handler action.ResultHandler) error {
+func (m *MockResultAction) Run(context context.Context, inputs map[string]interface{}, handler action.ResultHandler) error {
 	args := m.Called(context, inputs, handler)
 	go func() {
-		dataAttr, _ := data.NewAttribute("data", data.TypeString, "mock")
-		codeAttr, _ := data.NewAttribute("code", data.TypeInteger, 200)
-		resultData := map[string]*data.Attribute{
-			"data": dataAttr,
-			"code": codeAttr,
-		}
+		resultData := make(map[string]interface{})
+		resultData["data"] = "mock"
+		resultData["code"] = 200
 		handler.HandleResult(resultData, nil)
 		handler.Done()
 	}()
@@ -94,7 +91,7 @@ func TestRunNilError(t *testing.T) {
 	assert.NotNil(t, runner)
 	err := runner.Start()
 	assert.Nil(t, err)
-	_, err = runner.Execute(nil, nil, nil)
+	_, err = runner.RunAction(context.Background(), nil, nil)
 	assert.NotNil(t, err)
 }
 
@@ -104,7 +101,7 @@ func TestRunInnactiveError(t *testing.T) {
 	runner := NewPooled(config)
 	assert.NotNil(t, runner)
 	a := new(MockFullAction)
-	_, err := runner.Execute(nil, a, nil)
+	_, err := runner.RunAction(context.Background(), a, nil)
 	assert.NotNil(t, err)
 }
 
@@ -113,11 +110,12 @@ func TestRunErrorInAction(t *testing.T) {
 	config := &PooledConfig{NumWorkers: 5, WorkQueueSize: 5}
 	runner := NewPooled(config)
 	assert.NotNil(t, runner)
+
 	err := runner.Start()
-	assert.Nil(t, err)
+
 	a := new(MockFullAction)
-	a.On("Run", nil, mock.AnythingOfType("map[string]*data.Attribute"), mock.AnythingOfType("*runner.AsyncResultHandler")).Return(errors.New("Error in action"))
-	_, err = runner.Execute(nil, a, nil)
+	a.On("Run", nil, mock.AnythingOfType("map[string]interface {}"), mock.AnythingOfType("*runner.AsyncResultHandler")).Return(errors.New("Error in action"))
+	_, err = runner.RunAction(nil, a, nil)
 	assert.NotNil(t, err)
 	assert.Equal(t, "Error in action", err.Error())
 }
@@ -130,15 +128,15 @@ func TestRunOk(t *testing.T) {
 	err := runner.Start()
 	assert.Nil(t, err)
 	a := new(MockResultAction)
-	a.On("Run", nil, mock.AnythingOfType("map[string]*data.Attribute"), mock.AnythingOfType("*runner.AsyncResultHandler")).Return(nil)
-	results, err := runner.Execute(nil, a, nil)
+	a.On("Run", nil, mock.AnythingOfType("map[string]interface {}"), mock.AnythingOfType("*runner.AsyncResultHandler")).Return(nil)
+	results, err := runner.RunAction(nil, a, nil)
 	assert.Nil(t, err)
 	codeAttr := results["code"]
 	assert.NotNil(t, codeAttr)
-	assert.Equal(t, 200, codeAttr.Value())
+	assert.Equal(t, 200, codeAttr)
 	dataAttr := results["data"]
 	assert.NotNil(t, dataAttr)
-	assert.Equal(t, "mock", dataAttr.Value())
+	assert.Equal(t, "mock", dataAttr)
 }
 
 // TestStopOk test that Stop method is fine
