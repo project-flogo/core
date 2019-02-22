@@ -7,12 +7,37 @@ import (
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/support/log"
 	"runtime/debug"
-	"strconv"
 	"strings"
 )
 
 const (
-	FOREACH  = "@foreach"
+	//Foreach Handle array must start with @foreach.
+	/*
+			"input": {
+
+		    "val" : {
+		        "a" : "=$activity[blah].out",
+		        "addresses": {
+		            "@foreach($activity[blah].out2, i)":
+		            {
+		              "street"  : "=$.street",
+		              "zipcode" : "9999",
+		              "state"   : "=$activity[test].state",
+		              "addresses2": {
+		                  "@foreach($.addresses2)":{
+		                        "street2"  : "=$loop[i].street2",
+		                        "zipcode2" : "=$.zipcode",
+		                        "state2"   : "=$activity[test].state"
+		                	  }
+		               	}
+		            	}
+		        	}
+		    	}
+			}
+
+	*/
+	FOREACH = "@foreach"
+	//NEWARRAY create one array element for target array
 	NEWARRAY = "NEWARRAY"
 )
 
@@ -52,85 +77,79 @@ func (am *ObjectMapper) Eval(inputScope data.Scope) (interface{}, error) {
 	return handleObjectMapping(am.mappings, am.exprFactory, inputScope)
 }
 
-func getForeach(foreachpath string) (*foreach, error) {
-	foreachpath = strings.TrimSpace(foreachpath)
-	if strings.HasPrefix(foreachpath, FOREACH) && strings.Contains(foreachpath, "(") && strings.Contains(foreachpath, ")") {
-		paramsStr := foreachpath[strings.Index(foreachpath, "(")+1 : strings.Index(foreachpath, ")")]
-		params := strings.Split(paramsStr, ",")
-		if len(params) == 2 {
-			return &foreach{sourceFrom: strings.TrimSpace(params[0]), index: strings.TrimSpace(params[1])}, nil
-		} else {
-			return &foreach{sourceFrom: strings.TrimSpace(params[0])}, nil
-		}
-	}
-	return nil, fmt.Errorf("invalid foreach [%s], it must follow @foreach(sourceArray, optional)", foreachpath)
-}
-
 type foreach struct {
-	sourceFrom string
-	index      string
+	sourceFrom  string
+	index       string
+	exprFactory expression.Factory
 }
 
-func handleObjectMapping(mappings map[string]interface{}, exprF expression.Factory, inputScope data.Scope) (interface{}, error) {
-	var value interface{}
-	if len(mappings) > 0 {
-		for mk, mv := range mappings {
-			//Array mapping should be only @foreach node
+func handleObjectMapping(objectMappings map[string]interface{}, exprF expression.Factory, inputScope data.Scope) (interface{}, error) {
+	objectVal := make(map[string]interface{})
+	if len(objectMappings) > 0 {
+		for mk, mv := range objectMappings {
+			//Root level @foreach, it should be only itself
+			if strings.HasPrefix(mk, FOREACH) {
+				return newForeach(mk, exprF).handle(mv.(map[string]interface{}), inputScope)
+			}
+
 			if nxtVal, ok := mv.(map[string]interface{}); ok {
+				//second level object
 				for foreachK, foreachV := range nxtVal {
 					if strings.HasPrefix(foreachK, FOREACH) {
-						//Array mapping
-						foreach, err := getForeach(foreachK)
+						result, err := newForeach(foreachK, exprF).handle(foreachV.(map[string]interface{}), inputScope)
 						if err != nil {
 							return nil, err
 						}
-						if foreach.sourceFrom == NEWARRAY {
-							newArrayValues := make([]interface{}, 1)
-							value = make([]interface{}, 1)
-							err := handleArray(value.([]interface{}), newArrayValues, foreachV.(map[string]interface{}), exprF, newLoopScope(newArrayValues, foreach.index, inputScope))
-							if err != nil {
-								return nil, fmt.Errorf("new array mapping failed %s", err.Error())
-							}
-
-						} else {
-							fromValue, err := getExpressionValue("="+foreach.sourceFrom, exprF, inputScope)
-							if err != nil {
-								return nil, fmt.Errorf("get value from source array error, %s", err.Error())
-							}
-							sourceValues, err := coerce.ToArray(fromValue)
-							if err != nil {
-								return nil, fmt.Errorf("source array not an array, error %s", err.Error())
-							}
-							value = make([]interface{}, len(sourceValues))
-							err = handleArray(value.([]interface{}), sourceValues, foreachV.(map[string]interface{}), exprF, newLoopScope(sourceValues, foreach.index, inputScope))
-							if err != nil {
-								return nil, fmt.Errorf("array mapping failed %s", err.Error())
-							}
-						}
-
+						objectVal[mk] = result
 					} else {
-						if value == nil {
-							value = make(map[string]interface{})
+						secondMap, ok := objectVal[mk]
+						if !ok {
+							secondMap = make(map[string]interface{})
+							objectVal[mk] = secondMap
 						}
-						err := handleObject(value, mk, mv, exprF, inputScope)
+						err := handleObject(secondMap, foreachK, foreachV, exprF, inputScope)
 						if err != nil {
 							return nil, err
 						}
 					}
 				}
 			} else {
-				//Object mapping
-				if value == nil {
-					value = make(map[string]interface{})
-				}
-				err := handleObject(value, mk, mv, exprF, inputScope)
+				err := handleObject(objectVal, mk, mv, exprF, inputScope)
 				if err != nil {
 					return nil, err
 				}
 			}
 		}
 	}
-	return value, nil
+	return objectVal, nil
+}
+
+func (f *foreach) handle(arrayMappingFields map[string]interface{}, inputScope data.Scope) (interface{}, error) {
+	var newSourceArray []interface{}
+	if f.sourceFrom == NEWARRAY {
+		newSourceArray = make([]interface{}, 1)
+	} else {
+		fromValue, err := getExpressionValue("="+f.sourceFrom, f.exprFactory, inputScope)
+		if err != nil {
+			return nil, fmt.Errorf("get value from source array error, %s", err.Error())
+		}
+		newSourceArray, err = coerce.ToArray(fromValue)
+		if err != nil {
+			return nil, fmt.Errorf("source array not an array, error %s", err.Error())
+		}
+	}
+
+	targetValues := make([]interface{}, len(newSourceArray))
+	for i, sourceValue := range newSourceArray {
+		inputScope = newLoopScope(sourceValue, f.index, inputScope)
+		item, err := handleObjectMapping(arrayMappingFields, f.exprFactory, inputScope)
+		if err != nil {
+			return nil, err
+		}
+		targetValues[i] = item
+	}
+	return targetValues, nil
+
 }
 
 func handleObject(targetValue interface{}, targetName string, source interface{}, exprF expression.Factory, scope data.Scope) error {
@@ -148,64 +167,7 @@ func handleObject(targetValue interface{}, targetName string, source interface{}
 	return nil
 }
 
-func handleArray(targetValues []interface{}, sourceValues []interface{}, arrayMappingFields map[string]interface{}, exprF expression.Factory, inputScope data.Scope) error {
-	for i, sourceValue := range sourceValues {
-		for k, v := range arrayMappingFields {
-			if strings.HasPrefix(k, FOREACH) {
-				//Array mapping
-				foreach, err := getForeach(k)
-				if err != nil {
-					return err
-				}
-				if foreach.sourceFrom == NEWARRAY {
-					targetValues[i] = make([]interface{}, 1)
-					err := handleArray(targetValues[i].([]interface{}), []interface{}{}, v.(map[string]interface{}), exprF, newLoopScope([]interface{}{}, foreach.index, inputScope))
-					if err != nil {
-						return fmt.Errorf("get expression failed %s", err.Error())
-					}
-
-				} else {
-					fromValue, err := getExpressionValueWithData(sourceValue, "="+foreach.sourceFrom, exprF, inputScope)
-					if err != nil {
-						return fmt.Errorf("get value from source array error, %s", err.Error())
-					}
-
-					sourceValues, err := coerce.ToArray(fromValue)
-					if err != nil {
-						return fmt.Errorf("source array not an array, error %s", err.Error())
-					}
-					targetValues[i] = make([]interface{}, len(sourceValues))
-
-					err = handleArray(targetValues[i].([]interface{}), sourceValues, v.(map[string]interface{}), exprF, newLoopScope(sourceValues, foreach.index, inputScope))
-					if err != nil {
-						return err
-					}
-				}
-
-			} else {
-				//Array fields
-				if targetValues[i] == nil {
-					targetValues[i] = make(map[string]interface{})
-				}
-				if objValue, ok := targetValues[i].(map[string]interface{}); ok {
-					if isExpr(v) {
-						fromValue, err := getExpressionValueWithData(sourceValue, v, exprF, inputScope)
-						if err != nil {
-							return fmt.Errorf("get expression failed %s", err.Error())
-						}
-						objValue[k] = fromValue
-					} else {
-						objValue[k] = v
-					}
-				}
-			}
-		}
-	}
-	return nil
-
-}
-
-func getExpressionValueWithData(value, path interface{}, exprF expression.Factory, scope data.Scope) (interface{}, error) {
+func getExpressionValue(path interface{}, exprF expression.Factory, scope data.Scope) (interface{}, error) {
 	var finalExpr expression.Expr
 	if isExpr(path) {
 		var err error
@@ -216,29 +178,38 @@ func getExpressionValueWithData(value, path interface{}, exprF expression.Factor
 	} else {
 		finalExpr = expression.NewLiteralExpr(path)
 	}
-	//Add current from value to scope
-	if value != nil {
-		scope = data.NewSimpleScope(value.(map[string]interface{}), scope)
-
-	}
 	return finalExpr.Eval(scope)
 }
 
-func getExpressionValue(path interface{}, exprF expression.Factory, scope data.Scope) (interface{}, error) {
-	return getExpressionValueWithData(nil, path, exprF, scope)
+func newForeach(foreachpath string, exprF expression.Factory) *foreach {
+	foreach := &foreach{exprFactory: exprF}
+	foreachpath = strings.TrimSpace(foreachpath)
+	if strings.HasPrefix(foreachpath, FOREACH) && strings.Contains(foreachpath, "(") && strings.Contains(foreachpath, ")") {
+		paramsStr := foreachpath[strings.Index(foreachpath, "(")+1 : strings.Index(foreachpath, ")")]
+		params := strings.Split(paramsStr, ",")
+		if len(params) >= 2 {
+			foreach.sourceFrom = strings.TrimSpace(params[0])
+			foreach.index = strings.TrimSpace(params[1])
+		} else {
+			foreach.sourceFrom = strings.TrimSpace(params[0])
+		}
+	}
+	return foreach
 }
 
 func isExpr(value interface{}) bool {
-	if strVal, ok := value.(string); ok && len(strVal) > 0 && (strVal[0] == '=' || strVal[0] == '$') {
+	if strVal, ok := value.(string); ok && len(strVal) > 0 && (strVal[0] == '=') {
 		return true
 	}
 	return false
 }
 
-func newLoopScope(array []interface{}, indexName string, scope data.Scope) data.Scope {
-	values := make(map[string]interface{})
-	for i, v := range array {
-		values["_L."+indexName+"."+strconv.Itoa(i)] = v
+func newLoopScope(arrayItem interface{}, indexName string, scope data.Scope) data.Scope {
+	if len(indexName) <= 0 {
+		return data.NewSimpleScope(arrayItem.(map[string]interface{}), scope)
+	} else {
+		values := arrayItem.(map[string]interface{})
+		values[indexName] = arrayItem
+		return data.NewSimpleScope(values, scope)
 	}
-	return data.NewSimpleScope(values, scope)
 }

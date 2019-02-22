@@ -9,166 +9,49 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-//
-//func TestArrayMapping(t *testing.T) {
-//	mappingValue := `
-//{
-//		"persion2":"$"
-//       "@foreach[=$.field.addresses]":{
-//              "street"  : "=$.street",
-//              "zipcode" : "=$.zipcode",
-//              "state"   : "=$.state"
-//		}
-//}
-//
-//`
-//
-//	arrayData := `{
-//    "person": "name",
-//    "addresses": [
-//        {
-//            "street": "street",
-//            "zipcode": 77479,
-//            "state": "tx"
-//        }
-//    ]
-//}`
-//
-//	var val interface{}
-//	err := json.Unmarshal([]byte(mappingValue), &val)
-//	assert.Nil(t, err)
-//	mappings := map[string]interface{}{"addresses": val}
-//	factory := NewFactory(resolve.GetBasicResolver())
-//	mapper, err := factory.NewMapper(mappings)
-//
-//	attrs := map[string]interface{}{"field": arrayData}
-//	scope := data.NewSimpleScope(attrs, nil)
-//	results, err := mapper.Apply(scope)
-//	assert.Nil(t, err)
-//	arr := results["addresses"]
-//
-//	assert.Equal(t, "street", arr.([]interface{})[0].(map[string]interface{})["street"])
-//	assert.Equal(t, float64(77479), arr.([]interface{})[0].(map[string]interface{})["zipcode"])
-//	assert.Equal(t, "tx", arr.([]interface{})[0].(map[string]interface{})["state"])
-//
-//}
-//
-////8. array mappping with static function and leaf field
-//func TestArrayMappingWithFunction(t *testing.T) {
-//	mappingValue := `{
-//   "fields": [
-//       {
-//           "from": "=tstring.concat(\"this stree name: \", $.street)",
-//           "to": "street",
-//           "type": "primitive"
-//       },
-//       {
-//           "from": "=tstring.concat(\"The zipcode is: \",$.zipcode)",
-//           "to": "zipcode",
-//           "type": "primitive"
-//       },
-//       {
-//           "from": "=$.state",
-//           "to": "state",
-//           "type": "primitive"
-//       }
-//   ],
-//   "from": "=$.field.addresses",
-//   "to": "addresses",
-//   "type": "foreach"
-//}`
-//
-//	arrayData := `{
-//   "person": "name",
-//   "addresses": [
-//       {
-//           "street": "street",
-//           "zipcode": 77479,
-//           "state": "tx"
-//       }
-//   ]
-//}`
-//
-//	mappings := map[string]interface{}{"addresses": mappingValue}
-//	factory := NewFactory(resolve.GetBasicResolver())
-//	mapper, err := factory.NewMapper(mappings)
-//
-//	attrs := map[string]interface{}{"field": arrayData}
-//	scope := data.NewSimpleScope(attrs, nil)
-//	results, err := mapper.Apply(scope)
-//	assert.Nil(t, err)
-//	arr := results["addresses"]
-//	assert.Equal(t, "this stree name: street", arr.([]interface{})[0].(map[string]interface{})["street"])
-//	assert.Equal(t, "The zipcode is: 77479", arr.([]interface{})[0].(map[string]interface{})["zipcode"])
-//	assert.Equal(t, "tx", arr.([]interface{})[0].(map[string]interface{})["state"])
-//
-//}
-//
-////9. array mapping with other activity output
-//func TestArrayMappingWithUpstreamingOutput(t *testing.T) {
-//	mappingValue := `{
-//   "fields": [
-//       {
-//           "from": "=tstring.concat(\"this stree name: \", $.field.person)",
-//           "to": "street",
-//           "type": "primitive"
-//       },
-//       {
-//           "from": "=tstring.concat(\"The zipcode is: \",$.zipcode)",
-//           "to": "zipcode",
-//           "type": "primitive"
-//       },
-//       {
-//           "from": "=$.state",
-//           "to": "state",
-//           "type": "primitive"
-//       }
-//   ],
-//   "from": "=$.field.addresses",
-//   "to": "addresses",
-//   "type": "foreach"
-//}`
-//
-//	arrayData := `{
-//   "person": "name",
-//   "addresses": [
-//       {
-//           "street": "street",
-//           "zipcode": 77479,
-//           "state": "tx"
-//       }
-//   ]
-//}`
-//	mappings := map[string]interface{}{"addresses": mappingValue}
-//	factory := NewFactory(resolve.GetBasicResolver())
-//	mapper, err := factory.NewMapper(mappings)
-//
-//	attrs := map[string]interface{}{"field": arrayData}
-//	scope := data.NewSimpleScope(attrs, nil)
-//	results, err := mapper.Apply(scope)
-//	assert.Nil(t, err)
-//	arr := results["addresses"]
-//	assert.Equal(t, "this stree name: name", arr.([]interface{})[0].(map[string]interface{})["street"])
-//	assert.Equal(t, "The zipcode is: 77479", arr.([]interface{})[0].(map[string]interface{})["zipcode"])
-//	assert.Equal(t, "tx", arr.([]interface{})[0].(map[string]interface{})["state"])
-//
-//}
+func TestObjectMappingWithFunction(t *testing.T) {
+	mappingValue := `{
+        "person2" : "person",
+        "addresses": {
+              "tostate"   : "=tstring.concat(\"State is \", \"tx\")",
+               "tostreet": "3421 st",
+              "addresses2": {
+               			"tofield2": "=tstring.concat(\"field is \", \"ffff\")"
+              }
+        }
+    }`
 
-//9. array mapping with other activity output
+	arrayMapping := make(map[string]interface{})
+	err := json.Unmarshal([]byte(mappingValue), &arrayMapping)
+	assert.Nil(t, err)
+	mappings := map[string]interface{}{"addresses": arrayMapping}
+	factory := NewFactory(resolve.GetBasicResolver())
+	mapper, err := factory.NewMapper(mappings)
+
+	results, err := mapper.Apply(nil)
+	assert.Nil(t, err)
+
+	arr := results["addresses"]
+	assert.Equal(t, "person", arr.(map[string]interface{})["person2"])
+	assert.Equal(t, "3421 st", arr.(map[string]interface{})["addresses"].(map[string]interface{})["tostreet"])
+	assert.Equal(t, "State is tx", arr.(map[string]interface{})["addresses"].(map[string]interface{})["tostate"])
+}
+
+//1. array mapping with other activity output
 func TestArrayMappingWithNest(t *testing.T) {
 	mappingValue := `{
-        "person2" : "person 2222",
+        "person2" : "person",
         "addresses": {
             "@foreach($.field.addresses, index)":
             {
-              "street"  : "=$.street",
-              "zipcode" : "9999",
-              "state"   : "$loop[index].state",
+              "tostate"   : "=$loop[index].state",
+               "tostreet": "=$.street",
+               "tozipcode":"=$.zipcode",
               "addresses2": {
                   "@foreach($.array)":{
-                        "street2"  : "=$loop[index].street",
-                        "zipcode2" : "=$.field1",
-                        "state2"   : "=$.field3"
+                        "tofield1"  : "=$loop[index].street",
+               			"tofield2": "=$.field2",
+               			"tofield3":"=$.field3"
                   }
               }
             }
@@ -187,6 +70,28 @@ func TestArrayMappingWithNest(t *testing.T) {
 					"field1":"field1value",
 					"field2":"field2value",
 					"field3":"field3value"
+				},
+				{
+					"field1":"field1value2",
+					"field2":"field2value2",
+					"field3":"field3value2"
+				}
+			]
+       },
+ {
+           "street": "street2",
+           "zipcode": 774792,
+           "state": "tx2",
+			"array":[
+				{
+					"field1":"field1value2",
+					"field2":"field2value2",
+					"field3":"field3value2"
+				},
+				{
+					"field1":"field1value22",
+					"field2":"field2value22",
+					"field3":"field3value22"
 				}
 			]
        }
@@ -204,27 +109,83 @@ func TestArrayMappingWithNest(t *testing.T) {
 	scope := data.NewSimpleScope(attrs, nil)
 	results, err := mapper.Apply(scope)
 	assert.Nil(t, err)
+
 	arr := results["addresses"]
-	assert.Equal(t, "this stree name: name", arr.([]interface{})[0].(map[string]interface{})["street"])
-	assert.Equal(t, "The zipcode is: 77479", arr.([]interface{})[0].(map[string]interface{})["zipcode"])
-	assert.Equal(t, "tx", arr.([]interface{})[0].(map[string]interface{})["state"])
+	assert.Equal(t, "person", arr.(map[string]interface{})["person2"])
+	assert.Equal(t, float64(77479), arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["tozipcode"])
+	assert.Equal(t, "tx", arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["tostate"])
+}
 
-	assert.Equal(t, "field1value", arr.([]interface{})[0].(map[string]interface{})["array"].([]interface{})[0].(map[string]interface{})["tofield1"])
-	assert.Equal(t, "field2value", arr.([]interface{})[0].(map[string]interface{})["array"].([]interface{})[0].(map[string]interface{})["tofield2"])
-	assert.Equal(t, "wangzai", arr.([]interface{})[0].(map[string]interface{})["array"].([]interface{})[0].(map[string]interface{})["tofield3"])
+//2. array mapping with function
+func TestArrayMappingWithFunction(t *testing.T) {
+	mappingValue := `{
+        "person2" : "person",
+        "addresses": {
+            "@foreach($.field.addresses, index)":
+            {
+              "tostate"   : "=tstring.concat(\"State is \", $loop[index].state)",
+               "tostreet": "=$.street",
+               "tozipcode":"=$.zipcode",
+              "addresses2": {
+                  "@foreach($.array)":{
+                        "tofield1"  : "=$loop[index].street",
+               			"tofield2": "=tstring.concat(\"field is \", $.field2)",
+               			"tofield3":"=$.field3"
+                  }
+              }
+            }
+        }
+    }`
 
+	arrayData := `{
+   "person": "name",
+   "addresses": [
+       {
+           "street": "street",
+           "zipcode": 77479,
+           "state": "tx",
+			"array":[
+				{
+					"field1":"field1value",
+					"field2":"field2value",
+					"field3":"field3value"
+				},
+				{
+					"field1":"field1value2",
+					"field2":"field2value2",
+					"field3":"field3value2"
+				}
+			]
+       }
+   ]
+}`
+
+	arrayMapping := make(map[string]interface{})
+	err := json.Unmarshal([]byte(mappingValue), &arrayMapping)
+	assert.Nil(t, err)
+	mappings := map[string]interface{}{"addresses": arrayMapping}
+	factory := NewFactory(resolve.GetBasicResolver())
+	mapper, err := factory.NewMapper(mappings)
+
+	attrs := map[string]interface{}{"field": arrayData}
+	scope := data.NewSimpleScope(attrs, nil)
+	results, err := mapper.Apply(scope)
+	assert.Nil(t, err)
+
+	arr := results["addresses"]
+	assert.Equal(t, "person", arr.(map[string]interface{})["person2"])
+	assert.Equal(t, float64(77479), arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["tozipcode"])
+	assert.Equal(t, "State is tx", arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["tostate"])
 }
 
 func TestGetSource(t *testing.T) {
 	var s = "@foreach($activity[blah].out2)"
-	foreach, err := getForeach(s)
-	assert.Nil(t, err)
+	foreach := newForeach(s, nil)
 	assert.Equal(t, "$activity[blah].out2", foreach.sourceFrom)
 	assert.Equal(t, "", foreach.index)
 
 	s = "@foreach($activity[blah].out2, index)"
-	foreach, err = getForeach(s)
-	assert.Nil(t, err)
+	foreach = newForeach(s, nil)
 	assert.Equal(t, "$activity[blah].out2", foreach.sourceFrom)
 	assert.Equal(t, "index", foreach.index)
 
