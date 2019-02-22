@@ -6,12 +6,15 @@ import (
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/support/log"
+	"reflect"
 	"runtime/debug"
 	"strings"
 )
 
+var objectMapperLog = log.ChildLogger(log.RootLogger(), "object-mapper")
+
 const (
-	//Foreach Handle array must start with @foreach.
+	//To do an array mapping from upstreaming, use @foreach.
 	/*
 			"input": {
 
@@ -37,8 +40,6 @@ const (
 
 	*/
 	FOREACH = "@foreach"
-	//NEWARRAY create one array element for target array
-	NEWARRAY = "NEWARRAY"
 )
 
 type ObjectMapperFactory struct {
@@ -49,7 +50,7 @@ func NewObjectMapperFactory(exprFactory expression.Factory) expression.Factory {
 	return &ObjectMapperFactory{exprFactory: exprFactory}
 }
 
-func (am *ObjectMapperFactory) NewObjectMapper(value map[string]interface{}) (expression.Expr, error) {
+func (am *ObjectMapperFactory) NewObjectMapper(value interface{}) (expression.Expr, error) {
 	return &ObjectMapper{mappings: value, exprFactory: am.exprFactory}, nil
 }
 
@@ -62,18 +63,18 @@ func (am *ObjectMapperFactory) NewExpr(value string) (expression.Expr, error) {
 }
 
 type ObjectMapper struct {
-	mappings    map[string]interface{}
+	mappings    interface{}
 	exprFactory expression.Factory
 }
 
 func (am *ObjectMapper) Eval(inputScope data.Scope) (interface{}, error) {
 	defer func() {
 		if r := recover(); r != nil {
-			log.RootLogger().Error("%+v", r)
-			log.RootLogger().Debugf("StackTrace: %s", debug.Stack())
+			objectMapperLog.Error("%+v", r)
+			objectMapperLog.Debugf("StackTrace: %s", debug.Stack())
 		}
 	}()
-
+	objectMapperLog.Debugf("Handleing object mapper %+v", am.mappings)
 	return handleObjectMapping(am.mappings, am.exprFactory, inputScope)
 }
 
@@ -83,36 +84,64 @@ type foreach struct {
 	exprFactory expression.Factory
 }
 
-func handleObjectMapping(objectMappings map[string]interface{}, exprF expression.Factory, inputScope data.Scope) (interface{}, error) {
-	objectVal := make(map[string]interface{})
-	if len(objectMappings) > 0 {
-		for mk, mv := range objectMappings {
-			//Root level @foreach, it should be only itself
+func handleObjectMapping(objectMappings interface{}, exprF expression.Factory, inputScope data.Scope) (interface{}, error) {
+	var err error
+	switch t := objectMappings.(type) {
+	case map[string]interface{}:
+		objectVal := make(map[string]interface{})
+		for mk, mv := range t {
 			if strings.HasPrefix(mk, FOREACH) {
 				return newForeach(mk, exprF).handle(mv.(map[string]interface{}), inputScope)
 			}
-
+			//Go second level to find possible @foreach node
 			if nxtVal, ok := mv.(map[string]interface{}); ok {
 				//second level object
 				for foreachK, foreachV := range nxtVal {
 					if strings.HasPrefix(foreachK, FOREACH) {
-						result, err := newForeach(foreachK, exprF).handle(foreachV.(map[string]interface{}), inputScope)
+						objectVal[mk], err = newForeach(foreachK, exprF).handle(foreachV.(map[string]interface{}), inputScope)
 						if err != nil {
 							return nil, err
 						}
-						objectVal[mk] = result
 					} else {
-						secondMap, ok := objectVal[mk]
-						if !ok {
-							secondMap = make(map[string]interface{})
-							objectVal[mk] = secondMap
-						}
-						err := handleObject(secondMap, foreachK, foreachV, exprF, inputScope)
-						if err != nil {
-							return nil, err
+						switch t := foreachV.(type) {
+						case []interface{}:
+							arrayResult := make([]interface{}, len(t))
+							for i, element := range t {
+								arrayResult[i], err = handleObjectMapping(element.(map[string]interface{}), exprF, inputScope)
+								if err != nil {
+									return nil, err
+								}
+							}
+							objectVal[foreachK] = arrayResult
+						case map[string]interface{}:
+							if objectVal[mk] == nil {
+								objectVal[mk] = make(map[string]interface{})
+							}
+							v, err := handleObjectMapping(t, exprF, inputScope)
+							if err != nil {
+								return nil, err
+							}
+							objectVal[mk].(map[string]interface{})[foreachK] = v
+						default:
+							if objectVal[mk] == nil {
+								objectVal[mk] = make(map[string]interface{})
+							}
+							err := handleObject(objectVal[mk].(map[string]interface{}), foreachK, foreachV, exprF, inputScope)
+							if err != nil {
+								return nil, err
+							}
 						}
 					}
 				}
+			} else if arrayV, ok := mv.([]interface{}); ok {
+				arrayResult := make([]interface{}, len(arrayV))
+				for i, element := range arrayV {
+					arrayResult[i], err = handleObjectMapping(element.(map[string]interface{}), exprF, inputScope)
+					if err != nil {
+						return nil, err
+					}
+				}
+				objectVal[mk] = arrayResult
 			} else {
 				err := handleObject(objectVal, mk, mv, exprF, inputScope)
 				if err != nil {
@@ -120,25 +149,41 @@ func handleObjectMapping(objectMappings map[string]interface{}, exprF expression
 				}
 			}
 		}
+		return objectVal, nil
+	case []interface{}:
+		//array with possible child object
+		objArray := make([]interface{}, len(t))
+		for i, element := range t {
+			//Only handle object mapping
+			switch element.(type) {
+			case map[string]interface{}:
+				objArray[i], err = handleObjectMapping(element, exprF, inputScope)
+				if err != nil {
+					return nil, err
+				}
+			default:
+				objArray[i], err = getExpressionValue(element, exprF, inputScope)
+				if err != nil {
+					return nil, err
+				}
+			}
+		}
+		return objArray, nil
+	default:
+		return nil, fmt.Errorf("unsupport type [%s] for object mapper", reflect.TypeOf(objectMappings))
 	}
-	return objectVal, nil
 }
 
 func (f *foreach) handle(arrayMappingFields map[string]interface{}, inputScope data.Scope) (interface{}, error) {
-	var newSourceArray []interface{}
-	if f.sourceFrom == NEWARRAY {
-		newSourceArray = make([]interface{}, 1)
-	} else {
-		fromValue, err := getExpressionValue("="+f.sourceFrom, f.exprFactory, inputScope)
-		if err != nil {
-			return nil, fmt.Errorf("get value from source array error, %s", err.Error())
-		}
-		newSourceArray, err = coerce.ToArray(fromValue)
-		if err != nil {
-			return nil, fmt.Errorf("source array not an array, error %s", err.Error())
-		}
+	fromValue, err := getExpressionValue("="+f.sourceFrom, f.exprFactory, inputScope)
+	if err != nil {
+		return nil, fmt.Errorf("foreach eval source array error, %s", err.Error())
 	}
-
+	newSourceArray, err := coerce.ToArray(fromValue)
+	if err != nil {
+		objectMapperLog.Errorf("foreach source [%+v] not an array, cast to array error %s", fromValue, err.Error())
+		return nil, fmt.Errorf("foreach source [%+v] not an array", fromValue)
+	}
 	targetValues := make([]interface{}, len(newSourceArray))
 	for i, sourceValue := range newSourceArray {
 		inputScope = newLoopScope(sourceValue, f.index, inputScope)
@@ -152,17 +197,15 @@ func (f *foreach) handle(arrayMappingFields map[string]interface{}, inputScope d
 
 }
 
-func handleObject(targetValue interface{}, targetName string, source interface{}, exprF expression.Factory, scope data.Scope) error {
-	if objValue, ok := targetValue.(map[string]interface{}); ok {
-		if isExpr(source) {
-			fromValue, err := getExpressionValue(source, exprF, scope)
-			if err != nil {
-				return fmt.Errorf("get expression failed %s", err.Error())
-			}
-			objValue[targetName] = fromValue
-		} else {
-			objValue[targetName] = source
+func handleObject(targetValue map[string]interface{}, targetName string, source interface{}, exprF expression.Factory, scope data.Scope) error {
+	if isExpr(source) {
+		fromValue, err := getExpressionValue(source, exprF, scope)
+		if err != nil {
+			return fmt.Errorf("eval expression failed %s", err.Error())
 		}
+		targetValue[targetName] = fromValue
+	} else {
+		targetValue[targetName] = source
 	}
 	return nil
 }

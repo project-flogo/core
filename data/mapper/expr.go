@@ -37,8 +37,8 @@ func (mf *ExprMapperFactory) NewMapper(mappings map[string]interface{}) (Mapper,
 				} else {
 					exprMappings[key] = expression.NewLiteralExpr(value)
 				}
-
-			case map[string]interface{}:
+			//Object mapping
+			case map[string]interface{}, []interface{}:
 				objectExpr, err := NewObjectMapperFactory(mf.exprFactory).(*ObjectMapperFactory).NewObjectMapper(t)
 				if err != nil {
 					return nil, err
