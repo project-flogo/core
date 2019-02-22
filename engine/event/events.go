@@ -23,3 +23,15 @@ func (ec *Context) GetEvent() interface{} {
 func (ec *Context) GetEventType() string {
 	return ec.eventType
 }
+
+// Buffered channel
+var eventQueue = make(chan *Context, 100)
+
+// Puts event with given type and data on the channel
+func Post(eventType string, event interface{}) {
+	if publishEventsEnabled && publisherRunning && HasListener(eventType) {
+		evtCtx := &Context{event: event, eventType: eventType}
+		// Put event on the queue
+		eventQueue <- evtCtx
+	}
+}

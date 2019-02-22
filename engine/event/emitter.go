@@ -57,6 +57,8 @@ func (te *Emitter) Publish(evtCtx *Context) {
 
 	te.mutex.RLock()
 
+	//todo consider handling panic one level up, this will improve performance
+
 	defer func() {
 		te.mutex.RUnlock()
 		if r := recover(); r != nil {

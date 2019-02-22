@@ -15,21 +15,10 @@ var publishEventsEnabled = PublishEnabled()
 var publisherRunning = false
 var shutdown = make(chan bool)
 
-// Buffered channel
-var eventQueue = make(chan *Context, 100)
 
-//TODO channel to be passed to actions
-// Puts event with given type and data on the channel
-func Post(eventType string, event interface{}) {
-	if publishEventsEnabled && publisherRunning && HasListener(eventType) {
-		evtCtx := &Context{event: event, eventType: eventType}
-		// Put event on the queue
-		eventQueue <- evtCtx
-	}
-}
 
 func startPublisherRoutine() {
-	if publisherRunning {
+	if publisherRunning || !publishEventsEnabled {
 		return
 	}
 
@@ -60,6 +49,9 @@ func stopPublisherRoutine() {
 }
 
 func publishEvents() {
+
+	log.RootLogger().Infof("Starting event publisher")
+
 	defer func() {
 		publisherRunning = false
 	}()
@@ -69,7 +61,7 @@ func publishEvents() {
 		case evtCtx := <-eventQueue:
 			publishEvent(evtCtx)
 		case <-shutdown:
-			log.RootLogger().Infof("Shutting down event publisher routine")
+			log.RootLogger().Infof("Shutting down event publisher")
 			return
 		}
 	}
