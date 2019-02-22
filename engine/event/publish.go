@@ -15,8 +15,6 @@ var publishEventsEnabled = PublishEnabled()
 var publisherRunning = false
 var shutdown = make(chan bool)
 
-
-
 func startPublisherRoutine() {
 	if publisherRunning || !publishEventsEnabled {
 		return

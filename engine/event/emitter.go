@@ -8,7 +8,6 @@ import (
 	"github.com/project-flogo/core/support/log"
 )
 
-
 type Emitter struct {
 	mutex     *sync.RWMutex
 	eventType string
