@@ -1,7 +1,6 @@
 package channels
 
 import (
-	"fmt"
 	"testing"
 	"time"
 
@@ -128,7 +127,6 @@ type cbTester struct {
 func (cbt *cbTester) onMessage(msg interface{}) {
 	cbt.called++
 	cbt.val = msg
-	fmt.Printf("HERE\n")
 }
 
 func TestChannel_Callback(t *testing.T) {

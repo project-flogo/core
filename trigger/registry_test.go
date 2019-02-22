@@ -78,7 +78,7 @@ func TestAddFactoryDuplicated(t *testing.T) {
 	// Register factory: this time should fail, duplicated
 	err = Register(&MockTrigger{}, f)
 	assert.NotNil(t, err)
-	assert.Equal(t, "trigger already registered for ref 'github.com/project-flogo/core/trigger'", err.Error())
+	assert.Equal(t, "trigger already registered for ref github.com/project-flogo/core/trigger", err.Error())
 }
 
 //TestAddFactoryOk
