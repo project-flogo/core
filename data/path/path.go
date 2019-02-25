@@ -1,6 +1,7 @@
 package path
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"reflect"
@@ -22,6 +23,16 @@ func GetValue(value interface{}, path string) (interface{}, error) {
 	var newVal interface{}
 	var err error
 	var newPath string
+
+	//To interface if it is an string
+	if val, ok := value.(string); ok {
+		var in interface{}
+		err = json.Unmarshal([]byte(val), &in)
+		if err != nil {
+			return nil, err
+		}
+		value = in
+	}
 
 	if strings.HasPrefix(path, ".") {
 		if objVal, ok := value.(map[string]interface{}); ok {
