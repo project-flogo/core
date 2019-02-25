@@ -12,6 +12,7 @@ var defaultResolver = NewCompositeResolver(map[string]Resolver{
 	".":        &ScopeResolver{},
 	"env":      &EnvResolver{},
 	"property": &PropertyResolver{},
+	"loop":     &LoopResolver{},
 })
 
 func GetBasicResolver() CompositeResolver {
