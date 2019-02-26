@@ -18,7 +18,11 @@ type HasSchema interface {
 }
 
 type Factory interface {
-	New(def Def) (Schema, error)
+	New(def *Def) (Schema, error)
+}
+
+func NewValidationError(msg string, errors []error)  *ValidationError {
+	return &ValidationError{msg:msg, errors:errors}
 }
 
 type ValidationError struct {
@@ -47,7 +51,7 @@ func New(schemaDef *Def) (Schema, error) {
 		return nil, fmt.Errorf("support for schema type '%s' not installed", factory)
 	}
 
-	s, err := factory.New(Def{})
+	s, err := factory.New(schemaDef)
 
 	if err != nil {
 		return nil, err
