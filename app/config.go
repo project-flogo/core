@@ -22,7 +22,6 @@ type Config struct {
 	Resources  []*resource.Config `json:"resources"`
 	Actions    []*action.Config   `json:"actions"`
 	Schemas    []*SchemaConfig    `json:"schemas,omitempty"`
-
 }
 
 type SchemaConfig struct {

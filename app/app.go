@@ -35,6 +35,8 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 		}
 	}
 
+	schema.ResolveSchemas()
+
 	properties := make(map[string]interface{}, len(config.Properties))
 	for _, attr := range config.Properties {
 		properties[attr.Name()] = attr.Value()

@@ -56,7 +56,7 @@ func New(schemaDef *Def) (Schema, error) {
 	return s, nil
 }
 
-func FindOrCreate(schemaRep interface{})  (Schema, error){
+func FindOrCreate(schemaRep interface{}) (Schema, error) {
 
 	switch t := schemaRep.(type) {
 	case HasSchema:
@@ -67,7 +67,15 @@ func FindOrCreate(schemaRep interface{})  (Schema, error){
 		return New(t)
 	case string:
 		if strings.HasPrefix(t, "schema://") {
-			return Get(t[9:]), nil
+			id := t[9:]
+			s := Get(t[9:])
+			if s == nil {
+				sh := &schemaHolder{id: id}
+				toResolve = append(toResolve, sh)
+				s = sh
+			}
+
+			return s, nil
 		}
 		return nil, fmt.Errorf("invalid schema reference: %s", t)
 	case map[string]string:
