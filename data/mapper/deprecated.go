@@ -40,114 +40,273 @@ func ConvertLegacyMappings(mappings *LegacyMappings) (input map[string]interface
 	output = make(map[string]interface{}, len(mappings.Output))
 
 	if mappings.Input != nil {
-		for _, mapping := range mappings.Input {
-			val, err := convertMappingValue(mapping)
-			if err != nil {
-				return nil, nil, err
-			}
-			input[mapping.MapTo] = val
+		input, err = HandleMappings(mappings.Input)
+		if err != nil {
+			return nil, nil, err
 		}
 	}
 
 	if mappings.Output != nil {
-		for _, mapping := range mappings.Output {
-			val, err := convertMappingValue(mapping)
-			if err != nil {
-				return nil, nil, err
-			}
-			output[mapping.MapTo] = val
+		output, err = HandleMappings(mappings.Output)
+		if err != nil {
+			return nil, nil, err
 		}
 	}
 
 	return input, output, nil
 }
 
-func convertMappingValue(mapping *LegacyMapping) (interface{}, error) {
-	strType, _ := toString(mapping.Type)
-	return convertMapperValue(mapping.Value, strType)
+func HandleMappings(mappings []*LegacyMapping) (map[string]interface{}, error) {
+
+	input := make(map[string]interface{})
+
+	fieldNameMap := make(map[string][]*objectMappings)
+	for _, m := range mappings {
+		field, err := ParseMappingField(m.MapTo)
+		if err != nil {
+			return nil, err
+		}
+		mapToFields := field.Getfields()
+		fieldName := getFieldName(mapToFields[0])
+		objMapping := &objectMappings{fieldName: fieldName, mapping: m}
+
+		if strings.Index(mapToFields[0], "[") >= 0 && strings.Index(mapToFields[0], "]") > 0 {
+			mapToFields[0] = mapToFields[0][len(fieldName):]
+			objMapping.targetFields = mapToFields
+		} else {
+			if len(mapToFields) > 1 {
+				objMapping.targetFields = mapToFields[1:]
+			}
+		}
+		fieldNameMap[fieldName] = append(fieldNameMap[fieldName], objMapping)
+	}
+
+	for k, v := range fieldNameMap {
+		sort.Slice(v, func(i, j int) bool {
+			return len(v[i].targetFields) < len(v[j].targetFields)
+		})
+
+		var obj interface{}
+		for _, objMapping := range v {
+			typ, _ := toString(objMapping.mapping.Type)
+			val, err := convertMapperValue(objMapping.mapping.Value, typ)
+			if err != nil {
+				return nil, err
+			}
+
+			if obj == nil && len(objMapping.targetFields) > 0 {
+				if strings.Index(objMapping.targetFields[0], "[") >= 0 && strings.Index(objMapping.targetFields[0], "]") > 0 {
+					obj = make([]interface{}, 1)
+				} else {
+					obj = make(map[string]interface{})
+				}
+			}
+
+			if len(objMapping.targetFields) > 0 {
+				obj, err = constructObjectFromPath(objMapping.targetFields, val, obj)
+				if err != nil {
+					return nil, err
+				}
+			} else {
+				obj = val
+			}
+		}
+		input[k] = obj
+	}
+
+	return input, nil
 }
 
-func ToObjectMapping(mappings []*objectMappings) (interface{}, error) {
-
-	sort.Slice(mappings, func(i, j int) bool {
-		return len(mappings[i].paths) < len(mappings[j].paths)
-	})
-
-	//obj := make(map[string]interface{})
-	//toObjectFromPath(obj)
-	return nil, nil
+func (o *objectMappings) constructObject(value interface{}) (interface{}, error) {
+	var obj interface{}
+	if strings.Index(o.targetFields[0], "[") >= 0 && strings.Index(o.targetFields[0], "]") > 0 {
+		obj = make([]interface{}, 1)
+	} else {
+		obj = make(map[string]interface{})
+	}
+	var err error
+	obj, err = constructObjectFromPath(o.targetFields, value, obj)
+	if err != nil {
+		return nil, err
+	}
+	return obj, nil
 }
 
-func toObjectFromPath(fields []string, value interface{}, object map[string]interface{}) interface{} {
+func createArray(index int) []interface{} {
+	tmpArrray := make([]interface{}, index+1)
+	tmpArrray[index] = make(map[string]interface{})
+	return tmpArrray
+}
+
+func constructObjectFromPath(fields []string, value interface{}, object interface{}) (interface{}, error) {
 	path := fields[0]
 	fieldName := getFieldName(path)
+	//Has array
 	if strings.Index(path, "[") >= 0 && strings.HasSuffix(path, "]") {
 		//Make sure the index are integer
 		index, err := strconv.Atoi(getNameInsideBrancket(path))
 		if err == nil {
-			//Array
-			if array, exist := object[fieldName]; !exist {
-				tmpArrray := make([]interface{}, index+1)
-				tmpArrray[index] = make(map[string]interface{})
-				if len(fields) == 1 {
-					tmpArrray[index] = value
-					object[fieldName] = tmpArrray
-					return object
-				} else {
-					object[fieldName] = tmpArrray
-					return toObjectFromPath(fields[1:], value, tmpArrray[index].(map[string]interface{}))
-				}
-			} else {
-				//exist
-				if av, ok := array.([]interface{}); ok {
-					if len(fields) <= 1 {
-						av = Insert(av, index, value)
-						object[fieldName] = av
-						return object
-					} else {
-						if index >= len(av) {
-							av = Insert(av, index, make(map[string]interface{}))
-						} else {
-							av[index] = make(map[string]interface{})
-						}
-						object[fieldName] = av
-						return toObjectFromPath(fields[1:], value, object[fieldName].([]interface{})[index].(map[string]interface{}))
-					}
-				} else {
-					return fmt.Errorf("not an array")
-				}
+			object, err = handlePathArray(fieldName, index, fields, value, object)
+			if err != nil {
+				return nil, err
 			}
+			////Root field name be an array node
+			//if fieldName == "" {
+			//	_, ok := object.([]interface{})
+			//	if !ok {
+			//		tmpArrray := createArray(index)
+			//		object = tmpArrray
+			//	} else {
+			//		if index >= len(object.([]interface{})) {
+			//			object = insert(object.([]interface{}), index, map[string]interface{}{})
+			//		}
+			//	}
+			//	if len(fields) == 1 {
+			//		object.([]interface{})[index] = value
+			//		return object, nil
+			//	} else {
+			//		if object.([]interface{})[index] == nil {
+			//			object.([]interface{})[index] = make(map[string]interface{})
+			//		}
+			//		object.([]interface{})[index], err = constructObjectFromPath(fields[1:], value, object.([]interface{})[index])
+			//		if err != nil {
+			//			return nil, err
+			//		}
+			//	}
+			//} else {
+			//	obj := object.(map[string]interface{})
+			//	if array, exist := obj[fieldName]; !exist {
+			//		obj[fieldName] = createArray(index)
+			//		if len(fields) == 1 {
+			//			obj[fieldName].([]interface{})[index] = value
+			//			return obj, nil
+			//		} else {
+			//			obj[fieldName].([]interface{})[index], err = constructObjectFromPath(fields[1:], value, obj[fieldName].([]interface{})[index].(map[string]interface{}))
+			//			if err != nil {
+			//				return nil, err
+			//			}
+			//		}
+			//	} else {
+			//		//exist
+			//		if av, ok := array.([]interface{}); ok {
+			//			if len(fields) <= 1 {
+			//				av = Insert(av, index, value)
+			//				obj[fieldName] = av
+			//				return obj, nil
+			//			} else {
+			//				if index >= len(av) {
+			//					av = Insert(av, index, make(map[string]interface{}))
+			//				} else {
+			//					av[index] = make(map[string]interface{})
+			//				}
+			//				obj[fieldName] = av
+			//				obj[fieldName].([]interface{})[index], err = constructObjectFromPath(fields[1:], value, obj[fieldName].([]interface{})[index].(map[string]interface{}))
+			//				if err != nil {
+			//					return nil, err
+			//				}
+			//			}
+			//		} else {
+			//			return nil, fmt.Errorf("not an array")
+			//		}
+			//	}
+			//}
 
 		} else {
-			//Not an array
-			if len(fields) == 1 {
-				object[fieldName] = value
-				return object
-			} else {
-				if _, exist := object[fieldName]; !exist {
-					object[fieldName] = map[string]interface{}{}
-				}
-			}
-
-			if len(fields) > 1 {
-				toObjectFromPath(fields[1:], value, object[fieldName].(map[string]interface{}))
+			if err := handlePathObject(fieldName, fields, value, object); err != nil {
+				return nil, err
 			}
 		}
 
 	} else {
-		//Not an array
-		if len(fields) <= 1 {
-			object[fieldName] = value
-			return object
-		} else {
-			if _, exist := object[fieldName]; !exist {
-				object[fieldName] = map[string]interface{}{}
-			}
+		if err := handlePathObject(fieldName, fields, value, object); err != nil {
+			return nil, err
 		}
+	}
 
-		toObjectFromPath(fields[1:], value, object[path].(map[string]interface{}))
+	return object, nil
+}
+
+func handlePathObject(fieldName string, fields []string, value interface{}, object interface{}) error {
+	//Not an array
+	if len(fields) <= 1 {
+		object.(map[string]interface{})[fieldName] = value
+		return nil
+	} else {
+		if _, exist := object.(map[string]interface{})[fieldName]; !exist {
+			object.(map[string]interface{})[fieldName] = map[string]interface{}{}
+		}
+	}
+	var err error
+	object.(map[string]interface{})[fieldName], err = constructObjectFromPath(fields[1:], value, object.(map[string]interface{})[fieldName].(map[string]interface{}))
+	if err != nil {
+		return err
 	}
 	return nil
+}
+
+func handlePathArray(fieldName string, index int, fields []string, value interface{}, object interface{}) (interface{}, error) {
+	//Only root field with array no field name
+	var err error
+	if fieldName == "" {
+		_, ok := object.([]interface{})
+		if !ok {
+			tmpArrray := createArray(index)
+			object = tmpArrray
+		} else {
+			if index >= len(object.([]interface{})) {
+				object = insert(object.([]interface{}), index, map[string]interface{}{})
+			}
+		}
+		if len(fields) == 1 {
+			object.([]interface{})[index] = value
+			return object, nil
+		} else {
+			if object.([]interface{})[index] == nil {
+				object.([]interface{})[index] = make(map[string]interface{})
+			}
+			object.([]interface{})[index], err = constructObjectFromPath(fields[1:], value, object.([]interface{})[index])
+			if err != nil {
+				return nil, err
+			}
+		}
+	} else {
+		obj := object.(map[string]interface{})
+		if array, exist := obj[fieldName]; !exist {
+			obj[fieldName] = createArray(index)
+			if len(fields) == 1 {
+				obj[fieldName].([]interface{})[index] = value
+				return obj, nil
+			} else {
+				obj[fieldName].([]interface{})[index], err = constructObjectFromPath(fields[1:], value, obj[fieldName].([]interface{})[index].(map[string]interface{}))
+				if err != nil {
+					return nil, err
+				}
+			}
+		} else {
+			//exist
+			if av, ok := array.([]interface{}); ok {
+				if len(fields) <= 1 {
+					av = Insert(av, index, value)
+					obj[fieldName] = av
+					return obj, nil
+				} else {
+					if index >= len(av) {
+						av = Insert(av, index, make(map[string]interface{}))
+					} else {
+						av[index] = make(map[string]interface{})
+					}
+					obj[fieldName] = av
+					obj[fieldName].([]interface{})[index], err = constructObjectFromPath(fields[1:], value, obj[fieldName].([]interface{})[index].(map[string]interface{}))
+					if err != nil {
+						return nil, err
+					}
+				}
+			} else {
+				return nil, fmt.Errorf("not an array")
+			}
+		}
+	}
+	return object, nil
 }
 
 func Insert(slice []interface{}, index int, value interface{}) []interface{} {
@@ -162,6 +321,20 @@ func Insert(slice []interface{}, index int, value interface{}) []interface{} {
 	return slice
 }
 
+func insert(original []interface{}, position int, value interface{}) []interface{} {
+	l := len(original)
+	target := original
+	if cap(original) == l {
+		target = make([]interface{}, l+1, l+10)
+		copy(target, original[:position])
+	} else {
+		target = append(target, -1)
+	}
+	copy(target[position+1:], original[position:])
+	target[position] = value
+	return target
+}
+
 func getNameInsideBrancket(fieldName string) string {
 	if strings.Index(fieldName, "[") >= 0 {
 		index := fieldName[strings.Index(fieldName, "[")+1 : strings.Index(fieldName, "]")]
@@ -172,42 +345,13 @@ func getNameInsideBrancket(fieldName string) string {
 }
 
 type objectMappings struct {
-	fieldName string
-	paths     []string
-	mapping   *LegacyMapping
-}
-
-func getSortedMapto(mappings []*LegacyMapping) (map[string]interface{}, error) {
-	input := make(map[string]interface{})
-	fieldNameMap := make(map[string][]*objectMappings)
-	for _, m := range mappings {
-		field, err := ParseMappingField(m.MapTo)
-		if err != nil {
-			return nil, err
-		}
-		objectLevelFields := field.Getfields()
-		fieldName := getFieldName(objectLevelFields[0])
-		fieldNameMap[fieldName] = append(fieldNameMap[fieldName], &objectMappings{fieldName: fieldName, paths: objectLevelFields[1:], mapping: m})
-	}
-
-	for k, v := range fieldNameMap {
-		if len(v) == 1 {
-			val, err := convertMappingValue(v[0].mapping)
-			if err != nil {
-				return nil, err
-			}
-			input[k] = val
-		}
-
-		if len(v) > 1 {
-
-		}
-	}
-	return nil, nil
+	fieldName    string
+	targetFields []string
+	mapping      *LegacyMapping
 }
 
 func getFieldName(fieldname string) string {
-	if strings.Index(fieldname, "[") > 0 && strings.Index(fieldname, "]") > 0 {
+	if strings.Index(fieldname, "[") >= 0 && strings.Index(fieldname, "]") > 0 {
 		return fieldname[:strings.Index(fieldname, "[")]
 	}
 	return fieldname
@@ -259,9 +403,9 @@ func ToNewArray(mapping *LegacyArrayMapping) (interface{}, error) {
 	for _, field := range mapping.Fields {
 		if field.Type == "foreach" {
 			//Check to see if it is a new array
-			fieldsMapping[ToNewMapto(field.To)], err = ToNewArray(field)
+			fieldsMapping[ToNewArrayChildMapto(field.To)], err = ToNewArray(field)
 		} else {
-			fieldsMapping[ToNewMapto(field.To)], err = convertMapperValue(field.From, field.Type)
+			fieldsMapping[ToNewArrayChildMapto(field.To)], err = convertMapperValue(field.From, field.Type)
 			if err != nil {
 				return nil, err
 			}
@@ -270,21 +414,12 @@ func ToNewArray(mapping *LegacyArrayMapping) (interface{}, error) {
 	return newMapping, nil
 }
 
-func ToNewMapto(old string) string {
+func ToNewArrayChildMapto(old string) string {
 	if strings.HasPrefix(old, "$.") || strings.HasPrefix(old, "$$") {
 		return old[2:]
 	}
 	return old
 }
-
-//func ToMaptoObject(mapto string) (interface{}, error) {
-//	m := make(map[string]interface{})
-//	err := path.SetValue(m, mapto, m)
-//	if err != nil {
-//		return nil, fmt.Errorf("construct object from map to [%s] failed, due to [%s]", mapto, err.Error())
-//	}
-//	return m, nil
-//}
 
 // ToString coerce a value to a string
 func toString(val interface{}) (string, error) {
@@ -318,7 +453,7 @@ func convertMapperValue(value interface{}, typ string) (interface{}, error) {
 	case "expression", "3":
 		expr, ok := value.(string)
 		if !ok {
-			return nil, fmt.Errorf("invalid expression mapping: '%v'", value)
+			return value, nil
 		}
 		return "=" + expr, nil
 	case "object", "4":
