@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"github.com/project-flogo/core/data/schema"
 	"path"
 	"runtime/debug"
 	"strings"
@@ -24,6 +25,14 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 
 	for _, anImport := range config.Imports {
 		registerImport(anImport)
+	}
+
+	// register schemas, assumes appropriate schema factories have been registered
+	for _, schemaCfg := range config.Schemas {
+		_, err := schema.Register(schemaCfg.Id, schemaCfg.Def)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	properties := make(map[string]interface{}, len(config.Properties))

@@ -4,6 +4,7 @@ import (
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/app/resource"
 	"github.com/project-flogo/core/data"
+	"github.com/project-flogo/core/data/schema"
 	"github.com/project-flogo/core/trigger"
 )
 
@@ -20,4 +21,11 @@ type Config struct {
 	Triggers   []*trigger.Config  `json:"triggers"`
 	Resources  []*resource.Config `json:"resources"`
 	Actions    []*action.Config   `json:"actions"`
+	Schemas    []*SchemaConfig    `json:"schemas,omitempty"`
+
+}
+
+type SchemaConfig struct {
+	*schema.Def
+	Id string `json:"id"`
 }
