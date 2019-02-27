@@ -43,7 +43,22 @@ type Def struct {
 	Value string
 }
 
+var enabled bool
+
+func Enable() {
+	enabled = true
+}
+
+func Enabled() bool {
+	return enabled
+}
+
+
 func New(schemaDef *Def) (Schema, error) {
+
+	if !enabled {
+		return emptySchema, nil
+	}
 
 	factory := GetFactory(schemaDef.Type)
 
@@ -103,4 +118,21 @@ func FindOrCreate(schemaRep interface{}) (Schema, error) {
 	default:
 		return nil, fmt.Errorf("invalid schema definition, %v", t)
 	}
+}
+
+var emptySchema = &emptySchemaImpl{}
+
+type emptySchemaImpl struct {
+}
+
+func (*emptySchemaImpl) Type() string {
+	return ""
+}
+
+func (*emptySchemaImpl) Value() string {
+	return ""
+}
+
+func (*emptySchemaImpl) Validate(data interface{}) error {
+	return nil
 }

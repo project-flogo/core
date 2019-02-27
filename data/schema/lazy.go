@@ -1,7 +1,6 @@
 package schema
 
 var toResolve []*schemaHolder
-var emptySchema = &emptySchemaImpl{}
 
 func ResolveSchemas() {
 	for _, sh := range toResolve {
@@ -29,19 +28,4 @@ func (sh *schemaHolder) Value() string {
 
 func (sh *schemaHolder) Validate(data interface{}) error {
 	return sh.schema.Validate(data)
-}
-
-type emptySchemaImpl struct {
-}
-
-func (*emptySchemaImpl) Type() string {
-	return ""
-}
-
-func (*emptySchemaImpl) Value() string {
-	return ""
-}
-
-func (*emptySchemaImpl) Validate(data interface{}) error {
-	return nil
 }
