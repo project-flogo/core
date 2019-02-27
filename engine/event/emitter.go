@@ -76,6 +76,4 @@ func (te *Emitter) Publish(evtCtx *Context) {
 			log.RootLogger().Debugf("Event - '%s' is successfully delivered to event listener - '%s'", te.eventType, name)
 		}
 	}
-
-	te.mutex.RUnlock()
 }
