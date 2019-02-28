@@ -14,7 +14,6 @@ import (
 var appName, appVersion string
 
 func init() {
-	//todo check and enable schema validation before loading the application
 	if IsSchemaValidationEnabled() {
 		schema.Enable()
 	}
