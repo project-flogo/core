@@ -3,6 +3,7 @@ package mapper
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/project-flogo/core/data/resolve"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -58,7 +59,7 @@ func TestArrayMapper(t *testing.T) {
 	array, err := ParseArrayMapping(oldArray)
 	assert.Nil(t, err)
 
-	v, err := ToNewArray(array)
+	v, err := ToNewArray(array, resolve.GetBasicResolver())
 	assert.Nil(t, err)
 
 	vv, _ := json.Marshal(v)
@@ -116,7 +117,7 @@ func TestNewArrayMapper(t *testing.T) {
 	array, err := ParseArrayMapping(oldArray)
 	assert.Nil(t, err)
 
-	v, err := ToNewArray(array)
+	v, err := ToNewArray(array, resolve.GetBasicResolver())
 	assert.Nil(t, err)
 
 	vv, _ := json.Marshal(v)
@@ -224,7 +225,7 @@ func TestConvertMappingValue(t *testing.T) {
 	err := json.Unmarshal([]byte(mappings), mapping)
 	assert.Nil(t, err)
 
-	input, output, err := ConvertLegacyMappings(mapping)
+	input, output, err := ConvertLegacyMappings(mapping, resolve.GetBasicResolver())
 	assert.Nil(t, err)
 
 	v, _ := json.Marshal(input)
@@ -270,7 +271,7 @@ func TestConvertMappingValue2(t *testing.T) {
 	err := json.Unmarshal([]byte(mappings), mapping)
 	assert.Nil(t, err)
 
-	input, output, err := ConvertLegacyMappings(mapping)
+	input, output, err := ConvertLegacyMappings(mapping, resolve.GetBasicResolver())
 	assert.Nil(t, err)
 
 	v, _ := json.Marshal(input)
@@ -322,7 +323,7 @@ func TestConvertMappingValue3(t *testing.T) {
 	err := json.Unmarshal([]byte(mappings), mapping)
 	assert.Nil(t, err)
 
-	input, output, err := ConvertLegacyMappings(mapping)
+	input, output, err := ConvertLegacyMappings(mapping, resolve.GetBasicResolver())
 	assert.Nil(t, err)
 
 	v, _ := json.Marshal(input)
@@ -361,7 +362,7 @@ func TestConvertMappingValue4(t *testing.T) {
 	err := json.Unmarshal([]byte(mappings), mapping)
 	assert.Nil(t, err)
 
-	input, output, err := ConvertLegacyMappings(mapping)
+	input, output, err := ConvertLegacyMappings(mapping, resolve.GetBasicResolver())
 	assert.Nil(t, err)
 
 	v, _ := json.Marshal(input)
@@ -416,7 +417,7 @@ func TestConvertMappingWithObjectMapping(t *testing.T) {
 	err := json.Unmarshal([]byte(mappings), mapping)
 	assert.Nil(t, err)
 
-	input, output, err := ConvertLegacyMappings(mapping)
+	input, output, err := ConvertLegacyMappings(mapping, resolve.GetBasicResolver())
 	assert.Nil(t, err)
 
 	v, _ := json.Marshal(input)

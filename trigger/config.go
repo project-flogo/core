@@ -141,7 +141,7 @@ func (ac *ActionConfig) UnmarshalJSON(d []byte) error {
 		}
 	}
 
-	input, output, err := mapper.ConvertLegacyMappings(ser.Mappings)
+	input, output, err := mapper.ConvertLegacyMappings(ser.Mappings, resolve.GetBasicResolver())
 	if err != nil {
 		return err
 	}
