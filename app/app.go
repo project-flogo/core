@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/project-flogo/core/data/schema"
 	"path"
+	"regexp"
 	"runtime/debug"
 	"strings"
 
@@ -19,12 +20,15 @@ import (
 
 type Option func(*App) error
 
+var flogoImportPattern = regexp.MustCompile(`^(([^ ]*)[ ]+)?([^@:]*)@?([^:]*)?:?(.*)?$`) // extract import path even if there is an alias and/or a version
+
 func New(config *Config, runner action.Runner, options ...Option) (*App, error) {
 
 	app := &App{stopOnError: true, name: config.Name, version: config.Version}
 
 	for _, anImport := range config.Imports {
-		registerImport(anImport)
+		matches := flogoImportPattern.FindStringSubmatch(anImport)
+		registerImport(matches[1] + matches[3] + matches[5]) // alias + module path + relative import path
 	}
 
 	// register schemas, assumes appropriate schema factories have been registered
