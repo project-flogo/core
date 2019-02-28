@@ -62,7 +62,7 @@ func New(schemaDef *Def) (Schema, error) {
 	factory := GetFactory(schemaDef.Type)
 
 	if factory == nil {
-		return nil, fmt.Errorf("support for schema type '%s' not installed", factory)
+		return nil, fmt.Errorf("support for schema type '%s' not installed", schemaDef.Type)
 	}
 
 	s, err := factory.New(schemaDef)
