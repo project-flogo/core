@@ -32,8 +32,8 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 	}
 
 	// register schemas, assumes appropriate schema factories have been registered
-	for _, schemaCfg := range config.Schemas {
-		_, err := schema.Register(schemaCfg.Id, schemaCfg.Def)
+	for id, def := range config.Schemas {
+		_, err := schema.Register(id,  def)
 		if err != nil {
 			return nil, err
 		}

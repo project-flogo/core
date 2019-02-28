@@ -39,8 +39,8 @@ func (e *ValidationError) Errors() []error {
 }
 
 type Def struct {
-	Type  string
-	Value string
+	Type  string `json:"type"`
+	Value string `json:"value"`
 }
 
 var enabled bool
@@ -52,7 +52,6 @@ func Enable() {
 func Enabled() bool {
 	return enabled
 }
-
 
 func New(schemaDef *Def) (Schema, error) {
 
