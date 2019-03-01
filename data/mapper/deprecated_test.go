@@ -42,7 +42,7 @@ func TestArrayMapper(t *testing.T) {
             		"type": "assign"
         		},
 				{
-            		"from": "wangzai",
+            		"from": "flogo",
 					"to": "$.tofield3",
             		"type": "assign"
         		}
@@ -64,6 +64,13 @@ func TestArrayMapper(t *testing.T) {
 
 	vv, _ := json.Marshal(v)
 	fmt.Println(string(vv))
+
+	assert.Equal(t, "=$.state", v.(map[string]interface{})["@foreach($activity[a1].field.addresses)"].(map[string]interface{})["state"])
+	assert.Equal(t, "=tstring.concat(\"this street name: \", \"ddd\")", v.(map[string]interface{})["@foreach($activity[a1].field.addresses)"].(map[string]interface{})["street"])
+	assert.Equal(t, "=$.field1", v.(map[string]interface{})["@foreach($activity[a1].field.addresses)"].(map[string]interface{})["array"].(map[string]interface{})["@foreach($.array)"].(map[string]interface{})["tofield1"])
+	assert.Equal(t, "=$.field2", v.(map[string]interface{})["@foreach($activity[a1].field.addresses)"].(map[string]interface{})["array"].(map[string]interface{})["@foreach($.array)"].(map[string]interface{})["tofield2"])
+	assert.Equal(t, "flogo", v.(map[string]interface{})["@foreach($activity[a1].field.addresses)"].(map[string]interface{})["array"].(map[string]interface{})["@foreach($.array)"].(map[string]interface{})["tofield3"])
+
 }
 
 func TestNewArrayMapper(t *testing.T) {
@@ -122,6 +129,10 @@ func TestNewArrayMapper(t *testing.T) {
 
 	vv, _ := json.Marshal(v)
 	fmt.Println(string(vv))
+
+	assert.Equal(t, "=$.state", v.([]interface{})[0].(map[string]interface{})["state"])
+	assert.Equal(t, "=tstring.concat(\"this street name: \", \"ddd\")", v.([]interface{})[0].(map[string]interface{})["street"])
+	assert.Equal(t, "=$.field1", v.([]interface{})[0].(map[string]interface{})["array"].([]interface{})[0].(map[string]interface{})["tofield1"])
 }
 
 func TestPathToObject(t *testing.T) {
@@ -374,7 +385,7 @@ func TestConvertMappingValue4(t *testing.T) {
 	assert.Equal(t, "=$.body.ddd", input["data"].([]interface{})[1])
 }
 
-func TestConvertMappingWithObjectMapping(t *testing.T) {
+func TestConvertMappingWithArrayMapping(t *testing.T) {
 	mappings := `{
         "input": [
          {
@@ -383,7 +394,7 @@ func TestConvertMappingWithObjectMapping(t *testing.T) {
           "value": "$.body.id"
          },
 		 {
-				"mapto":"input1[1].a",
+				"mapto":"input1[1].c",
 				"type":"array",
 				"value":"{\r\n    \"fields\": [\r\n        {\r\n            \"from\": \"tstring.concat(\\\"this street name: \\\", \\\"ddd\\\")\",\r\n            \"to\": \"$.street\",\r\n            \"type\": \"primitive\"\r\n        },\r\n        {\r\n            \"from\": \"tstring.concat(\\\"The zipcode is: \\\",$.zipcode)\",\r\n            \"to\": \"$.zipcode\",\r\n            \"type\": \"primitive\"\r\n        },\r\n        {\r\n            \"from\": \"$.state\",\r\n            \"to\": \"$.state\",\r\n            \"type\": \"primitive\"\r\n        },\r\n\t\t{\r\n    \t\t\"from\": \"$.array\",\r\n    \t\t\"to\": \"$.array\",\r\n            \"type\": \"foreach\",\r\n\t\t\t\"fields\":[\r\n\t\t\t\t{\r\n           \t\t\t \"from\": \"$.field1\",\r\n           \t\t\t \"to\": \"$.tofield1\",\r\n           \t\t\t \"type\": \"assign\"\r\n        \t\t},\r\n\t\t\t\t{\r\n            \t\t\"from\": \"$.field2\",\r\n\t\t\t\t\t\"to\": \"$.tofield2\",\r\n            \t\t\"type\": \"assign\"\r\n        \t\t},\r\n\t\t\t\t{\r\n            \t\t\"from\": \"wangzai\",\r\n\t\t\t\t\t\"to\": \"$.tofield3\",\r\n            \t\t\"type\": \"assign\"\r\n        \t\t}\r\n\t\t\t]\r\n\r\n\t\t}\r\n    ],\r\n    \"from\": \"$activity[a1].field.addresses\",\r\n    \"to\": \".field.addresses\",\r\n    \"type\": \"foreach\"\r\n}"
          },
@@ -428,7 +439,7 @@ func TestConvertMappingWithObjectMapping(t *testing.T) {
 	assert.Equal(t, "=$.body.name", input["data"].([]interface{})[0])
 	assert.Equal(t, "=$.body.name", input["data"].([]interface{})[1])
 	assert.Equal(t, "=$.body.id", input["input1"].([]interface{})[0].(map[string]interface{})["a"].(map[string]interface{})["b"])
-
+	assert.Equal(t, "=$.state", input["input1"].([]interface{})[1].(map[string]interface{})["c"].(map[string]interface{})["@foreach($activity[a1].field.addresses)"].(map[string]interface{})["state"])
 	//output
 	assert.Equal(t, "=$.res", output["data"].(map[string]interface{})["return"])
 	assert.Equal(t, float64(200), output["code"])
