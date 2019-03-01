@@ -7,7 +7,6 @@ import (
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/resolve"
-	"sort"
 	"strconv"
 	"strings"
 	"text/scanner"
@@ -63,7 +62,7 @@ func HandleMappings(mappings []*LegacyMapping, resolver resolve.CompositeResolve
 	fieldNameMap := make(map[string][]*objectMappings)
 	for _, m := range mappings {
 		//target is single field name
-		if strings.Index(m.MapTo, ".") <= 0 && (strings.Index(m.MapTo, "[") <= 0 || strings.Index(m.MapTo, "]") <= 0) {
+		if strings.Index(m.MapTo, ".") <= 0 && !hasArray(m.MapTo) {
 			typ, _ := toString(m.Type)
 			val, err := convertMapperValue(m.Value, typ, resolver)
 			if err != nil {
@@ -71,7 +70,7 @@ func HandleMappings(mappings []*LegacyMapping, resolver resolve.CompositeResolve
 			}
 			input[m.MapTo] = val
 		} else {
-			//Handle multiple value to single field
+			//Handle multiple mapping to single field value
 			field, err := ParseMappingField(m.MapTo)
 			if err != nil {
 				return nil, err
@@ -80,7 +79,8 @@ func HandleMappings(mappings []*LegacyMapping, resolver resolve.CompositeResolve
 			fieldName := getFieldName(mapToFields[0])
 			objMapping := &objectMappings{fieldName: fieldName, mapping: m}
 
-			if strings.Index(mapToFields[0], "[") >= 0 && strings.Index(mapToFields[0], "]") > 0 {
+			if hasArray(mapToFields[0]) {
+				//take [index] as first map field if root field is an array
 				mapToFields[0] = mapToFields[0][len(fieldName):]
 				objMapping.targetFields = mapToFields
 			} else {
@@ -93,18 +93,16 @@ func HandleMappings(mappings []*LegacyMapping, resolver resolve.CompositeResolve
 	}
 
 	for k, v := range fieldNameMap {
-		sort.Slice(v, func(i, j int) bool {
-			return len(v[i].targetFields) < len(v[j].targetFields)
-		})
-
 		var obj interface{}
 		for _, objMapping := range v {
 			typ, _ := toString(objMapping.mapping.Type)
+			//Convert value to new
 			val, err := convertMapperValue(objMapping.mapping.Value, typ, resolver)
 			if err != nil {
 				return nil, err
 			}
 
+			//First field handle, handle attribute name has array
 			if obj == nil && len(objMapping.targetFields) > 0 {
 				if strings.Index(objMapping.targetFields[0], "[") >= 0 && strings.Index(objMapping.targetFields[0], "]") > 0 {
 					obj = make([]interface{}, 1)
@@ -126,27 +124,6 @@ func HandleMappings(mappings []*LegacyMapping, resolver resolve.CompositeResolve
 	}
 
 	return input, nil
-}
-
-func (o *objectMappings) constructObject(value interface{}) (interface{}, error) {
-	var obj interface{}
-	if strings.Index(o.targetFields[0], "[") >= 0 && strings.Index(o.targetFields[0], "]") > 0 {
-		obj = make([]interface{}, 1)
-	} else {
-		obj = make(map[string]interface{})
-	}
-	var err error
-	obj, err = constructObjectFromPath(o.targetFields, value, obj)
-	if err != nil {
-		return nil, err
-	}
-	return obj, nil
-}
-
-func createArray(index int) []interface{} {
-	tmpArrray := make([]interface{}, index+1)
-	tmpArrray[index] = make(map[string]interface{})
-	return tmpArrray
 }
 
 func constructObjectFromPath(fields []string, value interface{}, object interface{}) (interface{}, error) {
@@ -269,6 +246,12 @@ func Insert(slice []interface{}, index int, value interface{}) []interface{} {
 	return slice
 }
 
+func createArray(index int) []interface{} {
+	tmpArrray := make([]interface{}, index+1)
+	tmpArrray[index] = make(map[string]interface{})
+	return tmpArrray
+}
+
 func getNameInsideBrancket(fieldName string) string {
 	if strings.Index(fieldName, "[") >= 0 {
 		index := fieldName[strings.Index(fieldName, "[")+1 : strings.Index(fieldName, "]")]
@@ -291,6 +274,7 @@ func getFieldName(fieldname string) string {
 	return fieldname
 }
 
+//DEPRECATED
 type LegacyArrayMapping struct {
 	From   interface{}           `json:"from"`
 	To     string                `json:"to"`
@@ -357,7 +341,6 @@ func ToNewArrayChildMapto(old string) string {
 
 // ToString coerce a value to a string
 func toString(val interface{}) (string, error) {
-
 	switch t := val.(type) {
 	case string:
 		return t, nil
@@ -414,6 +397,10 @@ func convertMapperValue(value interface{}, typ string, resolver resolve.Composit
 	}
 }
 
+func hasArray(field string) bool {
+	return strings.Index(field, "[") >= 0 && strings.Index(field, "]") > 0
+}
+
 func ResolvableExpr(expr string, resolver resolve.CompositeResolver) bool {
 	_, err := expression.NewFactory(resolver).NewExpr(expr)
 	if err != nil {
@@ -423,6 +410,7 @@ func ResolvableExpr(expr string, resolver resolve.CompositeResolver) bool {
 	return true
 }
 
+//DEPRECATED, code from flogo-lib for map ref parser
 type MappingField struct {
 	fields []string
 	ref    string
