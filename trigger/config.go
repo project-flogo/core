@@ -12,8 +12,8 @@ import (
 // Config is the configuration for a Trigger
 type Config struct {
 	Id       string                 `json:"id"`
-	Type     string                 `json:"type"` //an alias to the ref, can be used if imported
-	Ref      string                 `json:"ref"`
+	Type     string                 `json:"type,omitempty"` //an alias to the ref, can be used if imported
+	Ref      string                 `json:"ref,omitempty"`
 	Settings map[string]interface{} `json:"settings"`
 	Handlers []*HandlerConfig       `json:"handlers"`
 }
@@ -94,7 +94,7 @@ type ActionConfig struct {
 	Input  map[string]interface{} `json:"input,omitempty"`
 	Output map[string]interface{} `json:"output,omitempty"`
 
-	Act action.Action
+	Act action.Action             `json:"-,omitempty"`
 }
 
 // UnmarshalJSON overrides the default UnmarshalJSON for TaskInst
@@ -141,7 +141,7 @@ func (ac *ActionConfig) UnmarshalJSON(d []byte) error {
 		}
 	}
 
-	input, output, err := mapper.ConvertLegacyMappings(ser.Mappings)
+	input, output, err := mapper.ConvertLegacyMappings(ser.Mappings, resolve.GetBasicResolver())
 	if err != nil {
 		return err
 	}

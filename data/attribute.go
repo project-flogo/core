@@ -2,6 +2,7 @@ package data
 
 import (
 	"encoding/json"
+	"github.com/project-flogo/core/data/schema"
 )
 
 // TODO this should probably go away
@@ -13,11 +14,12 @@ func NewAttribute(name string, dataType Type, value interface{}) *Attribute {
 type Attribute struct {
 	name     string
 	dataType Type
-	keyType  Type
-	elemType Type
 	value    interface{}
 
-	schema interface{}
+	//keyType  Type
+	//elemType Type
+
+	schema schema.Schema
 }
 
 func (a *Attribute) Name() string {
@@ -32,15 +34,15 @@ func (a *Attribute) Value() interface{} {
 	return a.value
 }
 
-func (a *Attribute) KeyType() Type {
-	return a.keyType
-}
+//func (a *Attribute) KeyType() Type {
+//	return a.keyType
+//}
+//
+//func (a *Attribute) ElemType() Type {
+//	return a.elemType
+//}
 
-func (a *Attribute) ElemType() Type {
-	return a.elemType
-}
-
-func (a *Attribute) Schema() interface{} {
+func (a *Attribute) Schema() schema.Schema {
 	return a.schema
 }
 
@@ -50,19 +52,25 @@ func (a *Attribute) Schema() interface{} {
 func (a *Attribute) UnmarshalJSON(data []byte) error {
 
 	ser := &struct {
-		Name     string      `json:"name"`
-		Type     string      `json:"type"`
-		Value    interface{} `json:"value"`
-		KeyType  string      `json:"keyType,omitempty"`
-		ElemType string      `json:"elemType,omitempty"`
-		Schema   interface{} `json:"schema,omitempty"`
+		Name   string      `json:"name"`
+		Type   string      `json:"type"`
+		Value  interface{} `json:"value"`
+		Schema interface{} `json:"schema,omitempty"`
+
+		//KeyType  string      `json:"keyType,omitempty"`
+		//ElemType string      `json:"elemType,omitempty"`
 	}{}
 
 	if err := json.Unmarshal(data, ser); err != nil {
 		return err
 	}
 	a.name = ser.Name
-	a.schema = ser.Schema
+
+	var err error
+	a.schema, err = getSchema(ser.Schema)
+	if err != nil {
+		return err
+	}
 
 	dt, err := ToTypeEnum(ser.Type)
 	if err != nil {
@@ -70,21 +78,21 @@ func (a *Attribute) UnmarshalJSON(data []byte) error {
 	}
 	a.dataType = dt
 
-	if ser.ElemType != "" {
-		dt, err := ToTypeEnum(ser.ElemType)
-		if err != nil {
-			return err
-		}
-		a.elemType = dt
-	}
-
-	if ser.KeyType != "" {
-		dt, err := ToTypeEnum(ser.KeyType)
-		if err != nil {
-			return err
-		}
-		a.keyType = dt
-	}
+	//if ser.ElemType != "" {
+	//	dt, err := ToTypeEnum(ser.ElemType)
+	//	if err != nil {
+	//		return err
+	//	}
+	//	a.elemType = dt
+	//}
+	//
+	//if ser.KeyType != "" {
+	//	dt, err := ToTypeEnum(ser.KeyType)
+	//	if err != nil {
+	//		return err
+	//	}
+	//	a.keyType = dt
+	//}
 
 	val, err := typeConverter(ser.Value, a.dataType)
 
@@ -95,4 +103,8 @@ func (a *Attribute) UnmarshalJSON(data []byte) error {
 	}
 
 	return nil
+}
+
+func getSchema(schemaDef interface{}) (schema.Schema, error) {
+	return schema.FindOrCreate(schemaDef)
 }

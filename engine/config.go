@@ -4,6 +4,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 
 	"github.com/project-flogo/core/engine/runner"
 )
@@ -20,11 +21,21 @@ const (
 	EnvKeyRunnerQueueSize    = "FLOGO_RUNNER_QUEUE"
 	DefaultRunnerQueueSize   = 50
 
-	EnvAppPropertyResolvers = "FLOGO_APP_PROP_RESOLVERS"
+	EnvAppPropertyResolvers   = "FLOGO_APP_PROP_RESOLVERS"
+	EnvEnableSchemaValidation = "FLOGO_SCHEMA_VALIDATION"
 
 	ValueRunnerTypePooled = "POOLED"
 	ValueRunnerTypeDirect = "DIRECT"
 )
+
+func IsSchemaValidationEnabled() bool {
+	schemaValidationEnv := os.Getenv(EnvEnableSchemaValidation)
+	if strings.EqualFold(schemaValidationEnv, "true") {
+		return true
+	}
+
+	return false
+}
 
 //GetFlogoConfigPath returns the flogo config path
 func GetFlogoConfigPath() string {
