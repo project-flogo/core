@@ -142,29 +142,29 @@ func NewActivity(act activity.Activity, settings ...interface{}) (activity.Activ
 
 	ref := activity.GetRef(act)
 
-   	if f := activity.GetFactory(ref); f == nil {
+    if f := activity.GetFactory(ref); f == nil {
 
-		return activity.Get(ref), nil
-	}else {
-		if len(settings) != 0{
-			
-			inSettings := settings[0]
-		
-			var settingsMap map[string]interface{}
-			if im, ok := inSettings.(map[string]interface{}); ok {
-				settingsMap = im
-			} else {
-				settingsMap = metadata.StructToMap(inSettings)
-			}
-			
-			
-			f := activity.GetFactory(ref)
-			ctx := &initCtx{settings: settingsMap}
-			return f(ctx)
-		}
-		return nil, nil		
-	}
-	return nil, nil
+        return activity.Get(ref), nil
+    } else {
+
+        var settingsMap map[string]interface{}
+
+        if len(settings) == 0 {
+            settingsMap = make(map[string]interface{})
+        } else {
+            inSettings := settings[0]
+
+            if im, ok := inSettings.(map[string]interface{}); ok {
+                settingsMap = im
+            } else {
+                settingsMap = metadata.StructToMap(inSettings)
+            }
+        }
+
+        f := activity.GetFactory(ref)
+        ctx := &initCtx{settings: settingsMap}
+        return f(ctx)
+    }
 
 }
 
@@ -198,6 +198,8 @@ func EvalActivity(act activity.Activity, input interface{}) (map[string]interfac
 	}
 
 	logger := activityLogger
+
+
 
 	if act.Metadata() == nil {
 
