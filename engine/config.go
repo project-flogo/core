@@ -22,19 +22,30 @@ const (
 	DefaultRunnerQueueSize   = 50
 
 	EnvAppPropertyResolvers   = "FLOGO_APP_PROP_RESOLVERS"
+	EnvEnableSchemaSupport    = "FLOGO_SCHEMA_SUPPORT"
 	EnvEnableSchemaValidation = "FLOGO_SCHEMA_VALIDATION"
 
 	ValueRunnerTypePooled = "POOLED"
 	ValueRunnerTypeDirect = "DIRECT"
 )
 
-func IsSchemaValidationEnabled() bool {
-	schemaValidationEnv := os.Getenv(EnvEnableSchemaValidation)
+func IsSchemaSupportEnabled() bool {
+	schemaValidationEnv := os.Getenv(EnvEnableSchemaSupport)
 	if strings.EqualFold(schemaValidationEnv, "true") {
 		return true
 	}
 
 	return false
+}
+
+
+func IsSchemaValidationEnabled() bool {
+	schemaValidationEnv := os.Getenv(EnvEnableSchemaValidation)
+	if !strings.EqualFold(schemaValidationEnv, "true") {
+		return false
+	}
+
+	return true
 }
 
 //GetFlogoConfigPath returns the flogo config path

@@ -14,8 +14,12 @@ import (
 var appName, appVersion string
 
 func init() {
-	if IsSchemaValidationEnabled() {
+	if IsSchemaSupportEnabled() {
 		schema.Enable()
+
+		if !IsSchemaValidationEnabled() {
+			schema.DisableValidation()
+		}
 	}
 }
 
