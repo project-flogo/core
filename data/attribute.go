@@ -5,9 +5,12 @@ import (
 	"github.com/project-flogo/core/data/schema"
 )
 
-// TODO this should probably go away
 func NewAttribute(name string, dataType Type, value interface{}) *Attribute {
 	return &Attribute{name: name, dataType: dataType, value: value}
+}
+
+func NewAttributeWithSchema(name string, dataType Type, value interface{}, schema schema.Schema) *Attribute {
+	return &Attribute{name: name, dataType: dataType, value: value, schema:schema}
 }
 
 // Attribute is a simple structure used to define a data Attribute/property

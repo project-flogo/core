@@ -17,6 +17,12 @@ type HasSchema interface {
 	Schema() Schema
 }
 
+type HasSchemaIO interface {
+	GetInputSchema(name string) Schema
+
+	GetOutputSchema(name string) Schema
+}
+
 type Factory interface {
 	New(def *Def) (Schema, error)
 }
