@@ -59,7 +59,7 @@ type HandlerConfig struct {
 	Settings map[string]interface{} `json:"settings"`
 	Actions  []*ActionConfig        `json:"actions"`
 
-	//handle complex object
+	OutputSchemas map[string]interface{} `json:"outputSchemas,omitempty"`
 }
 
 // UnmarshalJSON overrides the default UnmarshalJSON for TaskInst
@@ -69,6 +69,7 @@ func (hc *HandlerConfig) UnmarshalJSON(d []byte) error {
 		Settings map[string]interface{} `json:"settings"`
 		Actions  []*ActionConfig        `json:"actions"`
 		Action   *ActionConfig          `json:"action"`
+		OutputSchemas map[string]interface{} `json:"outputSchemas,omitempty"`
 	}{}
 
 	if err := json.Unmarshal(d, ser); err != nil {
@@ -77,6 +78,7 @@ func (hc *HandlerConfig) UnmarshalJSON(d []byte) error {
 
 	hc.Name = ser.Name
 	hc.Settings = ser.Settings
+	hc.OutputSchemas = ser.OutputSchemas
 
 	if ser.Action != nil {
 		hc.Actions = []*ActionConfig{ser.Action}
@@ -94,7 +96,7 @@ type ActionConfig struct {
 	Input  map[string]interface{} `json:"input,omitempty"`
 	Output map[string]interface{} `json:"output,omitempty"`
 
-	Act action.Action             `json:"-,omitempty"`
+	Act action.Action `json:"-,omitempty"`
 }
 
 // UnmarshalJSON overrides the default UnmarshalJSON for TaskInst

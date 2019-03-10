@@ -9,7 +9,6 @@ import (
 	"github.com/project-flogo/core/support/log"
 )
 
-
 const EnvAppPropertyEnvConfigKey = "FLOGO_APP_PROPS_ENV"
 
 type PropertyMappings struct {
@@ -64,7 +63,6 @@ func (resolver *EnvVariableValueResolver) LookupValue(key string) (interface{}, 
 	if exists {
 		return value, exists
 	}
-
 
 	// Try upper case form e.g. a.b would be A_B
 	key = strings.ToUpper(key)

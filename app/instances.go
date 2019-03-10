@@ -20,7 +20,7 @@ func (a *App) createSharedActions(actionConfigs []*action.Config) (map[string]ac
 
 		if config.Ref == "" {
 			var ok bool
-			config.Ref, ok =support.GetAliasRef("action", config.Type)
+			config.Ref, ok = support.GetAliasRef("action", config.Type)
 			if !ok {
 				return nil, fmt.Errorf("Action type '%s' not registered", config.Type)
 			}
@@ -58,7 +58,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 
 		if tConfig.Ref == "" {
 			var ok bool
-			tConfig.Ref, ok =support.GetAliasRef("trigger", tConfig.Type)
+			tConfig.Ref, ok = support.GetAliasRef("trigger", tConfig.Type)
 			if !ok {
 				return nil, fmt.Errorf("Trigger type '%s' not registered", tConfig.Type)
 			}
@@ -117,7 +117,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 
 						if act.Ref == "" {
 							var ok bool
-							act.Ref, ok =support.GetAliasRef("action", act.Type)
+							act.Ref, ok = support.GetAliasRef("action", act.Type)
 							if !ok {
 								return nil, fmt.Errorf("Action type '%s' not registered", act.Type)
 							}

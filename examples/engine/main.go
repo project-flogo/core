@@ -13,9 +13,9 @@ import (
 )
 
 var (
-	cpuProfile = flag.String("cpuprofile", "", "Writes CPU profile to the specified file")
-	memProfile = flag.String("memprofile", "", "Writes memory profile to the specified file")
-	cfgJson string
+	cpuProfile    = flag.String("cpuprofile", "", "Writes CPU profile to the specified file")
+	memProfile    = flag.String("memprofile", "", "Writes memory profile to the specified file")
+	cfgJson       string
 	cfgCompressed bool
 )
 

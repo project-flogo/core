@@ -28,7 +28,7 @@ func New(schemaDef *Def) (Schema, error) {
 
 	if !validationEnabled {
 		// validation disabled, so return non-validating schema
-		return &schemaSansValidation{def:schemaDef}, nil
+		return &schemaSansValidation{def: schemaDef}, nil
 	}
 
 	factory := GetFactory(schemaDef.Type)

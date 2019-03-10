@@ -12,8 +12,8 @@ type Factory interface {
 	New(def *Def) (Schema, error)
 }
 
-func NewValidationError(msg string, errors []error)  *ValidationError {
-	return &ValidationError{msg:msg, errors:errors}
+func NewValidationError(msg string, errors []error) *ValidationError {
+	return &ValidationError{msg: msg, errors: errors}
 }
 
 type ValidationError struct {

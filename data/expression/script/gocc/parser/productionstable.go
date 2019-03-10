@@ -57,7 +57,7 @@ var productionsTable = ProdTab{
 		Index:      3,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewBoolExpr(X[0],X[1],X[2])
+			return ast.NewBoolExpr(X[0], X[1], X[2])
 		},
 	},
 	ProdTabEntry{
@@ -77,7 +77,7 @@ var productionsTable = ProdTab{
 		Index:      5,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewBoolExpr(X[0],X[1],X[2])
+			return ast.NewBoolExpr(X[0], X[1], X[2])
 		},
 	},
 	ProdTabEntry{
@@ -97,7 +97,7 @@ var productionsTable = ProdTab{
 		Index:      7,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewCmpExpr(X[0],X[1],X[2])
+			return ast.NewCmpExpr(X[0], X[1], X[2])
 		},
 	},
 	ProdTabEntry{
@@ -107,7 +107,7 @@ var productionsTable = ProdTab{
 		Index:      8,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewCmpExpr(X[0],X[1],X[2])
+			return ast.NewCmpExpr(X[0], X[1], X[2])
 		},
 	},
 	ProdTabEntry{
@@ -117,7 +117,7 @@ var productionsTable = ProdTab{
 		Index:      9,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewCmpExpr(X[0],X[1],X[2])
+			return ast.NewCmpExpr(X[0], X[1], X[2])
 		},
 	},
 	ProdTabEntry{
@@ -127,7 +127,7 @@ var productionsTable = ProdTab{
 		Index:      10,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewCmpExpr(X[0],X[1],X[2])
+			return ast.NewCmpExpr(X[0], X[1], X[2])
 		},
 	},
 	ProdTabEntry{
@@ -137,7 +137,7 @@ var productionsTable = ProdTab{
 		Index:      11,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewCmpExpr(X[0],X[1],X[2])
+			return ast.NewCmpExpr(X[0], X[1], X[2])
 		},
 	},
 	ProdTabEntry{
@@ -147,7 +147,7 @@ var productionsTable = ProdTab{
 		Index:      12,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewCmpExpr(X[0],X[1],X[2])
+			return ast.NewCmpExpr(X[0], X[1], X[2])
 		},
 	},
 	ProdTabEntry{
@@ -167,7 +167,7 @@ var productionsTable = ProdTab{
 		Index:      14,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewArithExpr(X[0],X[1],X[2])
+			return ast.NewArithExpr(X[0], X[1], X[2])
 		},
 	},
 	ProdTabEntry{
@@ -177,7 +177,7 @@ var productionsTable = ProdTab{
 		Index:      15,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewArithExpr(X[0],X[1],X[2])
+			return ast.NewArithExpr(X[0], X[1], X[2])
 		},
 	},
 	ProdTabEntry{
@@ -197,7 +197,7 @@ var productionsTable = ProdTab{
 		Index:      17,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewArithExpr(X[0],X[1],X[2])
+			return ast.NewArithExpr(X[0], X[1], X[2])
 		},
 	},
 	ProdTabEntry{
@@ -207,7 +207,7 @@ var productionsTable = ProdTab{
 		Index:      18,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewArithExpr(X[0],X[1],X[2])
+			return ast.NewArithExpr(X[0], X[1], X[2])
 		},
 	},
 	ProdTabEntry{
@@ -217,7 +217,7 @@ var productionsTable = ProdTab{
 		Index:      19,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewArithExpr(X[0],X[1],X[2])
+			return ast.NewArithExpr(X[0], X[1], X[2])
 		},
 	},
 	ProdTabEntry{
@@ -397,7 +397,7 @@ var productionsTable = ProdTab{
 		Index:      37,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewLiteral("int",X[0])
+			return ast.NewLiteral("int", X[0])
 		},
 	},
 	ProdTabEntry{
@@ -407,7 +407,7 @@ var productionsTable = ProdTab{
 		Index:      38,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewLiteral("float",X[0])
+			return ast.NewLiteral("float", X[0])
 		},
 	},
 	ProdTabEntry{
@@ -417,7 +417,7 @@ var productionsTable = ProdTab{
 		Index:      39,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewLiteral("string",X[0])
+			return ast.NewLiteral("string", X[0])
 		},
 	},
 	ProdTabEntry{
@@ -427,7 +427,7 @@ var productionsTable = ProdTab{
 		Index:      40,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewLiteral("bool",X[0])
+			return ast.NewLiteral("bool", X[0])
 		},
 	},
 	ProdTabEntry{
@@ -437,7 +437,7 @@ var productionsTable = ProdTab{
 		Index:      41,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewLiteral("nil",X[0])
+			return ast.NewLiteral("nil", X[0])
 		},
 	},
 	ProdTabEntry{
