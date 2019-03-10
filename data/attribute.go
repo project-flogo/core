@@ -10,7 +10,7 @@ func NewAttribute(name string, dataType Type, value interface{}) *Attribute {
 }
 
 func NewAttributeWithSchema(name string, dataType Type, value interface{}, schema schema.Schema) *Attribute {
-	return &Attribute{name: name, dataType: dataType, value: value, schema:schema}
+	return &Attribute{name: name, dataType: dataType, value: value, schema: schema}
 }
 
 // Attribute is a simple structure used to define a data Attribute/property

@@ -38,7 +38,6 @@ func IsSchemaSupportEnabled() bool {
 	return false
 }
 
-
 func IsSchemaValidationEnabled() bool {
 	schemaValidationEnv := os.Getenv(EnvEnableSchemaValidation)
 	if !strings.EqualFold(schemaValidationEnv, "true") {
