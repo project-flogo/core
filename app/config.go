@@ -14,6 +14,7 @@ type Config struct {
 	Type        string `json:"type"`
 	Version     string `json:"version"`
 	Description string `json:"description"`
+	AppModel    string `json:"appModel"`
 
 	Imports    []string               `json:"imports,omitempty"`
 	Properties []*data.Attribute      `json:"properties,omitempty"`
