@@ -44,19 +44,34 @@ type Def struct {
 }
 
 var enabled bool
+var validationEnabled bool
 
 func Enable() {
 	enabled = true
+	validationEnabled = true
 }
 
 func Enabled() bool {
 	return enabled
 }
 
+func DisableValidation() {
+	validationEnabled = false
+}
+
+func ValidationEnabled() bool {
+	return validationEnabled
+}
+
 func New(schemaDef *Def) (Schema, error) {
 
 	if !enabled {
 		return emptySchema, nil
+	}
+
+	if !validationEnabled {
+		// validation disabled, so return non-validating schema
+		return &schemaSansValidation{def:schemaDef}, nil
 	}
 
 	factory := GetFactory(schemaDef.Type)
@@ -133,5 +148,22 @@ func (*emptySchemaImpl) Value() string {
 }
 
 func (*emptySchemaImpl) Validate(data interface{}) error {
+	return nil
+}
+
+// schemaSansValidation holds the schema information and ignores validation
+type schemaSansValidation struct {
+	def *Def
+}
+
+func (s *schemaSansValidation) Type() string {
+	return s.def.Type
+}
+
+func (s *schemaSansValidation) Value() string {
+	return s.def.Value
+}
+
+func (*schemaSansValidation) Validate(data interface{}) error {
 	return nil
 }
