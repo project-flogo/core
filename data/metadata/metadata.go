@@ -51,6 +51,31 @@ type IOMetadata struct {
 	Output map[string]data.TypedValue
 }
 
+func (md *IOMetadata) MarshalJSON() ([]byte, error) {
+	var mdInputs []*data.Attribute
+	var mdOutputs []*data.Attribute
+
+	for _, v := range md.Input {
+		if attr,ok := v.(*data.Attribute); ok {
+			mdInputs = append(mdInputs, attr)
+		}
+	}
+	for _, v := range md.Output {
+		if attr,ok := v.(*data.Attribute); ok {
+			mdOutputs = append(mdOutputs, attr)
+		}
+	}
+
+	return json.Marshal(&struct {
+		Input  []*data.Attribute `json:"input,omitempty"`
+		Output []*data.Attribute `json:"output,omitempty"`
+	}{
+		Input:  mdInputs,
+		Output: mdOutputs,
+	})
+}
+
+
 func (md *IOMetadata) UnmarshalJSON(b []byte) error {
 
 	ser := &struct {

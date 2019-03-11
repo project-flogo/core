@@ -12,39 +12,70 @@ type Metadata struct {
 	Settings map[string]data.TypedValue
 }
 
-// UnmarshalJSON overrides the default UnmarshalJSON for TaskEnv
-func (md *Metadata) UnmarshalJSON(b []byte) error {
+func (md *Metadata) MarshalJSON() ([]byte, error) {
+	var mdSettings []*data.Attribute
+	var mdInputs []*data.Attribute
+	var mdOutputs []*data.Attribute
 
-	ser := &struct {
-		Settings []*data.Attribute `json:"settings"`
-		Input    []*data.Attribute `json:"input"`
-		Output   []*data.Attribute `json:"output"`
-	}{}
-
-	if err := json.Unmarshal(b, ser); err != nil {
-		return err
+	for _, v := range md.Settings {
+		if attr,ok := v.(*data.Attribute); ok {
+			mdSettings = append(mdSettings, attr)
+		}
+	}
+	for _, v := range md.Input {
+		if attr,ok := v.(*data.Attribute); ok {
+			mdInputs = append(mdInputs, attr)
+		}
+	}
+	for _, v := range md.Output {
+		if attr,ok := v.(*data.Attribute); ok {
+			mdOutputs = append(mdOutputs, attr)
+		}
 	}
 
-	md.IOMetadata = &metadata.IOMetadata{}
-
-	md.Settings = make(map[string]data.TypedValue, len(ser.Settings))
-	md.Input = make(map[string]data.TypedValue, len(ser.Input))
-	md.Output = make(map[string]data.TypedValue, len(ser.Output))
-
-	for _, attr := range ser.Settings {
-		md.Settings[attr.Name()] = attr
-	}
-
-	for _, attr := range ser.Input {
-		md.Input[attr.Name()] = attr
-	}
-
-	for _, attr := range ser.Output {
-		md.Output[attr.Name()] = attr
-	}
-
-	return nil
+	return json.Marshal(&struct {
+		Settings []*data.Attribute `json:"settings,omitempty"`
+		Input  []*data.Attribute `json:"input,omitempty"`
+		Output []*data.Attribute `json:"output,omitempty"`
+	}{
+		Settings:mdSettings,
+		Input:  mdInputs,
+		Output: mdOutputs,
+	})
 }
+
+//func (md *Metadata) UnmarshalJSON(b []byte) error {
+//
+//	ser := &struct {
+//		Settings []*data.Attribute `json:"settings"`
+//		Input    []*data.Attribute `json:"input"`
+//		Output   []*data.Attribute `json:"output"`
+//	}{}
+//
+//	if err := json.Unmarshal(b, ser); err != nil {
+//		return err
+//	}
+//
+//	md.IOMetadata = &metadata.IOMetadata{}
+//
+//	md.Settings = make(map[string]data.TypedValue, len(ser.Settings))
+//	md.Output = make(map[string]data.TypedValue, len(ser.Output))
+//	md.Output = make(map[string]data.TypedValue, len(ser.Output))
+//
+//	for _, attr := range ser.Settings {
+//		md.Settings[attr.Name()] = attr
+//	}
+//
+//	for _, attr := range ser.Input {
+//		md.Input[attr.Name()] = attr
+//	}
+//
+//	for _, attr := range ser.Output {
+//		md.Output[attr.Name()] = attr
+//	}
+//
+//	return nil
+//}
 
 func ToMetadata(mdStructs ...interface{}) *Metadata {
 
