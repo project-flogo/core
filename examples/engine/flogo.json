@@ -12,7 +12,7 @@
   "triggers": [
     {
       "id": "my_rest_trigger",
-      "type": "rest",
+      "ref": "#rest",
       "settings": {
         "port": "8888"
       },
@@ -24,7 +24,7 @@
           },
           "actions": [
             {
-              "type": "flow",
+              "ref": "#flow",
               "settings": {
                 "flowURI": "res://flow:simple_flow"
               },
@@ -55,7 +55,7 @@
             "id": "log",
             "name": "Log Message",
             "activity": {
-              "type": "log",
+              "ref": "#log",
               "input": {
                 "message": "=$flow.in",
                 "flowInfo": "false",
