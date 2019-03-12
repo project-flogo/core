@@ -89,7 +89,7 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 		appOptions = append(appOptions, app.ContinueOnError)
 	}
 
-	propResolvers := GetAppPropertyValueResolvers()
+	propResolvers := GetAppPropertyValueResolvers(logger)
 	enableExternalPropResolution := false
 	if len(propResolvers) > 0 {
 		err := property.EnableExternalResolvers(propResolvers)
