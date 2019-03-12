@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/data/expression"
-	"github.com/project-flogo/core/data/mapper"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/data/resolve"
 )
@@ -12,10 +11,12 @@ import (
 // Config is the configuration for a Trigger
 type Config struct {
 	Id       string                 `json:"id"`
-	Type     string                 `json:"type,omitempty"` //an alias to the ref, can be used if imported
-	Ref      string                 `json:"ref,omitempty"`
+	Ref      string                 `json:"ref"`
 	Settings map[string]interface{} `json:"settings"`
 	Handlers []*HandlerConfig       `json:"handlers"`
+
+	//DEPRECATED
+	Type string `json:"type,omitempty"`
 }
 
 func (c *Config) FixUp(md *Metadata) error {
@@ -54,21 +55,20 @@ func (c *Config) FixUp(md *Metadata) error {
 }
 
 type HandlerConfig struct {
-	parent   *Config
-	Name     string                 `json:"name,omitempty"`
-	Settings map[string]interface{} `json:"settings"`
-	Actions  []*ActionConfig        `json:"actions"`
-
+	parent        *Config
+	Name          string                 `json:"name,omitempty"`
+	Settings      map[string]interface{} `json:"settings"`
+	Actions       []*ActionConfig        `json:"actions"`
 	OutputSchemas map[string]interface{} `json:"outputSchemas,omitempty"`
 }
 
 // UnmarshalJSON overrides the default UnmarshalJSON for TaskInst
 func (hc *HandlerConfig) UnmarshalJSON(d []byte) error {
 	ser := &struct {
-		Name     string                 `json:"name,omitempty"`
-		Settings map[string]interface{} `json:"settings"`
-		Actions  []*ActionConfig        `json:"actions"`
-		Action   *ActionConfig          `json:"action"`
+		Name          string                 `json:"name,omitempty"`
+		Settings      map[string]interface{} `json:"settings"`
+		Actions       []*ActionConfig        `json:"actions"`
+		Action        *ActionConfig          `json:"action"`
 		OutputSchemas map[string]interface{} `json:"outputSchemas,omitempty"`
 	}{}
 
@@ -99,70 +99,35 @@ type ActionConfig struct {
 	Act action.Action `json:"-,omitempty"`
 }
 
-// UnmarshalJSON overrides the default UnmarshalJSON for TaskInst
-func (ac *ActionConfig) UnmarshalJSON(d []byte) error {
-	ser := &struct {
-		If     string                 `json:"if,omitempty"`
-		Input  map[string]interface{} `json:"input,omitempty"`
-		Output map[string]interface{} `json:"output,omitempty"`
-
-		Ref      string                 `json:"ref"`
-		Type     string                 `json:"type"`
-		Settings map[string]interface{} `json:"settings"`
-
-		//referenced action
-		Id string `json:"id"`
-
-		//DEPRECATED
-		Data map[string]interface{} `json:"data"`
-		//DEPRECATED
-		Mappings *mapper.LegacyMappings `json:"mappings"`
-	}{}
-
-	if err := json.Unmarshal(d, ser); err != nil {
-		return err
-	}
-
-	ac.Config = &action.Config{}
-
-	ac.Ref = ser.Ref
-	ac.Type = ser.Type
-	ac.Id = ser.Id
-	ac.If = ser.If
-	ac.Input = ser.Input
-	ac.Output = ser.Output
-	ac.Settings = ser.Settings
-
-	if ac.Settings == nil {
-		ac.Settings = make(map[string]interface{})
-	}
-
-	if ser.Data != nil {
-		for key, value := range ser.Data {
-			ac.Settings[key] = value
-		}
-	}
-
-	input, output, err := mapper.ConvertLegacyMappings(ser.Mappings, resolve.GetBasicResolver())
-	if err != nil {
-		return err
-	}
-
-	if ac.Input == nil {
-		ac.Input = input
-	} else {
-		for key, value := range input {
-			ac.Input[key] = value
-		}
-	}
-
-	if ac.Output == nil {
-		ac.Output = output
-	} else {
-		for key, value := range output {
-			ac.Output[key] = value
-		}
-	}
-
-	return nil
-}
+//// UnmarshalJSON overrides the default UnmarshalJSON for TaskInst
+//func (ac *ActionConfig) UnmarshalJSON(d []byte) error {
+//	ser := &struct {
+//		If       string                 `json:"if,omitempty"`
+//		Ref      string                 `json:"ref"`
+//		Settings map[string]interface{} `json:"settings,omitempty"`
+//		Input    map[string]interface{} `json:"input,omitempty"`
+//		Output   map[string]interface{} `json:"output,omitempty"`
+//
+//		//referenced action
+//		Id string `json:"id"`
+//	}{}
+//
+//	if err := json.Unmarshal(d, ser); err != nil {
+//		return err
+//	}
+//
+//	ac.Config = &action.Config{}
+//
+//	ac.Ref = ser.Ref
+//	ac.Id = ser.Id
+//	ac.If = ser.If
+//	ac.Input = ser.Input
+//	ac.Output = ser.Output
+//	ac.Settings = ser.Settings
+//
+//	if ac.Settings == nil {
+//		ac.Settings = make(map[string]interface{})
+//	}
+//
+//	return nil
+//}

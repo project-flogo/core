@@ -33,9 +33,6 @@ const (
 	TypeParams // map[string]string
 	TypeArray  // []interface{}
 	TypeMap    // map[interface{}]interface{}
-
-	//DEPRECATED
-	TypeComplexObject
 )
 
 var types = [...]string{
@@ -94,8 +91,6 @@ func ToTypeEnum(typeStr string) (Type, error) {
 		return TypeArray, nil
 	case "map":
 		return TypeMap, nil
-	case "complexobject", "complex_object":
-		return TypeComplexObject, nil
 	default:
 		return TypeUnknown, errors.New("unknown type: " + typeStr)
 	}
@@ -134,8 +129,6 @@ func GetType(val interface{}) (Type, error) {
 		return TypeArray, nil
 	case map[string]string:
 		return TypeParams, nil
-	case ComplexObject:
-		return TypeComplexObject, nil
 	default:
 		return TypeUnknown, fmt.Errorf("unable to determine type of %#v", t)
 	}
