@@ -74,15 +74,34 @@ func FindOrCreate(schemaRep interface{}) (Schema, error) {
 		if sType, ok := t["type"]; ok {
 			def.Type = sType
 		} else {
-			return nil, fmt.Errorf("invalid schema definition, type not specified: %s", t)
+			return nil, fmt.Errorf("invalid schema definition, type not specified: %+v", t)
 		}
 
 		if sValue, ok := t["value"]; ok {
 			def.Value = sValue
 		} else {
-			return nil, fmt.Errorf("invalid schema definition, value not specified: %s", t)
+			return nil, fmt.Errorf("invalid schema definition, value not specified: %+v", t)
+		}
+		return New(def)
+	case map[string]interface{}:
+		def := &Def{}
+		if sType, ok := t["type"]; ok {
+			def.Type, ok = sType.(string)
+			if !ok  {
+				return nil, fmt.Errorf("invalid schema definition, type is not a string specified: %+v", sType)
+			}
+		} else {
+			return nil, fmt.Errorf("invalid schema definition, type not specified: %+v", t)
 		}
 
+		if sValue, ok := t["value"]; ok {
+			def.Value, ok = sValue.(string)
+			if !ok  {
+				return nil, fmt.Errorf("invalid schema definition, value is not a string specified: %+v", sValue)
+			}
+		} else {
+			return nil, fmt.Errorf("invalid schema definition, value not specified: %+v", t)
+		}
 		return New(def)
 	case nil:
 		return nil, nil
