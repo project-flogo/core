@@ -21,7 +21,7 @@ func init() {
 
 	logger := log.RootLogger()
 
-	property.RegisterExternalResolver("env", &EnvVariableValueResolver{})
+	property.RegisterPropertyResolver("env", &EnvVariableValueResolver{})
 
 	mappings := getEnvValue()
 	if mappings != "" {
