@@ -20,7 +20,7 @@ type Config struct {
 	Properties []*data.Attribute      `json:"properties,omitempty"`
 	Channels   []string               `json:"channels,omitempty"`
 	Triggers   []*trigger.Config      `json:"triggers"`
-	Resources  []*resource.Config     `json:"resources"`
+	Resources  []*resource.Config     `json:"resources,omitempty"`
 	Actions    []*action.Config       `json:"actions,omitempty"`
 	Schemas    map[string]*schema.Def `json:"schemas,omitempty"`
 }
