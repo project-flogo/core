@@ -3,6 +3,7 @@ package propertyresolver
 import (
 	"encoding/json"
 	"github.com/project-flogo/core/data/property"
+	"github.com/project-flogo/core/engine"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -65,7 +66,7 @@ type JSONFileValueResolver struct {
 }
 
 func (resolver *JSONFileValueResolver) Name() string {
-	return "json"
+	return engine.PropertyResolverJson
 }
 
 func (resolver *JSONFileValueResolver) LookupValue(toResolve string) (interface{}, bool) {
