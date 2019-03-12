@@ -3,16 +3,16 @@
 
 
 Sections:
-* [Imports](#Imports "Goto Imports") - Go package and contribution imports
-* [Properties](#Properties "Goto Imports") - Shared Properties
-* [Channels](#Channels "Goto Imports") - Internal Communication Channels
-* [Triggers](#Imports "Goto Triggers") - Triggers
-* [Actions](#Actions "Goto Actions") - Shared Actions
-* [Schemas](#Schemas "Goto Schemas") - Shared Schemas
+* [Imports](#imports "Goto Imports") - Go package and contribution imports
+* [Properties](#properties "Goto Imports") - Shared Properties
+* [Channels](#channels "Goto Imports") - Internal Communication Channels
+* [Triggers](#imports "Goto Triggers") - Triggers
+* [Actions](#actions "Goto Actions") - Shared Actions
+* [Schemas](#schemas "Goto Schemas") - Shared Schemas
     
-[Full Example](#Full Example "Full Example") 
+[Full Example](#full-example "Full Example") 
 
-##Imports
+## Imports
 The imports section allows one to define all the packages that should be imported by the engine.  This includes go code and references to contribution.
 ```json
   "imports": [
@@ -28,11 +28,11 @@ Direct: `"ref" : "github.com/project-flogo/flow"`
  
 Indirect: `"ref" : "#flow"` 
 
-##Properties
+## Properties
 The properties section allows one to define properties that can be shared by the application.
 ```json
   "properties": [
-    {"name":"myProp", "type":"string" "value":"myValue" }
+    {"name":"myProp", "type":"string", "value":"myValue" }
   ]
 ```
 The properties section allows one to define properties that can be shared by the application.
@@ -46,7 +46,7 @@ Example:
   } 
 ```
 
-##Channels
+## Channels
 The channels section allows one to define internal communications channels for the engine.
 ```json
   "channels": [
@@ -57,7 +57,7 @@ A channel is used for internal communications in an engine.  It is defined by a 
 
 The `github.com/project-flogo/contrib/activity/channel` activity can be used to put a message on the channel.  The `github.com/project-flogo/contrib/trigger/channel` trigger can be used to listen on a channel and trigger actions from messages received on that channel.
 
-##Triggers
+## Triggers
 The triggers section is used to define the triggers that will be used by the application.
  
 ```json
@@ -119,7 +119,7 @@ Example:
 In this example the action "sharedAction" is executed if the header Foo = "bar", otherwise the "sharedActionDefault"
 is executed.
 
-##Actions
+## Actions
 The actions section is used to define shared actions that can be referenced by id.
 ```json
   "actions": [
@@ -133,7 +133,7 @@ The actions section is used to define shared actions that can be referenced by i
   ]
 ```
 
-##Resources
+## Resources
 The resources section contains the resources used by actions.
 ```json
   "resources": [
@@ -150,7 +150,7 @@ The resources section contains the resources used by actions.
   ]  
 ```
 
-##Schemas
+## Schemas
 The schemas section contains schemas that are shared in the application.
 
 ```json
@@ -168,7 +168,7 @@ Schemas can be referenced in metadata or in schema sections in contributions.
    "ref": "#myActivity",
     "input": {
       "val": "=$flow.Val"
-    }
+    },
    "schemas": {
        "input": {
          "val": "schema://mySchema"
@@ -182,7 +182,7 @@ Schemas can also be defined inline:
    "ref": "#myActivity",
     "input": {
       "val": "=$flow.Val"
-    }
+    },
    "schemas": {
        "input": {
          "val": { "type": "json","value": "{\"$schema\": \"http://json-schema.org/draft-07/schema#\", ... }" }
