@@ -25,7 +25,7 @@ func init() {
 	filePaths := getExternalFiles()
 	if filePaths != "" {
 		// Register value resolver
-		property.RegisterExternalResolver("json", &JSONFileValueResolver{})
+		property.RegisterPropertyResolver("json", &JSONFileValueResolver{})
 
 		// preload props from files
 		files := strings.Split(filePaths, ",")

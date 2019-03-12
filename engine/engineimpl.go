@@ -90,20 +90,20 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 	}
 
 	propResolvers := GetAppPropertyValueResolvers(logger)
-	enableExternalPropResolution := false
+	enablePropertiesResolution := false
 	if len(propResolvers) > 0 {
-		err := property.EnableExternalResolvers(propResolvers)
+		err := property.EnablePropertyResolvers(propResolvers)
 		if err != nil {
 			return nil, err
 		}
 
-		enableExternalPropResolution = true
+		enablePropertiesResolution = true
 	}
 
-	// properties post processors (external properties resolver if enabled, secret property replacer)
+	// properties post processors (properties resolver if enabled, secret properties replacer)
 	var postProcessors []property.PostProcessor
-	if enableExternalPropResolution {
-		postProcessors = append(postProcessors, property.ExternalPropertyResolverProcessor)
+	if enablePropertiesResolution {
+		postProcessors = append(postProcessors, property.PropertyResolverProcessor)
 	}
 	postProcessors = append(postProcessors, secret.PropertyProcessor)
 
