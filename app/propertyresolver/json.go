@@ -25,7 +25,7 @@ func init() {
 	filePaths := getExternalFiles()
 	if filePaths != "" {
 		// Register value resolver
-		property.RegisterPropertyResolver("json", &JSONFileValueResolver{})
+		property.RegisterPropertyResolver(&JSONFileValueResolver{})
 
 		// preload props from files
 		files := strings.Split(filePaths, ",")
@@ -62,6 +62,10 @@ func getExternalFiles() string {
 
 // Resolve property value from external files
 type JSONFileValueResolver struct {
+}
+
+func (resolver *JSONFileValueResolver) Name() string {
+	return "json"
 }
 
 func (resolver *JSONFileValueResolver) LookupValue(toResolve string) (interface{}, bool) {

@@ -21,7 +21,7 @@ func init() {
 
 	logger := log.RootLogger()
 
-	property.RegisterPropertyResolver("env", &EnvVariableValueResolver{})
+	property.RegisterPropertyResolver(&EnvVariableValueResolver{})
 
 	mappings := getEnvValue()
 	if mappings != "" {
@@ -43,6 +43,10 @@ func getEnvValue() string {
 
 // Resolve property value from environment variable
 type EnvVariableValueResolver struct {
+}
+
+func (resolver *EnvVariableValueResolver) Name() string {
+	return "env"
 }
 
 func (resolver *EnvVariableValueResolver) LookupValue(key string) (interface{}, bool) {

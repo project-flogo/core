@@ -15,29 +15,32 @@ var (
 
 // Resolver used to resolve property value from external configuration like env, file etc
 type Resolver interface {
+	Name() string
 	// Should return value and true if the given key exists in the external configuration otherwise should return nil and false.
 	LookupValue(key string) (interface{}, bool)
 }
 
-func RegisterPropertyResolver(resolverType string, resolver Resolver) error {
+func RegisterPropertyResolver(resolver Resolver) error {
 
 	logger := log.RootLogger()
 
-	if resolverType == "" {
-		return fmt.Errorf("'resolverType' must be specified when registering a property resolver")
+	resolverName := resolver.Name()
+
+	if resolverName == "" {
+		return fmt.Errorf("a property resolver must have a non-empty name")
 	}
 
 	if resolver == nil {
-		return fmt.Errorf("cannot register 'nil' property resolver")
+		return fmt.Errorf("cannot register a 'nil' property resolver")
 	}
 
-	if _, dup := RegisteredResolvers[resolverType]; dup {
-		return fmt.Errorf("property resolver already registered: %s", resolverType)
+	if _, dup := RegisteredResolvers[resolverName]; dup {
+		return fmt.Errorf("property resolver already registered: %s", resolverName)
 	}
 
-	logger.Debugf("Registering property resolver [ %s ]", resolverType)
+	logger.Debugf("Registering property resolver [ %s ]", resolverName)
 
-	RegisteredResolvers[resolverType] = resolver
+	RegisteredResolvers[resolverName] = resolver
 
 	return nil
 }
@@ -76,6 +79,17 @@ func ResolveProperty(propertyName string) (interface{}, bool) {
 func PropertyResolverProcessor(properties map[string]interface{}) error {
 
 	logger := log.RootLogger()
+
+	var enabledResolvers []string
+	var resolver Resolver
+	for _, resolver = range EnabledResolvers {
+		enabledResolvers = append(enabledResolvers, resolver.Name())
+	}
+	if len(enabledResolvers) == 1 {
+		logger.Infof("Properties will be resolved with the '%s' resolver", resolver.Name())
+	} else {
+		logger.Infof("Properties will be resolved with these resolvers (in decreasing order of priority): %v", enabledResolvers)
+	}
 
 	for name := range properties {
 		newVal, found := ResolveProperty(name)
