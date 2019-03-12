@@ -29,6 +29,9 @@ const (
 
 	ValueRunnerTypePooled = "POOLED"
 	ValueRunnerTypeDirect = "DIRECT"
+
+	PropertyResolverEnv  = "env"
+	PropertyResolverJson = "json"
 )
 
 func IsSchemaSupportEnabled() bool {
@@ -120,22 +123,27 @@ func GetAppPropertyValueResolvers(logger log.Logger) string {
 		}
 	case 2, 3:
 		var resolvers, builtinResolvers []string
+
 		for resolver := range property.RegisteredResolvers {
-			if resolver != "env" && resolver != "json" {
+			if resolver != PropertyResolverEnv && resolver != PropertyResolverJson {
 				resolvers = append(resolvers, resolver)
 			} else {
 				builtinResolvers = append(builtinResolvers, resolver)
 			}
 		}
+
 		if len(resolvers) > 1 { // multiple (excluding builtin) resolvers defined, do nothing and hint to enforce an order
 			resolvers = append(resolvers, builtinResolvers...)
 			displayAppPropertyValueResolversHelp(logger, resolvers)
 			return ""
 		}
-		resolvers = append(resolvers, builtinResolvers...)
+
 		if len(builtinResolvers) == 2 { // force priority between the two builtin resolvers
-			builtinResolvers = []string{"env", "json"}
+			builtinResolvers = []string{PropertyResolverEnv, PropertyResolverJson}
 		}
+
+		resolvers = append(resolvers, builtinResolvers...)
+
 		return strings.Join(resolvers[:], ",")
 	default: // multiple (excluding builtin) resolvers defined, do nothing and hint to enforce an order
 		var resolvers []string
