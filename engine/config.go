@@ -110,6 +110,9 @@ func displayAppPropertyValueResolversHelp(logger log.Logger, resolvers []string)
 func GetAppPropertyValueResolvers(logger log.Logger) string {
 	key := os.Getenv(EnvAppPropertyResolvers)
 	if len(key) > 0 {
+		if key == "disabled" {
+			return ""
+		}
 		return key
 	}
 
