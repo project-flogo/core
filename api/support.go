@@ -2,7 +2,6 @@ package api
 
 import (
 	"context"
-	"encoding/json"
 	"github.com/project-flogo/core/support/log"
 	"reflect"
 	"strconv"
@@ -77,10 +76,11 @@ func toActionConfig(act *Action) *trigger.ActionConfig {
 	}
 
 	actionCfg.Ref = act.ref
+	actionCfg.Settings = act.settings
 
-	//todo handle error
-	jsonData, _ := json.Marshal(act.Settings())
-	actionCfg.Data = jsonData
+	////todo handle error
+	//jsonData, _ := json.Marshal(act.Settings())
+	//actionCfg.Data = jsonData
 
 	actionCfg.If = act.condition
 	if len(act.inputMappings) > 0 {
