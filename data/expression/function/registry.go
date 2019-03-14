@@ -9,9 +9,9 @@ import (
 )
 
 var (
-	functions = make(map[string]Function)
+	functions    = make(map[string]Function)
 	functionsTmp = make(map[string]Function)
-	packages = make(map[string]string)
+	packages     = make(map[string]string)
 )
 
 func Register(function Function) error {
@@ -39,12 +39,12 @@ func Register(function Function) error {
 
 	log.RootLogger().Tracef("Registering function: %s:%s", goPkg, function.Name())
 
-	functionsTmp[goPkg + ":" +function.Name()] = function
+	functionsTmp[goPkg+":"+function.Name()] = function
 
 	return nil
 }
 
-func getGoPackage(function Function) (string,error) {
+func getGoPackage(function Function) (string, error) {
 	value := reflect.ValueOf(function)
 	// unwrap pointer
 	value = value.Elem()

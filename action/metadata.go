@@ -18,29 +18,29 @@ func (md *Metadata) MarshalJSON() ([]byte, error) {
 	var mdOutputs []*data.Attribute
 
 	for _, v := range md.Settings {
-		if attr,ok := v.(*data.Attribute); ok {
+		if attr, ok := v.(*data.Attribute); ok {
 			mdSettings = append(mdSettings, attr)
 		}
 	}
 	for _, v := range md.Input {
-		if attr,ok := v.(*data.Attribute); ok {
+		if attr, ok := v.(*data.Attribute); ok {
 			mdInputs = append(mdInputs, attr)
 		}
 	}
 	for _, v := range md.Output {
-		if attr,ok := v.(*data.Attribute); ok {
+		if attr, ok := v.(*data.Attribute); ok {
 			mdOutputs = append(mdOutputs, attr)
 		}
 	}
 
 	return json.Marshal(&struct {
 		Settings []*data.Attribute `json:"settings,omitempty"`
-		Input  []*data.Attribute `json:"input,omitempty"`
-		Output []*data.Attribute `json:"output,omitempty"`
+		Input    []*data.Attribute `json:"input,omitempty"`
+		Output   []*data.Attribute `json:"output,omitempty"`
 	}{
-		Settings:mdSettings,
-		Input:  mdInputs,
-		Output: mdOutputs,
+		Settings: mdSettings,
+		Input:    mdInputs,
+		Output:   mdOutputs,
 	})
 }
 
