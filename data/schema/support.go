@@ -87,7 +87,7 @@ func FindOrCreate(schemaRep interface{}) (Schema, error) {
 		def := &Def{}
 		if sType, ok := t["type"]; ok {
 			def.Type, ok = sType.(string)
-			if !ok  {
+			if !ok {
 				return nil, fmt.Errorf("invalid schema definition, type is not a string specified: %+v", sType)
 			}
 		} else {
@@ -96,7 +96,7 @@ func FindOrCreate(schemaRep interface{}) (Schema, error) {
 
 		if sValue, ok := t["value"]; ok {
 			def.Value, ok = sValue.(string)
-			if !ok  {
+			if !ok {
 				return nil, fmt.Errorf("invalid schema definition, value is not a string specified: %+v", sValue)
 			}
 		} else {

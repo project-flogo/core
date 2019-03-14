@@ -160,8 +160,8 @@ func newZapLogger(logFormat Format) (*zap.Logger, *zap.AtomicLevel, error) {
 
 	eCfg := cfg.EncoderConfig
 	eCfg.TimeKey = "timestamp"
-	//eCfg.EncodeTime = zapcore.ISO8601TimeEncoder
-	eCfg.EncodeTime = zapcore.EpochNanosTimeEncoder
+	eCfg.EncodeTime = zapcore.ISO8601TimeEncoder
+	//eCfg.EncodeTime = zapcore.EpochNanosTimeEncoder
 
 	if logFormat == FormatConsole {
 		eCfg.EncodeLevel = zapcore.CapitalLevelEncoder

@@ -56,12 +56,12 @@ func (md *IOMetadata) MarshalJSON() ([]byte, error) {
 	var mdOutputs []*data.Attribute
 
 	for _, v := range md.Input {
-		if attr,ok := v.(*data.Attribute); ok {
+		if attr, ok := v.(*data.Attribute); ok {
 			mdInputs = append(mdInputs, attr)
 		}
 	}
 	for _, v := range md.Output {
-		if attr,ok := v.(*data.Attribute); ok {
+		if attr, ok := v.(*data.Attribute); ok {
 			mdOutputs = append(mdOutputs, attr)
 		}
 	}
@@ -74,7 +74,6 @@ func (md *IOMetadata) MarshalJSON() ([]byte, error) {
 		Output: mdOutputs,
 	})
 }
-
 
 func (md *IOMetadata) UnmarshalJSON(b []byte) error {
 
