@@ -3,6 +3,7 @@ package propertyresolver
 import (
 	"encoding/json"
 	"github.com/project-flogo/core/data/property"
+	"github.com/project-flogo/core/engine"
 	"os"
 	"strings"
 
@@ -21,7 +22,7 @@ func init() {
 
 	logger := log.RootLogger()
 
-	property.RegisterExternalResolver("env", &EnvVariableValueResolver{})
+	property.RegisterPropertyResolver(&EnvVariableValueResolver{})
 
 	mappings := getEnvValue()
 	if mappings != "" {
@@ -43,6 +44,10 @@ func getEnvValue() string {
 
 // Resolve property value from environment variable
 type EnvVariableValueResolver struct {
+}
+
+func (resolver *EnvVariableValueResolver) Name() string {
+	return engine.PropertyResolverEnv
 }
 
 func (resolver *EnvVariableValueResolver) LookupValue(key string) (interface{}, bool) {
