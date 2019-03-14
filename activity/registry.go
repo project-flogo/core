@@ -31,7 +31,7 @@ func Register(activity Activity, f ...Factory) error {
 	log.RootLogger().Debugf("Registering activity: %s", ref)
 
 	activities[ref] = activity
-	name := path.Base(ref) //todo should probably get this from the descriptor? or on registration provide a short name
+	name := path.Base(ref) //todo should we use this or the alias?
 	activityLoggers[ref] = log.ChildLogger(activityLogger, name)
 
 	if len(f) > 1 {
@@ -85,5 +85,14 @@ func GetFactory(ref string) Factory {
 
 // GetLogger gets activity logger by ref
 func GetLogger(ref string) log.Logger {
-	return activityLoggers[ref]
+	if ref[0] == '#' {
+		ref,_ = support.GetAliasRef("activity", ref[1:])
+	}
+
+	logger, ok := activityLoggers[ref]
+	if ok {
+		return logger
+	} else {
+		return log.RootLogger()
+	}
 }
