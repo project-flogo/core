@@ -137,6 +137,49 @@ func TestRootLiteralArray(t *testing.T) {
 
 }
 
+func TestPrimitiveArray(t *testing.T) {
+	mappingValue := `
+{
+  "features": [
+    {
+      "name": "inputs",
+      "data": [
+        "=$.result.V1",
+        "=$.result.V2",
+        "=$.result.V3",
+        "=$.result.V4"
+      ]
+    }
+  ]
+}`
+
+	var arrayMapping interface{}
+	err := json.Unmarshal([]byte(mappingValue), &arrayMapping)
+	assert.Nil(t, err)
+	assert.False(t, IsLiteral(arrayMapping))
+	mappings := map[string]interface{}{"target": arrayMapping}
+	factory := NewFactory(resolve.GetBasicResolver())
+	mapper, err := factory.NewMapper(mappings)
+
+	attr := make(map[string]interface{})
+
+	val := map[string]interface{}{"V1": "1111"}
+	val["V2"] = "2222"
+	val["V3"] = "3333"
+	val["V4"] = "4444"
+	attr["result"] = val
+
+	scope := data.NewSimpleScope(attr, nil)
+
+	results, err := mapper.Apply(scope)
+	assert.Nil(t, err)
+	arr := results["target"]
+
+	assert.Equal(t, "inputs", arr.(map[string]interface{})["features"].([]interface{})[0].(map[string]interface{})["name"])
+	assert.Equal(t, "2222", arr.(map[string]interface{})["features"].([]interface{})[0].(map[string]interface{})["data"].([]interface{})[1])
+
+}
+
 func TestRootLiteralArrayMapping(t *testing.T) {
 	mappingValue := `["=$.field.name", "=$.field.id"]`
 	arrayData := `{
