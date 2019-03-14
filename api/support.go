@@ -77,12 +77,8 @@ func toActionConfig(act *Action) *trigger.ActionConfig {
 
 	actionCfg.Ref = act.ref
 	actionCfg.Settings = act.settings
-
-	////todo handle error
-	//jsonData, _ := json.Marshal(act.Settings())
-	//actionCfg.Data = jsonData
-
 	actionCfg.If = act.condition
+
 	if len(act.inputMappings) > 0 {
 		actionCfg.Input, _ = toMappings(act.inputMappings)
 	}
