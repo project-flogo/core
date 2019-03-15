@@ -46,9 +46,19 @@ type ObjectMapping struct {
 	Mapping interface{} `json:"mapping"`
 }
 
-func IsObjectMapping(value interface{}) bool {
-	_, ok := value.(*ObjectMapping)
-	return ok
+func GetObjectMapping(value interface{}) (interface{}, bool) {
+	switch t := value.(type) {
+	case *ObjectMapping:
+		return t.Mapping, true
+	case map[string]interface{}:
+
+		if mapping, ok := t["mapping"]; ok {
+			return mapping, true
+		}
+		return nil, false
+	default:
+		return nil, false
+	}
 }
 
 type ObjectMapperFactory struct {

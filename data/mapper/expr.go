@@ -40,9 +40,9 @@ func (mf *ExprMapperFactory) NewMapper(mappings map[string]interface{}) (Mapper,
 					exprMappings[key] = expression.NewLiteralExpr(value)
 				}
 			default:
-				if mo, ok := t.(ObjectMapping); ok {
+				if mapping, ok := GetObjectMapping(t); ok {
 					//Object mapping
-					objectExpr, err := NewObjectMapperFactory(mf.exprFactory).(*ObjectMapperFactory).NewObjectMapper(mo.Mapping)
+					objectExpr, err := NewObjectMapperFactory(mf.exprFactory).(*ObjectMapperFactory).NewObjectMapper(mapping)
 					if err != nil {
 						return nil, err
 					}
