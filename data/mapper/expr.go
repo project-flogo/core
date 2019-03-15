@@ -30,6 +30,7 @@ func (mf *ExprMapperFactory) NewMapper(mappings map[string]interface{}) (Mapper,
 			switch t := value.(type) {
 			case string:
 				if len(t) > 0 && t[0] == '=' {
+					//it's an expression
 					expr, err := mf.exprFactory.NewExpr(t[1:])
 					if err != nil {
 						return nil, err
@@ -39,21 +40,21 @@ func (mf *ExprMapperFactory) NewMapper(mappings map[string]interface{}) (Mapper,
 					exprMappings[key] = expression.NewLiteralExpr(value)
 				}
 			default:
-				if !IsLiteral(t) {
+				if mo, ok := t.(ObjectMapping); ok {
 					//Object mapping
-					objectExpr, err := NewObjectMapperFactory(mf.exprFactory).(*ObjectMapperFactory).NewObjectMapper(t)
+					objectExpr, err := NewObjectMapperFactory(mf.exprFactory).(*ObjectMapperFactory).NewObjectMapper(mo.Mapping)
 					if err != nil {
 						return nil, err
 					}
 					exprMappings[key] = objectExpr
 				} else {
 					exprMappings[key] = expression.NewLiteralExpr(value)
-
 				}
 			}
 		}
 	}
-	if len(exprMappings) <= 0 {
+
+	if len(exprMappings) == 0 {
 		return nil, nil
 	}
 
@@ -77,6 +78,8 @@ func (m *ExprMapper) Apply(inputScope data.Scope) (map[string]interface{}, error
 
 	return output, nil
 }
+
+
 
 func IsLiteral(value interface{}) bool {
 	if value != nil {
