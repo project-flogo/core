@@ -107,26 +107,38 @@ func NewRefExpr(refNode ...interface{}) (Expr, error) {
 	if err != nil {
 		return nil, err
 	}
-	//ref := strings.TrimSpace(string(expr.Lit)) //todo is trim overkill
 	return &exprRef{fields: inters}, nil
 }
 
 type exprRef struct {
-	fields []interface{}
-	res    resolve.Resolution
+	fields   []interface{}
+	resolver resolve.CompositeResolver
+	root     bool
 }
 
 func (e *exprRef) Init(resolver resolve.CompositeResolver, root bool) error {
-
-	//r, err := resolver.GetResolution(e.ref)
-	//if err != nil {
-	//	return err
-	//}
-	//
-	//e.res = r
+	e.resolver = resolver
+	e.root = root
 	return nil
 }
 
 func (e *exprRef) Eval(scope data.Scope) (interface{}, error) {
-	return e.res.GetValue(scope)
+	var ref = ""
+	for _, v := range e.fields {
+		switch t := v.(type) {
+		case *arrayIndexer:
+			indexRef, err := t.ToRef(e.resolver, e.root, scope)
+			if err != nil {
+				return nil, err
+			}
+			ref = ref + indexRef
+		case string:
+			ref = ref + t
+		}
+	}
+	r, err := e.resolver.GetResolution(ref)
+	if err != nil {
+		return nil, err
+	}
+	return r.GetValue(scope)
 }
