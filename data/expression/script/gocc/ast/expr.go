@@ -2,8 +2,6 @@ package ast
 
 import (
 	"fmt"
-	"strings"
-
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/resolve"
@@ -105,27 +103,27 @@ func (e *exprTernary) Eval(scope data.Scope) (interface{}, error) {
 }
 
 func NewRefExpr(refNode ...interface{}) (Expr, error) {
-	expr, err := Concat(refNode...)
+	inters, err := Concat(refNode...)
 	if err != nil {
 		return nil, err
 	}
-	ref := strings.TrimSpace(string(expr.Lit)) //todo is trim overkill
-	return &exprRef{ref: ref}, nil
+	//ref := strings.TrimSpace(string(expr.Lit)) //todo is trim overkill
+	return &exprRef{fields: inters}, nil
 }
 
 type exprRef struct {
-	ref string
-	res resolve.Resolution
+	fields []interface{}
+	res    resolve.Resolution
 }
 
 func (e *exprRef) Init(resolver resolve.CompositeResolver, root bool) error {
 
-	r, err := resolver.GetResolution(e.ref)
-	if err != nil {
-		return err
-	}
-
-	e.res = r
+	//r, err := resolver.GetResolution(e.ref)
+	//if err != nil {
+	//	return err
+	//}
+	//
+	//e.res = r
 	return nil
 }
 

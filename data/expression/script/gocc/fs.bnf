@@ -133,9 +133,13 @@ Literal
 
 Ref
     : selector       << ast.Concat($0) >>
-    | index          << ast.Concat($0) >>
+    | Indexer        << ast.Concat($0) >>
     | Ref selector   << ast.Concat($0, $1) >>
-    | Ref index      << ast.Concat($0, $1) >>
+    | Ref Indexer    << ast.Concat($0, $1) >>
+    ;
+Indexer
+    : index          << ast.Concat($0) >>
+    | "[" Expr "]"   << ast.ConcatIndexer($0, $1, $2) >>
     ;
 
 Args
