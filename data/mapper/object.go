@@ -42,6 +42,15 @@ const (
 	FOREACH = "@foreach"
 )
 
+type ObjectMapping struct {
+	Mapping interface{} `json:"mapping"`
+}
+
+func IsObjectMapping(value interface{}) bool {
+	_, ok := value.(*ObjectMapping)
+	return ok
+}
+
 type ObjectMapperFactory struct {
 	exprFactory expression.Factory
 }
