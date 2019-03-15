@@ -5,6 +5,7 @@ import (
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/resolve"
+	"strconv"
 )
 
 type Expr interface {
@@ -103,11 +104,11 @@ func (e *exprTernary) Eval(scope data.Scope) (interface{}, error) {
 }
 
 func NewRefExpr(refNode ...interface{}) (Expr, error) {
-	inters, err := Concat(refNode...)
+	refFields, err := Concat(refNode...)
 	if err != nil {
 		return nil, err
 	}
-	return &exprRef{fields: inters}, nil
+	return &exprRef{fields: refFields}, nil
 }
 
 type exprRef struct {
@@ -126,7 +127,7 @@ func (e *exprRef) Eval(scope data.Scope) (interface{}, error) {
 	var ref = ""
 	for _, v := range e.fields {
 		switch t := v.(type) {
-		case *arrayIndexer:
+		case *arrayIndexerExpr:
 			indexRef, err := t.ToRef(e.resolver, e.root, scope)
 			if err != nil {
 				return nil, err
@@ -141,4 +142,33 @@ func (e *exprRef) Eval(scope data.Scope) (interface{}, error) {
 		return nil, err
 	}
 	return r.GetValue(scope)
+}
+
+type arrayIndexerExpr struct {
+	expr Expr
+}
+
+func (e *arrayIndexerExpr) Init(resolver resolve.CompositeResolver, root bool) error {
+	return e.expr.Init(resolver, root)
+}
+
+func (e *arrayIndexerExpr) Eval(scope data.Scope) (interface{}, error) {
+	return e.expr.Eval(scope)
+}
+
+func (e *arrayIndexerExpr) ToRef(resolver resolve.CompositeResolver, root bool, scope data.Scope) (string, error) {
+	if err := e.Init(resolver, root); err != nil {
+		return "", nil
+	}
+
+	v, err := e.Eval(scope)
+	if err != nil {
+		return "", fmt.Errorf("eval array index expression error: %s", err.Error())
+	}
+	index, err := coerce.ToInt(v)
+	if err != nil {
+		return "", fmt.Errorf("array index [%s] must be int", v)
+	}
+
+	return "[" + strconv.Itoa(index) + "]", nil
 }
