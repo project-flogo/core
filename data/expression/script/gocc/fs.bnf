@@ -139,7 +139,7 @@ Ref
     ;
 Indexer
     : index          << ast.Concat($0) >>
-    | "[" Expr "]"   << ast.ConcatIndexer($0, $1, $2) >>
+    | "[" Fscript "]"   << ast.Indexer($1) >>
     ;
 
 Args

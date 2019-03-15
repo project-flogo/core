@@ -501,13 +501,13 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Indexer : "[" Expr "]"	<< ast.ConcatIndexer(X[0], X[1], X[2]) >>`,
+		String: `Indexer : "[" Fscript "]"	<< ast.Indexer(X[1]) >>`,
 		Id:         "Indexer",
 		NTType:     16,
 		Index:      48,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.ConcatIndexer(X[0], X[1], X[2])
+			return ast.Indexer(X[1])
 		},
 	},
 	ProdTabEntry{
