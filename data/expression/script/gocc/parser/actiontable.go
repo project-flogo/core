@@ -46,6 +46,8 @@ var actionTab = actionTable{
 			shift(27), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -85,6 +87,8 @@ var actionTab = actionTable{
 			nil,          /* ref */
 			nil,          /* selector */
 			nil,          /* index */
+			nil,          /* [ */
+			nil,          /* ] */
 			nil,          /* empty */
 			nil,          /* , */
 		},
@@ -124,6 +128,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -163,6 +169,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -202,6 +210,8 @@ var actionTab = actionTable{
 			nil,       /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -241,6 +251,8 @@ var actionTab = actionTable{
 			nil,       /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -280,6 +292,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -319,6 +333,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -358,6 +374,8 @@ var actionTab = actionTable{
 			shift(27), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -397,6 +415,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -436,6 +456,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -475,6 +497,8 @@ var actionTab = actionTable{
 			shift(27), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -514,6 +538,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -553,6 +579,8 @@ var actionTab = actionTable{
 			nil,       /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -592,6 +620,8 @@ var actionTab = actionTable{
 			shift(70), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -631,6 +661,8 @@ var actionTab = actionTable{
 			nil,       /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -670,6 +702,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -709,6 +743,8 @@ var actionTab = actionTable{
 			nil,       /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -748,6 +784,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -787,6 +825,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -826,6 +866,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -865,6 +907,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -904,6 +948,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -943,6 +989,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -982,6 +1030,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -1021,6 +1071,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -1060,6 +1112,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -1098,7 +1152,9 @@ var actionTab = actionTable{
 			nil,       /* stringLit */
 			nil,       /* ref */
 			shift(74), /* selector */
-			shift(75), /* index */
+			shift(76), /* index */
+			shift(77), /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -1138,6 +1194,8 @@ var actionTab = actionTable{
 			shift(27), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -1177,6 +1235,8 @@ var actionTab = actionTable{
 			shift(27), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -1216,6 +1276,8 @@ var actionTab = actionTable{
 			shift(27), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -1255,6 +1317,8 @@ var actionTab = actionTable{
 			shift(27), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -1294,6 +1358,8 @@ var actionTab = actionTable{
 			shift(27), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -1333,6 +1399,8 @@ var actionTab = actionTable{
 			shift(27), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -1372,6 +1440,8 @@ var actionTab = actionTable{
 			shift(27), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -1411,6 +1481,8 @@ var actionTab = actionTable{
 			shift(27), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -1450,6 +1522,8 @@ var actionTab = actionTable{
 			shift(27), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -1489,6 +1563,8 @@ var actionTab = actionTable{
 			shift(27), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -1528,6 +1604,8 @@ var actionTab = actionTable{
 			shift(27), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -1567,6 +1645,8 @@ var actionTab = actionTable{
 			shift(27), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -1606,6 +1686,8 @@ var actionTab = actionTable{
 			shift(27), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -1645,6 +1727,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -1663,27 +1747,29 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(94),  /* - */
+			shift(96),  /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(97),  /* ! */
-			shift(99),  /* ident */
-			shift(100), /* ( */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
 			nil,        /* ) */
-			shift(101), /* functionName */
+			shift(103), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(104), /* true */
-			shift(105), /* false */
-			shift(107), /* nil */
-			shift(108), /* null */
-			shift(109), /* intLit */
-			shift(110), /* floatLit */
-			shift(111), /* stringLit */
-			shift(112), /* ref */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -1723,6 +1809,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -1741,27 +1829,29 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
-			reduce(47), /* ), reduce: Args */
-			shift(126), /* functionName */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
+			reduce(49), /* ), reduce: Args */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -1771,7 +1861,7 @@ var actionTab = actionTable{
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			shift(139), /* || */
+			shift(141), /* || */
 			nil,        /* && */
 			nil,        /* == */
 			nil,        /* != */
@@ -1787,7 +1877,7 @@ var actionTab = actionTable{
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
-			shift(140), /* ) */
+			shift(142), /* ) */
 			nil,        /* functionName */
 			reduce(30), /* ?, reduce: TernaryArgument */
 			nil,        /* : */
@@ -1801,6 +1891,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -1826,7 +1918,7 @@ var actionTab = actionTable{
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
-			shift(141), /* ) */
+			shift(143), /* ) */
 			nil,        /* functionName */
 			reduce(31), /* ?, reduce: TernaryArgument */
 			nil,        /* : */
@@ -1840,6 +1932,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -1850,7 +1944,7 @@ var actionTab = actionTable{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			reduce(4),  /* ||, reduce: Expr */
-			shift(142), /* && */
+			shift(144), /* && */
 			nil,        /* == */
 			nil,        /* != */
 			nil,        /* < */
@@ -1879,6 +1973,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -1890,12 +1986,12 @@ var actionTab = actionTable{
 			nil,        /* $ */
 			reduce(6),  /* ||, reduce: Expr1 */
 			reduce(6),  /* &&, reduce: Expr1 */
-			shift(143), /* == */
-			shift(144), /* != */
-			shift(145), /* < */
-			shift(146), /* <= */
-			shift(147), /* > */
-			shift(148), /* >= */
+			shift(145), /* == */
+			shift(146), /* != */
+			shift(147), /* < */
+			shift(148), /* <= */
+			shift(149), /* > */
+			shift(150), /* >= */
 			nil,        /* + */
 			nil,        /* - */
 			nil,        /* * */
@@ -1918,6 +2014,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -1935,8 +2033,8 @@ var actionTab = actionTable{
 			reduce(13), /* <=, reduce: Expr2 */
 			reduce(13), /* >, reduce: Expr2 */
 			reduce(13), /* >=, reduce: Expr2 */
-			shift(149), /* + */
-			shift(150), /* - */
+			shift(151), /* + */
+			shift(152), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
@@ -1957,6 +2055,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -1976,9 +2076,9 @@ var actionTab = actionTable{
 			reduce(16), /* >=, reduce: Expr3 */
 			reduce(16), /* +, reduce: Expr3 */
 			reduce(16), /* -, reduce: Expr3 */
-			shift(151), /* * */
-			shift(152), /* / */
-			shift(153), /* % */
+			shift(153), /* * */
+			shift(154), /* / */
+			shift(155), /* % */
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
@@ -1996,6 +2096,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2020,7 +2122,7 @@ var actionTab = actionTable{
 			nil,        /* % */
 			shift(54),  /* ! */
 			shift(56),  /* ident */
-			shift(155), /* ( */
+			shift(157), /* ( */
 			nil,        /* ) */
 			shift(58),  /* functionName */
 			nil,        /* ? */
@@ -2035,6 +2137,8 @@ var actionTab = actionTable{
 			shift(70),  /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2074,6 +2178,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2113,6 +2219,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2137,7 +2245,7 @@ var actionTab = actionTable{
 			nil,        /* % */
 			shift(54),  /* ! */
 			shift(56),  /* ident */
-			shift(155), /* ( */
+			shift(157), /* ( */
 			nil,        /* ) */
 			shift(58),  /* functionName */
 			nil,        /* ? */
@@ -2152,6 +2260,8 @@ var actionTab = actionTable{
 			shift(70),  /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2191,6 +2301,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2215,7 +2327,7 @@ var actionTab = actionTable{
 			nil,        /* % */
 			nil,        /* ! */
 			nil,        /* ident */
-			shift(157), /* ( */
+			shift(159), /* ( */
 			nil,        /* ) */
 			nil,        /* functionName */
 			nil,        /* ? */
@@ -2230,6 +2342,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2269,6 +2383,8 @@ var actionTab = actionTable{
 			shift(70), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
@@ -2293,7 +2409,7 @@ var actionTab = actionTable{
 			nil,        /* % */
 			nil,        /* ! */
 			nil,        /* ident */
-			shift(159), /* ( */
+			shift(161), /* ( */
 			nil,        /* ) */
 			nil,        /* functionName */
 			nil,        /* ? */
@@ -2308,6 +2424,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2347,6 +2465,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2374,7 +2494,7 @@ var actionTab = actionTable{
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* functionName */
-			shift(160), /* ? */
+			shift(162), /* ? */
 			nil,        /* : */
 			nil,        /* true */
 			nil,        /* false */
@@ -2386,6 +2506,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2425,6 +2547,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2464,6 +2588,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2503,6 +2629,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2542,6 +2670,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2581,6 +2711,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2620,6 +2752,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2659,6 +2793,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2698,6 +2834,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2737,6 +2875,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2774,8 +2914,10 @@ var actionTab = actionTable{
 			nil,        /* floatLit */
 			nil,        /* stringLit */
 			nil,        /* ref */
-			shift(162), /* selector */
-			shift(163), /* index */
+			shift(164), /* selector */
+			shift(166), /* index */
+			shift(167), /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2794,27 +2936,29 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
-			reduce(47), /* ), reduce: Args */
-			shift(126), /* functionName */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
+			reduce(49), /* ), reduce: Args */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2833,27 +2977,29 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(171), /* - */
+			shift(175), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(174), /* ! */
-			shift(176), /* ident */
-			shift(177), /* ( */
+			shift(178), /* ! */
+			shift(180), /* ident */
+			shift(181), /* ( */
 			nil,        /* ) */
-			shift(178), /* functionName */
+			shift(182), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(182), /* true */
-			shift(183), /* false */
-			shift(185), /* nil */
-			shift(186), /* null */
-			shift(187), /* intLit */
-			shift(188), /* floatLit */
-			shift(189), /* stringLit */
-			shift(190), /* ref */
+			shift(186), /* true */
+			shift(187), /* false */
+			shift(189), /* nil */
+			shift(190), /* null */
+			shift(191), /* intLit */
+			shift(192), /* floatLit */
+			shift(193), /* stringLit */
+			shift(194), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2891,8 +3037,10 @@ var actionTab = actionTable{
 			nil,        /* floatLit */
 			nil,        /* stringLit */
 			nil,        /* ref */
-			shift(191), /* selector */
-			shift(192), /* index */
+			shift(195), /* selector */
+			shift(76),  /* index */
+			shift(77),  /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2932,6 +3080,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			reduce(43), /* selector, reduce: Ref */
 			reduce(43), /* index, reduce: Ref */
+			reduce(43), /* [, reduce: Ref */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -2971,11 +3121,95 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			reduce(44), /* selector, reduce: Ref */
 			reduce(44), /* index, reduce: Ref */
+			reduce(44), /* [, reduce: Ref */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
 	actionRow{ // S76
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			reduce(47), /* $, reduce: Indexer */
+			reduce(47), /* ||, reduce: Indexer */
+			reduce(47), /* &&, reduce: Indexer */
+			reduce(47), /* ==, reduce: Indexer */
+			reduce(47), /* !=, reduce: Indexer */
+			reduce(47), /* <, reduce: Indexer */
+			reduce(47), /* <=, reduce: Indexer */
+			reduce(47), /* >, reduce: Indexer */
+			reduce(47), /* >=, reduce: Indexer */
+			reduce(47), /* +, reduce: Indexer */
+			reduce(47), /* -, reduce: Indexer */
+			reduce(47), /* *, reduce: Indexer */
+			reduce(47), /* /, reduce: Indexer */
+			reduce(47), /* %, reduce: Indexer */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			reduce(47), /* ?, reduce: Indexer */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			reduce(47), /* selector, reduce: Indexer */
+			reduce(47), /* index, reduce: Indexer */
+			reduce(47), /* [, reduce: Indexer */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S77
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(202), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
+			nil,        /* ) */
+			shift(209), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S78
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,       /* INVALID */
@@ -3010,11 +3244,13 @@ var actionTab = actionTable{
 			nil,       /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
 	},
-	actionRow{ // S77
+	actionRow{ // S79
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,       /* INVALID */
@@ -3049,11 +3285,13 @@ var actionTab = actionTable{
 			nil,       /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
 	},
-	actionRow{ // S78
+	actionRow{ // S80
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,       /* INVALID */
@@ -3088,11 +3326,13 @@ var actionTab = actionTable{
 			nil,       /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
 	},
-	actionRow{ // S79
+	actionRow{ // S81
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,       /* INVALID */
@@ -3127,11 +3367,13 @@ var actionTab = actionTable{
 			nil,       /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
 	},
-	actionRow{ // S80
+	actionRow{ // S82
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,       /* INVALID */
@@ -3166,11 +3408,13 @@ var actionTab = actionTable{
 			nil,       /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
 	},
-	actionRow{ // S81
+	actionRow{ // S83
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -3205,11 +3449,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S82
+	actionRow{ // S84
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -3244,11 +3490,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S83
+	actionRow{ // S85
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -3283,11 +3531,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S84
+	actionRow{ // S86
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -3322,11 +3572,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S85
+	actionRow{ // S87
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -3361,11 +3613,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S86
+	actionRow{ // S88
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -3400,11 +3654,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S87
+	actionRow{ // S89
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -3439,11 +3695,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S88
+	actionRow{ // S90
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -3478,16 +3736,18 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S89
+	actionRow{ // S91
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			shift(193), /* || */
+			shift(221), /* || */
 			nil,        /* && */
 			nil,        /* == */
 			nil,        /* != */
@@ -3503,7 +3763,7 @@ var actionTab = actionTable{
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
-			shift(140), /* ) */
+			shift(142), /* ) */
 			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
@@ -3517,17 +3777,19 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S90
+	actionRow{ // S92
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			reduce(4),  /* ||, reduce: Expr */
-			shift(194), /* && */
+			shift(222), /* && */
 			nil,        /* == */
 			nil,        /* != */
 			nil,        /* < */
@@ -3556,23 +3818,25 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S91
+	actionRow{ // S93
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			reduce(6),  /* ||, reduce: Expr1 */
 			reduce(6),  /* &&, reduce: Expr1 */
-			shift(195), /* == */
-			shift(196), /* != */
-			shift(197), /* < */
-			shift(198), /* <= */
-			shift(199), /* > */
-			shift(200), /* >= */
+			shift(223), /* == */
+			shift(224), /* != */
+			shift(225), /* < */
+			shift(226), /* <= */
+			shift(227), /* > */
+			shift(228), /* >= */
 			nil,        /* + */
 			nil,        /* - */
 			nil,        /* * */
@@ -3595,11 +3859,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S92
+	actionRow{ // S94
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -3612,8 +3878,8 @@ var actionTab = actionTable{
 			reduce(13), /* <=, reduce: Expr2 */
 			reduce(13), /* >, reduce: Expr2 */
 			reduce(13), /* >=, reduce: Expr2 */
-			shift(201), /* + */
-			shift(202), /* - */
+			shift(229), /* + */
+			shift(230), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
@@ -3634,11 +3900,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S93
+	actionRow{ // S95
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -3653,9 +3921,9 @@ var actionTab = actionTable{
 			reduce(16), /* >=, reduce: Expr3 */
 			reduce(16), /* +, reduce: Expr3 */
 			reduce(16), /* -, reduce: Expr3 */
-			shift(203), /* * */
-			shift(204), /* / */
-			shift(205), /* % */
+			shift(231), /* * */
+			shift(232), /* / */
+			shift(233), /* % */
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
@@ -3673,11 +3941,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S94
+	actionRow{ // S96
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -3691,32 +3961,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(94),  /* - */
+			shift(96),  /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(97),  /* ! */
-			shift(99),  /* ident */
-			shift(100), /* ( */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
 			nil,        /* ) */
-			shift(101), /* functionName */
+			shift(103), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(104), /* true */
-			shift(105), /* false */
-			shift(107), /* nil */
-			shift(108), /* null */
-			shift(109), /* intLit */
-			shift(110), /* floatLit */
-			shift(111), /* stringLit */
-			shift(112), /* ref */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S95
+	actionRow{ // S97
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -3751,11 +4023,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S96
+	actionRow{ // S98
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -3790,11 +4064,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S97
+	actionRow{ // S99
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -3808,32 +4084,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(94),  /* - */
+			shift(96),  /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(97),  /* ! */
-			shift(99),  /* ident */
-			shift(100), /* ( */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
 			nil,        /* ) */
-			shift(101), /* functionName */
+			shift(103), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(104), /* true */
-			shift(105), /* false */
-			shift(107), /* nil */
-			shift(108), /* null */
-			shift(109), /* intLit */
-			shift(110), /* floatLit */
-			shift(111), /* stringLit */
-			shift(112), /* ref */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S98
+	actionRow{ // S100
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -3868,84 +4146,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S99
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			nil,        /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			shift(208), /* ( */
-			nil,        /* ) */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S100
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			shift(94),  /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			shift(97),  /* ! */
-			shift(99),  /* ident */
-			shift(100), /* ( */
-			nil,        /* ) */
-			shift(101), /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			shift(104), /* true */
-			shift(105), /* false */
-			shift(107), /* nil */
-			shift(108), /* null */
-			shift(109), /* intLit */
-			shift(110), /* floatLit */
-			shift(111), /* stringLit */
-			shift(112), /* ref */
-			nil,        /* selector */
-			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -3970,7 +4172,7 @@ var actionTab = actionTable{
 			nil,        /* % */
 			nil,        /* ! */
 			nil,        /* ident */
-			shift(210), /* ( */
+			shift(236), /* ( */
 			nil,        /* ) */
 			nil,        /* functionName */
 			nil,        /* ? */
@@ -3985,11 +4187,95 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
 	actionRow{ // S102
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(96),  /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
+			nil,        /* ) */
+			shift(103), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S103
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			shift(238), /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S104
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -4024,11 +4310,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S103
+	actionRow{ // S105
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -4063,11 +4351,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S104
+	actionRow{ // S106
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -4102,11 +4392,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S105
+	actionRow{ // S107
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -4141,11 +4433,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S106
+	actionRow{ // S108
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -4180,11 +4474,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S107
+	actionRow{ // S109
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -4219,11 +4515,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S108
+	actionRow{ // S110
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -4258,11 +4556,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S109
+	actionRow{ // S111
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -4297,11 +4597,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S110
+	actionRow{ // S112
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -4336,11 +4638,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S111
+	actionRow{ // S113
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -4375,11 +4679,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S112
+	actionRow{ // S114
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -4412,18 +4718,20 @@ var actionTab = actionTable{
 			nil,        /* floatLit */
 			nil,        /* stringLit */
 			nil,        /* ref */
-			shift(212), /* selector */
-			shift(213), /* index */
+			shift(240), /* selector */
+			shift(242), /* index */
+			shift(243), /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S113
+	actionRow{ // S115
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			shift(214), /* || */
+			shift(244), /* || */
 			nil,        /* && */
 			nil,        /* == */
 			nil,        /* != */
@@ -4439,7 +4747,7 @@ var actionTab = actionTable{
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
-			reduce(49), /* ), reduce: ExprList */
+			reduce(51), /* ), reduce: ExprList */
 			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
@@ -4453,17 +4761,19 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
-			reduce(49), /* ,, reduce: ExprList */
+			reduce(51), /* ,, reduce: ExprList */
 		},
 	},
-	actionRow{ // S114
+	actionRow{ // S116
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			reduce(4),  /* ||, reduce: Expr */
-			shift(215), /* && */
+			shift(245), /* && */
 			nil,        /* == */
 			nil,        /* != */
 			nil,        /* < */
@@ -4492,23 +4802,25 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(4),  /* ,, reduce: Expr */
 		},
 	},
-	actionRow{ // S115
+	actionRow{ // S117
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			reduce(6),  /* ||, reduce: Expr1 */
 			reduce(6),  /* &&, reduce: Expr1 */
-			shift(216), /* == */
-			shift(217), /* != */
-			shift(218), /* < */
-			shift(219), /* <= */
-			shift(220), /* > */
-			shift(221), /* >= */
+			shift(246), /* == */
+			shift(247), /* != */
+			shift(248), /* < */
+			shift(249), /* <= */
+			shift(250), /* > */
+			shift(251), /* >= */
 			nil,        /* + */
 			nil,        /* - */
 			nil,        /* * */
@@ -4531,11 +4843,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(6),  /* ,, reduce: Expr1 */
 		},
 	},
-	actionRow{ // S116
+	actionRow{ // S118
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -4548,8 +4862,8 @@ var actionTab = actionTable{
 			reduce(13), /* <=, reduce: Expr2 */
 			reduce(13), /* >, reduce: Expr2 */
 			reduce(13), /* >=, reduce: Expr2 */
-			shift(222), /* + */
-			shift(223), /* - */
+			shift(252), /* + */
+			shift(253), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
@@ -4570,11 +4884,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(13), /* ,, reduce: Expr2 */
 		},
 	},
-	actionRow{ // S117
+	actionRow{ // S119
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -4589,9 +4905,9 @@ var actionTab = actionTable{
 			reduce(16), /* >=, reduce: Expr3 */
 			reduce(16), /* +, reduce: Expr3 */
 			reduce(16), /* -, reduce: Expr3 */
-			shift(224), /* * */
-			shift(225), /* / */
-			shift(226), /* % */
+			shift(254), /* * */
+			shift(255), /* / */
+			shift(256), /* % */
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
@@ -4609,11 +4925,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(16), /* ,, reduce: Expr3 */
 		},
 	},
-	actionRow{ // S118
+	actionRow{ // S120
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -4627,32 +4945,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
 			nil,        /* ) */
-			shift(126), /* functionName */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S119
+	actionRow{ // S121
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -4687,11 +5007,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(20), /* ,, reduce: Expr4 */
 		},
 	},
-	actionRow{ // S120
+	actionRow{ // S122
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -4726,11 +5048,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(21), /* ,, reduce: Expr5 */
 		},
 	},
-	actionRow{ // S121
+	actionRow{ // S123
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -4744,32 +5068,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
 			nil,        /* ) */
-			shift(126), /* functionName */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S122
+	actionRow{ // S124
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -4804,86 +5130,10 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(24), /* ,, reduce: Expr6 */
-		},
-	},
-	actionRow{ // S123
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			nil,        /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			shift(229), /* ( */
-			nil,        /* ) */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S124
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			shift(94),  /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			shift(97),  /* ! */
-			shift(99),  /* ident */
-			shift(100), /* ( */
-			nil,        /* ) */
-			shift(101), /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			shift(104), /* true */
-			shift(105), /* false */
-			shift(107), /* nil */
-			shift(108), /* null */
-			shift(109), /* intLit */
-			shift(110), /* floatLit */
-			shift(111), /* stringLit */
-			shift(112), /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
 		},
 	},
 	actionRow{ // S125
@@ -4906,8 +5156,8 @@ var actionTab = actionTable{
 			nil,        /* % */
 			nil,        /* ! */
 			nil,        /* ident */
-			nil,        /* ( */
-			shift(231), /* ) */
+			shift(259), /* ( */
+			nil,        /* ) */
 			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
@@ -4921,11 +5171,54 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
 	actionRow{ // S126
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(96),  /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
+			nil,        /* ) */
+			shift(103), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S127
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -4945,7 +5238,48 @@ var actionTab = actionTable{
 			nil,        /* % */
 			nil,        /* ! */
 			nil,        /* ident */
-			shift(232), /* ( */
+			nil,        /* ( */
+			shift(261), /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S128
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			shift(262), /* ( */
 			nil,        /* ) */
 			nil,        /* functionName */
 			nil,        /* ? */
@@ -4960,11 +5294,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S127
+	actionRow{ // S129
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -4999,11 +5335,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(27), /* ,, reduce: PrimaryExpr */
 		},
 	},
-	actionRow{ // S128
+	actionRow{ // S130
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -5038,11 +5376,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(40), /* ,, reduce: Literal */
 		},
 	},
-	actionRow{ // S129
+	actionRow{ // S131
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -5077,11 +5417,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(33), /* ,, reduce: BoolLit */
 		},
 	},
-	actionRow{ // S130
+	actionRow{ // S132
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -5116,11 +5458,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(34), /* ,, reduce: BoolLit */
 		},
 	},
-	actionRow{ // S131
+	actionRow{ // S133
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -5155,11 +5499,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(41), /* ,, reduce: Literal */
 		},
 	},
-	actionRow{ // S132
+	actionRow{ // S134
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -5194,11 +5540,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(35), /* ,, reduce: NilLit */
 		},
 	},
-	actionRow{ // S133
+	actionRow{ // S135
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -5233,11 +5581,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(36), /* ,, reduce: NilLit */
 		},
 	},
-	actionRow{ // S134
+	actionRow{ // S136
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -5272,11 +5622,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(37), /* ,, reduce: Literal */
 		},
 	},
-	actionRow{ // S135
+	actionRow{ // S137
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -5311,11 +5663,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(38), /* ,, reduce: Literal */
 		},
 	},
-	actionRow{ // S136
+	actionRow{ // S138
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -5350,11 +5704,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(39), /* ,, reduce: Literal */
 		},
 	},
-	actionRow{ // S137
+	actionRow{ // S139
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -5387,13 +5743,15 @@ var actionTab = actionTable{
 			nil,        /* floatLit */
 			nil,        /* stringLit */
 			nil,        /* ref */
-			shift(234), /* selector */
-			shift(235), /* index */
+			shift(264), /* selector */
+			shift(266), /* index */
+			shift(267), /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S138
+	actionRow{ // S140
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -5414,7 +5772,7 @@ var actionTab = actionTable{
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
-			reduce(48), /* ), reduce: Args */
+			reduce(50), /* ), reduce: Args */
 			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
@@ -5428,11 +5786,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
-			shift(236), /* , */
+			shift(268), /* , */
 		},
 	},
-	actionRow{ // S139
+	actionRow{ // S141
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -5452,7 +5812,7 @@ var actionTab = actionTable{
 			nil,        /* % */
 			shift(54),  /* ! */
 			shift(56),  /* ident */
-			shift(155), /* ( */
+			shift(157), /* ( */
 			nil,        /* ) */
 			shift(58),  /* functionName */
 			nil,        /* ? */
@@ -5467,11 +5827,13 @@ var actionTab = actionTable{
 			shift(70),  /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S140
+	actionRow{ // S142
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -5506,11 +5868,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S141
+	actionRow{ // S143
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -5545,84 +5909,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S142
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			shift(51),  /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			shift(54),  /* ! */
-			shift(56),  /* ident */
-			shift(155), /* ( */
-			nil,        /* ) */
-			shift(58),  /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			shift(62),  /* true */
-			shift(63),  /* false */
-			shift(65),  /* nil */
-			shift(66),  /* null */
-			shift(67),  /* intLit */
-			shift(68),  /* floatLit */
-			shift(69),  /* stringLit */
-			shift(70),  /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S143
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			shift(51),  /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			shift(54),  /* ! */
-			shift(56),  /* ident */
-			shift(155), /* ( */
-			nil,        /* ) */
-			shift(58),  /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			shift(62),  /* true */
-			shift(63),  /* false */
-			shift(65),  /* nil */
-			shift(66),  /* null */
-			shift(67),  /* intLit */
-			shift(68),  /* floatLit */
-			shift(69),  /* stringLit */
-			shift(70),  /* ref */
-			nil,        /* selector */
-			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -5647,7 +5935,7 @@ var actionTab = actionTable{
 			nil,        /* % */
 			shift(54),  /* ! */
 			shift(56),  /* ident */
-			shift(155), /* ( */
+			shift(157), /* ( */
 			nil,        /* ) */
 			shift(58),  /* functionName */
 			nil,        /* ? */
@@ -5662,6 +5950,8 @@ var actionTab = actionTable{
 			shift(70),  /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -5686,7 +5976,7 @@ var actionTab = actionTable{
 			nil,        /* % */
 			shift(54),  /* ! */
 			shift(56),  /* ident */
-			shift(155), /* ( */
+			shift(157), /* ( */
 			nil,        /* ) */
 			shift(58),  /* functionName */
 			nil,        /* ? */
@@ -5701,6 +5991,8 @@ var actionTab = actionTable{
 			shift(70),  /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -5725,7 +6017,7 @@ var actionTab = actionTable{
 			nil,        /* % */
 			shift(54),  /* ! */
 			shift(56),  /* ident */
-			shift(155), /* ( */
+			shift(157), /* ( */
 			nil,        /* ) */
 			shift(58),  /* functionName */
 			nil,        /* ? */
@@ -5740,6 +6032,8 @@ var actionTab = actionTable{
 			shift(70),  /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -5764,7 +6058,7 @@ var actionTab = actionTable{
 			nil,        /* % */
 			shift(54),  /* ! */
 			shift(56),  /* ident */
-			shift(155), /* ( */
+			shift(157), /* ( */
 			nil,        /* ) */
 			shift(58),  /* functionName */
 			nil,        /* ? */
@@ -5779,6 +6073,8 @@ var actionTab = actionTable{
 			shift(70),  /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -5803,7 +6099,7 @@ var actionTab = actionTable{
 			nil,        /* % */
 			shift(54),  /* ! */
 			shift(56),  /* ident */
-			shift(155), /* ( */
+			shift(157), /* ( */
 			nil,        /* ) */
 			shift(58),  /* functionName */
 			nil,        /* ? */
@@ -5818,6 +6114,8 @@ var actionTab = actionTable{
 			shift(70),  /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -5842,7 +6140,7 @@ var actionTab = actionTable{
 			nil,        /* % */
 			shift(54),  /* ! */
 			shift(56),  /* ident */
-			shift(155), /* ( */
+			shift(157), /* ( */
 			nil,        /* ) */
 			shift(58),  /* functionName */
 			nil,        /* ? */
@@ -5857,6 +6155,8 @@ var actionTab = actionTable{
 			shift(70),  /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -5881,7 +6181,7 @@ var actionTab = actionTable{
 			nil,        /* % */
 			shift(54),  /* ! */
 			shift(56),  /* ident */
-			shift(155), /* ( */
+			shift(157), /* ( */
 			nil,        /* ) */
 			shift(58),  /* functionName */
 			nil,        /* ? */
@@ -5896,6 +6196,8 @@ var actionTab = actionTable{
 			shift(70),  /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -5920,7 +6222,7 @@ var actionTab = actionTable{
 			nil,        /* % */
 			shift(54),  /* ! */
 			shift(56),  /* ident */
-			shift(155), /* ( */
+			shift(157), /* ( */
 			nil,        /* ) */
 			shift(58),  /* functionName */
 			nil,        /* ? */
@@ -5935,6 +6237,8 @@ var actionTab = actionTable{
 			shift(70),  /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -5959,7 +6263,7 @@ var actionTab = actionTable{
 			nil,        /* % */
 			shift(54),  /* ! */
 			shift(56),  /* ident */
-			shift(155), /* ( */
+			shift(157), /* ( */
 			nil,        /* ) */
 			shift(58),  /* functionName */
 			nil,        /* ? */
@@ -5974,6 +6278,8 @@ var actionTab = actionTable{
 			shift(70),  /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -5998,7 +6304,7 @@ var actionTab = actionTable{
 			nil,        /* % */
 			shift(54),  /* ! */
 			shift(56),  /* ident */
-			shift(155), /* ( */
+			shift(157), /* ( */
 			nil,        /* ) */
 			shift(58),  /* functionName */
 			nil,        /* ? */
@@ -6013,11 +6319,95 @@ var actionTab = actionTable{
 			shift(70),  /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
 	actionRow{ // S154
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(51),  /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(54),  /* ! */
+			shift(56),  /* ident */
+			shift(157), /* ( */
+			nil,        /* ) */
+			shift(58),  /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(62),  /* true */
+			shift(63),  /* false */
+			shift(65),  /* nil */
+			shift(66),  /* null */
+			shift(67),  /* intLit */
+			shift(68),  /* floatLit */
+			shift(69),  /* stringLit */
+			shift(70),  /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S155
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(51),  /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(54),  /* ! */
+			shift(56),  /* ident */
+			shift(157), /* ( */
+			nil,        /* ) */
+			shift(58),  /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(62),  /* true */
+			shift(63),  /* false */
+			shift(65),  /* nil */
+			shift(66),  /* null */
+			shift(67),  /* intLit */
+			shift(68),  /* floatLit */
+			shift(69),  /* stringLit */
+			shift(70),  /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S156
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -6052,11 +6442,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S155
+	actionRow{ // S157
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -6070,32 +6462,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(94),  /* - */
+			shift(96),  /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(97),  /* ! */
-			shift(99),  /* ident */
-			shift(100), /* ( */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
 			nil,        /* ) */
-			shift(101), /* functionName */
+			shift(103), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(104), /* true */
-			shift(105), /* false */
-			shift(107), /* nil */
-			shift(108), /* null */
-			shift(109), /* intLit */
-			shift(110), /* floatLit */
-			shift(111), /* stringLit */
-			shift(112), /* ref */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S156
+	actionRow{ // S158
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -6130,84 +6524,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S157
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			shift(118), /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
-			reduce(47), /* ), reduce: Args */
-			shift(126), /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S158
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			shift(139), /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			nil,        /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			shift(252), /* ) */
-			nil,        /* functionName */
-			reduce(30), /* ?, reduce: TernaryArgument */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -6226,32 +6544,75 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
-			reduce(47), /* ), reduce: Args */
-			shift(126), /* functionName */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
+			reduce(49), /* ), reduce: Args */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
 	actionRow{ // S160
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			shift(141), /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			shift(284), /* ) */
+			nil,        /* functionName */
+			reduce(30), /* ?, reduce: TernaryArgument */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S161
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -6265,32 +6626,75 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(171), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(174), /* ! */
-			shift(176), /* ident */
-			shift(177), /* ( */
-			nil,        /* ) */
-			shift(178), /* functionName */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
+			reduce(49), /* ), reduce: Args */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(182), /* true */
-			shift(183), /* false */
-			shift(185), /* nil */
-			shift(186), /* null */
-			shift(187), /* intLit */
-			shift(188), /* floatLit */
-			shift(189), /* stringLit */
-			shift(190), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S161
+	actionRow{ // S162
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(175), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(178), /* ! */
+			shift(180), /* ident */
+			shift(181), /* ( */
+			nil,        /* ) */
+			shift(182), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(186), /* true */
+			shift(187), /* false */
+			shift(189), /* nil */
+			shift(190), /* null */
+			shift(191), /* intLit */
+			shift(192), /* floatLit */
+			shift(193), /* stringLit */
+			shift(194), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S163
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -6323,13 +6727,15 @@ var actionTab = actionTable{
 			nil,        /* floatLit */
 			nil,        /* stringLit */
 			nil,        /* ref */
-			shift(255), /* selector */
-			shift(256), /* index */
+			shift(287), /* selector */
+			shift(166), /* index */
+			shift(167), /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S162
+	actionRow{ // S164
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -6364,11 +6770,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			reduce(43), /* selector, reduce: Ref */
 			reduce(43), /* index, reduce: Ref */
+			reduce(43), /* [, reduce: Ref */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S163
+	actionRow{ // S165
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -6403,11 +6811,95 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			reduce(44), /* selector, reduce: Ref */
 			reduce(44), /* index, reduce: Ref */
+			reduce(44), /* [, reduce: Ref */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S164
+	actionRow{ // S166
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(47), /* ||, reduce: Indexer */
+			reduce(47), /* &&, reduce: Indexer */
+			reduce(47), /* ==, reduce: Indexer */
+			reduce(47), /* !=, reduce: Indexer */
+			reduce(47), /* <, reduce: Indexer */
+			reduce(47), /* <=, reduce: Indexer */
+			reduce(47), /* >, reduce: Indexer */
+			reduce(47), /* >=, reduce: Indexer */
+			reduce(47), /* +, reduce: Indexer */
+			reduce(47), /* -, reduce: Indexer */
+			reduce(47), /* *, reduce: Indexer */
+			reduce(47), /* /, reduce: Indexer */
+			reduce(47), /* %, reduce: Indexer */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(47), /* ), reduce: Indexer */
+			nil,        /* functionName */
+			reduce(47), /* ?, reduce: Indexer */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			reduce(47), /* selector, reduce: Indexer */
+			reduce(47), /* index, reduce: Indexer */
+			reduce(47), /* [, reduce: Indexer */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S167
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(202), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
+			nil,        /* ) */
+			shift(209), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S168
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -6428,7 +6920,7 @@ var actionTab = actionTable{
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
-			shift(257), /* ) */
+			shift(290), /* ) */
 			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
@@ -6442,16 +6934,18 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S165
+	actionRow{ // S169
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			shift(258), /* || */
+			shift(291), /* || */
 			nil,        /* && */
 			nil,        /* == */
 			nil,        /* != */
@@ -6481,11 +6975,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S166
+	actionRow{ // S170
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -6520,17 +7016,19 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S167
+	actionRow{ // S171
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			reduce(4),  /* ||, reduce: Expr */
-			shift(259), /* && */
+			shift(292), /* && */
 			nil,        /* == */
 			nil,        /* != */
 			nil,        /* < */
@@ -6559,23 +7057,25 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S168
+	actionRow{ // S172
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			reduce(6),  /* ||, reduce: Expr1 */
 			reduce(6),  /* &&, reduce: Expr1 */
-			shift(260), /* == */
-			shift(261), /* != */
-			shift(262), /* < */
-			shift(263), /* <= */
-			shift(264), /* > */
-			shift(265), /* >= */
+			shift(293), /* == */
+			shift(294), /* != */
+			shift(295), /* < */
+			shift(296), /* <= */
+			shift(297), /* > */
+			shift(298), /* >= */
 			nil,        /* + */
 			nil,        /* - */
 			nil,        /* * */
@@ -6598,11 +7098,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S169
+	actionRow{ // S173
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -6615,8 +7117,8 @@ var actionTab = actionTable{
 			reduce(13), /* <=, reduce: Expr2 */
 			reduce(13), /* >, reduce: Expr2 */
 			reduce(13), /* >=, reduce: Expr2 */
-			shift(266), /* + */
-			shift(267), /* - */
+			shift(299), /* + */
+			shift(300), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
@@ -6637,11 +7139,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S170
+	actionRow{ // S174
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -6656,9 +7160,9 @@ var actionTab = actionTable{
 			reduce(16), /* >=, reduce: Expr3 */
 			reduce(16), /* +, reduce: Expr3 */
 			reduce(16), /* -, reduce: Expr3 */
-			shift(268), /* * */
-			shift(269), /* / */
-			shift(270), /* % */
+			shift(301), /* * */
+			shift(302), /* / */
+			shift(303), /* % */
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
@@ -6676,11 +7180,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S171
+	actionRow{ // S175
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -6694,32 +7200,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(171), /* - */
+			shift(175), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(174), /* ! */
-			shift(176), /* ident */
-			shift(272), /* ( */
+			shift(178), /* ! */
+			shift(180), /* ident */
+			shift(305), /* ( */
 			nil,        /* ) */
-			shift(178), /* functionName */
+			shift(182), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(182), /* true */
-			shift(183), /* false */
-			shift(185), /* nil */
-			shift(186), /* null */
-			shift(187), /* intLit */
-			shift(188), /* floatLit */
-			shift(189), /* stringLit */
-			shift(190), /* ref */
+			shift(186), /* true */
+			shift(187), /* false */
+			shift(189), /* nil */
+			shift(190), /* null */
+			shift(191), /* intLit */
+			shift(192), /* floatLit */
+			shift(193), /* stringLit */
+			shift(194), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S172
+	actionRow{ // S176
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -6754,11 +7262,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S173
+	actionRow{ // S177
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -6793,11 +7303,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S174
+	actionRow{ // S178
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -6811,32 +7323,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(171), /* - */
+			shift(175), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(174), /* ! */
-			shift(176), /* ident */
-			shift(272), /* ( */
+			shift(178), /* ! */
+			shift(180), /* ident */
+			shift(305), /* ( */
 			nil,        /* ) */
-			shift(178), /* functionName */
+			shift(182), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(182), /* true */
-			shift(183), /* false */
-			shift(185), /* nil */
-			shift(186), /* null */
-			shift(187), /* intLit */
-			shift(188), /* floatLit */
-			shift(189), /* stringLit */
-			shift(190), /* ref */
+			shift(186), /* true */
+			shift(187), /* false */
+			shift(189), /* nil */
+			shift(190), /* null */
+			shift(191), /* intLit */
+			shift(192), /* floatLit */
+			shift(193), /* stringLit */
+			shift(194), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S175
+	actionRow{ // S179
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -6871,11 +7385,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S176
+	actionRow{ // S180
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -6895,7 +7411,7 @@ var actionTab = actionTable{
 			nil,        /* % */
 			nil,        /* ! */
 			nil,        /* ident */
-			shift(274), /* ( */
+			shift(307), /* ( */
 			nil,        /* ) */
 			nil,        /* functionName */
 			nil,        /* ? */
@@ -6910,11 +7426,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S177
+	actionRow{ // S181
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,       /* INVALID */
@@ -6949,11 +7467,13 @@ var actionTab = actionTable{
 			shift(70), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
 	},
-	actionRow{ // S178
+	actionRow{ // S182
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -6973,7 +7493,7 @@ var actionTab = actionTable{
 			nil,        /* % */
 			nil,        /* ! */
 			nil,        /* ident */
-			shift(277), /* ( */
+			shift(310), /* ( */
 			nil,        /* ) */
 			nil,        /* functionName */
 			nil,        /* ? */
@@ -6988,11 +7508,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S179
+	actionRow{ // S183
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -7027,11 +7549,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S180
+	actionRow{ // S184
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -7054,8 +7578,8 @@ var actionTab = actionTable{
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* functionName */
-			shift(278), /* ? */
-			shift(279), /* : */
+			shift(311), /* ? */
+			shift(312), /* : */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* nil */
@@ -7066,11 +7590,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S181
+	actionRow{ // S185
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -7105,11 +7631,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S182
+	actionRow{ // S186
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -7144,11 +7672,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S183
+	actionRow{ // S187
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -7183,11 +7713,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S184
+	actionRow{ // S188
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -7222,11 +7754,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S185
+	actionRow{ // S189
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -7261,11 +7795,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S186
+	actionRow{ // S190
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -7300,11 +7836,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S187
+	actionRow{ // S191
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -7339,11 +7877,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S188
+	actionRow{ // S192
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -7378,11 +7918,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S189
+	actionRow{ // S193
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -7417,11 +7959,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S190
+	actionRow{ // S194
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -7454,13 +7998,15 @@ var actionTab = actionTable{
 			nil,        /* floatLit */
 			nil,        /* stringLit */
 			nil,        /* ref */
-			shift(281), /* selector */
-			shift(282), /* index */
+			shift(314), /* selector */
+			shift(316), /* index */
+			shift(317), /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S191
+	actionRow{ // S195
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -7495,11 +8041,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			reduce(45), /* selector, reduce: Ref */
 			reduce(45), /* index, reduce: Ref */
+			reduce(45), /* [, reduce: Ref */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S192
+	actionRow{ // S196
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -7534,162 +8082,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			reduce(46), /* selector, reduce: Ref */
 			reduce(46), /* index, reduce: Ref */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S193
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			shift(94),  /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			shift(97),  /* ! */
-			shift(99),  /* ident */
-			shift(100), /* ( */
-			nil,        /* ) */
-			shift(101), /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			shift(104), /* true */
-			shift(105), /* false */
-			shift(107), /* nil */
-			shift(108), /* null */
-			shift(109), /* intLit */
-			shift(110), /* floatLit */
-			shift(111), /* stringLit */
-			shift(112), /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S194
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			shift(94),  /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			shift(97),  /* ! */
-			shift(99),  /* ident */
-			shift(100), /* ( */
-			nil,        /* ) */
-			shift(101), /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			shift(104), /* true */
-			shift(105), /* false */
-			shift(107), /* nil */
-			shift(108), /* null */
-			shift(109), /* intLit */
-			shift(110), /* floatLit */
-			shift(111), /* stringLit */
-			shift(112), /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S195
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			shift(94),  /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			shift(97),  /* ! */
-			shift(99),  /* ident */
-			shift(100), /* ( */
-			nil,        /* ) */
-			shift(101), /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			shift(104), /* true */
-			shift(105), /* false */
-			shift(107), /* nil */
-			shift(108), /* null */
-			shift(109), /* intLit */
-			shift(110), /* floatLit */
-			shift(111), /* stringLit */
-			shift(112), /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S196
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			shift(94),  /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			shift(97),  /* ! */
-			shift(99),  /* ident */
-			shift(100), /* ( */
-			nil,        /* ) */
-			shift(101), /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			shift(104), /* true */
-			shift(105), /* false */
-			shift(107), /* nil */
-			shift(108), /* null */
-			shift(109), /* intLit */
-			shift(110), /* floatLit */
-			shift(111), /* stringLit */
-			shift(112), /* ref */
-			nil,        /* selector */
-			nil,        /* index */
+			reduce(46), /* [, reduce: Ref */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -7699,7 +8093,7 @@ var actionTab = actionTable{
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			nil,        /* || */
+			shift(318), /* || */
 			nil,        /* && */
 			nil,        /* == */
 			nil,        /* != */
@@ -7708,27 +8102,29 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(94),  /* - */
+			nil,        /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(97),  /* ! */
-			shift(99),  /* ident */
-			shift(100), /* ( */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
 			nil,        /* ) */
-			shift(101), /* functionName */
+			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(104), /* true */
-			shift(105), /* false */
-			shift(107), /* nil */
-			shift(108), /* null */
-			shift(109), /* intLit */
-			shift(110), /* floatLit */
-			shift(111), /* stringLit */
-			shift(112), /* ref */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			shift(319), /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -7738,8 +8134,8 @@ var actionTab = actionTable{
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
+			reduce(4),  /* ||, reduce: Expr */
+			shift(320), /* && */
 			nil,        /* == */
 			nil,        /* != */
 			nil,        /* < */
@@ -7747,27 +8143,29 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(94),  /* - */
+			nil,        /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(97),  /* ! */
-			shift(99),  /* ident */
-			shift(100), /* ( */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
 			nil,        /* ) */
-			shift(101), /* functionName */
+			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(104), /* true */
-			shift(105), /* false */
-			shift(107), /* nil */
-			shift(108), /* null */
-			shift(109), /* intLit */
-			shift(110), /* floatLit */
-			shift(111), /* stringLit */
-			shift(112), /* ref */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			reduce(4),  /* ], reduce: Expr */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -7777,36 +8175,38 @@ var actionTab = actionTable{
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
+			reduce(6),  /* ||, reduce: Expr1 */
+			reduce(6),  /* &&, reduce: Expr1 */
+			shift(321), /* == */
+			shift(322), /* != */
+			shift(323), /* < */
+			shift(324), /* <= */
+			shift(325), /* > */
+			shift(326), /* >= */
 			nil,        /* + */
-			shift(94),  /* - */
+			nil,        /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(97),  /* ! */
-			shift(99),  /* ident */
-			shift(100), /* ( */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
 			nil,        /* ) */
-			shift(101), /* functionName */
+			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(104), /* true */
-			shift(105), /* false */
-			shift(107), /* nil */
-			shift(108), /* null */
-			shift(109), /* intLit */
-			shift(110), /* floatLit */
-			shift(111), /* stringLit */
-			shift(112), /* ref */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			reduce(6),  /* ], reduce: Expr1 */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -7816,36 +8216,38 @@ var actionTab = actionTable{
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			shift(94),  /* - */
+			reduce(13), /* ||, reduce: Expr2 */
+			reduce(13), /* &&, reduce: Expr2 */
+			reduce(13), /* ==, reduce: Expr2 */
+			reduce(13), /* !=, reduce: Expr2 */
+			reduce(13), /* <, reduce: Expr2 */
+			reduce(13), /* <=, reduce: Expr2 */
+			reduce(13), /* >, reduce: Expr2 */
+			reduce(13), /* >=, reduce: Expr2 */
+			shift(327), /* + */
+			shift(328), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(97),  /* ! */
-			shift(99),  /* ident */
-			shift(100), /* ( */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
 			nil,        /* ) */
-			shift(101), /* functionName */
+			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(104), /* true */
-			shift(105), /* false */
-			shift(107), /* nil */
-			shift(108), /* null */
-			shift(109), /* intLit */
-			shift(110), /* floatLit */
-			shift(111), /* stringLit */
-			shift(112), /* ref */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			reduce(13), /* ], reduce: Expr2 */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -7855,36 +8257,38 @@ var actionTab = actionTable{
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			shift(94),  /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			shift(97),  /* ! */
-			shift(99),  /* ident */
-			shift(100), /* ( */
+			reduce(16), /* ||, reduce: Expr3 */
+			reduce(16), /* &&, reduce: Expr3 */
+			reduce(16), /* ==, reduce: Expr3 */
+			reduce(16), /* !=, reduce: Expr3 */
+			reduce(16), /* <, reduce: Expr3 */
+			reduce(16), /* <=, reduce: Expr3 */
+			reduce(16), /* >, reduce: Expr3 */
+			reduce(16), /* >=, reduce: Expr3 */
+			reduce(16), /* +, reduce: Expr3 */
+			reduce(16), /* -, reduce: Expr3 */
+			shift(329), /* * */
+			shift(330), /* / */
+			shift(331), /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
 			nil,        /* ) */
-			shift(101), /* functionName */
+			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(104), /* true */
-			shift(105), /* false */
-			shift(107), /* nil */
-			shift(108), /* null */
-			shift(109), /* intLit */
-			shift(110), /* floatLit */
-			shift(111), /* stringLit */
-			shift(112), /* ref */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			reduce(16), /* ], reduce: Expr3 */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -7903,27 +8307,29 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(94),  /* - */
+			shift(202), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(97),  /* ! */
-			shift(99),  /* ident */
-			shift(100), /* ( */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
 			nil,        /* ) */
-			shift(101), /* functionName */
+			shift(209), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(104), /* true */
-			shift(105), /* false */
-			shift(107), /* nil */
-			shift(108), /* null */
-			shift(109), /* intLit */
-			shift(110), /* floatLit */
-			shift(111), /* stringLit */
-			shift(112), /* ref */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -7933,36 +8339,38 @@ var actionTab = actionTable{
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			shift(94),  /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			shift(97),  /* ! */
-			shift(99),  /* ident */
-			shift(100), /* ( */
+			reduce(20), /* ||, reduce: Expr4 */
+			reduce(20), /* &&, reduce: Expr4 */
+			reduce(20), /* ==, reduce: Expr4 */
+			reduce(20), /* !=, reduce: Expr4 */
+			reduce(20), /* <, reduce: Expr4 */
+			reduce(20), /* <=, reduce: Expr4 */
+			reduce(20), /* >, reduce: Expr4 */
+			reduce(20), /* >=, reduce: Expr4 */
+			reduce(20), /* +, reduce: Expr4 */
+			reduce(20), /* -, reduce: Expr4 */
+			reduce(20), /* *, reduce: Expr4 */
+			reduce(20), /* /, reduce: Expr4 */
+			reduce(20), /* %, reduce: Expr4 */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
 			nil,        /* ) */
-			shift(101), /* functionName */
+			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(104), /* true */
-			shift(105), /* false */
-			shift(107), /* nil */
-			shift(108), /* null */
-			shift(109), /* intLit */
-			shift(110), /* floatLit */
-			shift(111), /* stringLit */
-			shift(112), /* ref */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			reduce(20), /* ], reduce: Expr4 */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -7972,36 +8380,38 @@ var actionTab = actionTable{
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			shift(94),  /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			shift(97),  /* ! */
-			shift(99),  /* ident */
-			shift(100), /* ( */
+			reduce(21), /* ||, reduce: Expr5 */
+			reduce(21), /* &&, reduce: Expr5 */
+			reduce(21), /* ==, reduce: Expr5 */
+			reduce(21), /* !=, reduce: Expr5 */
+			reduce(21), /* <, reduce: Expr5 */
+			reduce(21), /* <=, reduce: Expr5 */
+			reduce(21), /* >, reduce: Expr5 */
+			reduce(21), /* >=, reduce: Expr5 */
+			reduce(21), /* +, reduce: Expr5 */
+			reduce(21), /* -, reduce: Expr5 */
+			reduce(21), /* *, reduce: Expr5 */
+			reduce(21), /* /, reduce: Expr5 */
+			reduce(21), /* %, reduce: Expr5 */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
 			nil,        /* ) */
-			shift(101), /* functionName */
+			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(104), /* true */
-			shift(105), /* false */
-			shift(107), /* nil */
-			shift(108), /* null */
-			shift(109), /* intLit */
-			shift(110), /* floatLit */
-			shift(111), /* stringLit */
-			shift(112), /* ref */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			reduce(21), /* ], reduce: Expr5 */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -8020,32 +8430,1182 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(94),  /* - */
+			shift(202), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(97),  /* ! */
-			shift(99),  /* ident */
-			shift(100), /* ( */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
 			nil,        /* ) */
-			shift(101), /* functionName */
+			shift(209), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(104), /* true */
-			shift(105), /* false */
-			shift(107), /* nil */
-			shift(108), /* null */
-			shift(109), /* intLit */
-			shift(110), /* floatLit */
-			shift(111), /* stringLit */
-			shift(112), /* ref */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
 	actionRow{ // S206
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(24), /* ||, reduce: Expr6 */
+			reduce(24), /* &&, reduce: Expr6 */
+			reduce(24), /* ==, reduce: Expr6 */
+			reduce(24), /* !=, reduce: Expr6 */
+			reduce(24), /* <, reduce: Expr6 */
+			reduce(24), /* <=, reduce: Expr6 */
+			reduce(24), /* >, reduce: Expr6 */
+			reduce(24), /* >=, reduce: Expr6 */
+			reduce(24), /* +, reduce: Expr6 */
+			reduce(24), /* -, reduce: Expr6 */
+			reduce(24), /* *, reduce: Expr6 */
+			reduce(24), /* /, reduce: Expr6 */
+			reduce(24), /* %, reduce: Expr6 */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(24), /* ], reduce: Expr6 */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S207
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			shift(334), /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S208
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(96),  /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
+			nil,        /* ) */
+			shift(103), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S209
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			shift(336), /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S210
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(27), /* ||, reduce: PrimaryExpr */
+			reduce(27), /* &&, reduce: PrimaryExpr */
+			reduce(27), /* ==, reduce: PrimaryExpr */
+			reduce(27), /* !=, reduce: PrimaryExpr */
+			reduce(27), /* <, reduce: PrimaryExpr */
+			reduce(27), /* <=, reduce: PrimaryExpr */
+			reduce(27), /* >, reduce: PrimaryExpr */
+			reduce(27), /* >=, reduce: PrimaryExpr */
+			reduce(27), /* +, reduce: PrimaryExpr */
+			reduce(27), /* -, reduce: PrimaryExpr */
+			reduce(27), /* *, reduce: PrimaryExpr */
+			reduce(27), /* /, reduce: PrimaryExpr */
+			reduce(27), /* %, reduce: PrimaryExpr */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(27), /* ], reduce: PrimaryExpr */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S211
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(40), /* ||, reduce: Literal */
+			reduce(40), /* &&, reduce: Literal */
+			reduce(40), /* ==, reduce: Literal */
+			reduce(40), /* !=, reduce: Literal */
+			reduce(40), /* <, reduce: Literal */
+			reduce(40), /* <=, reduce: Literal */
+			reduce(40), /* >, reduce: Literal */
+			reduce(40), /* >=, reduce: Literal */
+			reduce(40), /* +, reduce: Literal */
+			reduce(40), /* -, reduce: Literal */
+			reduce(40), /* *, reduce: Literal */
+			reduce(40), /* /, reduce: Literal */
+			reduce(40), /* %, reduce: Literal */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(40), /* ], reduce: Literal */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S212
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(33), /* ||, reduce: BoolLit */
+			reduce(33), /* &&, reduce: BoolLit */
+			reduce(33), /* ==, reduce: BoolLit */
+			reduce(33), /* !=, reduce: BoolLit */
+			reduce(33), /* <, reduce: BoolLit */
+			reduce(33), /* <=, reduce: BoolLit */
+			reduce(33), /* >, reduce: BoolLit */
+			reduce(33), /* >=, reduce: BoolLit */
+			reduce(33), /* +, reduce: BoolLit */
+			reduce(33), /* -, reduce: BoolLit */
+			reduce(33), /* *, reduce: BoolLit */
+			reduce(33), /* /, reduce: BoolLit */
+			reduce(33), /* %, reduce: BoolLit */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(33), /* ], reduce: BoolLit */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S213
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(34), /* ||, reduce: BoolLit */
+			reduce(34), /* &&, reduce: BoolLit */
+			reduce(34), /* ==, reduce: BoolLit */
+			reduce(34), /* !=, reduce: BoolLit */
+			reduce(34), /* <, reduce: BoolLit */
+			reduce(34), /* <=, reduce: BoolLit */
+			reduce(34), /* >, reduce: BoolLit */
+			reduce(34), /* >=, reduce: BoolLit */
+			reduce(34), /* +, reduce: BoolLit */
+			reduce(34), /* -, reduce: BoolLit */
+			reduce(34), /* *, reduce: BoolLit */
+			reduce(34), /* /, reduce: BoolLit */
+			reduce(34), /* %, reduce: BoolLit */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(34), /* ], reduce: BoolLit */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S214
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(41), /* ||, reduce: Literal */
+			reduce(41), /* &&, reduce: Literal */
+			reduce(41), /* ==, reduce: Literal */
+			reduce(41), /* !=, reduce: Literal */
+			reduce(41), /* <, reduce: Literal */
+			reduce(41), /* <=, reduce: Literal */
+			reduce(41), /* >, reduce: Literal */
+			reduce(41), /* >=, reduce: Literal */
+			reduce(41), /* +, reduce: Literal */
+			reduce(41), /* -, reduce: Literal */
+			reduce(41), /* *, reduce: Literal */
+			reduce(41), /* /, reduce: Literal */
+			reduce(41), /* %, reduce: Literal */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(41), /* ], reduce: Literal */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S215
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(35), /* ||, reduce: NilLit */
+			reduce(35), /* &&, reduce: NilLit */
+			reduce(35), /* ==, reduce: NilLit */
+			reduce(35), /* !=, reduce: NilLit */
+			reduce(35), /* <, reduce: NilLit */
+			reduce(35), /* <=, reduce: NilLit */
+			reduce(35), /* >, reduce: NilLit */
+			reduce(35), /* >=, reduce: NilLit */
+			reduce(35), /* +, reduce: NilLit */
+			reduce(35), /* -, reduce: NilLit */
+			reduce(35), /* *, reduce: NilLit */
+			reduce(35), /* /, reduce: NilLit */
+			reduce(35), /* %, reduce: NilLit */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(35), /* ], reduce: NilLit */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S216
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(36), /* ||, reduce: NilLit */
+			reduce(36), /* &&, reduce: NilLit */
+			reduce(36), /* ==, reduce: NilLit */
+			reduce(36), /* !=, reduce: NilLit */
+			reduce(36), /* <, reduce: NilLit */
+			reduce(36), /* <=, reduce: NilLit */
+			reduce(36), /* >, reduce: NilLit */
+			reduce(36), /* >=, reduce: NilLit */
+			reduce(36), /* +, reduce: NilLit */
+			reduce(36), /* -, reduce: NilLit */
+			reduce(36), /* *, reduce: NilLit */
+			reduce(36), /* /, reduce: NilLit */
+			reduce(36), /* %, reduce: NilLit */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(36), /* ], reduce: NilLit */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S217
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(37), /* ||, reduce: Literal */
+			reduce(37), /* &&, reduce: Literal */
+			reduce(37), /* ==, reduce: Literal */
+			reduce(37), /* !=, reduce: Literal */
+			reduce(37), /* <, reduce: Literal */
+			reduce(37), /* <=, reduce: Literal */
+			reduce(37), /* >, reduce: Literal */
+			reduce(37), /* >=, reduce: Literal */
+			reduce(37), /* +, reduce: Literal */
+			reduce(37), /* -, reduce: Literal */
+			reduce(37), /* *, reduce: Literal */
+			reduce(37), /* /, reduce: Literal */
+			reduce(37), /* %, reduce: Literal */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(37), /* ], reduce: Literal */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S218
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(38), /* ||, reduce: Literal */
+			reduce(38), /* &&, reduce: Literal */
+			reduce(38), /* ==, reduce: Literal */
+			reduce(38), /* !=, reduce: Literal */
+			reduce(38), /* <, reduce: Literal */
+			reduce(38), /* <=, reduce: Literal */
+			reduce(38), /* >, reduce: Literal */
+			reduce(38), /* >=, reduce: Literal */
+			reduce(38), /* +, reduce: Literal */
+			reduce(38), /* -, reduce: Literal */
+			reduce(38), /* *, reduce: Literal */
+			reduce(38), /* /, reduce: Literal */
+			reduce(38), /* %, reduce: Literal */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(38), /* ], reduce: Literal */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S219
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(39), /* ||, reduce: Literal */
+			reduce(39), /* &&, reduce: Literal */
+			reduce(39), /* ==, reduce: Literal */
+			reduce(39), /* !=, reduce: Literal */
+			reduce(39), /* <, reduce: Literal */
+			reduce(39), /* <=, reduce: Literal */
+			reduce(39), /* >, reduce: Literal */
+			reduce(39), /* >=, reduce: Literal */
+			reduce(39), /* +, reduce: Literal */
+			reduce(39), /* -, reduce: Literal */
+			reduce(39), /* *, reduce: Literal */
+			reduce(39), /* /, reduce: Literal */
+			reduce(39), /* %, reduce: Literal */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(39), /* ], reduce: Literal */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S220
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			shift(338), /* selector */
+			shift(340), /* index */
+			shift(341), /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S221
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(96),  /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
+			nil,        /* ) */
+			shift(103), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S222
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(96),  /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
+			nil,        /* ) */
+			shift(103), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S223
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(96),  /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
+			nil,        /* ) */
+			shift(103), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S224
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(96),  /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
+			nil,        /* ) */
+			shift(103), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S225
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(96),  /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
+			nil,        /* ) */
+			shift(103), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S226
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(96),  /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
+			nil,        /* ) */
+			shift(103), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S227
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(96),  /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
+			nil,        /* ) */
+			shift(103), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S228
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(96),  /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
+			nil,        /* ) */
+			shift(103), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S229
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(96),  /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
+			nil,        /* ) */
+			shift(103), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S230
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(96),  /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
+			nil,        /* ) */
+			shift(103), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S231
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(96),  /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
+			nil,        /* ) */
+			shift(103), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S232
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(96),  /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
+			nil,        /* ) */
+			shift(103), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S233
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(96),  /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
+			nil,        /* ) */
+			shift(103), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S234
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8080,11 +9640,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S207
+	actionRow{ // S235
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8119,11 +9681,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S208
+	actionRow{ // S236
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8137,37 +9701,39 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
-			reduce(47), /* ), reduce: Args */
-			shift(126), /* functionName */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
+			reduce(49), /* ), reduce: Args */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S209
+	actionRow{ // S237
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			shift(193), /* || */
+			shift(221), /* || */
 			nil,        /* && */
 			nil,        /* == */
 			nil,        /* != */
@@ -8183,7 +9749,7 @@ var actionTab = actionTable{
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
-			shift(297), /* ) */
+			shift(356), /* ) */
 			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
@@ -8197,11 +9763,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S210
+	actionRow{ // S238
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8215,32 +9783,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
-			reduce(47), /* ), reduce: Args */
-			shift(126), /* functionName */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
+			reduce(49), /* ), reduce: Args */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S211
+	actionRow{ // S239
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8273,13 +9843,15 @@ var actionTab = actionTable{
 			nil,        /* floatLit */
 			nil,        /* stringLit */
 			nil,        /* ref */
-			shift(299), /* selector */
-			shift(300), /* index */
+			shift(358), /* selector */
+			shift(242), /* index */
+			shift(243), /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S212
+	actionRow{ // S240
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8314,11 +9886,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			reduce(43), /* selector, reduce: Ref */
 			reduce(43), /* index, reduce: Ref */
+			reduce(43), /* [, reduce: Ref */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S213
+	actionRow{ // S241
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8353,11 +9927,54 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			reduce(44), /* selector, reduce: Ref */
 			reduce(44), /* index, reduce: Ref */
+			reduce(44), /* [, reduce: Ref */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S214
+	actionRow{ // S242
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(47), /* ||, reduce: Indexer */
+			reduce(47), /* &&, reduce: Indexer */
+			reduce(47), /* ==, reduce: Indexer */
+			reduce(47), /* !=, reduce: Indexer */
+			reduce(47), /* <, reduce: Indexer */
+			reduce(47), /* <=, reduce: Indexer */
+			reduce(47), /* >, reduce: Indexer */
+			reduce(47), /* >=, reduce: Indexer */
+			reduce(47), /* +, reduce: Indexer */
+			reduce(47), /* -, reduce: Indexer */
+			reduce(47), /* *, reduce: Indexer */
+			reduce(47), /* /, reduce: Indexer */
+			reduce(47), /* %, reduce: Indexer */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(47), /* ), reduce: Indexer */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			reduce(47), /* selector, reduce: Indexer */
+			reduce(47), /* index, reduce: Indexer */
+			reduce(47), /* [, reduce: Indexer */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S243
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8371,32 +9988,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(202), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
 			nil,        /* ) */
-			shift(126), /* functionName */
+			shift(209), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S215
+	actionRow{ // S244
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8410,32 +10029,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
 			nil,        /* ) */
-			shift(126), /* functionName */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S216
+	actionRow{ // S245
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8449,32 +10070,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
 			nil,        /* ) */
-			shift(126), /* functionName */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S217
+	actionRow{ // S246
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8488,32 +10111,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
 			nil,        /* ) */
-			shift(126), /* functionName */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S218
+	actionRow{ // S247
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8527,32 +10152,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
 			nil,        /* ) */
-			shift(126), /* functionName */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S219
+	actionRow{ // S248
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8566,32 +10193,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
 			nil,        /* ) */
-			shift(126), /* functionName */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S220
+	actionRow{ // S249
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8605,32 +10234,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
 			nil,        /* ) */
-			shift(126), /* functionName */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S221
+	actionRow{ // S250
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8644,32 +10275,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
 			nil,        /* ) */
-			shift(126), /* functionName */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S222
+	actionRow{ // S251
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8683,32 +10316,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
 			nil,        /* ) */
-			shift(126), /* functionName */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S223
+	actionRow{ // S252
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8722,32 +10357,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
 			nil,        /* ) */
-			shift(126), /* functionName */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S224
+	actionRow{ // S253
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8761,32 +10398,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
 			nil,        /* ) */
-			shift(126), /* functionName */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S225
+	actionRow{ // S254
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8800,32 +10439,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
 			nil,        /* ) */
-			shift(126), /* functionName */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S226
+	actionRow{ // S255
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8839,32 +10480,75 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
 			nil,        /* ) */
-			shift(126), /* functionName */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S227
+	actionRow{ // S256
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(120), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
+			nil,        /* ) */
+			shift(128), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S257
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8899,11 +10583,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(22), /* ,, reduce: Expr5 */
 		},
 	},
-	actionRow{ // S228
+	actionRow{ // S258
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8938,11 +10624,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(23), /* ,, reduce: Expr5 */
 		},
 	},
-	actionRow{ // S229
+	actionRow{ // S259
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -8956,37 +10644,39 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
-			reduce(47), /* ), reduce: Args */
-			shift(126), /* functionName */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
+			reduce(49), /* ), reduce: Args */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S230
+	actionRow{ // S260
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			shift(193), /* || */
+			shift(221), /* || */
 			nil,        /* && */
 			nil,        /* == */
 			nil,        /* != */
@@ -9002,7 +10692,7 @@ var actionTab = actionTable{
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
-			shift(315), /* ) */
+			shift(375), /* ) */
 			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
@@ -9016,11 +10706,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S231
+	actionRow{ // S261
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9055,11 +10747,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S232
+	actionRow{ // S262
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9073,32 +10767,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
-			reduce(47), /* ), reduce: Args */
-			shift(126), /* functionName */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
+			reduce(49), /* ), reduce: Args */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S233
+	actionRow{ // S263
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9131,13 +10827,15 @@ var actionTab = actionTable{
 			nil,        /* floatLit */
 			nil,        /* stringLit */
 			nil,        /* ref */
-			shift(317), /* selector */
-			shift(318), /* index */
+			shift(377), /* selector */
+			shift(266), /* index */
+			shift(267), /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(42), /* ,, reduce: Literal */
 		},
 	},
-	actionRow{ // S234
+	actionRow{ // S264
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9172,11 +10870,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			reduce(43), /* selector, reduce: Ref */
 			reduce(43), /* index, reduce: Ref */
+			reduce(43), /* [, reduce: Ref */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(43), /* ,, reduce: Ref */
 		},
 	},
-	actionRow{ // S235
+	actionRow{ // S265
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9211,11 +10911,54 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			reduce(44), /* selector, reduce: Ref */
 			reduce(44), /* index, reduce: Ref */
+			reduce(44), /* [, reduce: Ref */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(44), /* ,, reduce: Ref */
 		},
 	},
-	actionRow{ // S236
+	actionRow{ // S266
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(47), /* ||, reduce: Indexer */
+			reduce(47), /* &&, reduce: Indexer */
+			reduce(47), /* ==, reduce: Indexer */
+			reduce(47), /* !=, reduce: Indexer */
+			reduce(47), /* <, reduce: Indexer */
+			reduce(47), /* <=, reduce: Indexer */
+			reduce(47), /* >, reduce: Indexer */
+			reduce(47), /* >=, reduce: Indexer */
+			reduce(47), /* +, reduce: Indexer */
+			reduce(47), /* -, reduce: Indexer */
+			reduce(47), /* *, reduce: Indexer */
+			reduce(47), /* /, reduce: Indexer */
+			reduce(47), /* %, reduce: Indexer */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(47), /* ), reduce: Indexer */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			reduce(47), /* selector, reduce: Indexer */
+			reduce(47), /* index, reduce: Indexer */
+			reduce(47), /* [, reduce: Indexer */
+			nil,        /* ] */
+			nil,        /* empty */
+			reduce(47), /* ,, reduce: Indexer */
+		},
+	},
+	actionRow{ // S267
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9229,38 +10972,81 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(202), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
 			nil,        /* ) */
-			shift(126), /* functionName */
+			shift(209), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S237
+	actionRow{ // S268
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(120), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
+			nil,        /* ) */
+			shift(128), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S269
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			reduce(3),  /* ||, reduce: Expr */
-			shift(142), /* && */
+			shift(144), /* && */
 			nil,        /* == */
 			nil,        /* != */
 			nil,        /* < */
@@ -9289,23 +11075,25 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S238
+	actionRow{ // S270
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			reduce(5),  /* ||, reduce: Expr1 */
 			reduce(5),  /* &&, reduce: Expr1 */
-			shift(143), /* == */
-			shift(144), /* != */
-			shift(145), /* < */
-			shift(146), /* <= */
-			shift(147), /* > */
-			shift(148), /* >= */
+			shift(145), /* == */
+			shift(146), /* != */
+			shift(147), /* < */
+			shift(148), /* <= */
+			shift(149), /* > */
+			shift(150), /* >= */
 			nil,        /* + */
 			nil,        /* - */
 			nil,        /* * */
@@ -9328,11 +11116,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S239
+	actionRow{ // S271
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9345,8 +11135,8 @@ var actionTab = actionTable{
 			reduce(7),  /* <=, reduce: Expr2 */
 			reduce(7),  /* >, reduce: Expr2 */
 			reduce(7),  /* >=, reduce: Expr2 */
-			shift(149), /* + */
-			shift(150), /* - */
+			shift(151), /* + */
+			shift(152), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
@@ -9367,11 +11157,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S240
+	actionRow{ // S272
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9384,8 +11176,8 @@ var actionTab = actionTable{
 			reduce(8),  /* <=, reduce: Expr2 */
 			reduce(8),  /* >, reduce: Expr2 */
 			reduce(8),  /* >=, reduce: Expr2 */
-			shift(149), /* + */
-			shift(150), /* - */
+			shift(151), /* + */
+			shift(152), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
@@ -9406,11 +11198,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S241
+	actionRow{ // S273
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9423,8 +11217,8 @@ var actionTab = actionTable{
 			reduce(9),  /* <=, reduce: Expr2 */
 			reduce(9),  /* >, reduce: Expr2 */
 			reduce(9),  /* >=, reduce: Expr2 */
-			shift(149), /* + */
-			shift(150), /* - */
+			shift(151), /* + */
+			shift(152), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
@@ -9445,11 +11239,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S242
+	actionRow{ // S274
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9462,8 +11258,8 @@ var actionTab = actionTable{
 			reduce(10), /* <=, reduce: Expr2 */
 			reduce(10), /* >, reduce: Expr2 */
 			reduce(10), /* >=, reduce: Expr2 */
-			shift(149), /* + */
-			shift(150), /* - */
+			shift(151), /* + */
+			shift(152), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
@@ -9484,11 +11280,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S243
+	actionRow{ // S275
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9501,8 +11299,8 @@ var actionTab = actionTable{
 			reduce(11), /* <=, reduce: Expr2 */
 			reduce(11), /* >, reduce: Expr2 */
 			reduce(11), /* >=, reduce: Expr2 */
-			shift(149), /* + */
-			shift(150), /* - */
+			shift(151), /* + */
+			shift(152), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
@@ -9523,11 +11321,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S244
+	actionRow{ // S276
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9540,8 +11340,8 @@ var actionTab = actionTable{
 			reduce(12), /* <=, reduce: Expr2 */
 			reduce(12), /* >, reduce: Expr2 */
 			reduce(12), /* >=, reduce: Expr2 */
-			shift(149), /* + */
-			shift(150), /* - */
+			shift(151), /* + */
+			shift(152), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
@@ -9562,11 +11362,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S245
+	actionRow{ // S277
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9581,9 +11383,9 @@ var actionTab = actionTable{
 			reduce(14), /* >=, reduce: Expr3 */
 			reduce(14), /* +, reduce: Expr3 */
 			reduce(14), /* -, reduce: Expr3 */
-			shift(151), /* * */
-			shift(152), /* / */
-			shift(153), /* % */
+			shift(153), /* * */
+			shift(154), /* / */
+			shift(155), /* % */
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
@@ -9601,11 +11403,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S246
+	actionRow{ // S278
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9620,9 +11424,9 @@ var actionTab = actionTable{
 			reduce(15), /* >=, reduce: Expr3 */
 			reduce(15), /* +, reduce: Expr3 */
 			reduce(15), /* -, reduce: Expr3 */
-			shift(151), /* * */
-			shift(152), /* / */
-			shift(153), /* % */
+			shift(153), /* * */
+			shift(154), /* / */
+			shift(155), /* % */
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
@@ -9640,11 +11444,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S247
+	actionRow{ // S279
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9679,11 +11485,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S248
+	actionRow{ // S280
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9718,11 +11526,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S249
+	actionRow{ // S281
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9757,16 +11567,18 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S250
+	actionRow{ // S282
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			shift(193), /* || */
+			shift(221), /* || */
 			nil,        /* && */
 			nil,        /* == */
 			nil,        /* != */
@@ -9782,7 +11594,7 @@ var actionTab = actionTable{
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
-			shift(252), /* ) */
+			shift(284), /* ) */
 			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
@@ -9796,11 +11608,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S251
+	actionRow{ // S283
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9821,7 +11635,7 @@ var actionTab = actionTable{
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
-			shift(320), /* ) */
+			shift(381), /* ) */
 			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
@@ -9835,11 +11649,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S252
+	actionRow{ // S284
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9874,11 +11690,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S253
+	actionRow{ // S285
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9899,7 +11717,7 @@ var actionTab = actionTable{
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
-			shift(321), /* ) */
+			shift(382), /* ) */
 			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
@@ -9913,11 +11731,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S254
+	actionRow{ // S286
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9940,8 +11760,8 @@ var actionTab = actionTable{
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* functionName */
-			shift(278), /* ? */
-			shift(322), /* : */
+			shift(311), /* ? */
+			shift(383), /* : */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* nil */
@@ -9952,11 +11772,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S255
+	actionRow{ // S287
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -9991,11 +11813,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			reduce(45), /* selector, reduce: Ref */
 			reduce(45), /* index, reduce: Ref */
+			reduce(45), /* [, reduce: Ref */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S256
+	actionRow{ // S288
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10030,11 +11854,54 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			reduce(46), /* selector, reduce: Ref */
 			reduce(46), /* index, reduce: Ref */
+			reduce(46), /* [, reduce: Ref */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S257
+	actionRow{ // S289
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			shift(318), /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			shift(384), /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S290
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10069,11 +11936,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S258
+	actionRow{ // S291
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10087,32 +11956,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(171), /* - */
+			shift(175), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(174), /* ! */
-			shift(176), /* ident */
-			shift(272), /* ( */
+			shift(178), /* ! */
+			shift(180), /* ident */
+			shift(305), /* ( */
 			nil,        /* ) */
-			shift(178), /* functionName */
+			shift(182), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(182), /* true */
-			shift(183), /* false */
-			shift(185), /* nil */
-			shift(186), /* null */
-			shift(187), /* intLit */
-			shift(188), /* floatLit */
-			shift(189), /* stringLit */
-			shift(190), /* ref */
+			shift(186), /* true */
+			shift(187), /* false */
+			shift(189), /* nil */
+			shift(190), /* null */
+			shift(191), /* intLit */
+			shift(192), /* floatLit */
+			shift(193), /* stringLit */
+			shift(194), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S259
+	actionRow{ // S292
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10126,32 +11997,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(171), /* - */
+			shift(175), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(174), /* ! */
-			shift(176), /* ident */
-			shift(272), /* ( */
+			shift(178), /* ! */
+			shift(180), /* ident */
+			shift(305), /* ( */
 			nil,        /* ) */
-			shift(178), /* functionName */
+			shift(182), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(182), /* true */
-			shift(183), /* false */
-			shift(185), /* nil */
-			shift(186), /* null */
-			shift(187), /* intLit */
-			shift(188), /* floatLit */
-			shift(189), /* stringLit */
-			shift(190), /* ref */
+			shift(186), /* true */
+			shift(187), /* false */
+			shift(189), /* nil */
+			shift(190), /* null */
+			shift(191), /* intLit */
+			shift(192), /* floatLit */
+			shift(193), /* stringLit */
+			shift(194), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S260
+	actionRow{ // S293
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10165,32 +12038,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(171), /* - */
+			shift(175), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(174), /* ! */
-			shift(176), /* ident */
-			shift(272), /* ( */
+			shift(178), /* ! */
+			shift(180), /* ident */
+			shift(305), /* ( */
 			nil,        /* ) */
-			shift(178), /* functionName */
+			shift(182), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(182), /* true */
-			shift(183), /* false */
-			shift(185), /* nil */
-			shift(186), /* null */
-			shift(187), /* intLit */
-			shift(188), /* floatLit */
-			shift(189), /* stringLit */
-			shift(190), /* ref */
+			shift(186), /* true */
+			shift(187), /* false */
+			shift(189), /* nil */
+			shift(190), /* null */
+			shift(191), /* intLit */
+			shift(192), /* floatLit */
+			shift(193), /* stringLit */
+			shift(194), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S261
+	actionRow{ // S294
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10204,32 +12079,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(171), /* - */
+			shift(175), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(174), /* ! */
-			shift(176), /* ident */
-			shift(272), /* ( */
+			shift(178), /* ! */
+			shift(180), /* ident */
+			shift(305), /* ( */
 			nil,        /* ) */
-			shift(178), /* functionName */
+			shift(182), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(182), /* true */
-			shift(183), /* false */
-			shift(185), /* nil */
-			shift(186), /* null */
-			shift(187), /* intLit */
-			shift(188), /* floatLit */
-			shift(189), /* stringLit */
-			shift(190), /* ref */
+			shift(186), /* true */
+			shift(187), /* false */
+			shift(189), /* nil */
+			shift(190), /* null */
+			shift(191), /* intLit */
+			shift(192), /* floatLit */
+			shift(193), /* stringLit */
+			shift(194), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S262
+	actionRow{ // S295
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10243,32 +12120,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(171), /* - */
+			shift(175), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(174), /* ! */
-			shift(176), /* ident */
-			shift(272), /* ( */
+			shift(178), /* ! */
+			shift(180), /* ident */
+			shift(305), /* ( */
 			nil,        /* ) */
-			shift(178), /* functionName */
+			shift(182), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(182), /* true */
-			shift(183), /* false */
-			shift(185), /* nil */
-			shift(186), /* null */
-			shift(187), /* intLit */
-			shift(188), /* floatLit */
-			shift(189), /* stringLit */
-			shift(190), /* ref */
+			shift(186), /* true */
+			shift(187), /* false */
+			shift(189), /* nil */
+			shift(190), /* null */
+			shift(191), /* intLit */
+			shift(192), /* floatLit */
+			shift(193), /* stringLit */
+			shift(194), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S263
+	actionRow{ // S296
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10282,32 +12161,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(171), /* - */
+			shift(175), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(174), /* ! */
-			shift(176), /* ident */
-			shift(272), /* ( */
+			shift(178), /* ! */
+			shift(180), /* ident */
+			shift(305), /* ( */
 			nil,        /* ) */
-			shift(178), /* functionName */
+			shift(182), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(182), /* true */
-			shift(183), /* false */
-			shift(185), /* nil */
-			shift(186), /* null */
-			shift(187), /* intLit */
-			shift(188), /* floatLit */
-			shift(189), /* stringLit */
-			shift(190), /* ref */
+			shift(186), /* true */
+			shift(187), /* false */
+			shift(189), /* nil */
+			shift(190), /* null */
+			shift(191), /* intLit */
+			shift(192), /* floatLit */
+			shift(193), /* stringLit */
+			shift(194), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S264
+	actionRow{ // S297
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10321,32 +12202,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(171), /* - */
+			shift(175), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(174), /* ! */
-			shift(176), /* ident */
-			shift(272), /* ( */
+			shift(178), /* ! */
+			shift(180), /* ident */
+			shift(305), /* ( */
 			nil,        /* ) */
-			shift(178), /* functionName */
+			shift(182), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(182), /* true */
-			shift(183), /* false */
-			shift(185), /* nil */
-			shift(186), /* null */
-			shift(187), /* intLit */
-			shift(188), /* floatLit */
-			shift(189), /* stringLit */
-			shift(190), /* ref */
+			shift(186), /* true */
+			shift(187), /* false */
+			shift(189), /* nil */
+			shift(190), /* null */
+			shift(191), /* intLit */
+			shift(192), /* floatLit */
+			shift(193), /* stringLit */
+			shift(194), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S265
+	actionRow{ // S298
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10360,32 +12243,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(171), /* - */
+			shift(175), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(174), /* ! */
-			shift(176), /* ident */
-			shift(272), /* ( */
+			shift(178), /* ! */
+			shift(180), /* ident */
+			shift(305), /* ( */
 			nil,        /* ) */
-			shift(178), /* functionName */
+			shift(182), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(182), /* true */
-			shift(183), /* false */
-			shift(185), /* nil */
-			shift(186), /* null */
-			shift(187), /* intLit */
-			shift(188), /* floatLit */
-			shift(189), /* stringLit */
-			shift(190), /* ref */
+			shift(186), /* true */
+			shift(187), /* false */
+			shift(189), /* nil */
+			shift(190), /* null */
+			shift(191), /* intLit */
+			shift(192), /* floatLit */
+			shift(193), /* stringLit */
+			shift(194), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S266
+	actionRow{ // S299
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10399,32 +12284,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(171), /* - */
+			shift(175), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(174), /* ! */
-			shift(176), /* ident */
-			shift(272), /* ( */
+			shift(178), /* ! */
+			shift(180), /* ident */
+			shift(305), /* ( */
 			nil,        /* ) */
-			shift(178), /* functionName */
+			shift(182), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(182), /* true */
-			shift(183), /* false */
-			shift(185), /* nil */
-			shift(186), /* null */
-			shift(187), /* intLit */
-			shift(188), /* floatLit */
-			shift(189), /* stringLit */
-			shift(190), /* ref */
+			shift(186), /* true */
+			shift(187), /* false */
+			shift(189), /* nil */
+			shift(190), /* null */
+			shift(191), /* intLit */
+			shift(192), /* floatLit */
+			shift(193), /* stringLit */
+			shift(194), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S267
+	actionRow{ // S300
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10438,32 +12325,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(171), /* - */
+			shift(175), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(174), /* ! */
-			shift(176), /* ident */
-			shift(272), /* ( */
+			shift(178), /* ! */
+			shift(180), /* ident */
+			shift(305), /* ( */
 			nil,        /* ) */
-			shift(178), /* functionName */
+			shift(182), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(182), /* true */
-			shift(183), /* false */
-			shift(185), /* nil */
-			shift(186), /* null */
-			shift(187), /* intLit */
-			shift(188), /* floatLit */
-			shift(189), /* stringLit */
-			shift(190), /* ref */
+			shift(186), /* true */
+			shift(187), /* false */
+			shift(189), /* nil */
+			shift(190), /* null */
+			shift(191), /* intLit */
+			shift(192), /* floatLit */
+			shift(193), /* stringLit */
+			shift(194), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S268
+	actionRow{ // S301
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10477,32 +12366,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(171), /* - */
+			shift(175), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(174), /* ! */
-			shift(176), /* ident */
-			shift(272), /* ( */
+			shift(178), /* ! */
+			shift(180), /* ident */
+			shift(305), /* ( */
 			nil,        /* ) */
-			shift(178), /* functionName */
+			shift(182), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(182), /* true */
-			shift(183), /* false */
-			shift(185), /* nil */
-			shift(186), /* null */
-			shift(187), /* intLit */
-			shift(188), /* floatLit */
-			shift(189), /* stringLit */
-			shift(190), /* ref */
+			shift(186), /* true */
+			shift(187), /* false */
+			shift(189), /* nil */
+			shift(190), /* null */
+			shift(191), /* intLit */
+			shift(192), /* floatLit */
+			shift(193), /* stringLit */
+			shift(194), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S269
+	actionRow{ // S302
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10516,32 +12407,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(171), /* - */
+			shift(175), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(174), /* ! */
-			shift(176), /* ident */
-			shift(272), /* ( */
+			shift(178), /* ! */
+			shift(180), /* ident */
+			shift(305), /* ( */
 			nil,        /* ) */
-			shift(178), /* functionName */
+			shift(182), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(182), /* true */
-			shift(183), /* false */
-			shift(185), /* nil */
-			shift(186), /* null */
-			shift(187), /* intLit */
-			shift(188), /* floatLit */
-			shift(189), /* stringLit */
-			shift(190), /* ref */
+			shift(186), /* true */
+			shift(187), /* false */
+			shift(189), /* nil */
+			shift(190), /* null */
+			shift(191), /* intLit */
+			shift(192), /* floatLit */
+			shift(193), /* stringLit */
+			shift(194), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S270
+	actionRow{ // S303
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10555,32 +12448,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(171), /* - */
+			shift(175), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(174), /* ! */
-			shift(176), /* ident */
-			shift(272), /* ( */
+			shift(178), /* ! */
+			shift(180), /* ident */
+			shift(305), /* ( */
 			nil,        /* ) */
-			shift(178), /* functionName */
+			shift(182), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(182), /* true */
-			shift(183), /* false */
-			shift(185), /* nil */
-			shift(186), /* null */
-			shift(187), /* intLit */
-			shift(188), /* floatLit */
-			shift(189), /* stringLit */
-			shift(190), /* ref */
+			shift(186), /* true */
+			shift(187), /* false */
+			shift(189), /* nil */
+			shift(190), /* null */
+			shift(191), /* intLit */
+			shift(192), /* floatLit */
+			shift(193), /* stringLit */
+			shift(194), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S271
+	actionRow{ // S304
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10615,11 +12510,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S272
+	actionRow{ // S305
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10633,32 +12530,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(94),  /* - */
+			shift(96),  /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(97),  /* ! */
-			shift(99),  /* ident */
-			shift(100), /* ( */
+			shift(99),  /* ! */
+			shift(101), /* ident */
+			shift(102), /* ( */
 			nil,        /* ) */
-			shift(101), /* functionName */
+			shift(103), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(104), /* true */
-			shift(105), /* false */
-			shift(107), /* nil */
-			shift(108), /* null */
-			shift(109), /* intLit */
-			shift(110), /* floatLit */
-			shift(111), /* stringLit */
-			shift(112), /* ref */
+			shift(106), /* true */
+			shift(107), /* false */
+			shift(109), /* nil */
+			shift(110), /* null */
+			shift(111), /* intLit */
+			shift(112), /* floatLit */
+			shift(113), /* stringLit */
+			shift(114), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S273
+	actionRow{ // S306
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10693,11 +12592,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S274
+	actionRow{ // S307
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10711,37 +12612,39 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
-			reduce(47), /* ), reduce: Args */
-			shift(126), /* functionName */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
+			reduce(49), /* ), reduce: Args */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S275
+	actionRow{ // S308
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			shift(139), /* || */
+			shift(141), /* || */
 			nil,        /* && */
 			nil,        /* == */
 			nil,        /* != */
@@ -10757,7 +12660,7 @@ var actionTab = actionTable{
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
-			shift(338), /* ) */
+			shift(400), /* ) */
 			nil,        /* functionName */
 			reduce(30), /* ?, reduce: TernaryArgument */
 			nil,        /* : */
@@ -10771,11 +12674,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S276
+	actionRow{ // S309
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10796,7 +12701,7 @@ var actionTab = actionTable{
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
-			shift(339), /* ) */
+			shift(401), /* ) */
 			nil,        /* functionName */
 			reduce(31), /* ?, reduce: TernaryArgument */
 			nil,        /* : */
@@ -10810,11 +12715,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S277
+	actionRow{ // S310
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10828,32 +12735,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(118), /* - */
+			shift(120), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(121), /* ! */
-			shift(123), /* ident */
-			shift(124), /* ( */
-			reduce(47), /* ), reduce: Args */
-			shift(126), /* functionName */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
+			reduce(49), /* ), reduce: Args */
+			shift(128), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(129), /* true */
-			shift(130), /* false */
-			shift(132), /* nil */
-			shift(133), /* null */
-			shift(134), /* intLit */
-			shift(135), /* floatLit */
-			shift(136), /* stringLit */
-			shift(137), /* ref */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S278
+	actionRow{ // S311
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10867,32 +12776,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(171), /* - */
+			shift(175), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(174), /* ! */
-			shift(176), /* ident */
-			shift(177), /* ( */
+			shift(178), /* ! */
+			shift(180), /* ident */
+			shift(181), /* ( */
 			nil,        /* ) */
-			shift(178), /* functionName */
+			shift(182), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(182), /* true */
-			shift(183), /* false */
-			shift(185), /* nil */
-			shift(186), /* null */
-			shift(187), /* intLit */
-			shift(188), /* floatLit */
-			shift(189), /* stringLit */
-			shift(190), /* ref */
+			shift(186), /* true */
+			shift(187), /* false */
+			shift(189), /* nil */
+			shift(190), /* null */
+			shift(191), /* intLit */
+			shift(192), /* floatLit */
+			shift(193), /* stringLit */
+			shift(194), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S279
+	actionRow{ // S312
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10912,7 +12823,7 @@ var actionTab = actionTable{
 			nil,        /* % */
 			shift(11),  /* ! */
 			shift(13),  /* ident */
-			shift(344), /* ( */
+			shift(406), /* ( */
 			nil,        /* ) */
 			shift(15),  /* functionName */
 			nil,        /* ? */
@@ -10927,11 +12838,13 @@ var actionTab = actionTable{
 			shift(27),  /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S280
+	actionRow{ // S313
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -10964,13 +12877,15 @@ var actionTab = actionTable{
 			nil,        /* floatLit */
 			nil,        /* stringLit */
 			nil,        /* ref */
-			shift(346), /* selector */
-			shift(347), /* index */
+			shift(408), /* selector */
+			shift(316), /* index */
+			shift(317), /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S281
+	actionRow{ // S314
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -11005,11 +12920,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			reduce(43), /* selector, reduce: Ref */
 			reduce(43), /* index, reduce: Ref */
+			reduce(43), /* [, reduce: Ref */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S282
+	actionRow{ // S315
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -11044,1295 +12961,10 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			reduce(44), /* selector, reduce: Ref */
 			reduce(44), /* index, reduce: Ref */
+			reduce(44), /* [, reduce: Ref */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
-		},
-	},
-	actionRow{ // S283
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(3),  /* ||, reduce: Expr */
-			shift(194), /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			nil,        /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(3),  /* ), reduce: Expr */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S284
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(5),  /* ||, reduce: Expr1 */
-			reduce(5),  /* &&, reduce: Expr1 */
-			shift(195), /* == */
-			shift(196), /* != */
-			shift(197), /* < */
-			shift(198), /* <= */
-			shift(199), /* > */
-			shift(200), /* >= */
-			nil,        /* + */
-			nil,        /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(5),  /* ), reduce: Expr1 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S285
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(7),  /* ||, reduce: Expr2 */
-			reduce(7),  /* &&, reduce: Expr2 */
-			reduce(7),  /* ==, reduce: Expr2 */
-			reduce(7),  /* !=, reduce: Expr2 */
-			reduce(7),  /* <, reduce: Expr2 */
-			reduce(7),  /* <=, reduce: Expr2 */
-			reduce(7),  /* >, reduce: Expr2 */
-			reduce(7),  /* >=, reduce: Expr2 */
-			shift(201), /* + */
-			shift(202), /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(7),  /* ), reduce: Expr2 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S286
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(8),  /* ||, reduce: Expr2 */
-			reduce(8),  /* &&, reduce: Expr2 */
-			reduce(8),  /* ==, reduce: Expr2 */
-			reduce(8),  /* !=, reduce: Expr2 */
-			reduce(8),  /* <, reduce: Expr2 */
-			reduce(8),  /* <=, reduce: Expr2 */
-			reduce(8),  /* >, reduce: Expr2 */
-			reduce(8),  /* >=, reduce: Expr2 */
-			shift(201), /* + */
-			shift(202), /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(8),  /* ), reduce: Expr2 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S287
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(9),  /* ||, reduce: Expr2 */
-			reduce(9),  /* &&, reduce: Expr2 */
-			reduce(9),  /* ==, reduce: Expr2 */
-			reduce(9),  /* !=, reduce: Expr2 */
-			reduce(9),  /* <, reduce: Expr2 */
-			reduce(9),  /* <=, reduce: Expr2 */
-			reduce(9),  /* >, reduce: Expr2 */
-			reduce(9),  /* >=, reduce: Expr2 */
-			shift(201), /* + */
-			shift(202), /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(9),  /* ), reduce: Expr2 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S288
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(10), /* ||, reduce: Expr2 */
-			reduce(10), /* &&, reduce: Expr2 */
-			reduce(10), /* ==, reduce: Expr2 */
-			reduce(10), /* !=, reduce: Expr2 */
-			reduce(10), /* <, reduce: Expr2 */
-			reduce(10), /* <=, reduce: Expr2 */
-			reduce(10), /* >, reduce: Expr2 */
-			reduce(10), /* >=, reduce: Expr2 */
-			shift(201), /* + */
-			shift(202), /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(10), /* ), reduce: Expr2 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S289
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(11), /* ||, reduce: Expr2 */
-			reduce(11), /* &&, reduce: Expr2 */
-			reduce(11), /* ==, reduce: Expr2 */
-			reduce(11), /* !=, reduce: Expr2 */
-			reduce(11), /* <, reduce: Expr2 */
-			reduce(11), /* <=, reduce: Expr2 */
-			reduce(11), /* >, reduce: Expr2 */
-			reduce(11), /* >=, reduce: Expr2 */
-			shift(201), /* + */
-			shift(202), /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(11), /* ), reduce: Expr2 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S290
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(12), /* ||, reduce: Expr2 */
-			reduce(12), /* &&, reduce: Expr2 */
-			reduce(12), /* ==, reduce: Expr2 */
-			reduce(12), /* !=, reduce: Expr2 */
-			reduce(12), /* <, reduce: Expr2 */
-			reduce(12), /* <=, reduce: Expr2 */
-			reduce(12), /* >, reduce: Expr2 */
-			reduce(12), /* >=, reduce: Expr2 */
-			shift(201), /* + */
-			shift(202), /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(12), /* ), reduce: Expr2 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S291
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(14), /* ||, reduce: Expr3 */
-			reduce(14), /* &&, reduce: Expr3 */
-			reduce(14), /* ==, reduce: Expr3 */
-			reduce(14), /* !=, reduce: Expr3 */
-			reduce(14), /* <, reduce: Expr3 */
-			reduce(14), /* <=, reduce: Expr3 */
-			reduce(14), /* >, reduce: Expr3 */
-			reduce(14), /* >=, reduce: Expr3 */
-			reduce(14), /* +, reduce: Expr3 */
-			reduce(14), /* -, reduce: Expr3 */
-			shift(203), /* * */
-			shift(204), /* / */
-			shift(205), /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(14), /* ), reduce: Expr3 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S292
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(15), /* ||, reduce: Expr3 */
-			reduce(15), /* &&, reduce: Expr3 */
-			reduce(15), /* ==, reduce: Expr3 */
-			reduce(15), /* !=, reduce: Expr3 */
-			reduce(15), /* <, reduce: Expr3 */
-			reduce(15), /* <=, reduce: Expr3 */
-			reduce(15), /* >, reduce: Expr3 */
-			reduce(15), /* >=, reduce: Expr3 */
-			reduce(15), /* +, reduce: Expr3 */
-			reduce(15), /* -, reduce: Expr3 */
-			shift(203), /* * */
-			shift(204), /* / */
-			shift(205), /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(15), /* ), reduce: Expr3 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S293
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(17), /* ||, reduce: Expr4 */
-			reduce(17), /* &&, reduce: Expr4 */
-			reduce(17), /* ==, reduce: Expr4 */
-			reduce(17), /* !=, reduce: Expr4 */
-			reduce(17), /* <, reduce: Expr4 */
-			reduce(17), /* <=, reduce: Expr4 */
-			reduce(17), /* >, reduce: Expr4 */
-			reduce(17), /* >=, reduce: Expr4 */
-			reduce(17), /* +, reduce: Expr4 */
-			reduce(17), /* -, reduce: Expr4 */
-			reduce(17), /* *, reduce: Expr4 */
-			reduce(17), /* /, reduce: Expr4 */
-			reduce(17), /* %, reduce: Expr4 */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(17), /* ), reduce: Expr4 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S294
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(18), /* ||, reduce: Expr4 */
-			reduce(18), /* &&, reduce: Expr4 */
-			reduce(18), /* ==, reduce: Expr4 */
-			reduce(18), /* !=, reduce: Expr4 */
-			reduce(18), /* <, reduce: Expr4 */
-			reduce(18), /* <=, reduce: Expr4 */
-			reduce(18), /* >, reduce: Expr4 */
-			reduce(18), /* >=, reduce: Expr4 */
-			reduce(18), /* +, reduce: Expr4 */
-			reduce(18), /* -, reduce: Expr4 */
-			reduce(18), /* *, reduce: Expr4 */
-			reduce(18), /* /, reduce: Expr4 */
-			reduce(18), /* %, reduce: Expr4 */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(18), /* ), reduce: Expr4 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S295
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(19), /* ||, reduce: Expr4 */
-			reduce(19), /* &&, reduce: Expr4 */
-			reduce(19), /* ==, reduce: Expr4 */
-			reduce(19), /* !=, reduce: Expr4 */
-			reduce(19), /* <, reduce: Expr4 */
-			reduce(19), /* <=, reduce: Expr4 */
-			reduce(19), /* >, reduce: Expr4 */
-			reduce(19), /* >=, reduce: Expr4 */
-			reduce(19), /* +, reduce: Expr4 */
-			reduce(19), /* -, reduce: Expr4 */
-			reduce(19), /* *, reduce: Expr4 */
-			reduce(19), /* /, reduce: Expr4 */
-			reduce(19), /* %, reduce: Expr4 */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(19), /* ), reduce: Expr4 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S296
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			nil,        /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			shift(348), /* ) */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S297
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(28), /* ||, reduce: PrimaryExpr */
-			reduce(28), /* &&, reduce: PrimaryExpr */
-			reduce(28), /* ==, reduce: PrimaryExpr */
-			reduce(28), /* !=, reduce: PrimaryExpr */
-			reduce(28), /* <, reduce: PrimaryExpr */
-			reduce(28), /* <=, reduce: PrimaryExpr */
-			reduce(28), /* >, reduce: PrimaryExpr */
-			reduce(28), /* >=, reduce: PrimaryExpr */
-			reduce(28), /* +, reduce: PrimaryExpr */
-			reduce(28), /* -, reduce: PrimaryExpr */
-			reduce(28), /* *, reduce: PrimaryExpr */
-			reduce(28), /* /, reduce: PrimaryExpr */
-			reduce(28), /* %, reduce: PrimaryExpr */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(28), /* ), reduce: PrimaryExpr */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S298
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			nil,        /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			shift(349), /* ) */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S299
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(45), /* ||, reduce: Ref */
-			reduce(45), /* &&, reduce: Ref */
-			reduce(45), /* ==, reduce: Ref */
-			reduce(45), /* !=, reduce: Ref */
-			reduce(45), /* <, reduce: Ref */
-			reduce(45), /* <=, reduce: Ref */
-			reduce(45), /* >, reduce: Ref */
-			reduce(45), /* >=, reduce: Ref */
-			reduce(45), /* +, reduce: Ref */
-			reduce(45), /* -, reduce: Ref */
-			reduce(45), /* *, reduce: Ref */
-			reduce(45), /* /, reduce: Ref */
-			reduce(45), /* %, reduce: Ref */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(45), /* ), reduce: Ref */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			reduce(45), /* selector, reduce: Ref */
-			reduce(45), /* index, reduce: Ref */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S300
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(46), /* ||, reduce: Ref */
-			reduce(46), /* &&, reduce: Ref */
-			reduce(46), /* ==, reduce: Ref */
-			reduce(46), /* !=, reduce: Ref */
-			reduce(46), /* <, reduce: Ref */
-			reduce(46), /* <=, reduce: Ref */
-			reduce(46), /* >, reduce: Ref */
-			reduce(46), /* >=, reduce: Ref */
-			reduce(46), /* +, reduce: Ref */
-			reduce(46), /* -, reduce: Ref */
-			reduce(46), /* *, reduce: Ref */
-			reduce(46), /* /, reduce: Ref */
-			reduce(46), /* %, reduce: Ref */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(46), /* ), reduce: Ref */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			reduce(46), /* selector, reduce: Ref */
-			reduce(46), /* index, reduce: Ref */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S301
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(3),  /* ||, reduce: Expr */
-			shift(215), /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			nil,        /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(3),  /* ), reduce: Expr */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			reduce(3),  /* ,, reduce: Expr */
-		},
-	},
-	actionRow{ // S302
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(5),  /* ||, reduce: Expr1 */
-			reduce(5),  /* &&, reduce: Expr1 */
-			shift(216), /* == */
-			shift(217), /* != */
-			shift(218), /* < */
-			shift(219), /* <= */
-			shift(220), /* > */
-			shift(221), /* >= */
-			nil,        /* + */
-			nil,        /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(5),  /* ), reduce: Expr1 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			reduce(5),  /* ,, reduce: Expr1 */
-		},
-	},
-	actionRow{ // S303
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(7),  /* ||, reduce: Expr2 */
-			reduce(7),  /* &&, reduce: Expr2 */
-			reduce(7),  /* ==, reduce: Expr2 */
-			reduce(7),  /* !=, reduce: Expr2 */
-			reduce(7),  /* <, reduce: Expr2 */
-			reduce(7),  /* <=, reduce: Expr2 */
-			reduce(7),  /* >, reduce: Expr2 */
-			reduce(7),  /* >=, reduce: Expr2 */
-			shift(222), /* + */
-			shift(223), /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(7),  /* ), reduce: Expr2 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			reduce(7),  /* ,, reduce: Expr2 */
-		},
-	},
-	actionRow{ // S304
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(8),  /* ||, reduce: Expr2 */
-			reduce(8),  /* &&, reduce: Expr2 */
-			reduce(8),  /* ==, reduce: Expr2 */
-			reduce(8),  /* !=, reduce: Expr2 */
-			reduce(8),  /* <, reduce: Expr2 */
-			reduce(8),  /* <=, reduce: Expr2 */
-			reduce(8),  /* >, reduce: Expr2 */
-			reduce(8),  /* >=, reduce: Expr2 */
-			shift(222), /* + */
-			shift(223), /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(8),  /* ), reduce: Expr2 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			reduce(8),  /* ,, reduce: Expr2 */
-		},
-	},
-	actionRow{ // S305
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(9),  /* ||, reduce: Expr2 */
-			reduce(9),  /* &&, reduce: Expr2 */
-			reduce(9),  /* ==, reduce: Expr2 */
-			reduce(9),  /* !=, reduce: Expr2 */
-			reduce(9),  /* <, reduce: Expr2 */
-			reduce(9),  /* <=, reduce: Expr2 */
-			reduce(9),  /* >, reduce: Expr2 */
-			reduce(9),  /* >=, reduce: Expr2 */
-			shift(222), /* + */
-			shift(223), /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(9),  /* ), reduce: Expr2 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			reduce(9),  /* ,, reduce: Expr2 */
-		},
-	},
-	actionRow{ // S306
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(10), /* ||, reduce: Expr2 */
-			reduce(10), /* &&, reduce: Expr2 */
-			reduce(10), /* ==, reduce: Expr2 */
-			reduce(10), /* !=, reduce: Expr2 */
-			reduce(10), /* <, reduce: Expr2 */
-			reduce(10), /* <=, reduce: Expr2 */
-			reduce(10), /* >, reduce: Expr2 */
-			reduce(10), /* >=, reduce: Expr2 */
-			shift(222), /* + */
-			shift(223), /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(10), /* ), reduce: Expr2 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			reduce(10), /* ,, reduce: Expr2 */
-		},
-	},
-	actionRow{ // S307
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(11), /* ||, reduce: Expr2 */
-			reduce(11), /* &&, reduce: Expr2 */
-			reduce(11), /* ==, reduce: Expr2 */
-			reduce(11), /* !=, reduce: Expr2 */
-			reduce(11), /* <, reduce: Expr2 */
-			reduce(11), /* <=, reduce: Expr2 */
-			reduce(11), /* >, reduce: Expr2 */
-			reduce(11), /* >=, reduce: Expr2 */
-			shift(222), /* + */
-			shift(223), /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(11), /* ), reduce: Expr2 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			reduce(11), /* ,, reduce: Expr2 */
-		},
-	},
-	actionRow{ // S308
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(12), /* ||, reduce: Expr2 */
-			reduce(12), /* &&, reduce: Expr2 */
-			reduce(12), /* ==, reduce: Expr2 */
-			reduce(12), /* !=, reduce: Expr2 */
-			reduce(12), /* <, reduce: Expr2 */
-			reduce(12), /* <=, reduce: Expr2 */
-			reduce(12), /* >, reduce: Expr2 */
-			reduce(12), /* >=, reduce: Expr2 */
-			shift(222), /* + */
-			shift(223), /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(12), /* ), reduce: Expr2 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			reduce(12), /* ,, reduce: Expr2 */
-		},
-	},
-	actionRow{ // S309
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(14), /* ||, reduce: Expr3 */
-			reduce(14), /* &&, reduce: Expr3 */
-			reduce(14), /* ==, reduce: Expr3 */
-			reduce(14), /* !=, reduce: Expr3 */
-			reduce(14), /* <, reduce: Expr3 */
-			reduce(14), /* <=, reduce: Expr3 */
-			reduce(14), /* >, reduce: Expr3 */
-			reduce(14), /* >=, reduce: Expr3 */
-			reduce(14), /* +, reduce: Expr3 */
-			reduce(14), /* -, reduce: Expr3 */
-			shift(224), /* * */
-			shift(225), /* / */
-			shift(226), /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(14), /* ), reduce: Expr3 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			reduce(14), /* ,, reduce: Expr3 */
-		},
-	},
-	actionRow{ // S310
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(15), /* ||, reduce: Expr3 */
-			reduce(15), /* &&, reduce: Expr3 */
-			reduce(15), /* ==, reduce: Expr3 */
-			reduce(15), /* !=, reduce: Expr3 */
-			reduce(15), /* <, reduce: Expr3 */
-			reduce(15), /* <=, reduce: Expr3 */
-			reduce(15), /* >, reduce: Expr3 */
-			reduce(15), /* >=, reduce: Expr3 */
-			reduce(15), /* +, reduce: Expr3 */
-			reduce(15), /* -, reduce: Expr3 */
-			shift(224), /* * */
-			shift(225), /* / */
-			shift(226), /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(15), /* ), reduce: Expr3 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			reduce(15), /* ,, reduce: Expr3 */
-		},
-	},
-	actionRow{ // S311
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(17), /* ||, reduce: Expr4 */
-			reduce(17), /* &&, reduce: Expr4 */
-			reduce(17), /* ==, reduce: Expr4 */
-			reduce(17), /* !=, reduce: Expr4 */
-			reduce(17), /* <, reduce: Expr4 */
-			reduce(17), /* <=, reduce: Expr4 */
-			reduce(17), /* >, reduce: Expr4 */
-			reduce(17), /* >=, reduce: Expr4 */
-			reduce(17), /* +, reduce: Expr4 */
-			reduce(17), /* -, reduce: Expr4 */
-			reduce(17), /* *, reduce: Expr4 */
-			reduce(17), /* /, reduce: Expr4 */
-			reduce(17), /* %, reduce: Expr4 */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(17), /* ), reduce: Expr4 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			reduce(17), /* ,, reduce: Expr4 */
-		},
-	},
-	actionRow{ // S312
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(18), /* ||, reduce: Expr4 */
-			reduce(18), /* &&, reduce: Expr4 */
-			reduce(18), /* ==, reduce: Expr4 */
-			reduce(18), /* !=, reduce: Expr4 */
-			reduce(18), /* <, reduce: Expr4 */
-			reduce(18), /* <=, reduce: Expr4 */
-			reduce(18), /* >, reduce: Expr4 */
-			reduce(18), /* >=, reduce: Expr4 */
-			reduce(18), /* +, reduce: Expr4 */
-			reduce(18), /* -, reduce: Expr4 */
-			reduce(18), /* *, reduce: Expr4 */
-			reduce(18), /* /, reduce: Expr4 */
-			reduce(18), /* %, reduce: Expr4 */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(18), /* ), reduce: Expr4 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			reduce(18), /* ,, reduce: Expr4 */
-		},
-	},
-	actionRow{ // S313
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(19), /* ||, reduce: Expr4 */
-			reduce(19), /* &&, reduce: Expr4 */
-			reduce(19), /* ==, reduce: Expr4 */
-			reduce(19), /* !=, reduce: Expr4 */
-			reduce(19), /* <, reduce: Expr4 */
-			reduce(19), /* <=, reduce: Expr4 */
-			reduce(19), /* >, reduce: Expr4 */
-			reduce(19), /* >=, reduce: Expr4 */
-			reduce(19), /* +, reduce: Expr4 */
-			reduce(19), /* -, reduce: Expr4 */
-			reduce(19), /* *, reduce: Expr4 */
-			reduce(19), /* /, reduce: Expr4 */
-			reduce(19), /* %, reduce: Expr4 */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(19), /* ), reduce: Expr4 */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			reduce(19), /* ,, reduce: Expr4 */
-		},
-	},
-	actionRow{ // S314
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			nil,        /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			shift(350), /* ) */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			nil,        /* , */
-		},
-	},
-	actionRow{ // S315
-		canRecover: false,
-		actions: [numSymbols]action{
-			nil,        /* INVALID */
-			nil,        /* $ */
-			reduce(28), /* ||, reduce: PrimaryExpr */
-			reduce(28), /* &&, reduce: PrimaryExpr */
-			reduce(28), /* ==, reduce: PrimaryExpr */
-			reduce(28), /* !=, reduce: PrimaryExpr */
-			reduce(28), /* <, reduce: PrimaryExpr */
-			reduce(28), /* <=, reduce: PrimaryExpr */
-			reduce(28), /* >, reduce: PrimaryExpr */
-			reduce(28), /* >=, reduce: PrimaryExpr */
-			reduce(28), /* +, reduce: PrimaryExpr */
-			reduce(28), /* -, reduce: PrimaryExpr */
-			reduce(28), /* *, reduce: PrimaryExpr */
-			reduce(28), /* /, reduce: PrimaryExpr */
-			reduce(28), /* %, reduce: PrimaryExpr */
-			nil,        /* ! */
-			nil,        /* ident */
-			nil,        /* ( */
-			reduce(28), /* ), reduce: PrimaryExpr */
-			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
-			nil,        /* true */
-			nil,        /* false */
-			nil,        /* nil */
-			nil,        /* null */
-			nil,        /* intLit */
-			nil,        /* floatLit */
-			nil,        /* stringLit */
-			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
-			nil,        /* empty */
-			reduce(28), /* ,, reduce: PrimaryExpr */
 		},
 	},
 	actionRow{ // S316
@@ -12340,26 +12972,26 @@ var actionTab = actionTable{
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			nil,        /* || */
-			nil,        /* && */
-			nil,        /* == */
-			nil,        /* != */
-			nil,        /* < */
-			nil,        /* <= */
-			nil,        /* > */
-			nil,        /* >= */
-			nil,        /* + */
-			nil,        /* - */
-			nil,        /* * */
-			nil,        /* / */
-			nil,        /* % */
+			reduce(47), /* ||, reduce: Indexer */
+			reduce(47), /* &&, reduce: Indexer */
+			reduce(47), /* ==, reduce: Indexer */
+			reduce(47), /* !=, reduce: Indexer */
+			reduce(47), /* <, reduce: Indexer */
+			reduce(47), /* <=, reduce: Indexer */
+			reduce(47), /* >, reduce: Indexer */
+			reduce(47), /* >=, reduce: Indexer */
+			reduce(47), /* +, reduce: Indexer */
+			reduce(47), /* -, reduce: Indexer */
+			reduce(47), /* *, reduce: Indexer */
+			reduce(47), /* /, reduce: Indexer */
+			reduce(47), /* %, reduce: Indexer */
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
-			shift(351), /* ) */
+			nil,        /* ) */
 			nil,        /* functionName */
-			nil,        /* ? */
-			nil,        /* : */
+			reduce(47), /* ?, reduce: Indexer */
+			reduce(47), /* :, reduce: Indexer */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* nil */
@@ -12368,8 +13000,10 @@ var actionTab = actionTable{
 			nil,        /* floatLit */
 			nil,        /* stringLit */
 			nil,        /* ref */
-			nil,        /* selector */
-			nil,        /* index */
+			reduce(47), /* selector, reduce: Indexer */
+			reduce(47), /* index, reduce: Indexer */
+			reduce(47), /* [, reduce: Indexer */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
@@ -12379,6 +13013,1687 @@ var actionTab = actionTable{
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(202), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
+			nil,        /* ) */
+			shift(209), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S318
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(202), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
+			nil,        /* ) */
+			shift(209), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S319
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			reduce(48), /* $, reduce: Indexer */
+			reduce(48), /* ||, reduce: Indexer */
+			reduce(48), /* &&, reduce: Indexer */
+			reduce(48), /* ==, reduce: Indexer */
+			reduce(48), /* !=, reduce: Indexer */
+			reduce(48), /* <, reduce: Indexer */
+			reduce(48), /* <=, reduce: Indexer */
+			reduce(48), /* >, reduce: Indexer */
+			reduce(48), /* >=, reduce: Indexer */
+			reduce(48), /* +, reduce: Indexer */
+			reduce(48), /* -, reduce: Indexer */
+			reduce(48), /* *, reduce: Indexer */
+			reduce(48), /* /, reduce: Indexer */
+			reduce(48), /* %, reduce: Indexer */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			reduce(48), /* ?, reduce: Indexer */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			reduce(48), /* selector, reduce: Indexer */
+			reduce(48), /* index, reduce: Indexer */
+			reduce(48), /* [, reduce: Indexer */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S320
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(202), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
+			nil,        /* ) */
+			shift(209), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S321
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(202), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
+			nil,        /* ) */
+			shift(209), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S322
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(202), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
+			nil,        /* ) */
+			shift(209), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S323
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(202), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
+			nil,        /* ) */
+			shift(209), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S324
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(202), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
+			nil,        /* ) */
+			shift(209), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S325
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(202), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
+			nil,        /* ) */
+			shift(209), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S326
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(202), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
+			nil,        /* ) */
+			shift(209), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S327
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(202), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
+			nil,        /* ) */
+			shift(209), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S328
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(202), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
+			nil,        /* ) */
+			shift(209), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S329
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(202), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
+			nil,        /* ) */
+			shift(209), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S330
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(202), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
+			nil,        /* ) */
+			shift(209), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S331
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(202), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
+			nil,        /* ) */
+			shift(209), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S332
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(22), /* ||, reduce: Expr5 */
+			reduce(22), /* &&, reduce: Expr5 */
+			reduce(22), /* ==, reduce: Expr5 */
+			reduce(22), /* !=, reduce: Expr5 */
+			reduce(22), /* <, reduce: Expr5 */
+			reduce(22), /* <=, reduce: Expr5 */
+			reduce(22), /* >, reduce: Expr5 */
+			reduce(22), /* >=, reduce: Expr5 */
+			reduce(22), /* +, reduce: Expr5 */
+			reduce(22), /* -, reduce: Expr5 */
+			reduce(22), /* *, reduce: Expr5 */
+			reduce(22), /* /, reduce: Expr5 */
+			reduce(22), /* %, reduce: Expr5 */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(22), /* ], reduce: Expr5 */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S333
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(23), /* ||, reduce: Expr5 */
+			reduce(23), /* &&, reduce: Expr5 */
+			reduce(23), /* ==, reduce: Expr5 */
+			reduce(23), /* !=, reduce: Expr5 */
+			reduce(23), /* <, reduce: Expr5 */
+			reduce(23), /* <=, reduce: Expr5 */
+			reduce(23), /* >, reduce: Expr5 */
+			reduce(23), /* >=, reduce: Expr5 */
+			reduce(23), /* +, reduce: Expr5 */
+			reduce(23), /* -, reduce: Expr5 */
+			reduce(23), /* *, reduce: Expr5 */
+			reduce(23), /* /, reduce: Expr5 */
+			reduce(23), /* %, reduce: Expr5 */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(23), /* ], reduce: Expr5 */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S334
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(120), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
+			reduce(49), /* ), reduce: Args */
+			shift(128), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S335
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			shift(221), /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			shift(425), /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S336
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(120), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(123), /* ! */
+			shift(125), /* ident */
+			shift(126), /* ( */
+			reduce(49), /* ), reduce: Args */
+			shift(128), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(131), /* true */
+			shift(132), /* false */
+			shift(134), /* nil */
+			shift(135), /* null */
+			shift(136), /* intLit */
+			shift(137), /* floatLit */
+			shift(138), /* stringLit */
+			shift(139), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S337
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(42), /* ||, reduce: Literal */
+			reduce(42), /* &&, reduce: Literal */
+			reduce(42), /* ==, reduce: Literal */
+			reduce(42), /* !=, reduce: Literal */
+			reduce(42), /* <, reduce: Literal */
+			reduce(42), /* <=, reduce: Literal */
+			reduce(42), /* >, reduce: Literal */
+			reduce(42), /* >=, reduce: Literal */
+			reduce(42), /* +, reduce: Literal */
+			reduce(42), /* -, reduce: Literal */
+			reduce(42), /* *, reduce: Literal */
+			reduce(42), /* /, reduce: Literal */
+			reduce(42), /* %, reduce: Literal */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			shift(427), /* selector */
+			shift(340), /* index */
+			shift(341), /* [ */
+			reduce(42), /* ], reduce: Literal */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S338
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(43), /* ||, reduce: Ref */
+			reduce(43), /* &&, reduce: Ref */
+			reduce(43), /* ==, reduce: Ref */
+			reduce(43), /* !=, reduce: Ref */
+			reduce(43), /* <, reduce: Ref */
+			reduce(43), /* <=, reduce: Ref */
+			reduce(43), /* >, reduce: Ref */
+			reduce(43), /* >=, reduce: Ref */
+			reduce(43), /* +, reduce: Ref */
+			reduce(43), /* -, reduce: Ref */
+			reduce(43), /* *, reduce: Ref */
+			reduce(43), /* /, reduce: Ref */
+			reduce(43), /* %, reduce: Ref */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			reduce(43), /* selector, reduce: Ref */
+			reduce(43), /* index, reduce: Ref */
+			reduce(43), /* [, reduce: Ref */
+			reduce(43), /* ], reduce: Ref */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S339
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(44), /* ||, reduce: Ref */
+			reduce(44), /* &&, reduce: Ref */
+			reduce(44), /* ==, reduce: Ref */
+			reduce(44), /* !=, reduce: Ref */
+			reduce(44), /* <, reduce: Ref */
+			reduce(44), /* <=, reduce: Ref */
+			reduce(44), /* >, reduce: Ref */
+			reduce(44), /* >=, reduce: Ref */
+			reduce(44), /* +, reduce: Ref */
+			reduce(44), /* -, reduce: Ref */
+			reduce(44), /* *, reduce: Ref */
+			reduce(44), /* /, reduce: Ref */
+			reduce(44), /* %, reduce: Ref */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			reduce(44), /* selector, reduce: Ref */
+			reduce(44), /* index, reduce: Ref */
+			reduce(44), /* [, reduce: Ref */
+			reduce(44), /* ], reduce: Ref */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S340
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(47), /* ||, reduce: Indexer */
+			reduce(47), /* &&, reduce: Indexer */
+			reduce(47), /* ==, reduce: Indexer */
+			reduce(47), /* !=, reduce: Indexer */
+			reduce(47), /* <, reduce: Indexer */
+			reduce(47), /* <=, reduce: Indexer */
+			reduce(47), /* >, reduce: Indexer */
+			reduce(47), /* >=, reduce: Indexer */
+			reduce(47), /* +, reduce: Indexer */
+			reduce(47), /* -, reduce: Indexer */
+			reduce(47), /* *, reduce: Indexer */
+			reduce(47), /* /, reduce: Indexer */
+			reduce(47), /* %, reduce: Indexer */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			reduce(47), /* selector, reduce: Indexer */
+			reduce(47), /* index, reduce: Indexer */
+			reduce(47), /* [, reduce: Indexer */
+			reduce(47), /* ], reduce: Indexer */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S341
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			shift(202), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			shift(205), /* ! */
+			shift(207), /* ident */
+			shift(208), /* ( */
+			nil,        /* ) */
+			shift(209), /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			shift(212), /* true */
+			shift(213), /* false */
+			shift(215), /* nil */
+			shift(216), /* null */
+			shift(217), /* intLit */
+			shift(218), /* floatLit */
+			shift(219), /* stringLit */
+			shift(220), /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S342
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(3),  /* ||, reduce: Expr */
+			shift(222), /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(3),  /* ), reduce: Expr */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S343
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(5),  /* ||, reduce: Expr1 */
+			reduce(5),  /* &&, reduce: Expr1 */
+			shift(223), /* == */
+			shift(224), /* != */
+			shift(225), /* < */
+			shift(226), /* <= */
+			shift(227), /* > */
+			shift(228), /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(5),  /* ), reduce: Expr1 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S344
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(7),  /* ||, reduce: Expr2 */
+			reduce(7),  /* &&, reduce: Expr2 */
+			reduce(7),  /* ==, reduce: Expr2 */
+			reduce(7),  /* !=, reduce: Expr2 */
+			reduce(7),  /* <, reduce: Expr2 */
+			reduce(7),  /* <=, reduce: Expr2 */
+			reduce(7),  /* >, reduce: Expr2 */
+			reduce(7),  /* >=, reduce: Expr2 */
+			shift(229), /* + */
+			shift(230), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(7),  /* ), reduce: Expr2 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S345
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(8),  /* ||, reduce: Expr2 */
+			reduce(8),  /* &&, reduce: Expr2 */
+			reduce(8),  /* ==, reduce: Expr2 */
+			reduce(8),  /* !=, reduce: Expr2 */
+			reduce(8),  /* <, reduce: Expr2 */
+			reduce(8),  /* <=, reduce: Expr2 */
+			reduce(8),  /* >, reduce: Expr2 */
+			reduce(8),  /* >=, reduce: Expr2 */
+			shift(229), /* + */
+			shift(230), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(8),  /* ), reduce: Expr2 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S346
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(9),  /* ||, reduce: Expr2 */
+			reduce(9),  /* &&, reduce: Expr2 */
+			reduce(9),  /* ==, reduce: Expr2 */
+			reduce(9),  /* !=, reduce: Expr2 */
+			reduce(9),  /* <, reduce: Expr2 */
+			reduce(9),  /* <=, reduce: Expr2 */
+			reduce(9),  /* >, reduce: Expr2 */
+			reduce(9),  /* >=, reduce: Expr2 */
+			shift(229), /* + */
+			shift(230), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(9),  /* ), reduce: Expr2 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S347
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(10), /* ||, reduce: Expr2 */
+			reduce(10), /* &&, reduce: Expr2 */
+			reduce(10), /* ==, reduce: Expr2 */
+			reduce(10), /* !=, reduce: Expr2 */
+			reduce(10), /* <, reduce: Expr2 */
+			reduce(10), /* <=, reduce: Expr2 */
+			reduce(10), /* >, reduce: Expr2 */
+			reduce(10), /* >=, reduce: Expr2 */
+			shift(229), /* + */
+			shift(230), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(10), /* ), reduce: Expr2 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S348
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(11), /* ||, reduce: Expr2 */
+			reduce(11), /* &&, reduce: Expr2 */
+			reduce(11), /* ==, reduce: Expr2 */
+			reduce(11), /* !=, reduce: Expr2 */
+			reduce(11), /* <, reduce: Expr2 */
+			reduce(11), /* <=, reduce: Expr2 */
+			reduce(11), /* >, reduce: Expr2 */
+			reduce(11), /* >=, reduce: Expr2 */
+			shift(229), /* + */
+			shift(230), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(11), /* ), reduce: Expr2 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S349
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(12), /* ||, reduce: Expr2 */
+			reduce(12), /* &&, reduce: Expr2 */
+			reduce(12), /* ==, reduce: Expr2 */
+			reduce(12), /* !=, reduce: Expr2 */
+			reduce(12), /* <, reduce: Expr2 */
+			reduce(12), /* <=, reduce: Expr2 */
+			reduce(12), /* >, reduce: Expr2 */
+			reduce(12), /* >=, reduce: Expr2 */
+			shift(229), /* + */
+			shift(230), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(12), /* ), reduce: Expr2 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S350
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(14), /* ||, reduce: Expr3 */
+			reduce(14), /* &&, reduce: Expr3 */
+			reduce(14), /* ==, reduce: Expr3 */
+			reduce(14), /* !=, reduce: Expr3 */
+			reduce(14), /* <, reduce: Expr3 */
+			reduce(14), /* <=, reduce: Expr3 */
+			reduce(14), /* >, reduce: Expr3 */
+			reduce(14), /* >=, reduce: Expr3 */
+			reduce(14), /* +, reduce: Expr3 */
+			reduce(14), /* -, reduce: Expr3 */
+			shift(231), /* * */
+			shift(232), /* / */
+			shift(233), /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(14), /* ), reduce: Expr3 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S351
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(15), /* ||, reduce: Expr3 */
+			reduce(15), /* &&, reduce: Expr3 */
+			reduce(15), /* ==, reduce: Expr3 */
+			reduce(15), /* !=, reduce: Expr3 */
+			reduce(15), /* <, reduce: Expr3 */
+			reduce(15), /* <=, reduce: Expr3 */
+			reduce(15), /* >, reduce: Expr3 */
+			reduce(15), /* >=, reduce: Expr3 */
+			reduce(15), /* +, reduce: Expr3 */
+			reduce(15), /* -, reduce: Expr3 */
+			shift(231), /* * */
+			shift(232), /* / */
+			shift(233), /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(15), /* ), reduce: Expr3 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S352
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(17), /* ||, reduce: Expr4 */
+			reduce(17), /* &&, reduce: Expr4 */
+			reduce(17), /* ==, reduce: Expr4 */
+			reduce(17), /* !=, reduce: Expr4 */
+			reduce(17), /* <, reduce: Expr4 */
+			reduce(17), /* <=, reduce: Expr4 */
+			reduce(17), /* >, reduce: Expr4 */
+			reduce(17), /* >=, reduce: Expr4 */
+			reduce(17), /* +, reduce: Expr4 */
+			reduce(17), /* -, reduce: Expr4 */
+			reduce(17), /* *, reduce: Expr4 */
+			reduce(17), /* /, reduce: Expr4 */
+			reduce(17), /* %, reduce: Expr4 */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(17), /* ), reduce: Expr4 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S353
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(18), /* ||, reduce: Expr4 */
+			reduce(18), /* &&, reduce: Expr4 */
+			reduce(18), /* ==, reduce: Expr4 */
+			reduce(18), /* !=, reduce: Expr4 */
+			reduce(18), /* <, reduce: Expr4 */
+			reduce(18), /* <=, reduce: Expr4 */
+			reduce(18), /* >, reduce: Expr4 */
+			reduce(18), /* >=, reduce: Expr4 */
+			reduce(18), /* +, reduce: Expr4 */
+			reduce(18), /* -, reduce: Expr4 */
+			reduce(18), /* *, reduce: Expr4 */
+			reduce(18), /* /, reduce: Expr4 */
+			reduce(18), /* %, reduce: Expr4 */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(18), /* ), reduce: Expr4 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S354
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(19), /* ||, reduce: Expr4 */
+			reduce(19), /* &&, reduce: Expr4 */
+			reduce(19), /* ==, reduce: Expr4 */
+			reduce(19), /* !=, reduce: Expr4 */
+			reduce(19), /* <, reduce: Expr4 */
+			reduce(19), /* <=, reduce: Expr4 */
+			reduce(19), /* >, reduce: Expr4 */
+			reduce(19), /* >=, reduce: Expr4 */
+			reduce(19), /* +, reduce: Expr4 */
+			reduce(19), /* -, reduce: Expr4 */
+			reduce(19), /* *, reduce: Expr4 */
+			reduce(19), /* /, reduce: Expr4 */
+			reduce(19), /* %, reduce: Expr4 */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(19), /* ), reduce: Expr4 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S355
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			shift(430), /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S356
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(28), /* ||, reduce: PrimaryExpr */
+			reduce(28), /* &&, reduce: PrimaryExpr */
+			reduce(28), /* ==, reduce: PrimaryExpr */
+			reduce(28), /* !=, reduce: PrimaryExpr */
+			reduce(28), /* <, reduce: PrimaryExpr */
+			reduce(28), /* <=, reduce: PrimaryExpr */
+			reduce(28), /* >, reduce: PrimaryExpr */
+			reduce(28), /* >=, reduce: PrimaryExpr */
+			reduce(28), /* +, reduce: PrimaryExpr */
+			reduce(28), /* -, reduce: PrimaryExpr */
+			reduce(28), /* *, reduce: PrimaryExpr */
+			reduce(28), /* /, reduce: PrimaryExpr */
+			reduce(28), /* %, reduce: PrimaryExpr */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(28), /* ), reduce: PrimaryExpr */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S357
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			shift(431), /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S358
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
 			reduce(45), /* ||, reduce: Ref */
 			reduce(45), /* &&, reduce: Ref */
 			reduce(45), /* ==, reduce: Ref */
@@ -12409,11 +14724,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			reduce(45), /* selector, reduce: Ref */
 			reduce(45), /* index, reduce: Ref */
+			reduce(45), /* [, reduce: Ref */
+			nil,        /* ] */
 			nil,        /* empty */
-			reduce(45), /* ,, reduce: Ref */
+			nil,        /* , */
 		},
 	},
-	actionRow{ // S318
+	actionRow{ // S359
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -12448,16 +14765,18 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			reduce(46), /* selector, reduce: Ref */
 			reduce(46), /* index, reduce: Ref */
+			reduce(46), /* [, reduce: Ref */
+			nil,        /* ] */
 			nil,        /* empty */
-			reduce(46), /* ,, reduce: Ref */
+			nil,        /* , */
 		},
 	},
-	actionRow{ // S319
+	actionRow{ // S360
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			shift(214), /* || */
+			shift(318), /* || */
 			nil,        /* && */
 			nil,        /* == */
 			nil,        /* != */
@@ -12473,7 +14792,7 @@ var actionTab = actionTable{
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
-			reduce(50), /* ), reduce: ExprList */
+			nil,        /* ) */
 			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
@@ -12487,11 +14806,833 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			shift(432), /* ] */
 			nil,        /* empty */
-			reduce(50), /* ,, reduce: ExprList */
+			nil,        /* , */
 		},
 	},
-	actionRow{ // S320
+	actionRow{ // S361
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(3),  /* ||, reduce: Expr */
+			shift(245), /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(3),  /* ), reduce: Expr */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			reduce(3),  /* ,, reduce: Expr */
+		},
+	},
+	actionRow{ // S362
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(5),  /* ||, reduce: Expr1 */
+			reduce(5),  /* &&, reduce: Expr1 */
+			shift(246), /* == */
+			shift(247), /* != */
+			shift(248), /* < */
+			shift(249), /* <= */
+			shift(250), /* > */
+			shift(251), /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(5),  /* ), reduce: Expr1 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			reduce(5),  /* ,, reduce: Expr1 */
+		},
+	},
+	actionRow{ // S363
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(7),  /* ||, reduce: Expr2 */
+			reduce(7),  /* &&, reduce: Expr2 */
+			reduce(7),  /* ==, reduce: Expr2 */
+			reduce(7),  /* !=, reduce: Expr2 */
+			reduce(7),  /* <, reduce: Expr2 */
+			reduce(7),  /* <=, reduce: Expr2 */
+			reduce(7),  /* >, reduce: Expr2 */
+			reduce(7),  /* >=, reduce: Expr2 */
+			shift(252), /* + */
+			shift(253), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(7),  /* ), reduce: Expr2 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			reduce(7),  /* ,, reduce: Expr2 */
+		},
+	},
+	actionRow{ // S364
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(8),  /* ||, reduce: Expr2 */
+			reduce(8),  /* &&, reduce: Expr2 */
+			reduce(8),  /* ==, reduce: Expr2 */
+			reduce(8),  /* !=, reduce: Expr2 */
+			reduce(8),  /* <, reduce: Expr2 */
+			reduce(8),  /* <=, reduce: Expr2 */
+			reduce(8),  /* >, reduce: Expr2 */
+			reduce(8),  /* >=, reduce: Expr2 */
+			shift(252), /* + */
+			shift(253), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(8),  /* ), reduce: Expr2 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			reduce(8),  /* ,, reduce: Expr2 */
+		},
+	},
+	actionRow{ // S365
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(9),  /* ||, reduce: Expr2 */
+			reduce(9),  /* &&, reduce: Expr2 */
+			reduce(9),  /* ==, reduce: Expr2 */
+			reduce(9),  /* !=, reduce: Expr2 */
+			reduce(9),  /* <, reduce: Expr2 */
+			reduce(9),  /* <=, reduce: Expr2 */
+			reduce(9),  /* >, reduce: Expr2 */
+			reduce(9),  /* >=, reduce: Expr2 */
+			shift(252), /* + */
+			shift(253), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(9),  /* ), reduce: Expr2 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			reduce(9),  /* ,, reduce: Expr2 */
+		},
+	},
+	actionRow{ // S366
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(10), /* ||, reduce: Expr2 */
+			reduce(10), /* &&, reduce: Expr2 */
+			reduce(10), /* ==, reduce: Expr2 */
+			reduce(10), /* !=, reduce: Expr2 */
+			reduce(10), /* <, reduce: Expr2 */
+			reduce(10), /* <=, reduce: Expr2 */
+			reduce(10), /* >, reduce: Expr2 */
+			reduce(10), /* >=, reduce: Expr2 */
+			shift(252), /* + */
+			shift(253), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(10), /* ), reduce: Expr2 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			reduce(10), /* ,, reduce: Expr2 */
+		},
+	},
+	actionRow{ // S367
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(11), /* ||, reduce: Expr2 */
+			reduce(11), /* &&, reduce: Expr2 */
+			reduce(11), /* ==, reduce: Expr2 */
+			reduce(11), /* !=, reduce: Expr2 */
+			reduce(11), /* <, reduce: Expr2 */
+			reduce(11), /* <=, reduce: Expr2 */
+			reduce(11), /* >, reduce: Expr2 */
+			reduce(11), /* >=, reduce: Expr2 */
+			shift(252), /* + */
+			shift(253), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(11), /* ), reduce: Expr2 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			reduce(11), /* ,, reduce: Expr2 */
+		},
+	},
+	actionRow{ // S368
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(12), /* ||, reduce: Expr2 */
+			reduce(12), /* &&, reduce: Expr2 */
+			reduce(12), /* ==, reduce: Expr2 */
+			reduce(12), /* !=, reduce: Expr2 */
+			reduce(12), /* <, reduce: Expr2 */
+			reduce(12), /* <=, reduce: Expr2 */
+			reduce(12), /* >, reduce: Expr2 */
+			reduce(12), /* >=, reduce: Expr2 */
+			shift(252), /* + */
+			shift(253), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(12), /* ), reduce: Expr2 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			reduce(12), /* ,, reduce: Expr2 */
+		},
+	},
+	actionRow{ // S369
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(14), /* ||, reduce: Expr3 */
+			reduce(14), /* &&, reduce: Expr3 */
+			reduce(14), /* ==, reduce: Expr3 */
+			reduce(14), /* !=, reduce: Expr3 */
+			reduce(14), /* <, reduce: Expr3 */
+			reduce(14), /* <=, reduce: Expr3 */
+			reduce(14), /* >, reduce: Expr3 */
+			reduce(14), /* >=, reduce: Expr3 */
+			reduce(14), /* +, reduce: Expr3 */
+			reduce(14), /* -, reduce: Expr3 */
+			shift(254), /* * */
+			shift(255), /* / */
+			shift(256), /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(14), /* ), reduce: Expr3 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			reduce(14), /* ,, reduce: Expr3 */
+		},
+	},
+	actionRow{ // S370
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(15), /* ||, reduce: Expr3 */
+			reduce(15), /* &&, reduce: Expr3 */
+			reduce(15), /* ==, reduce: Expr3 */
+			reduce(15), /* !=, reduce: Expr3 */
+			reduce(15), /* <, reduce: Expr3 */
+			reduce(15), /* <=, reduce: Expr3 */
+			reduce(15), /* >, reduce: Expr3 */
+			reduce(15), /* >=, reduce: Expr3 */
+			reduce(15), /* +, reduce: Expr3 */
+			reduce(15), /* -, reduce: Expr3 */
+			shift(254), /* * */
+			shift(255), /* / */
+			shift(256), /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(15), /* ), reduce: Expr3 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			reduce(15), /* ,, reduce: Expr3 */
+		},
+	},
+	actionRow{ // S371
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(17), /* ||, reduce: Expr4 */
+			reduce(17), /* &&, reduce: Expr4 */
+			reduce(17), /* ==, reduce: Expr4 */
+			reduce(17), /* !=, reduce: Expr4 */
+			reduce(17), /* <, reduce: Expr4 */
+			reduce(17), /* <=, reduce: Expr4 */
+			reduce(17), /* >, reduce: Expr4 */
+			reduce(17), /* >=, reduce: Expr4 */
+			reduce(17), /* +, reduce: Expr4 */
+			reduce(17), /* -, reduce: Expr4 */
+			reduce(17), /* *, reduce: Expr4 */
+			reduce(17), /* /, reduce: Expr4 */
+			reduce(17), /* %, reduce: Expr4 */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(17), /* ), reduce: Expr4 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			reduce(17), /* ,, reduce: Expr4 */
+		},
+	},
+	actionRow{ // S372
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(18), /* ||, reduce: Expr4 */
+			reduce(18), /* &&, reduce: Expr4 */
+			reduce(18), /* ==, reduce: Expr4 */
+			reduce(18), /* !=, reduce: Expr4 */
+			reduce(18), /* <, reduce: Expr4 */
+			reduce(18), /* <=, reduce: Expr4 */
+			reduce(18), /* >, reduce: Expr4 */
+			reduce(18), /* >=, reduce: Expr4 */
+			reduce(18), /* +, reduce: Expr4 */
+			reduce(18), /* -, reduce: Expr4 */
+			reduce(18), /* *, reduce: Expr4 */
+			reduce(18), /* /, reduce: Expr4 */
+			reduce(18), /* %, reduce: Expr4 */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(18), /* ), reduce: Expr4 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			reduce(18), /* ,, reduce: Expr4 */
+		},
+	},
+	actionRow{ // S373
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(19), /* ||, reduce: Expr4 */
+			reduce(19), /* &&, reduce: Expr4 */
+			reduce(19), /* ==, reduce: Expr4 */
+			reduce(19), /* !=, reduce: Expr4 */
+			reduce(19), /* <, reduce: Expr4 */
+			reduce(19), /* <=, reduce: Expr4 */
+			reduce(19), /* >, reduce: Expr4 */
+			reduce(19), /* >=, reduce: Expr4 */
+			reduce(19), /* +, reduce: Expr4 */
+			reduce(19), /* -, reduce: Expr4 */
+			reduce(19), /* *, reduce: Expr4 */
+			reduce(19), /* /, reduce: Expr4 */
+			reduce(19), /* %, reduce: Expr4 */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(19), /* ), reduce: Expr4 */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			reduce(19), /* ,, reduce: Expr4 */
+		},
+	},
+	actionRow{ // S374
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			shift(433), /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S375
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(28), /* ||, reduce: PrimaryExpr */
+			reduce(28), /* &&, reduce: PrimaryExpr */
+			reduce(28), /* ==, reduce: PrimaryExpr */
+			reduce(28), /* !=, reduce: PrimaryExpr */
+			reduce(28), /* <, reduce: PrimaryExpr */
+			reduce(28), /* <=, reduce: PrimaryExpr */
+			reduce(28), /* >, reduce: PrimaryExpr */
+			reduce(28), /* >=, reduce: PrimaryExpr */
+			reduce(28), /* +, reduce: PrimaryExpr */
+			reduce(28), /* -, reduce: PrimaryExpr */
+			reduce(28), /* *, reduce: PrimaryExpr */
+			reduce(28), /* /, reduce: PrimaryExpr */
+			reduce(28), /* %, reduce: PrimaryExpr */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(28), /* ), reduce: PrimaryExpr */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			reduce(28), /* ,, reduce: PrimaryExpr */
+		},
+	},
+	actionRow{ // S376
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			shift(434), /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S377
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(45), /* ||, reduce: Ref */
+			reduce(45), /* &&, reduce: Ref */
+			reduce(45), /* ==, reduce: Ref */
+			reduce(45), /* !=, reduce: Ref */
+			reduce(45), /* <, reduce: Ref */
+			reduce(45), /* <=, reduce: Ref */
+			reduce(45), /* >, reduce: Ref */
+			reduce(45), /* >=, reduce: Ref */
+			reduce(45), /* +, reduce: Ref */
+			reduce(45), /* -, reduce: Ref */
+			reduce(45), /* *, reduce: Ref */
+			reduce(45), /* /, reduce: Ref */
+			reduce(45), /* %, reduce: Ref */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(45), /* ), reduce: Ref */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			reduce(45), /* selector, reduce: Ref */
+			reduce(45), /* index, reduce: Ref */
+			reduce(45), /* [, reduce: Ref */
+			nil,        /* ] */
+			nil,        /* empty */
+			reduce(45), /* ,, reduce: Ref */
+		},
+	},
+	actionRow{ // S378
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(46), /* ||, reduce: Ref */
+			reduce(46), /* &&, reduce: Ref */
+			reduce(46), /* ==, reduce: Ref */
+			reduce(46), /* !=, reduce: Ref */
+			reduce(46), /* <, reduce: Ref */
+			reduce(46), /* <=, reduce: Ref */
+			reduce(46), /* >, reduce: Ref */
+			reduce(46), /* >=, reduce: Ref */
+			reduce(46), /* +, reduce: Ref */
+			reduce(46), /* -, reduce: Ref */
+			reduce(46), /* *, reduce: Ref */
+			reduce(46), /* /, reduce: Ref */
+			reduce(46), /* %, reduce: Ref */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(46), /* ), reduce: Ref */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			reduce(46), /* selector, reduce: Ref */
+			reduce(46), /* index, reduce: Ref */
+			reduce(46), /* [, reduce: Ref */
+			nil,        /* ] */
+			nil,        /* empty */
+			reduce(46), /* ,, reduce: Ref */
+		},
+	},
+	actionRow{ // S379
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			shift(318), /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			shift(435), /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S380
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			shift(244), /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(52), /* ), reduce: ExprList */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			reduce(52), /* ,, reduce: ExprList */
+		},
+	},
+	actionRow{ // S381
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -12526,11 +15667,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S321
+	actionRow{ // S382
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -12565,11 +15708,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S322
+	actionRow{ // S383
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -12589,7 +15734,7 @@ var actionTab = actionTable{
 			nil,        /* % */
 			shift(54),  /* ! */
 			shift(56),  /* ident */
-			shift(354), /* ( */
+			shift(438), /* ( */
 			nil,        /* ) */
 			shift(58),  /* functionName */
 			nil,        /* ? */
@@ -12604,17 +15749,60 @@ var actionTab = actionTable{
 			shift(70),  /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S323
+	actionRow{ // S384
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(48), /* ||, reduce: Indexer */
+			reduce(48), /* &&, reduce: Indexer */
+			reduce(48), /* ==, reduce: Indexer */
+			reduce(48), /* !=, reduce: Indexer */
+			reduce(48), /* <, reduce: Indexer */
+			reduce(48), /* <=, reduce: Indexer */
+			reduce(48), /* >, reduce: Indexer */
+			reduce(48), /* >=, reduce: Indexer */
+			reduce(48), /* +, reduce: Indexer */
+			reduce(48), /* -, reduce: Indexer */
+			reduce(48), /* *, reduce: Indexer */
+			reduce(48), /* /, reduce: Indexer */
+			reduce(48), /* %, reduce: Indexer */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(48), /* ), reduce: Indexer */
+			nil,        /* functionName */
+			reduce(48), /* ?, reduce: Indexer */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			reduce(48), /* selector, reduce: Indexer */
+			reduce(48), /* index, reduce: Indexer */
+			reduce(48), /* [, reduce: Indexer */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S385
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			reduce(3),  /* ||, reduce: Expr */
-			shift(259), /* && */
+			shift(292), /* && */
 			nil,        /* == */
 			nil,        /* != */
 			nil,        /* < */
@@ -12643,23 +15831,25 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S324
+	actionRow{ // S386
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
 			reduce(5),  /* ||, reduce: Expr1 */
 			reduce(5),  /* &&, reduce: Expr1 */
-			shift(260), /* == */
-			shift(261), /* != */
-			shift(262), /* < */
-			shift(263), /* <= */
-			shift(264), /* > */
-			shift(265), /* >= */
+			shift(293), /* == */
+			shift(294), /* != */
+			shift(295), /* < */
+			shift(296), /* <= */
+			shift(297), /* > */
+			shift(298), /* >= */
 			nil,        /* + */
 			nil,        /* - */
 			nil,        /* * */
@@ -12682,11 +15872,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S325
+	actionRow{ // S387
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -12699,8 +15891,8 @@ var actionTab = actionTable{
 			reduce(7),  /* <=, reduce: Expr2 */
 			reduce(7),  /* >, reduce: Expr2 */
 			reduce(7),  /* >=, reduce: Expr2 */
-			shift(266), /* + */
-			shift(267), /* - */
+			shift(299), /* + */
+			shift(300), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
@@ -12721,11 +15913,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S326
+	actionRow{ // S388
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -12738,8 +15932,8 @@ var actionTab = actionTable{
 			reduce(8),  /* <=, reduce: Expr2 */
 			reduce(8),  /* >, reduce: Expr2 */
 			reduce(8),  /* >=, reduce: Expr2 */
-			shift(266), /* + */
-			shift(267), /* - */
+			shift(299), /* + */
+			shift(300), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
@@ -12760,11 +15954,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S327
+	actionRow{ // S389
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -12777,8 +15973,8 @@ var actionTab = actionTable{
 			reduce(9),  /* <=, reduce: Expr2 */
 			reduce(9),  /* >, reduce: Expr2 */
 			reduce(9),  /* >=, reduce: Expr2 */
-			shift(266), /* + */
-			shift(267), /* - */
+			shift(299), /* + */
+			shift(300), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
@@ -12799,11 +15995,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S328
+	actionRow{ // S390
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -12816,8 +16014,8 @@ var actionTab = actionTable{
 			reduce(10), /* <=, reduce: Expr2 */
 			reduce(10), /* >, reduce: Expr2 */
 			reduce(10), /* >=, reduce: Expr2 */
-			shift(266), /* + */
-			shift(267), /* - */
+			shift(299), /* + */
+			shift(300), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
@@ -12838,11 +16036,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S329
+	actionRow{ // S391
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -12855,8 +16055,8 @@ var actionTab = actionTable{
 			reduce(11), /* <=, reduce: Expr2 */
 			reduce(11), /* >, reduce: Expr2 */
 			reduce(11), /* >=, reduce: Expr2 */
-			shift(266), /* + */
-			shift(267), /* - */
+			shift(299), /* + */
+			shift(300), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
@@ -12877,11 +16077,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S330
+	actionRow{ // S392
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -12894,8 +16096,8 @@ var actionTab = actionTable{
 			reduce(12), /* <=, reduce: Expr2 */
 			reduce(12), /* >, reduce: Expr2 */
 			reduce(12), /* >=, reduce: Expr2 */
-			shift(266), /* + */
-			shift(267), /* - */
+			shift(299), /* + */
+			shift(300), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
@@ -12916,11 +16118,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S331
+	actionRow{ // S393
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -12935,9 +16139,9 @@ var actionTab = actionTable{
 			reduce(14), /* >=, reduce: Expr3 */
 			reduce(14), /* +, reduce: Expr3 */
 			reduce(14), /* -, reduce: Expr3 */
-			shift(268), /* * */
-			shift(269), /* / */
-			shift(270), /* % */
+			shift(301), /* * */
+			shift(302), /* / */
+			shift(303), /* % */
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
@@ -12955,11 +16159,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S332
+	actionRow{ // S394
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -12974,9 +16180,9 @@ var actionTab = actionTable{
 			reduce(15), /* >=, reduce: Expr3 */
 			reduce(15), /* +, reduce: Expr3 */
 			reduce(15), /* -, reduce: Expr3 */
-			shift(268), /* * */
-			shift(269), /* / */
-			shift(270), /* % */
+			shift(301), /* * */
+			shift(302), /* / */
+			shift(303), /* % */
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
@@ -12994,11 +16200,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S333
+	actionRow{ // S395
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13033,11 +16241,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S334
+	actionRow{ // S396
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13072,11 +16282,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S335
+	actionRow{ // S397
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13111,16 +16323,18 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S336
+	actionRow{ // S398
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			shift(193), /* || */
+			shift(221), /* || */
 			nil,        /* && */
 			nil,        /* == */
 			nil,        /* != */
@@ -13136,7 +16350,7 @@ var actionTab = actionTable{
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
-			shift(338), /* ) */
+			shift(400), /* ) */
 			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
@@ -13150,11 +16364,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S337
+	actionRow{ // S399
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13175,7 +16391,7 @@ var actionTab = actionTable{
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
-			shift(356), /* ) */
+			shift(440), /* ) */
 			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
@@ -13189,11 +16405,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S338
+	actionRow{ // S400
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13228,11 +16446,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S339
+	actionRow{ // S401
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13267,11 +16487,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S340
+	actionRow{ // S402
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13292,7 +16514,7 @@ var actionTab = actionTable{
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
-			shift(357), /* ) */
+			shift(441), /* ) */
 			nil,        /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
@@ -13306,11 +16528,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S341
+	actionRow{ // S403
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13333,8 +16557,8 @@ var actionTab = actionTable{
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* functionName */
-			shift(278), /* ? */
-			shift(358), /* : */
+			shift(311), /* ? */
+			shift(442), /* : */
 			nil,        /* true */
 			nil,        /* false */
 			nil,        /* nil */
@@ -13345,11 +16569,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S342
+	actionRow{ // S404
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13384,11 +16610,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S343
+	actionRow{ // S405
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13423,11 +16651,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S344
+	actionRow{ // S406
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,       /* INVALID */
@@ -13462,11 +16692,13 @@ var actionTab = actionTable{
 			shift(70), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
 	},
-	actionRow{ // S345
+	actionRow{ // S407
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13501,11 +16733,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S346
+	actionRow{ // S408
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13540,11 +16774,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			reduce(45), /* selector, reduce: Ref */
 			reduce(45), /* index, reduce: Ref */
+			reduce(45), /* [, reduce: Ref */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S347
+	actionRow{ // S409
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13579,11 +16815,833 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			reduce(46), /* selector, reduce: Ref */
 			reduce(46), /* index, reduce: Ref */
+			reduce(46), /* [, reduce: Ref */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S348
+	actionRow{ // S410
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			shift(318), /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			shift(444), /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S411
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(3),  /* ||, reduce: Expr */
+			shift(320), /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(3),  /* ], reduce: Expr */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S412
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(5),  /* ||, reduce: Expr1 */
+			reduce(5),  /* &&, reduce: Expr1 */
+			shift(321), /* == */
+			shift(322), /* != */
+			shift(323), /* < */
+			shift(324), /* <= */
+			shift(325), /* > */
+			shift(326), /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(5),  /* ], reduce: Expr1 */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S413
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(7),  /* ||, reduce: Expr2 */
+			reduce(7),  /* &&, reduce: Expr2 */
+			reduce(7),  /* ==, reduce: Expr2 */
+			reduce(7),  /* !=, reduce: Expr2 */
+			reduce(7),  /* <, reduce: Expr2 */
+			reduce(7),  /* <=, reduce: Expr2 */
+			reduce(7),  /* >, reduce: Expr2 */
+			reduce(7),  /* >=, reduce: Expr2 */
+			shift(327), /* + */
+			shift(328), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(7),  /* ], reduce: Expr2 */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S414
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(8),  /* ||, reduce: Expr2 */
+			reduce(8),  /* &&, reduce: Expr2 */
+			reduce(8),  /* ==, reduce: Expr2 */
+			reduce(8),  /* !=, reduce: Expr2 */
+			reduce(8),  /* <, reduce: Expr2 */
+			reduce(8),  /* <=, reduce: Expr2 */
+			reduce(8),  /* >, reduce: Expr2 */
+			reduce(8),  /* >=, reduce: Expr2 */
+			shift(327), /* + */
+			shift(328), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(8),  /* ], reduce: Expr2 */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S415
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(9),  /* ||, reduce: Expr2 */
+			reduce(9),  /* &&, reduce: Expr2 */
+			reduce(9),  /* ==, reduce: Expr2 */
+			reduce(9),  /* !=, reduce: Expr2 */
+			reduce(9),  /* <, reduce: Expr2 */
+			reduce(9),  /* <=, reduce: Expr2 */
+			reduce(9),  /* >, reduce: Expr2 */
+			reduce(9),  /* >=, reduce: Expr2 */
+			shift(327), /* + */
+			shift(328), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(9),  /* ], reduce: Expr2 */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S416
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(10), /* ||, reduce: Expr2 */
+			reduce(10), /* &&, reduce: Expr2 */
+			reduce(10), /* ==, reduce: Expr2 */
+			reduce(10), /* !=, reduce: Expr2 */
+			reduce(10), /* <, reduce: Expr2 */
+			reduce(10), /* <=, reduce: Expr2 */
+			reduce(10), /* >, reduce: Expr2 */
+			reduce(10), /* >=, reduce: Expr2 */
+			shift(327), /* + */
+			shift(328), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(10), /* ], reduce: Expr2 */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S417
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(11), /* ||, reduce: Expr2 */
+			reduce(11), /* &&, reduce: Expr2 */
+			reduce(11), /* ==, reduce: Expr2 */
+			reduce(11), /* !=, reduce: Expr2 */
+			reduce(11), /* <, reduce: Expr2 */
+			reduce(11), /* <=, reduce: Expr2 */
+			reduce(11), /* >, reduce: Expr2 */
+			reduce(11), /* >=, reduce: Expr2 */
+			shift(327), /* + */
+			shift(328), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(11), /* ], reduce: Expr2 */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S418
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(12), /* ||, reduce: Expr2 */
+			reduce(12), /* &&, reduce: Expr2 */
+			reduce(12), /* ==, reduce: Expr2 */
+			reduce(12), /* !=, reduce: Expr2 */
+			reduce(12), /* <, reduce: Expr2 */
+			reduce(12), /* <=, reduce: Expr2 */
+			reduce(12), /* >, reduce: Expr2 */
+			reduce(12), /* >=, reduce: Expr2 */
+			shift(327), /* + */
+			shift(328), /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(12), /* ], reduce: Expr2 */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S419
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(14), /* ||, reduce: Expr3 */
+			reduce(14), /* &&, reduce: Expr3 */
+			reduce(14), /* ==, reduce: Expr3 */
+			reduce(14), /* !=, reduce: Expr3 */
+			reduce(14), /* <, reduce: Expr3 */
+			reduce(14), /* <=, reduce: Expr3 */
+			reduce(14), /* >, reduce: Expr3 */
+			reduce(14), /* >=, reduce: Expr3 */
+			reduce(14), /* +, reduce: Expr3 */
+			reduce(14), /* -, reduce: Expr3 */
+			shift(329), /* * */
+			shift(330), /* / */
+			shift(331), /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(14), /* ], reduce: Expr3 */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S420
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(15), /* ||, reduce: Expr3 */
+			reduce(15), /* &&, reduce: Expr3 */
+			reduce(15), /* ==, reduce: Expr3 */
+			reduce(15), /* !=, reduce: Expr3 */
+			reduce(15), /* <, reduce: Expr3 */
+			reduce(15), /* <=, reduce: Expr3 */
+			reduce(15), /* >, reduce: Expr3 */
+			reduce(15), /* >=, reduce: Expr3 */
+			reduce(15), /* +, reduce: Expr3 */
+			reduce(15), /* -, reduce: Expr3 */
+			shift(329), /* * */
+			shift(330), /* / */
+			shift(331), /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(15), /* ], reduce: Expr3 */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S421
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(17), /* ||, reduce: Expr4 */
+			reduce(17), /* &&, reduce: Expr4 */
+			reduce(17), /* ==, reduce: Expr4 */
+			reduce(17), /* !=, reduce: Expr4 */
+			reduce(17), /* <, reduce: Expr4 */
+			reduce(17), /* <=, reduce: Expr4 */
+			reduce(17), /* >, reduce: Expr4 */
+			reduce(17), /* >=, reduce: Expr4 */
+			reduce(17), /* +, reduce: Expr4 */
+			reduce(17), /* -, reduce: Expr4 */
+			reduce(17), /* *, reduce: Expr4 */
+			reduce(17), /* /, reduce: Expr4 */
+			reduce(17), /* %, reduce: Expr4 */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(17), /* ], reduce: Expr4 */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S422
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(18), /* ||, reduce: Expr4 */
+			reduce(18), /* &&, reduce: Expr4 */
+			reduce(18), /* ==, reduce: Expr4 */
+			reduce(18), /* !=, reduce: Expr4 */
+			reduce(18), /* <, reduce: Expr4 */
+			reduce(18), /* <=, reduce: Expr4 */
+			reduce(18), /* >, reduce: Expr4 */
+			reduce(18), /* >=, reduce: Expr4 */
+			reduce(18), /* +, reduce: Expr4 */
+			reduce(18), /* -, reduce: Expr4 */
+			reduce(18), /* *, reduce: Expr4 */
+			reduce(18), /* /, reduce: Expr4 */
+			reduce(18), /* %, reduce: Expr4 */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(18), /* ], reduce: Expr4 */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S423
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(19), /* ||, reduce: Expr4 */
+			reduce(19), /* &&, reduce: Expr4 */
+			reduce(19), /* ==, reduce: Expr4 */
+			reduce(19), /* !=, reduce: Expr4 */
+			reduce(19), /* <, reduce: Expr4 */
+			reduce(19), /* <=, reduce: Expr4 */
+			reduce(19), /* >, reduce: Expr4 */
+			reduce(19), /* >=, reduce: Expr4 */
+			reduce(19), /* +, reduce: Expr4 */
+			reduce(19), /* -, reduce: Expr4 */
+			reduce(19), /* *, reduce: Expr4 */
+			reduce(19), /* /, reduce: Expr4 */
+			reduce(19), /* %, reduce: Expr4 */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(19), /* ], reduce: Expr4 */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S424
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			shift(445), /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S425
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(28), /* ||, reduce: PrimaryExpr */
+			reduce(28), /* &&, reduce: PrimaryExpr */
+			reduce(28), /* ==, reduce: PrimaryExpr */
+			reduce(28), /* !=, reduce: PrimaryExpr */
+			reduce(28), /* <, reduce: PrimaryExpr */
+			reduce(28), /* <=, reduce: PrimaryExpr */
+			reduce(28), /* >, reduce: PrimaryExpr */
+			reduce(28), /* >=, reduce: PrimaryExpr */
+			reduce(28), /* +, reduce: PrimaryExpr */
+			reduce(28), /* -, reduce: PrimaryExpr */
+			reduce(28), /* *, reduce: PrimaryExpr */
+			reduce(28), /* /, reduce: PrimaryExpr */
+			reduce(28), /* %, reduce: PrimaryExpr */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(28), /* ], reduce: PrimaryExpr */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S426
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			nil,        /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			shift(446), /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S427
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(45), /* ||, reduce: Ref */
+			reduce(45), /* &&, reduce: Ref */
+			reduce(45), /* ==, reduce: Ref */
+			reduce(45), /* !=, reduce: Ref */
+			reduce(45), /* <, reduce: Ref */
+			reduce(45), /* <=, reduce: Ref */
+			reduce(45), /* >, reduce: Ref */
+			reduce(45), /* >=, reduce: Ref */
+			reduce(45), /* +, reduce: Ref */
+			reduce(45), /* -, reduce: Ref */
+			reduce(45), /* *, reduce: Ref */
+			reduce(45), /* /, reduce: Ref */
+			reduce(45), /* %, reduce: Ref */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			reduce(45), /* selector, reduce: Ref */
+			reduce(45), /* index, reduce: Ref */
+			reduce(45), /* [, reduce: Ref */
+			reduce(45), /* ], reduce: Ref */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S428
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(46), /* ||, reduce: Ref */
+			reduce(46), /* &&, reduce: Ref */
+			reduce(46), /* ==, reduce: Ref */
+			reduce(46), /* !=, reduce: Ref */
+			reduce(46), /* <, reduce: Ref */
+			reduce(46), /* <=, reduce: Ref */
+			reduce(46), /* >, reduce: Ref */
+			reduce(46), /* >=, reduce: Ref */
+			reduce(46), /* +, reduce: Ref */
+			reduce(46), /* -, reduce: Ref */
+			reduce(46), /* *, reduce: Ref */
+			reduce(46), /* /, reduce: Ref */
+			reduce(46), /* %, reduce: Ref */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			reduce(46), /* selector, reduce: Ref */
+			reduce(46), /* index, reduce: Ref */
+			reduce(46), /* [, reduce: Ref */
+			reduce(46), /* ], reduce: Ref */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S429
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			shift(318), /* || */
+			nil,        /* && */
+			nil,        /* == */
+			nil,        /* != */
+			nil,        /* < */
+			nil,        /* <= */
+			nil,        /* > */
+			nil,        /* >= */
+			nil,        /* + */
+			nil,        /* - */
+			nil,        /* * */
+			nil,        /* / */
+			nil,        /* % */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			shift(447), /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S430
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13618,11 +17676,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S349
+	actionRow{ // S431
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13657,11 +17717,54 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S350
+	actionRow{ // S432
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(48), /* ||, reduce: Indexer */
+			reduce(48), /* &&, reduce: Indexer */
+			reduce(48), /* ==, reduce: Indexer */
+			reduce(48), /* !=, reduce: Indexer */
+			reduce(48), /* <, reduce: Indexer */
+			reduce(48), /* <=, reduce: Indexer */
+			reduce(48), /* >, reduce: Indexer */
+			reduce(48), /* >=, reduce: Indexer */
+			reduce(48), /* +, reduce: Indexer */
+			reduce(48), /* -, reduce: Indexer */
+			reduce(48), /* *, reduce: Indexer */
+			reduce(48), /* /, reduce: Indexer */
+			reduce(48), /* %, reduce: Indexer */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(48), /* ), reduce: Indexer */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			reduce(48), /* selector, reduce: Indexer */
+			reduce(48), /* index, reduce: Indexer */
+			reduce(48), /* [, reduce: Indexer */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S433
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13696,11 +17799,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(25), /* ,, reduce: Expr6 */
 		},
 	},
-	actionRow{ // S351
+	actionRow{ // S434
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13735,16 +17840,59 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			reduce(26), /* ,, reduce: Expr6 */
 		},
 	},
-	actionRow{ // S352
+	actionRow{ // S435
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
 			nil,        /* $ */
-			shift(139), /* || */
+			reduce(48), /* ||, reduce: Indexer */
+			reduce(48), /* &&, reduce: Indexer */
+			reduce(48), /* ==, reduce: Indexer */
+			reduce(48), /* !=, reduce: Indexer */
+			reduce(48), /* <, reduce: Indexer */
+			reduce(48), /* <=, reduce: Indexer */
+			reduce(48), /* >, reduce: Indexer */
+			reduce(48), /* >=, reduce: Indexer */
+			reduce(48), /* +, reduce: Indexer */
+			reduce(48), /* -, reduce: Indexer */
+			reduce(48), /* *, reduce: Indexer */
+			reduce(48), /* /, reduce: Indexer */
+			reduce(48), /* %, reduce: Indexer */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			reduce(48), /* ), reduce: Indexer */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			reduce(48), /* selector, reduce: Indexer */
+			reduce(48), /* index, reduce: Indexer */
+			reduce(48), /* [, reduce: Indexer */
+			nil,        /* ] */
+			nil,        /* empty */
+			reduce(48), /* ,, reduce: Indexer */
+		},
+	},
+	actionRow{ // S436
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			shift(141), /* || */
 			nil,        /* && */
 			nil,        /* == */
 			nil,        /* != */
@@ -13774,11 +17922,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S353
+	actionRow{ // S437
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13813,11 +17963,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S354
+	actionRow{ // S438
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,       /* INVALID */
@@ -13852,11 +18004,13 @@ var actionTab = actionTable{
 			shift(70), /* ref */
 			nil,       /* selector */
 			nil,       /* index */
+			nil,       /* [ */
+			nil,       /* ] */
 			nil,       /* empty */
 			nil,       /* , */
 		},
 	},
-	actionRow{ // S355
+	actionRow{ // S439
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13879,7 +18033,7 @@ var actionTab = actionTable{
 			nil,        /* ( */
 			reduce(29), /* ), reduce: TernaryExpr */
 			nil,        /* functionName */
-			shift(160), /* ? */
+			shift(162), /* ? */
 			nil,        /* : */
 			nil,        /* true */
 			nil,        /* false */
@@ -13891,11 +18045,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S356
+	actionRow{ // S440
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13930,11 +18086,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S357
+	actionRow{ // S441
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13969,11 +18127,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S358
+	actionRow{ // S442
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -13987,32 +18147,34 @@ var actionTab = actionTable{
 			nil,        /* > */
 			nil,        /* >= */
 			nil,        /* + */
-			shift(171), /* - */
+			shift(175), /* - */
 			nil,        /* * */
 			nil,        /* / */
 			nil,        /* % */
-			shift(174), /* ! */
-			shift(176), /* ident */
-			shift(177), /* ( */
+			shift(178), /* ! */
+			shift(180), /* ident */
+			shift(181), /* ( */
 			nil,        /* ) */
-			shift(178), /* functionName */
+			shift(182), /* functionName */
 			nil,        /* ? */
 			nil,        /* : */
-			shift(182), /* true */
-			shift(183), /* false */
-			shift(185), /* nil */
-			shift(186), /* null */
-			shift(187), /* intLit */
-			shift(188), /* floatLit */
-			shift(189), /* stringLit */
-			shift(190), /* ref */
+			shift(186), /* true */
+			shift(187), /* false */
+			shift(189), /* nil */
+			shift(190), /* null */
+			shift(191), /* intLit */
+			shift(192), /* floatLit */
+			shift(193), /* stringLit */
+			shift(194), /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S359
+	actionRow{ // S443
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -14033,7 +18195,7 @@ var actionTab = actionTable{
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
-			shift(362), /* ) */
+			shift(450), /* ) */
 			nil,        /* functionName */
 			reduce(31), /* ?, reduce: TernaryArgument */
 			nil,        /* : */
@@ -14047,11 +18209,177 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S360
+	actionRow{ // S444
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(48), /* ||, reduce: Indexer */
+			reduce(48), /* &&, reduce: Indexer */
+			reduce(48), /* ==, reduce: Indexer */
+			reduce(48), /* !=, reduce: Indexer */
+			reduce(48), /* <, reduce: Indexer */
+			reduce(48), /* <=, reduce: Indexer */
+			reduce(48), /* >, reduce: Indexer */
+			reduce(48), /* >=, reduce: Indexer */
+			reduce(48), /* +, reduce: Indexer */
+			reduce(48), /* -, reduce: Indexer */
+			reduce(48), /* *, reduce: Indexer */
+			reduce(48), /* /, reduce: Indexer */
+			reduce(48), /* %, reduce: Indexer */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			reduce(48), /* ?, reduce: Indexer */
+			reduce(48), /* :, reduce: Indexer */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			reduce(48), /* selector, reduce: Indexer */
+			reduce(48), /* index, reduce: Indexer */
+			reduce(48), /* [, reduce: Indexer */
+			nil,        /* ] */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S445
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(25), /* ||, reduce: Expr6 */
+			reduce(25), /* &&, reduce: Expr6 */
+			reduce(25), /* ==, reduce: Expr6 */
+			reduce(25), /* !=, reduce: Expr6 */
+			reduce(25), /* <, reduce: Expr6 */
+			reduce(25), /* <=, reduce: Expr6 */
+			reduce(25), /* >, reduce: Expr6 */
+			reduce(25), /* >=, reduce: Expr6 */
+			reduce(25), /* +, reduce: Expr6 */
+			reduce(25), /* -, reduce: Expr6 */
+			reduce(25), /* *, reduce: Expr6 */
+			reduce(25), /* /, reduce: Expr6 */
+			reduce(25), /* %, reduce: Expr6 */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(25), /* ], reduce: Expr6 */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S446
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(26), /* ||, reduce: Expr6 */
+			reduce(26), /* &&, reduce: Expr6 */
+			reduce(26), /* ==, reduce: Expr6 */
+			reduce(26), /* !=, reduce: Expr6 */
+			reduce(26), /* <, reduce: Expr6 */
+			reduce(26), /* <=, reduce: Expr6 */
+			reduce(26), /* >, reduce: Expr6 */
+			reduce(26), /* >=, reduce: Expr6 */
+			reduce(26), /* +, reduce: Expr6 */
+			reduce(26), /* -, reduce: Expr6 */
+			reduce(26), /* *, reduce: Expr6 */
+			reduce(26), /* /, reduce: Expr6 */
+			reduce(26), /* %, reduce: Expr6 */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			nil,        /* selector */
+			nil,        /* index */
+			nil,        /* [ */
+			reduce(26), /* ], reduce: Expr6 */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S447
+		canRecover: false,
+		actions: [numSymbols]action{
+			nil,        /* INVALID */
+			nil,        /* $ */
+			reduce(48), /* ||, reduce: Indexer */
+			reduce(48), /* &&, reduce: Indexer */
+			reduce(48), /* ==, reduce: Indexer */
+			reduce(48), /* !=, reduce: Indexer */
+			reduce(48), /* <, reduce: Indexer */
+			reduce(48), /* <=, reduce: Indexer */
+			reduce(48), /* >, reduce: Indexer */
+			reduce(48), /* >=, reduce: Indexer */
+			reduce(48), /* +, reduce: Indexer */
+			reduce(48), /* -, reduce: Indexer */
+			reduce(48), /* *, reduce: Indexer */
+			reduce(48), /* /, reduce: Indexer */
+			reduce(48), /* %, reduce: Indexer */
+			nil,        /* ! */
+			nil,        /* ident */
+			nil,        /* ( */
+			nil,        /* ) */
+			nil,        /* functionName */
+			nil,        /* ? */
+			nil,        /* : */
+			nil,        /* true */
+			nil,        /* false */
+			nil,        /* nil */
+			nil,        /* null */
+			nil,        /* intLit */
+			nil,        /* floatLit */
+			nil,        /* stringLit */
+			nil,        /* ref */
+			reduce(48), /* selector, reduce: Indexer */
+			reduce(48), /* index, reduce: Indexer */
+			reduce(48), /* [, reduce: Indexer */
+			reduce(48), /* ], reduce: Indexer */
+			nil,        /* empty */
+			nil,        /* , */
+		},
+	},
+	actionRow{ // S448
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -14072,7 +18400,7 @@ var actionTab = actionTable{
 			nil,        /* ! */
 			nil,        /* ident */
 			nil,        /* ( */
-			shift(363), /* ) */
+			shift(451), /* ) */
 			nil,        /* functionName */
 			reduce(31), /* ?, reduce: TernaryArgument */
 			nil,        /* : */
@@ -14086,11 +18414,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S361
+	actionRow{ // S449
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -14113,7 +18443,7 @@ var actionTab = actionTable{
 			nil,        /* ( */
 			nil,        /* ) */
 			nil,        /* functionName */
-			shift(278), /* ? */
+			shift(311), /* ? */
 			reduce(29), /* :, reduce: TernaryExpr */
 			nil,        /* true */
 			nil,        /* false */
@@ -14125,11 +18455,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S362
+	actionRow{ // S450
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -14164,11 +18496,13 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
 	},
-	actionRow{ // S363
+	actionRow{ // S451
 		canRecover: false,
 		actions: [numSymbols]action{
 			nil,        /* INVALID */
@@ -14203,6 +18537,8 @@ var actionTab = actionTable{
 			nil,        /* ref */
 			nil,        /* selector */
 			nil,        /* index */
+			nil,        /* [ */
+			nil,        /* ] */
 			nil,        /* empty */
 			nil,        /* , */
 		},
