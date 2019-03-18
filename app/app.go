@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"github.com/project-flogo/core/data/expression/function"
 	"github.com/project-flogo/core/data/schema"
 	"path"
 	"regexp"
@@ -31,9 +32,11 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 		registerImport(matches[1] + matches[3] + matches[5]) // alias + module path + relative import path
 	}
 
+	function.ResolveAliases()
+
 	// register schemas, assumes appropriate schema factories have been registered
 	for id, def := range config.Schemas {
-		_, err := schema.Register(id,  def)
+		_, err := schema.Register(id, def)
 		if err != nil {
 			return nil, err
 		}
@@ -241,6 +244,11 @@ func registerImport(anImport string) error {
 	log.RootLogger().Debugf("Registering type alias '%s' for %s [%s]", alias, ct, ref)
 
 	support.RegisterAlias(ct, alias, ref)
+
+	if ct == "function" {
+		function.SetPackageAlias(ref, alias)
+	}
+
 	return nil
 }
 
@@ -252,6 +260,8 @@ func getContribType(ref string) string {
 		return "action"
 	} else if trigger.GetFactory(ref) != nil {
 		return "trigger"
+	} else if function.IsFunctionPackage(ref) {
+		return "function"
 	} else {
 		return ""
 	}

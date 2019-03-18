@@ -2,11 +2,9 @@ package api
 
 import (
 	"context"
-	"encoding/json"
 	"github.com/project-flogo/core/support/log"
 	"reflect"
 	"strconv"
-	
 	"strings"
 
 	"github.com/project-flogo/core/action"
@@ -78,12 +76,9 @@ func toActionConfig(act *Action) *trigger.ActionConfig {
 	}
 
 	actionCfg.Ref = act.ref
-
-	//todo handle error
-	jsonData, _ := json.Marshal(act.Settings())
-	actionCfg.Data = jsonData
-
+	actionCfg.Settings = act.settings
 	actionCfg.If = act.condition
+
 	if len(act.inputMappings) > 0 {
 		actionCfg.Input, _ = toMappings(act.inputMappings)
 	}
@@ -142,29 +137,29 @@ func NewActivity(act activity.Activity, settings ...interface{}) (activity.Activ
 
 	ref := activity.GetRef(act)
 
-    if f := activity.GetFactory(ref); f == nil {
+	if f := activity.GetFactory(ref); f == nil {
 
-        return activity.Get(ref), nil
-    } else {
+		return activity.Get(ref), nil
+	} else {
 
-        var settingsMap map[string]interface{}
+		var settingsMap map[string]interface{}
 
-        if len(settings) == 0 {
-            settingsMap = make(map[string]interface{})
-        } else {
-            inSettings := settings[0]
+		if len(settings) == 0 {
+			settingsMap = make(map[string]interface{})
+		} else {
+			inSettings := settings[0]
 
-            if im, ok := inSettings.(map[string]interface{}); ok {
-                settingsMap = im
-            } else {
-                settingsMap = metadata.StructToMap(inSettings)
-            }
-        }
+			if im, ok := inSettings.(map[string]interface{}); ok {
+				settingsMap = im
+			} else {
+				settingsMap = metadata.StructToMap(inSettings)
+			}
+		}
 
-        f := activity.GetFactory(ref)
-        ctx := &initCtx{settings: settingsMap}
-        return f(ctx)
-    }
+		f := activity.GetFactory(ref)
+		ctx := &initCtx{settings: settingsMap}
+		return f(ctx)
+	}
 
 }
 
@@ -199,8 +194,6 @@ func EvalActivity(act activity.Activity, input interface{}) (map[string]interfac
 
 	logger := activityLogger
 
-
-
 	if act.Metadata() == nil {
 
 		//try loading activity with metadata
@@ -224,7 +217,7 @@ func EvalActivity(act activity.Activity, input interface{}) (map[string]interfac
 		//return error
 	}
 
-	ac := &activityContext{input: make(map[string]interface{}), output: make(map[string]interface{}), logger:logger}
+	ac := &activityContext{input: make(map[string]interface{}), output: make(map[string]interface{}), logger: logger}
 
 	for key, value := range inputMap {
 		ac.input[key] = value

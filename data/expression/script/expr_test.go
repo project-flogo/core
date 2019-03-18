@@ -154,7 +154,7 @@ func TestLitExprStaticRef(t *testing.T) {
 
 func TestEnvResolve(t *testing.T) {
 
-	os.Setenv("FOO","bar")
+	os.Setenv("FOO", "bar")
 	expr, err := factory.NewExpr(`$env[FOO]`)
 	assert.Nil(t, err)
 	assert.NotNil(t, expr)

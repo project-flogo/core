@@ -2,12 +2,16 @@ package data
 
 import (
 	"encoding/json"
+
 	"github.com/project-flogo/core/data/schema"
 )
 
-// TODO this should probably go away
 func NewAttribute(name string, dataType Type, value interface{}) *Attribute {
 	return &Attribute{name: name, dataType: dataType, value: value}
+}
+
+func NewAttributeWithSchema(name string, dataType Type, value interface{}, schema schema.Schema) *Attribute {
+	return &Attribute{name: name, dataType: dataType, value: value, schema: schema}
 }
 
 // Attribute is a simple structure used to define a data Attribute/property
@@ -46,7 +50,27 @@ func (a *Attribute) Schema() schema.Schema {
 	return a.schema
 }
 
-//todo temporary work around for attribute deserialization
+func (a *Attribute) MarshalJSON() ([]byte, error) {
+
+	val := a.value
+	if vs, ok := val.(string); ok {
+		if vs == "" {
+			val = nil //hack to omit empty string value
+		}
+	}
+
+	return json.Marshal(&struct {
+		Name   string      `json:"name"`
+		Type   string      `json:"type"`
+		Value  interface{} `json:"value,omitempty"`
+		Schema interface{} `json:"schema,omitempty"`
+	}{
+		Name:   a.name,
+		Type:   a.dataType.String(),
+		Value:  val,
+		Schema: a.schema,
+	})
+}
 
 // UnmarshalJSON implements json.Unmarshaler.UnmarshalJSON
 func (a *Attribute) UnmarshalJSON(data []byte) error {
@@ -54,7 +78,7 @@ func (a *Attribute) UnmarshalJSON(data []byte) error {
 	ser := &struct {
 		Name   string      `json:"name"`
 		Type   string      `json:"type"`
-		Value  interface{} `json:"value"`
+		Value  interface{} `json:"value,omitempty"`
 		Schema interface{} `json:"schema,omitempty"`
 
 		//KeyType  string      `json:"keyType,omitempty"`

@@ -42,6 +42,25 @@ const (
 	FOREACH = "@foreach"
 )
 
+type ObjectMapping struct {
+	Mapping interface{} `json:"mapping"`
+}
+
+func GetObjectMapping(value interface{}) (interface{}, bool) {
+	switch t := value.(type) {
+	case *ObjectMapping:
+		return t.Mapping, true
+	case map[string]interface{}:
+
+		if mapping, ok := t["mapping"]; ok {
+			return mapping, true
+		}
+		return nil, false
+	default:
+		return nil, false
+	}
+}
+
 type ObjectMapperFactory struct {
 	exprFactory expression.Factory
 }
@@ -107,7 +126,8 @@ func handleObjectMapping(objectMappings interface{}, exprF expression.Factory, i
 						case []interface{}:
 							arrayResult := make([]interface{}, len(t))
 							for i, element := range t {
-								arrayResult[i], err = handleObjectMapping(element.(map[string]interface{}), exprF, inputScope)
+								var err error
+								arrayResult[i], err = handlerArrayElement(element, exprF, inputScope)
 								if err != nil {
 									return nil, err
 								}
@@ -136,7 +156,8 @@ func handleObjectMapping(objectMappings interface{}, exprF expression.Factory, i
 			} else if arrayV, ok := mv.([]interface{}); ok {
 				arrayResult := make([]interface{}, len(arrayV))
 				for i, element := range arrayV {
-					arrayResult[i], err = handleObjectMapping(element.(map[string]interface{}), exprF, inputScope)
+					var err error
+					arrayResult[i], err = handlerArrayElement(element, exprF, inputScope)
 					if err != nil {
 						return nil, err
 					}
@@ -154,23 +175,25 @@ func handleObjectMapping(objectMappings interface{}, exprF expression.Factory, i
 		//array with possible child object
 		objArray := make([]interface{}, len(t))
 		for i, element := range t {
-			//Only handle object mapping
-			switch element.(type) {
-			case map[string]interface{}:
-				objArray[i], err = handleObjectMapping(element, exprF, inputScope)
-				if err != nil {
-					return nil, err
-				}
-			default:
-				objArray[i], err = getExpressionValue(element, exprF, inputScope)
-				if err != nil {
-					return nil, err
-				}
+			var err error
+			objArray[i], err = handlerArrayElement(element, exprF, inputScope)
+			if err != nil {
+				return nil, err
 			}
 		}
 		return objArray, nil
 	default:
 		return nil, fmt.Errorf("unsupport type [%s] for object mapper", reflect.TypeOf(objectMappings))
+	}
+}
+
+func handlerArrayElement(element interface{}, exprF expression.Factory, inputScope data.Scope) (interface{}, error) {
+	//Only handle object mapping
+	switch element.(type) {
+	case map[string]interface{}:
+		return handleObjectMapping(element, exprF, inputScope)
+	default:
+		return getExpressionValue(element, exprF, inputScope)
 	}
 }
 
