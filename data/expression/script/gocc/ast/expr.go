@@ -6,6 +6,7 @@ import (
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/resolve"
 	"strconv"
+	"strings"
 )
 
 type Expr interface {
@@ -112,36 +113,67 @@ func NewRefExpr(refNode ...interface{}) (Expr, error) {
 }
 
 type exprRef struct {
-	fields   []interface{}
-	resolver resolve.CompositeResolver
-	root     bool
+	fields       []interface{}
+	res          resolve.Resolution
+	resolver     resolve.CompositeResolver
+	hasIndexExpr bool
 }
 
 func (e *exprRef) Init(resolver resolve.CompositeResolver, root bool) error {
 	e.resolver = resolver
-	e.root = root
+	for _, v := range e.fields {
+		switch t := v.(type) {
+		case Expr:
+			e.hasIndexExpr = true
+			err := t.Init(resolver, root)
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	//Make resolution if no index expression
+	if !e.hasIndexExpr {
+		var err error
+		t := make([]string, len(e.fields))
+		for i, v := range e.fields {
+			t[i] = v.(string)
+		}
+		e.res, err = resolver.GetResolution(strings.Join(t, ""))
+		if err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 
-func (e *exprRef) Eval(scope data.Scope) (interface{}, error) {
+func (e *exprRef) Eval(scope data.Scope) (data interface{}, err error) {
+	if e.hasIndexExpr {
+		//Get final resolved ref from index expression
+		e.res, err = e.constructRealRef(scope)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return e.res.GetValue(scope)
+}
+
+func (e *exprRef) constructRealRef(scope data.Scope) (resolve.Resolution, error) {
 	var ref = ""
 	for _, v := range e.fields {
 		switch t := v.(type) {
-		case *arrayIndexerExpr:
-			indexRef, err := t.ToRef(e.resolver, e.root, scope)
+		case Expr:
+			indexRef, err := t.Eval(scope)
 			if err != nil {
 				return nil, err
 			}
-			ref = ref + indexRef
+			ref = ref + indexRef.(string)
 		case string:
 			ref = ref + t
 		}
 	}
-	r, err := e.resolver.GetResolution(ref)
-	if err != nil {
-		return nil, err
-	}
-	return r.GetValue(scope)
+	return e.resolver.GetResolution(ref)
 }
 
 type arrayIndexerExpr struct {
@@ -153,15 +185,7 @@ func (e *arrayIndexerExpr) Init(resolver resolve.CompositeResolver, root bool) e
 }
 
 func (e *arrayIndexerExpr) Eval(scope data.Scope) (interface{}, error) {
-	return e.expr.Eval(scope)
-}
-
-func (e *arrayIndexerExpr) ToRef(resolver resolve.CompositeResolver, root bool, scope data.Scope) (string, error) {
-	if err := e.Init(resolver, root); err != nil {
-		return "", nil
-	}
-
-	v, err := e.Eval(scope)
+	v, err := e.expr.Eval(scope)
 	if err != nil {
 		return "", fmt.Errorf("eval array index expression error: %s", err.Error())
 	}
