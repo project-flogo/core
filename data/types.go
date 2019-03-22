@@ -44,13 +44,12 @@ var types = [...]string{
 	"int64",
 	"float32",
 	"float64",
-	"boolean",
+	"bool",
 	"object",
 	"bytes",
 	"params",
 	"array",
 	"map",
-	"complexObject",
 }
 
 func (t Type) String() string {
@@ -75,9 +74,9 @@ func ToTypeEnum(typeStr string) (Type, error) {
 		return TypeInt32, nil
 	case "int64", "long":
 		return TypeInt64, nil
-	case "float", "float32":
+	case "float32", "float":
 		return TypeFloat32, nil
-	case "double", "float64":
+	case "float64", "double":
 		return TypeFloat64, nil
 	case "bool", "boolean":
 		return TypeBool, nil
@@ -182,10 +181,3 @@ func SetAttributeTypeConverter(converter TypeConverter) {
 }
 
 type TypeConverter func(value interface{}, toType Type) (interface{}, error)
-
-// ComplexObject is the value that is used when using a "COMPLEX_OBJECT" type
-// DEPRECATED
-type ComplexObject struct {
-	Metadata string      `json:"metadata"`
-	Value    interface{} `json:"value"`
-}
