@@ -45,7 +45,13 @@ func Count() int {
 
 // Get gets the named channel
 func Get(name string) Channel {
-	return channels[name]
+	if ch, ok := channels[name]; ok {
+		return ch
+	}
+	return nil
+
+	//note: can't use nil check with this code
+	//return channels[name]
 }
 
 func Start() error {
