@@ -146,3 +146,11 @@ func TestChannel_Callback(t *testing.T) {
 	assert.Equal(t, 1, cbt.called)
 	assert.Equal(t, 22, cbt.val)
 }
+
+func TestBlah(t *testing.T) {
+	c := Get("blah")
+	if c == nil {
+		assert.True(t, false)
+	}
+	assert.True(t, true)
+}
