@@ -6,7 +6,9 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/project-flogo/core/data/property"
 	"github.com/project-flogo/core/engine/runner"
+	"github.com/project-flogo/core/support/log"
 )
 
 const (
@@ -27,6 +29,9 @@ const (
 
 	ValueRunnerTypePooled = "POOLED"
 	ValueRunnerTypeDirect = "DIRECT"
+
+	PropertyResolverEnv  = "env"
+	PropertyResolverJson = "json"
 )
 
 func IsSchemaSupportEnabled() bool {
@@ -37,7 +42,6 @@ func IsSchemaSupportEnabled() bool {
 
 	return false
 }
-
 
 func IsSchemaValidationEnabled() bool {
 	schemaValidationEnv := os.Getenv(EnvEnableSchemaValidation)
@@ -96,11 +100,66 @@ func StopEngineOnError() bool {
 	return b
 }
 
-func GetAppPropertyValueResolvers() string {
+func displayAppPropertyValueResolversHelp(logger log.Logger, resolvers []string) {
+	logger.Warn("Multiple property resolvers where defined without setting a priority order!")
+	logger.Infof("Set environment variable '%s' with a comma-separated list of resolvers to use (definition order is decreasing order of priority)", EnvAppPropertyResolvers)
+	logger.Infof("List of available resolvers: %v", resolvers)
+	logger.Warn("No property resolver will be used")
+}
+
+func GetAppPropertyValueResolvers(logger log.Logger) string {
 	key := os.Getenv(EnvAppPropertyResolvers)
 	if len(key) > 0 {
+		if key == "disabled" {
+			return ""
+		}
 		return key
 	}
+
+	// EnvAppPropertyResolvers is not set, let's guess some convenient default behaviours
+	switch len(property.RegisteredResolvers) {
+	case 0: // no resolver, do nothing
+		return ""
+	case 1: // only one resolver has been registered, use it
+		for resolver := range property.RegisteredResolvers {
+			return resolver
+		}
+	case 2, 3:
+		var resolvers, builtinResolvers []string
+
+		for resolver := range property.RegisteredResolvers {
+			if resolver != PropertyResolverEnv && resolver != PropertyResolverJson {
+				resolvers = append(resolvers, resolver)
+			} else {
+				builtinResolvers = append(builtinResolvers, resolver)
+			}
+		}
+
+		if len(resolvers) > 1 { // multiple (excluding builtin) resolvers defined, do nothing and hint to enforce an order
+			resolvers = append(resolvers, builtinResolvers...)
+			displayAppPropertyValueResolversHelp(logger, resolvers)
+			return ""
+		}
+
+		if len(builtinResolvers) == 2 { // force priority between the two builtin resolvers
+			builtinResolvers = []string{PropertyResolverEnv, PropertyResolverJson}
+		}
+
+		resolvers = append(resolvers, builtinResolvers...)
+
+		return strings.Join(resolvers[:], ",")
+	default: // multiple (excluding builtin) resolvers defined, do nothing and hint to enforce an order
+		var resolvers []string
+
+		for resolver := range property.RegisteredResolvers {
+			resolvers = append(resolvers, resolver)
+		}
+
+		displayAppPropertyValueResolversHelp(logger, resolvers)
+
+		return ""
+	}
+
 	return ""
 }
 

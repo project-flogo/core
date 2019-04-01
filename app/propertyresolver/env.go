@@ -3,12 +3,12 @@ package propertyresolver
 import (
 	"encoding/json"
 	"github.com/project-flogo/core/data/property"
+	"github.com/project-flogo/core/engine"
 	"os"
 	"strings"
 
 	"github.com/project-flogo/core/support/log"
 )
-
 
 const EnvAppPropertyEnvConfigKey = "FLOGO_APP_PROPS_ENV"
 
@@ -22,7 +22,7 @@ func init() {
 
 	logger := log.RootLogger()
 
-	property.RegisterExternalResolver("env", &EnvVariableValueResolver{})
+	property.RegisterPropertyResolver(&EnvVariableValueResolver{})
 
 	mappings := getEnvValue()
 	if mappings != "" {
@@ -46,6 +46,10 @@ func getEnvValue() string {
 type EnvVariableValueResolver struct {
 }
 
+func (resolver *EnvVariableValueResolver) Name() string {
+	return engine.PropertyResolverEnv
+}
+
 func (resolver *EnvVariableValueResolver) LookupValue(key string) (interface{}, bool) {
 	value, exists := os.LookupEnv(key) // first try with the name of the property as is
 	if exists {
@@ -64,7 +68,6 @@ func (resolver *EnvVariableValueResolver) LookupValue(key string) (interface{}, 
 	if exists {
 		return value, exists
 	}
-
 
 	// Try upper case form e.g. a.b would be A_B
 	key = strings.ToUpper(key)

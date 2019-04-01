@@ -23,12 +23,12 @@ func (factory) New(def *schema.Def) (schema.Schema, error) {
 		return nil, err
 	}
 
-	return &jsonSchema{def:def, js:s}, nil
+	return &jsonSchema{def: def, js: s}, nil
 }
 
 type jsonSchema struct {
 	def *schema.Def
-	js *gojsonschema.Schema
+	js  *gojsonschema.Schema
 }
 
 func (s *jsonSchema) Type() string {
@@ -55,9 +55,8 @@ func (s *jsonSchema) Validate(data interface{}) error {
 			errs = append(errs, errors.New(err.String()))
 		}
 
-		return  schema.NewValidationError("validation failed", errs)
+		return schema.NewValidationError("validation failed", errs)
 	}
 
 	return nil
 }
-

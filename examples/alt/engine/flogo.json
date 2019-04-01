@@ -3,7 +3,7 @@
   "type": "flogo:app",
   "version": "0.0.1",
   "description": "My flogo application description",
-  "appModel": "1.0.0",
+  "appModel": "1.1.0",
   "imports": [
     "github.com/project-flogo/contrib@latest:/activity/log",
     "github.com/project-flogo/contrib@latest:/trigger/rest",
@@ -12,7 +12,7 @@
   "triggers": [
     {
       "id": "my_rest_trigger",
-      "type": "rest",
+      "ref": "#rest",
       "settings": {
         "port": "8888"
       },
@@ -24,7 +24,7 @@
           },
           "actions": [
             {
-              "type": "flow",
+              "ref": "#flow",
               "settings": {
                 "flowURI": "res://flow:simple_flow"
               },
@@ -55,7 +55,7 @@
             "id": "log",
             "name": "Log Message",
             "activity": {
-              "type": "log",
+              "ref": "#log",
               "input": {
                 "message": "=$flow.in",
                 "flowInfo": "false",

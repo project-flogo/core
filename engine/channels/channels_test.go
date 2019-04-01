@@ -21,7 +21,19 @@ func TestNew(t *testing.T) {
 	channel, err := New("test1", 5)
 	assert.Nil(t, err)
 	assert.NotNil(t, channel)
+
+
 }
+
+func TestNilChannel(t *testing.T)  {
+	channels = map[string]*channelImpl{}
+	active = false
+
+	c := Get("dne")
+	assert.Nil(t, c)
+	assert.True(t, c == nil)
+}
+
 
 func TestNewDup(t *testing.T) {
 	channels = map[string]*channelImpl{}

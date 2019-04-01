@@ -2,7 +2,7 @@
 
 package parser
 
-const numNTSymbols = 18
+const numNTSymbols = 19
 
 type (
 	gotoTable [numStates]gotoRow
@@ -27,6 +27,7 @@ var gotoTab = gotoTable{
 		21, // NilLit
 		16, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -47,6 +48,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -67,6 +69,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -87,6 +90,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -107,6 +111,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -127,6 +132,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -147,6 +153,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -167,6 +174,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -187,6 +195,7 @@ var gotoTab = gotoTable{
 		21, // NilLit
 		16, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -207,6 +216,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -227,6 +237,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -247,6 +258,7 @@ var gotoTab = gotoTable{
 		21, // NilLit
 		16, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -267,6 +279,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -287,6 +300,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -307,6 +321,7 @@ var gotoTab = gotoTable{
 		64, // NilLit
 		59, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -327,6 +342,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -347,6 +363,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -367,6 +384,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -387,6 +405,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -407,6 +426,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -427,6 +447,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -447,6 +468,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -467,6 +489,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -487,6 +510,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -507,6 +531,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -527,6 +552,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -547,6 +573,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -567,6 +594,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		73, // Ref
+		75, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -574,7 +602,7 @@ var gotoTab = gotoTable{
 		-1, // S'
 		-1, // Fscript
 		-1, // Expr
-		76, // Expr1
+		78, // Expr1
 		5,  // Expr2
 		6,  // Expr3
 		7,  // Expr4
@@ -587,6 +615,7 @@ var gotoTab = gotoTable{
 		21, // NilLit
 		16, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -595,7 +624,7 @@ var gotoTab = gotoTable{
 		-1, // Fscript
 		-1, // Expr
 		-1, // Expr1
-		77, // Expr2
+		79, // Expr2
 		6,  // Expr3
 		7,  // Expr4
 		9,  // Expr5
@@ -607,50 +636,11 @@ var gotoTab = gotoTable{
 		21, // NilLit
 		16, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S30
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		78, // Expr3
-		7,  // Expr4
-		9,  // Expr5
-		10, // Expr6
-		12, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		18, // BoolLit
-		21, // NilLit
-		16, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
-	},
-	gotoRow{ // S31
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		79, // Expr3
-		7,  // Expr4
-		9,  // Expr5
-		10, // Expr6
-		12, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		18, // BoolLit
-		21, // NilLit
-		16, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
-	},
-	gotoRow{ // S32
 		-1, // S'
 		-1, // Fscript
 		-1, // Expr
@@ -667,10 +657,11 @@ var gotoTab = gotoTable{
 		21, // NilLit
 		16, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
-	gotoRow{ // S33
+	gotoRow{ // S31
 		-1, // S'
 		-1, // Fscript
 		-1, // Expr
@@ -687,10 +678,11 @@ var gotoTab = gotoTable{
 		21, // NilLit
 		16, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
-	gotoRow{ // S34
+	gotoRow{ // S32
 		-1, // S'
 		-1, // Fscript
 		-1, // Expr
@@ -707,10 +699,11 @@ var gotoTab = gotoTable{
 		21, // NilLit
 		16, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
-	gotoRow{ // S35
+	gotoRow{ // S33
 		-1, // S'
 		-1, // Fscript
 		-1, // Expr
@@ -727,6 +720,49 @@ var gotoTab = gotoTable{
 		21, // NilLit
 		16, // Literal
 		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S34
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		84, // Expr3
+		7,  // Expr4
+		9,  // Expr5
+		10, // Expr6
+		12, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		18, // BoolLit
+		21, // NilLit
+		16, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S35
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		85, // Expr3
+		7,  // Expr4
+		9,  // Expr5
+		10, // Expr6
+		12, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		18, // BoolLit
+		21, // NilLit
+		16, // Literal
+		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -737,7 +773,7 @@ var gotoTab = gotoTable{
 		-1, // Expr1
 		-1, // Expr2
 		-1, // Expr3
-		84, // Expr4
+		86, // Expr4
 		9,  // Expr5
 		10, // Expr6
 		12, // PrimaryExpr
@@ -747,6 +783,7 @@ var gotoTab = gotoTable{
 		21, // NilLit
 		16, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -757,7 +794,7 @@ var gotoTab = gotoTable{
 		-1, // Expr1
 		-1, // Expr2
 		-1, // Expr3
-		85, // Expr4
+		87, // Expr4
 		9,  // Expr5
 		10, // Expr6
 		12, // PrimaryExpr
@@ -767,50 +804,11 @@ var gotoTab = gotoTable{
 		21, // NilLit
 		16, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S38
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		86, // Expr5
-		10, // Expr6
-		12, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		18, // BoolLit
-		21, // NilLit
-		16, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
-	},
-	gotoRow{ // S39
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		87, // Expr5
-		10, // Expr6
-		12, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		18, // BoolLit
-		21, // NilLit
-		16, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
-	},
-	gotoRow{ // S40
 		-1, // S'
 		-1, // Fscript
 		-1, // Expr
@@ -827,6 +825,49 @@ var gotoTab = gotoTable{
 		21, // NilLit
 		16, // Literal
 		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S39
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		89, // Expr5
+		10, // Expr6
+		12, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		18, // BoolLit
+		21, // NilLit
+		16, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S40
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		90, // Expr5
+		10, // Expr6
+		12, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		18, // BoolLit
+		21, // NilLit
+		16, // Literal
+		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -847,26 +888,28 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S42
 		-1,  // S'
 		-1,  // Fscript
-		89,  // Expr
-		90,  // Expr1
-		91,  // Expr2
-		92,  // Expr3
-		93,  // Expr4
-		95,  // Expr5
-		96,  // Expr6
-		98,  // PrimaryExpr
+		91,  // Expr
+		92,  // Expr1
+		93,  // Expr2
+		94,  // Expr3
+		95,  // Expr4
+		97,  // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
 		-1,  // TernaryExpr
 		-1,  // TernaryArgument
-		103, // BoolLit
-		106, // NilLit
-		102, // Literal
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
 		-1,  // Ref
+		-1,  // Indexer
 		-1,  // Args
 		-1,  // ExprList
 	},
@@ -887,28 +930,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S44
 		-1,  // S'
 		-1,  // Fscript
-		113, // Expr
-		114, // Expr1
-		115, // Expr2
-		116, // Expr3
-		117, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
+		115, // Expr
+		116, // Expr1
+		117, // Expr2
+		118, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
 		-1,  // TernaryExpr
 		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
 		-1,  // Ref
-		125, // Args
-		138, // ExprList
+		-1,  // Indexer
+		127, // Args
+		140, // ExprList
 	},
 	gotoRow{ // S45
 		-1, // S'
@@ -927,6 +972,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -947,6 +993,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -967,6 +1014,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -987,6 +1035,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1007,6 +1056,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1027,6 +1077,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1038,7 +1089,7 @@ var gotoTab = gotoTable{
 		-1,  // Expr2
 		-1,  // Expr3
 		-1,  // Expr4
-		154, // Expr5
+		156, // Expr5
 		53,  // Expr6
 		55,  // PrimaryExpr
 		-1,  // TernaryExpr
@@ -1047,6 +1098,7 @@ var gotoTab = gotoTable{
 		64,  // NilLit
 		59,  // Literal
 		-1,  // Ref
+		-1,  // Indexer
 		-1,  // Args
 		-1,  // ExprList
 	},
@@ -1067,6 +1119,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1087,6 +1140,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1098,7 +1152,7 @@ var gotoTab = gotoTable{
 		-1,  // Expr2
 		-1,  // Expr3
 		-1,  // Expr4
-		156, // Expr5
+		158, // Expr5
 		53,  // Expr6
 		55,  // PrimaryExpr
 		-1,  // TernaryExpr
@@ -1107,6 +1161,7 @@ var gotoTab = gotoTable{
 		64,  // NilLit
 		59,  // Literal
 		-1,  // Ref
+		-1,  // Indexer
 		-1,  // Args
 		-1,  // ExprList
 	},
@@ -1127,6 +1182,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1147,13 +1203,14 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S57
 		-1,  // S'
 		-1,  // Fscript
-		158, // Expr
+		160, // Expr
 		47,  // Expr1
 		48,  // Expr2
 		49,  // Expr3
@@ -1167,6 +1224,7 @@ var gotoTab = gotoTable{
 		64,  // NilLit
 		59,  // Literal
 		-1,  // Ref
+		-1,  // Indexer
 		-1,  // Args
 		-1,  // ExprList
 	},
@@ -1187,6 +1245,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1207,6 +1266,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1227,6 +1287,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1247,6 +1308,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1267,6 +1329,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1287,6 +1350,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1307,6 +1371,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1327,6 +1392,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1347,6 +1413,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1367,6 +1434,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1387,6 +1455,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1407,6 +1476,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1426,69 +1496,73 @@ var gotoTab = gotoTable{
 		-1,  // BoolLit
 		-1,  // NilLit
 		-1,  // Literal
-		161, // Ref
+		163, // Ref
+		165, // Indexer
 		-1,  // Args
 		-1,  // ExprList
 	},
 	gotoRow{ // S71
 		-1,  // S'
 		-1,  // Fscript
-		113, // Expr
-		114, // Expr1
-		115, // Expr2
-		116, // Expr3
-		117, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
+		115, // Expr
+		116, // Expr1
+		117, // Expr2
+		118, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
 		-1,  // TernaryExpr
 		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
 		-1,  // Ref
-		164, // Args
-		138, // ExprList
+		-1,  // Indexer
+		168, // Args
+		140, // ExprList
 	},
 	gotoRow{ // S72
 		-1,  // S'
 		-1,  // Fscript
-		165, // Expr
-		167, // Expr1
-		168, // Expr2
-		169, // Expr3
-		170, // Expr4
-		172, // Expr5
-		173, // Expr6
-		175, // PrimaryExpr
-		166, // TernaryExpr
-		180, // TernaryArgument
-		181, // BoolLit
-		184, // NilLit
-		179, // Literal
+		169, // Expr
+		171, // Expr1
+		172, // Expr2
+		173, // Expr3
+		174, // Expr4
+		176, // Expr5
+		177, // Expr6
+		179, // PrimaryExpr
+		170, // TernaryExpr
+		184, // TernaryArgument
+		185, // BoolLit
+		188, // NilLit
+		183, // Literal
 		-1,  // Ref
+		-1,  // Indexer
 		-1,  // Args
 		-1,  // ExprList
 	},
 	gotoRow{ // S73
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		-1,  // Expr5
+		-1,  // Expr6
+		-1,  // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		-1,  // BoolLit
+		-1,  // NilLit
+		-1,  // Literal
+		-1,  // Ref
+		196, // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S74
 		-1, // S'
@@ -1507,6 +1581,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1527,6 +1602,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1547,28 +1623,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S77
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		197, // Fscript
+		198, // Expr
+		200, // Expr1
+		201, // Expr2
+		202, // Expr3
+		203, // Expr4
+		205, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		199, // TernaryExpr
+		213, // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S78
 		-1, // S'
@@ -1587,6 +1665,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1607,6 +1686,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1627,6 +1707,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1647,6 +1728,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1667,6 +1749,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1687,6 +1770,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1707,6 +1791,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1727,6 +1812,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1747,6 +1833,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1767,6 +1854,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1787,6 +1875,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1807,6 +1896,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1827,6 +1917,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1847,6 +1938,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1867,6 +1959,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -1887,28 +1980,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S94
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		-1,  // Expr4
-		206, // Expr5
-		96,  // Expr6
-		98,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		103, // BoolLit
-		106, // NilLit
-		102, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S95
 		-1, // S'
@@ -1927,10 +2022,32 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S96
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		237, // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S97
 		-1, // S'
 		-1, // Fscript
 		-1, // Expr
@@ -1947,28 +2064,9 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
-	},
-	gotoRow{ // S97
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		-1,  // Expr4
-		207, // Expr5
-		96,  // Expr6
-		98,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		103, // BoolLit
-		106, // NilLit
-		102, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
 	},
 	gotoRow{ // S98
 		-1, // S'
@@ -1987,10 +2085,32 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S99
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		238, // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S100
 		-1, // S'
 		-1, // Fscript
 		-1, // Expr
@@ -2007,28 +2127,9 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
-	},
-	gotoRow{ // S100
-		-1,  // S'
-		-1,  // Fscript
-		209, // Expr
-		90,  // Expr1
-		91,  // Expr2
-		92,  // Expr3
-		93,  // Expr4
-		95,  // Expr5
-		96,  // Expr6
-		98,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		103, // BoolLit
-		106, // NilLit
-		102, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
 	},
 	gotoRow{ // S101
 		-1, // S'
@@ -2047,28 +2148,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S102
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		240, // Expr
+		92,  // Expr1
+		93,  // Expr2
+		94,  // Expr3
+		95,  // Expr4
+		97,  // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S103
 		-1, // S'
@@ -2087,6 +2190,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -2107,6 +2211,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -2127,6 +2232,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -2147,6 +2253,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -2167,6 +2274,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -2187,6 +2295,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -2207,6 +2316,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -2227,6 +2337,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -2247,28 +2358,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S112
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		-1,  // Expr4
-		-1,  // Expr5
-		-1,  // Expr6
-		-1,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		-1,  // BoolLit
-		-1,  // NilLit
-		-1,  // Literal
-		211, // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S113
 		-1, // S'
@@ -2287,28 +2400,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S114
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		-1,  // Expr5
+		-1,  // Expr6
+		-1,  // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		-1,  // BoolLit
+		-1,  // NilLit
+		-1,  // Literal
+		242, // Ref
+		244, // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S115
 		-1, // S'
@@ -2327,6 +2442,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -2347,6 +2463,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -2367,28 +2484,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S118
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		-1,  // Expr4
-		227, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S119
 		-1, // S'
@@ -2407,10 +2526,32 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S120
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		260, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S121
 		-1, // S'
 		-1, // Fscript
 		-1, // Expr
@@ -2427,28 +2568,9 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
-	},
-	gotoRow{ // S121
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		-1,  // Expr4
-		228, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
 	},
 	gotoRow{ // S122
 		-1, // S'
@@ -2467,10 +2589,32 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S123
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		261, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S124
 		-1, // S'
 		-1, // Fscript
 		-1, // Expr
@@ -2487,28 +2631,9 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
-	},
-	gotoRow{ // S124
-		-1,  // S'
-		-1,  // Fscript
-		230, // Expr
-		90,  // Expr1
-		91,  // Expr2
-		92,  // Expr3
-		93,  // Expr4
-		95,  // Expr5
-		96,  // Expr6
-		98,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		103, // BoolLit
-		106, // NilLit
-		102, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
 	},
 	gotoRow{ // S125
 		-1, // S'
@@ -2527,28 +2652,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S126
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		263, // Expr
+		92,  // Expr1
+		93,  // Expr2
+		94,  // Expr3
+		95,  // Expr4
+		97,  // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S127
 		-1, // S'
@@ -2567,6 +2694,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -2587,6 +2715,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -2607,6 +2736,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -2627,6 +2757,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -2647,6 +2778,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -2667,6 +2799,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -2687,6 +2820,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -2707,6 +2841,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -2727,6 +2862,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -2747,28 +2883,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S137
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		-1,  // Expr4
-		-1,  // Expr5
-		-1,  // Expr6
-		-1,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		-1,  // BoolLit
-		-1,  // NilLit
-		-1,  // Literal
-		233, // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S138
 		-1, // S'
@@ -2787,6 +2925,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -2794,19 +2933,20 @@ var gotoTab = gotoTable{
 		-1,  // S'
 		-1,  // Fscript
 		-1,  // Expr
-		237, // Expr1
-		48,  // Expr2
-		49,  // Expr3
-		50,  // Expr4
-		52,  // Expr5
-		53,  // Expr6
-		55,  // PrimaryExpr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		-1,  // Expr5
+		-1,  // Expr6
+		-1,  // PrimaryExpr
 		-1,  // TernaryExpr
 		-1,  // TernaryArgument
-		61,  // BoolLit
-		64,  // NilLit
-		59,  // Literal
-		-1,  // Ref
+		-1,  // BoolLit
+		-1,  // NilLit
+		-1,  // Literal
+		266, // Ref
+		268, // Indexer
 		-1,  // Args
 		-1,  // ExprList
 	},
@@ -2827,35 +2967,16 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S141
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
-	},
-	gotoRow{ // S142
 		-1,  // S'
 		-1,  // Fscript
 		-1,  // Expr
-		-1,  // Expr1
-		238, // Expr2
+		272, // Expr1
+		48,  // Expr2
 		49,  // Expr3
 		50,  // Expr4
 		52,  // Expr5
@@ -2867,230 +2988,11 @@ var gotoTab = gotoTable{
 		64,  // NilLit
 		59,  // Literal
 		-1,  // Ref
+		-1,  // Indexer
 		-1,  // Args
 		-1,  // ExprList
 	},
-	gotoRow{ // S143
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		239, // Expr3
-		50,  // Expr4
-		52,  // Expr5
-		53,  // Expr6
-		55,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		61,  // BoolLit
-		64,  // NilLit
-		59,  // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S144
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		240, // Expr3
-		50,  // Expr4
-		52,  // Expr5
-		53,  // Expr6
-		55,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		61,  // BoolLit
-		64,  // NilLit
-		59,  // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S145
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		241, // Expr3
-		50,  // Expr4
-		52,  // Expr5
-		53,  // Expr6
-		55,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		61,  // BoolLit
-		64,  // NilLit
-		59,  // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S146
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		242, // Expr3
-		50,  // Expr4
-		52,  // Expr5
-		53,  // Expr6
-		55,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		61,  // BoolLit
-		64,  // NilLit
-		59,  // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S147
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		243, // Expr3
-		50,  // Expr4
-		52,  // Expr5
-		53,  // Expr6
-		55,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		61,  // BoolLit
-		64,  // NilLit
-		59,  // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S148
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		244, // Expr3
-		50,  // Expr4
-		52,  // Expr5
-		53,  // Expr6
-		55,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		61,  // BoolLit
-		64,  // NilLit
-		59,  // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S149
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		245, // Expr4
-		52,  // Expr5
-		53,  // Expr6
-		55,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		61,  // BoolLit
-		64,  // NilLit
-		59,  // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S150
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		246, // Expr4
-		52,  // Expr5
-		53,  // Expr6
-		55,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		61,  // BoolLit
-		64,  // NilLit
-		59,  // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S151
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		-1,  // Expr4
-		247, // Expr5
-		53,  // Expr6
-		55,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		61,  // BoolLit
-		64,  // NilLit
-		59,  // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S152
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		-1,  // Expr4
-		248, // Expr5
-		53,  // Expr6
-		55,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		61,  // BoolLit
-		64,  // NilLit
-		59,  // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S153
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		-1,  // Expr4
-		249, // Expr5
-		53,  // Expr6
-		55,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		61,  // BoolLit
-		64,  // NilLit
-		59,  // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S154
+	gotoRow{ // S142
 		-1, // S'
 		-1, // Fscript
 		-1, // Expr
@@ -3107,26 +3009,280 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
+	},
+	gotoRow{ // S143
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S144
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		273, // Expr2
+		49,  // Expr3
+		50,  // Expr4
+		52,  // Expr5
+		53,  // Expr6
+		55,  // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		61,  // BoolLit
+		64,  // NilLit
+		59,  // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S145
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		274, // Expr3
+		50,  // Expr4
+		52,  // Expr5
+		53,  // Expr6
+		55,  // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		61,  // BoolLit
+		64,  // NilLit
+		59,  // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S146
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		275, // Expr3
+		50,  // Expr4
+		52,  // Expr5
+		53,  // Expr6
+		55,  // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		61,  // BoolLit
+		64,  // NilLit
+		59,  // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S147
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		276, // Expr3
+		50,  // Expr4
+		52,  // Expr5
+		53,  // Expr6
+		55,  // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		61,  // BoolLit
+		64,  // NilLit
+		59,  // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S148
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		277, // Expr3
+		50,  // Expr4
+		52,  // Expr5
+		53,  // Expr6
+		55,  // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		61,  // BoolLit
+		64,  // NilLit
+		59,  // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S149
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		278, // Expr3
+		50,  // Expr4
+		52,  // Expr5
+		53,  // Expr6
+		55,  // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		61,  // BoolLit
+		64,  // NilLit
+		59,  // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S150
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		279, // Expr3
+		50,  // Expr4
+		52,  // Expr5
+		53,  // Expr6
+		55,  // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		61,  // BoolLit
+		64,  // NilLit
+		59,  // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S151
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		280, // Expr4
+		52,  // Expr5
+		53,  // Expr6
+		55,  // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		61,  // BoolLit
+		64,  // NilLit
+		59,  // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S152
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		281, // Expr4
+		52,  // Expr5
+		53,  // Expr6
+		55,  // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		61,  // BoolLit
+		64,  // NilLit
+		59,  // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S153
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		282, // Expr5
+		53,  // Expr6
+		55,  // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		61,  // BoolLit
+		64,  // NilLit
+		59,  // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S154
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		283, // Expr5
+		53,  // Expr6
+		55,  // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		61,  // BoolLit
+		64,  // NilLit
+		59,  // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S155
 		-1,  // S'
 		-1,  // Fscript
-		250, // Expr
-		90,  // Expr1
-		91,  // Expr2
-		92,  // Expr3
-		93,  // Expr4
-		95,  // Expr5
-		96,  // Expr6
-		98,  // PrimaryExpr
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		284, // Expr5
+		53,  // Expr6
+		55,  // PrimaryExpr
 		-1,  // TernaryExpr
 		-1,  // TernaryArgument
-		103, // BoolLit
-		106, // NilLit
-		102, // Literal
+		61,  // BoolLit
+		64,  // NilLit
+		59,  // Literal
 		-1,  // Ref
+		-1,  // Indexer
 		-1,  // Args
 		-1,  // ExprList
 	},
@@ -3147,28 +3303,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S157
 		-1,  // S'
 		-1,  // Fscript
-		113, // Expr
-		114, // Expr1
-		115, // Expr2
-		116, // Expr3
-		117, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
+		285, // Expr
+		92,  // Expr1
+		93,  // Expr2
+		94,  // Expr3
+		95,  // Expr4
+		97,  // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
 		-1,  // TernaryExpr
 		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
 		-1,  // Ref
-		251, // Args
-		138, // ExprList
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S158
 		-1, // S'
@@ -3187,108 +3345,114 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S159
 		-1,  // S'
 		-1,  // Fscript
-		113, // Expr
-		114, // Expr1
-		115, // Expr2
-		116, // Expr3
-		117, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
+		115, // Expr
+		116, // Expr1
+		117, // Expr2
+		118, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
 		-1,  // TernaryExpr
 		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
 		-1,  // Ref
-		253, // Args
-		138, // ExprList
+		-1,  // Indexer
+		286, // Args
+		140, // ExprList
 	},
 	gotoRow{ // S160
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S161
 		-1,  // S'
 		-1,  // Fscript
-		165, // Expr
-		167, // Expr1
-		168, // Expr2
-		169, // Expr3
-		170, // Expr4
-		172, // Expr5
-		173, // Expr6
-		175, // PrimaryExpr
-		166, // TernaryExpr
-		254, // TernaryArgument
-		181, // BoolLit
-		184, // NilLit
-		179, // Literal
+		115, // Expr
+		116, // Expr1
+		117, // Expr2
+		118, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
 		-1,  // Ref
+		-1,  // Indexer
+		288, // Args
+		140, // ExprList
+	},
+	gotoRow{ // S162
+		-1,  // S'
+		-1,  // Fscript
+		169, // Expr
+		171, // Expr1
+		172, // Expr2
+		173, // Expr3
+		174, // Expr4
+		176, // Expr5
+		177, // Expr6
+		179, // PrimaryExpr
+		170, // TernaryExpr
+		289, // TernaryArgument
+		185, // BoolLit
+		188, // NilLit
+		183, // Literal
+		-1,  // Ref
+		-1,  // Indexer
 		-1,  // Args
 		-1,  // ExprList
 	},
-	gotoRow{ // S161
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
-	},
-	gotoRow{ // S162
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
-	},
 	gotoRow{ // S163
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		-1,  // Expr5
+		-1,  // Expr6
+		-1,  // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		-1,  // BoolLit
+		-1,  // NilLit
+		-1,  // Literal
+		-1,  // Ref
+		291, // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S164
 		-1, // S'
@@ -3307,6 +3471,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -3327,6 +3492,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -3347,28 +3513,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S167
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		292, // Fscript
+		198, // Expr
+		200, // Expr1
+		201, // Expr2
+		202, // Expr3
+		203, // Expr4
+		205, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		199, // TernaryExpr
+		213, // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S168
 		-1, // S'
@@ -3387,6 +3555,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -3407,6 +3576,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -3427,28 +3597,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S171
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		-1,  // Expr4
-		271, // Expr5
-		173, // Expr6
-		175, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		181, // BoolLit
-		184, // NilLit
-		179, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S172
 		-1, // S'
@@ -3467,6 +3639,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -3487,30 +3660,11 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S174
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		-1,  // Expr4
-		273, // Expr5
-		173, // Expr6
-		175, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		181, // BoolLit
-		184, // NilLit
-		179, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S175
 		-1, // S'
 		-1, // Fscript
 		-1, // Expr
@@ -3527,8 +3681,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
+	},
+	gotoRow{ // S175
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		307, // Expr5
+		177, // Expr6
+		179, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		185, // BoolLit
+		188, // NilLit
+		183, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S176
 		-1, // S'
@@ -3547,30 +3723,11 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S177
-		-1,  // S'
-		-1,  // Fscript
-		275, // Expr
-		47,  // Expr1
-		48,  // Expr2
-		49,  // Expr3
-		50,  // Expr4
-		52,  // Expr5
-		53,  // Expr6
-		55,  // PrimaryExpr
-		276, // TernaryExpr
-		60,  // TernaryArgument
-		61,  // BoolLit
-		64,  // NilLit
-		59,  // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S178
 		-1, // S'
 		-1, // Fscript
 		-1, // Expr
@@ -3587,8 +3744,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
+	},
+	gotoRow{ // S178
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		309, // Expr5
+		177, // Expr6
+		179, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		185, // BoolLit
+		188, // NilLit
+		183, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S179
 		-1, // S'
@@ -3607,6 +3786,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -3627,28 +3807,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S181
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		311, // Expr
+		47,  // Expr1
+		48,  // Expr2
+		49,  // Expr3
+		50,  // Expr4
+		52,  // Expr5
+		53,  // Expr6
+		55,  // PrimaryExpr
+		312, // TernaryExpr
+		60,  // TernaryArgument
+		61,  // BoolLit
+		64,  // NilLit
+		59,  // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S182
 		-1, // S'
@@ -3667,6 +3849,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -3687,6 +3870,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -3707,6 +3891,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -3727,6 +3912,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -3747,6 +3933,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -3767,6 +3954,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -3787,6 +3975,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -3807,28 +3996,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S190
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		-1,  // Expr4
-		-1,  // Expr5
-		-1,  // Expr6
-		-1,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		-1,  // BoolLit
-		-1,  // NilLit
-		-1,  // Literal
-		280, // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S191
 		-1, // S'
@@ -3847,6 +4038,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -3867,210 +4059,32 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S193
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		283, // Expr1
-		91,  // Expr2
-		92,  // Expr3
-		93,  // Expr4
-		95,  // Expr5
-		96,  // Expr6
-		98,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		103, // BoolLit
-		106, // NilLit
-		102, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S194
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		284, // Expr2
-		92,  // Expr3
-		93,  // Expr4
-		95,  // Expr5
-		96,  // Expr6
-		98,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		103, // BoolLit
-		106, // NilLit
-		102, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S195
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		285, // Expr3
-		93,  // Expr4
-		95,  // Expr5
-		96,  // Expr6
-		98,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		103, // BoolLit
-		106, // NilLit
-		102, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S196
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		286, // Expr3
-		93,  // Expr4
-		95,  // Expr5
-		96,  // Expr6
-		98,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		103, // BoolLit
-		106, // NilLit
-		102, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S197
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		287, // Expr3
-		93,  // Expr4
-		95,  // Expr5
-		96,  // Expr6
-		98,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		103, // BoolLit
-		106, // NilLit
-		102, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S198
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		288, // Expr3
-		93,  // Expr4
-		95,  // Expr5
-		96,  // Expr6
-		98,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		103, // BoolLit
-		106, // NilLit
-		102, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S199
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		289, // Expr3
-		93,  // Expr4
-		95,  // Expr5
-		96,  // Expr6
-		98,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		103, // BoolLit
-		106, // NilLit
-		102, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S200
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		290, // Expr3
-		93,  // Expr4
-		95,  // Expr5
-		96,  // Expr6
-		98,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		103, // BoolLit
-		106, // NilLit
-		102, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S201
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		291, // Expr4
-		95,  // Expr5
-		96,  // Expr6
-		98,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		103, // BoolLit
-		106, // NilLit
-		102, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S202
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		292, // Expr4
-		95,  // Expr5
-		96,  // Expr6
-		98,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		103, // BoolLit
-		106, // NilLit
-		102, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S203
 		-1,  // S'
 		-1,  // Fscript
 		-1,  // Expr
@@ -4078,17 +4092,207 @@ var gotoTab = gotoTable{
 		-1,  // Expr2
 		-1,  // Expr3
 		-1,  // Expr4
-		293, // Expr5
-		96,  // Expr6
-		98,  // PrimaryExpr
+		-1,  // Expr5
+		-1,  // Expr6
+		-1,  // PrimaryExpr
 		-1,  // TernaryExpr
 		-1,  // TernaryArgument
-		103, // BoolLit
-		106, // NilLit
-		102, // Literal
-		-1,  // Ref
+		-1,  // BoolLit
+		-1,  // NilLit
+		-1,  // Literal
+		316, // Ref
+		318, // Indexer
 		-1,  // Args
 		-1,  // ExprList
+	},
+	gotoRow{ // S195
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S196
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S197
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S198
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S199
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S200
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S201
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S202
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S203
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S204
 		-1,  // S'
@@ -4098,37 +4302,39 @@ var gotoTab = gotoTable{
 		-1,  // Expr2
 		-1,  // Expr3
 		-1,  // Expr4
-		294, // Expr5
-		96,  // Expr6
-		98,  // PrimaryExpr
+		335, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
 		-1,  // TernaryExpr
 		-1,  // TernaryArgument
-		103, // BoolLit
-		106, // NilLit
-		102, // Literal
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
 		-1,  // Ref
+		-1,  // Indexer
 		-1,  // Args
 		-1,  // ExprList
 	},
 	gotoRow{ // S205
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		-1,  // Expr4
-		295, // Expr5
-		96,  // Expr6
-		98,  // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		103, // BoolLit
-		106, // NilLit
-		102, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S206
 		-1, // S'
@@ -4147,10 +4353,32 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S207
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		337, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S208
 		-1, // S'
 		-1, // Fscript
 		-1, // Expr
@@ -4167,28 +4395,9 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
-	},
-	gotoRow{ // S208
-		-1,  // S'
-		-1,  // Fscript
-		113, // Expr
-		114, // Expr1
-		115, // Expr2
-		116, // Expr3
-		117, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
-		-1,  // Ref
-		296, // Args
-		138, // ExprList
 	},
 	gotoRow{ // S209
 		-1, // S'
@@ -4207,28 +4416,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S210
 		-1,  // S'
 		-1,  // Fscript
-		113, // Expr
-		114, // Expr1
-		115, // Expr2
-		116, // Expr3
-		117, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
+		339, // Expr
+		47,  // Expr1
+		48,  // Expr2
+		49,  // Expr3
+		50,  // Expr4
+		52,  // Expr5
+		53,  // Expr6
+		55,  // PrimaryExpr
+		46,  // TernaryExpr
+		60,  // TernaryArgument
+		61,  // BoolLit
+		64,  // NilLit
+		59,  // Literal
 		-1,  // Ref
-		298, // Args
-		138, // ExprList
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S211
 		-1, // S'
@@ -4247,6 +4458,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -4267,6 +4479,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -4287,188 +4500,198 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S214
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		301, // Expr1
-		115, // Expr2
-		116, // Expr3
-		117, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S215
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		302, // Expr2
-		116, // Expr3
-		117, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S216
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		303, // Expr3
-		117, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S217
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		304, // Expr3
-		117, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S218
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		305, // Expr3
-		117, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S219
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		306, // Expr3
-		117, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S220
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		307, // Expr3
-		117, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S221
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		308, // Expr3
-		117, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S222
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		309, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S223
 		-1,  // S'
@@ -4477,16 +4700,17 @@ var gotoTab = gotoTable{
 		-1,  // Expr1
 		-1,  // Expr2
 		-1,  // Expr3
-		310, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
+		-1,  // Expr4
+		-1,  // Expr5
+		-1,  // Expr6
+		-1,  // PrimaryExpr
 		-1,  // TernaryExpr
 		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
-		-1,  // Ref
+		-1,  // BoolLit
+		-1,  // NilLit
+		-1,  // Literal
+		342, // Ref
+		344, // Indexer
 		-1,  // Args
 		-1,  // ExprList
 	},
@@ -4494,19 +4718,20 @@ var gotoTab = gotoTable{
 		-1,  // S'
 		-1,  // Fscript
 		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		-1,  // Expr4
-		311, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
+		347, // Expr1
+		93,  // Expr2
+		94,  // Expr3
+		95,  // Expr4
+		97,  // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
 		-1,  // TernaryExpr
 		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
 		-1,  // Ref
+		-1,  // Indexer
 		-1,  // Args
 		-1,  // ExprList
 	},
@@ -4515,18 +4740,19 @@ var gotoTab = gotoTable{
 		-1,  // Fscript
 		-1,  // Expr
 		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		-1,  // Expr4
-		312, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
+		348, // Expr2
+		94,  // Expr3
+		95,  // Expr4
+		97,  // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
 		-1,  // TernaryExpr
 		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
 		-1,  // Ref
+		-1,  // Indexer
 		-1,  // Args
 		-1,  // ExprList
 	},
@@ -4536,217 +4762,228 @@ var gotoTab = gotoTable{
 		-1,  // Expr
 		-1,  // Expr1
 		-1,  // Expr2
-		-1,  // Expr3
-		-1,  // Expr4
-		313, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
+		349, // Expr3
+		95,  // Expr4
+		97,  // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
 		-1,  // TernaryExpr
 		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
 		-1,  // Ref
+		-1,  // Indexer
 		-1,  // Args
 		-1,  // ExprList
 	},
 	gotoRow{ // S227
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		350, // Expr3
+		95,  // Expr4
+		97,  // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S228
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		351, // Expr3
+		95,  // Expr4
+		97,  // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S229
 		-1,  // S'
 		-1,  // Fscript
-		113, // Expr
-		114, // Expr1
-		115, // Expr2
-		116, // Expr3
-		117, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		352, // Expr3
+		95,  // Expr4
+		97,  // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
 		-1,  // TernaryExpr
 		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
 		-1,  // Ref
-		314, // Args
-		138, // ExprList
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S230
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		353, // Expr3
+		95,  // Expr4
+		97,  // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S231
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		354, // Expr3
+		95,  // Expr4
+		97,  // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S232
 		-1,  // S'
 		-1,  // Fscript
-		113, // Expr
-		114, // Expr1
-		115, // Expr2
-		116, // Expr3
-		117, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		355, // Expr4
+		97,  // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
 		-1,  // TernaryExpr
 		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
 		-1,  // Ref
-		316, // Args
-		138, // ExprList
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S233
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		356, // Expr4
+		97,  // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S234
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		357, // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S235
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		358, // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S236
 		-1,  // S'
 		-1,  // Fscript
-		319, // Expr
-		114, // Expr1
-		115, // Expr2
-		116, // Expr3
-		117, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		359, // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
 		-1,  // TernaryExpr
 		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
 		-1,  // Ref
+		-1,  // Indexer
 		-1,  // Args
 		-1,  // ExprList
 	},
@@ -4767,6 +5004,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -4787,28 +5025,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S239
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		115, // Expr
+		116, // Expr1
+		117, // Expr2
+		118, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		360, // Args
+		140, // ExprList
 	},
 	gotoRow{ // S240
 		-1, // S'
@@ -4827,48 +5067,51 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S241
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		115, // Expr
+		116, // Expr1
+		117, // Expr2
+		118, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		362, // Args
+		140, // ExprList
 	},
 	gotoRow{ // S242
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		-1,  // Expr5
+		-1,  // Expr6
+		-1,  // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		-1,  // BoolLit
+		-1,  // NilLit
+		-1,  // Literal
+		-1,  // Ref
+		364, // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S243
 		-1, // S'
@@ -4887,6 +5130,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -4907,6 +5151,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -4927,266 +5172,280 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S246
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		365, // Fscript
+		198, // Expr
+		200, // Expr1
+		201, // Expr2
+		202, // Expr3
+		203, // Expr4
+		205, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		199, // TernaryExpr
+		213, // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S247
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		366, // Expr1
+		117, // Expr2
+		118, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S248
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		367, // Expr2
+		118, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S249
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		368, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S250
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		369, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S251
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		370, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S252
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		371, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S253
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		372, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S254
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		373, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S255
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		374, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S256
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		375, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S257
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		376, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S258
 		-1,  // S'
 		-1,  // Fscript
 		-1,  // Expr
-		323, // Expr1
-		168, // Expr2
-		169, // Expr3
-		170, // Expr4
-		172, // Expr5
-		173, // Expr6
-		175, // PrimaryExpr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		377, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
 		-1,  // TernaryExpr
 		-1,  // TernaryArgument
-		181, // BoolLit
-		184, // NilLit
-		179, // Literal
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
 		-1,  // Ref
+		-1,  // Indexer
 		-1,  // Args
 		-1,  // ExprList
 	},
@@ -5195,242 +5454,23 @@ var gotoTab = gotoTable{
 		-1,  // Fscript
 		-1,  // Expr
 		-1,  // Expr1
-		324, // Expr2
-		169, // Expr3
-		170, // Expr4
-		172, // Expr5
-		173, // Expr6
-		175, // PrimaryExpr
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		378, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
 		-1,  // TernaryExpr
 		-1,  // TernaryArgument
-		181, // BoolLit
-		184, // NilLit
-		179, // Literal
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
 		-1,  // Ref
+		-1,  // Indexer
 		-1,  // Args
 		-1,  // ExprList
 	},
 	gotoRow{ // S260
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		325, // Expr3
-		170, // Expr4
-		172, // Expr5
-		173, // Expr6
-		175, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		181, // BoolLit
-		184, // NilLit
-		179, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S261
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		326, // Expr3
-		170, // Expr4
-		172, // Expr5
-		173, // Expr6
-		175, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		181, // BoolLit
-		184, // NilLit
-		179, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S262
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		327, // Expr3
-		170, // Expr4
-		172, // Expr5
-		173, // Expr6
-		175, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		181, // BoolLit
-		184, // NilLit
-		179, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S263
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		328, // Expr3
-		170, // Expr4
-		172, // Expr5
-		173, // Expr6
-		175, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		181, // BoolLit
-		184, // NilLit
-		179, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S264
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		329, // Expr3
-		170, // Expr4
-		172, // Expr5
-		173, // Expr6
-		175, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		181, // BoolLit
-		184, // NilLit
-		179, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S265
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		330, // Expr3
-		170, // Expr4
-		172, // Expr5
-		173, // Expr6
-		175, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		181, // BoolLit
-		184, // NilLit
-		179, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S266
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		331, // Expr4
-		172, // Expr5
-		173, // Expr6
-		175, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		181, // BoolLit
-		184, // NilLit
-		179, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S267
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		332, // Expr4
-		172, // Expr5
-		173, // Expr6
-		175, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		181, // BoolLit
-		184, // NilLit
-		179, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S268
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		-1,  // Expr4
-		333, // Expr5
-		173, // Expr6
-		175, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		181, // BoolLit
-		184, // NilLit
-		179, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S269
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		-1,  // Expr4
-		334, // Expr5
-		173, // Expr6
-		175, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		181, // BoolLit
-		184, // NilLit
-		179, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S270
-		-1,  // S'
-		-1,  // Fscript
-		-1,  // Expr
-		-1,  // Expr1
-		-1,  // Expr2
-		-1,  // Expr3
-		-1,  // Expr4
-		335, // Expr5
-		173, // Expr6
-		175, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		181, // BoolLit
-		184, // NilLit
-		179, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
-	},
-	gotoRow{ // S271
 		-1, // S'
 		-1, // Fscript
 		-1, // Expr
@@ -5447,28 +5487,261 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
-	gotoRow{ // S272
+	gotoRow{ // S261
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S262
 		-1,  // S'
 		-1,  // Fscript
-		336, // Expr
-		90,  // Expr1
-		91,  // Expr2
-		92,  // Expr3
-		93,  // Expr4
-		95,  // Expr5
-		96,  // Expr6
-		98,  // PrimaryExpr
+		115, // Expr
+		116, // Expr1
+		117, // Expr2
+		118, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
 		-1,  // TernaryExpr
 		-1,  // TernaryArgument
-		103, // BoolLit
-		106, // NilLit
-		102, // Literal
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
 		-1,  // Ref
+		-1,  // Indexer
+		379, // Args
+		140, // ExprList
+	},
+	gotoRow{ // S263
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S264
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S265
+		-1,  // S'
+		-1,  // Fscript
+		115, // Expr
+		116, // Expr1
+		117, // Expr2
+		118, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		381, // Args
+		140, // ExprList
+	},
+	gotoRow{ // S266
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		-1,  // Expr5
+		-1,  // Expr6
+		-1,  // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		-1,  // BoolLit
+		-1,  // NilLit
+		-1,  // Literal
+		-1,  // Ref
+		383, // Indexer
 		-1,  // Args
 		-1,  // ExprList
+	},
+	gotoRow{ // S267
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S268
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S269
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S270
+		-1,  // S'
+		384, // Fscript
+		198, // Expr
+		200, // Expr1
+		201, // Expr2
+		202, // Expr3
+		203, // Expr4
+		205, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		199, // TernaryExpr
+		213, // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S271
+		-1,  // S'
+		-1,  // Fscript
+		385, // Expr
+		116, // Expr1
+		117, // Expr2
+		118, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S272
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S273
 		-1, // S'
@@ -5487,28 +5760,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S274
-		-1,  // S'
-		-1,  // Fscript
-		113, // Expr
-		114, // Expr1
-		115, // Expr2
-		116, // Expr3
-		117, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
-		-1,  // Ref
-		337, // Args
-		138, // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S275
 		-1, // S'
@@ -5527,6 +5802,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -5547,68 +5823,72 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S277
-		-1,  // S'
-		-1,  // Fscript
-		113, // Expr
-		114, // Expr1
-		115, // Expr2
-		116, // Expr3
-		117, // Expr4
-		119, // Expr5
-		120, // Expr6
-		122, // PrimaryExpr
-		-1,  // TernaryExpr
-		-1,  // TernaryArgument
-		128, // BoolLit
-		131, // NilLit
-		127, // Literal
-		-1,  // Ref
-		340, // Args
-		138, // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S278
-		-1,  // S'
-		-1,  // Fscript
-		165, // Expr
-		167, // Expr1
-		168, // Expr2
-		169, // Expr3
-		170, // Expr4
-		172, // Expr5
-		173, // Expr6
-		175, // PrimaryExpr
-		166, // TernaryExpr
-		341, // TernaryArgument
-		181, // BoolLit
-		184, // NilLit
-		179, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S279
-		-1,  // S'
-		-1,  // Fscript
-		342, // Expr
-		4,   // Expr1
-		5,   // Expr2
-		6,   // Expr3
-		7,   // Expr4
-		9,   // Expr5
-		10,  // Expr6
-		12,  // PrimaryExpr
-		343, // TernaryExpr
-		345, // TernaryArgument
-		18,  // BoolLit
-		21,  // NilLit
-		16,  // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S280
 		-1, // S'
@@ -5627,6 +5907,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -5647,6 +5928,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -5667,6 +5949,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -5687,6 +5970,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -5707,6 +5991,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -5727,6 +6012,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -5747,6 +6033,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -5767,6 +6054,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -5787,6 +6075,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -5807,6 +6096,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -5827,6 +6117,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -5847,6 +6138,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -5867,6 +6159,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -5887,268 +6180,282 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S294
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		390, // Expr1
+		172, // Expr2
+		173, // Expr3
+		174, // Expr4
+		176, // Expr5
+		177, // Expr6
+		179, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		185, // BoolLit
+		188, // NilLit
+		183, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S295
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		391, // Expr2
+		173, // Expr3
+		174, // Expr4
+		176, // Expr5
+		177, // Expr6
+		179, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		185, // BoolLit
+		188, // NilLit
+		183, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S296
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		392, // Expr3
+		174, // Expr4
+		176, // Expr5
+		177, // Expr6
+		179, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		185, // BoolLit
+		188, // NilLit
+		183, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S297
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		393, // Expr3
+		174, // Expr4
+		176, // Expr5
+		177, // Expr6
+		179, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		185, // BoolLit
+		188, // NilLit
+		183, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S298
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		394, // Expr3
+		174, // Expr4
+		176, // Expr5
+		177, // Expr6
+		179, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		185, // BoolLit
+		188, // NilLit
+		183, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S299
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		395, // Expr3
+		174, // Expr4
+		176, // Expr5
+		177, // Expr6
+		179, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		185, // BoolLit
+		188, // NilLit
+		183, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S300
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		396, // Expr3
+		174, // Expr4
+		176, // Expr5
+		177, // Expr6
+		179, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		185, // BoolLit
+		188, // NilLit
+		183, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S301
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		397, // Expr3
+		174, // Expr4
+		176, // Expr5
+		177, // Expr6
+		179, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		185, // BoolLit
+		188, // NilLit
+		183, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S302
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		398, // Expr4
+		176, // Expr5
+		177, // Expr6
+		179, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		185, // BoolLit
+		188, // NilLit
+		183, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S303
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		399, // Expr4
+		176, // Expr5
+		177, // Expr6
+		179, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		185, // BoolLit
+		188, // NilLit
+		183, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S304
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		400, // Expr5
+		177, // Expr6
+		179, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		185, // BoolLit
+		188, // NilLit
+		183, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S305
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		401, // Expr5
+		177, // Expr6
+		179, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		185, // BoolLit
+		188, // NilLit
+		183, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S306
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		402, // Expr5
+		177, // Expr6
+		179, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		185, // BoolLit
+		188, // NilLit
+		183, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S307
 		-1, // S'
@@ -6167,28 +6474,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S308
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		403, // Expr
+		92,  // Expr1
+		93,  // Expr2
+		94,  // Expr3
+		95,  // Expr4
+		97,  // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S309
 		-1, // S'
@@ -6207,28 +6516,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S310
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		115, // Expr
+		116, // Expr1
+		117, // Expr2
+		118, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		404, // Args
+		140, // ExprList
 	},
 	gotoRow{ // S311
 		-1, // S'
@@ -6247,6 +6558,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -6267,88 +6579,93 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S313
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		115, // Expr
+		116, // Expr1
+		117, // Expr2
+		118, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		407, // Args
+		140, // ExprList
 	},
 	gotoRow{ // S314
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		169, // Expr
+		171, // Expr1
+		172, // Expr2
+		173, // Expr3
+		174, // Expr4
+		176, // Expr5
+		177, // Expr6
+		179, // PrimaryExpr
+		170, // TernaryExpr
+		408, // TernaryArgument
+		185, // BoolLit
+		188, // NilLit
+		183, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S315
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		409, // Expr
+		4,   // Expr1
+		5,   // Expr2
+		6,   // Expr3
+		7,   // Expr4
+		9,   // Expr5
+		10,  // Expr6
+		12,  // PrimaryExpr
+		410, // TernaryExpr
+		412, // TernaryArgument
+		18,  // BoolLit
+		21,  // NilLit
+		16,  // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S316
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		-1,  // Expr5
+		-1,  // Expr6
+		-1,  // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		-1,  // BoolLit
+		-1,  // NilLit
+		-1,  // Literal
+		-1,  // Ref
+		414, // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S317
 		-1, // S'
@@ -6367,6 +6684,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -6387,6 +6705,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -6407,28 +6726,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S320
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		415, // Fscript
+		198, // Expr
+		200, // Expr1
+		201, // Expr2
+		202, // Expr3
+		203, // Expr4
+		205, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		199, // TernaryExpr
+		213, // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S321
 		-1, // S'
@@ -6447,268 +6768,282 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S322
 		-1,  // S'
 		-1,  // Fscript
-		352, // Expr
-		47,  // Expr1
-		48,  // Expr2
-		49,  // Expr3
-		50,  // Expr4
-		52,  // Expr5
-		53,  // Expr6
-		55,  // PrimaryExpr
-		353, // TernaryExpr
-		355, // TernaryArgument
-		61,  // BoolLit
-		64,  // NilLit
-		59,  // Literal
+		-1,  // Expr
+		416, // Expr1
+		201, // Expr2
+		202, // Expr3
+		203, // Expr4
+		205, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
 		-1,  // Ref
+		-1,  // Indexer
 		-1,  // Args
 		-1,  // ExprList
 	},
 	gotoRow{ // S323
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		417, // Expr2
+		202, // Expr3
+		203, // Expr4
+		205, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S324
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		418, // Expr3
+		203, // Expr4
+		205, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S325
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		419, // Expr3
+		203, // Expr4
+		205, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S326
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		420, // Expr3
+		203, // Expr4
+		205, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S327
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		421, // Expr3
+		203, // Expr4
+		205, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S328
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		422, // Expr3
+		203, // Expr4
+		205, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S329
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		423, // Expr3
+		203, // Expr4
+		205, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S330
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		424, // Expr4
+		205, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S331
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		425, // Expr4
+		205, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S332
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		426, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S333
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		427, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S334
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		428, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S335
 		-1, // S'
@@ -6727,28 +7062,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S336
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		429, // Expr
+		92,  // Expr1
+		93,  // Expr2
+		94,  // Expr3
+		95,  // Expr4
+		97,  // Expr5
+		98,  // Expr6
+		100, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		105, // BoolLit
+		108, // NilLit
+		104, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S337
 		-1, // S'
@@ -6767,28 +7104,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S338
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		115, // Expr
+		116, // Expr1
+		117, // Expr2
+		118, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		430, // Args
+		140, // ExprList
 	},
 	gotoRow{ // S339
 		-1, // S'
@@ -6807,68 +7146,72 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S340
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		115, // Expr
+		116, // Expr1
+		117, // Expr2
+		118, // Expr3
+		119, // Expr4
+		121, // Expr5
+		122, // Expr6
+		124, // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		130, // BoolLit
+		133, // NilLit
+		129, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		432, // Args
+		140, // ExprList
 	},
 	gotoRow{ // S341
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		169, // Expr
+		171, // Expr1
+		172, // Expr2
+		173, // Expr3
+		174, // Expr4
+		176, // Expr5
+		177, // Expr6
+		179, // PrimaryExpr
+		170, // TernaryExpr
+		433, // TernaryArgument
+		185, // BoolLit
+		188, // NilLit
+		183, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S342
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		-1,  // Fscript
+		-1,  // Expr
+		-1,  // Expr1
+		-1,  // Expr2
+		-1,  // Expr3
+		-1,  // Expr4
+		-1,  // Expr5
+		-1,  // Expr6
+		-1,  // PrimaryExpr
+		-1,  // TernaryExpr
+		-1,  // TernaryArgument
+		-1,  // BoolLit
+		-1,  // NilLit
+		-1,  // Literal
+		-1,  // Ref
+		435, // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S343
 		-1, // S'
@@ -6887,28 +7230,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S344
-		-1,  // S'
-		-1,  // Fscript
-		45,  // Expr
-		47,  // Expr1
-		48,  // Expr2
-		49,  // Expr3
-		50,  // Expr4
-		52,  // Expr5
-		53,  // Expr6
-		55,  // PrimaryExpr
-		359, // TernaryExpr
-		60,  // TernaryArgument
-		61,  // BoolLit
-		64,  // NilLit
-		59,  // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S345
 		-1, // S'
@@ -6927,28 +7272,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S346
-		-1, // S'
-		-1, // Fscript
-		-1, // Expr
-		-1, // Expr1
-		-1, // Expr2
-		-1, // Expr3
-		-1, // Expr4
-		-1, // Expr5
-		-1, // Expr6
-		-1, // PrimaryExpr
-		-1, // TernaryExpr
-		-1, // TernaryArgument
-		-1, // BoolLit
-		-1, // NilLit
-		-1, // Literal
-		-1, // Ref
-		-1, // Args
-		-1, // ExprList
+		-1,  // S'
+		436, // Fscript
+		198, // Expr
+		200, // Expr1
+		201, // Expr2
+		202, // Expr3
+		203, // Expr4
+		205, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		199, // TernaryExpr
+		213, // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
 	},
 	gotoRow{ // S347
 		-1, // S'
@@ -6967,6 +7314,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -6987,6 +7335,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -7007,6 +7356,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -7027,6 +7377,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -7047,6 +7398,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -7067,6 +7419,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -7087,28 +7440,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S354
-		-1,  // S'
-		-1,  // Fscript
-		158, // Expr
-		47,  // Expr1
-		48,  // Expr2
-		49,  // Expr3
-		50,  // Expr4
-		52,  // Expr5
-		53,  // Expr6
-		55,  // PrimaryExpr
-		360, // TernaryExpr
-		60,  // TernaryArgument
-		61,  // BoolLit
-		64,  // NilLit
-		59,  // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S355
 		-1, // S'
@@ -7127,6 +7482,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -7147,6 +7503,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -7167,28 +7524,30 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
 	gotoRow{ // S358
-		-1,  // S'
-		-1,  // Fscript
-		165, // Expr
-		167, // Expr1
-		168, // Expr2
-		169, // Expr3
-		170, // Expr4
-		172, // Expr5
-		173, // Expr6
-		175, // PrimaryExpr
-		166, // TernaryExpr
-		361, // TernaryArgument
-		181, // BoolLit
-		184, // NilLit
-		179, // Literal
-		-1,  // Ref
-		-1,  // Args
-		-1,  // ExprList
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
 	},
 	gotoRow{ // S359
 		-1, // S'
@@ -7207,6 +7566,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -7227,6 +7587,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -7247,6 +7608,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -7267,6 +7629,7 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},
@@ -7287,6 +7650,2149 @@ var gotoTab = gotoTable{
 		-1, // NilLit
 		-1, // Literal
 		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S364
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S365
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S366
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S367
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S368
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S369
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S370
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S371
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S372
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S373
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S374
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S375
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S376
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S377
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S378
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S379
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S380
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S381
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S382
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S383
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S384
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S385
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S386
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S387
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S388
+		-1,  // S'
+		-1,  // Fscript
+		443, // Expr
+		47,  // Expr1
+		48,  // Expr2
+		49,  // Expr3
+		50,  // Expr4
+		52,  // Expr5
+		53,  // Expr6
+		55,  // PrimaryExpr
+		444, // TernaryExpr
+		446, // TernaryArgument
+		61,  // BoolLit
+		64,  // NilLit
+		59,  // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S389
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S390
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S391
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S392
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S393
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S394
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S395
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S396
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S397
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S398
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S399
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S400
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S401
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S402
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S403
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S404
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S405
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S406
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S407
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S408
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S409
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S410
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S411
+		-1,  // S'
+		-1,  // Fscript
+		45,  // Expr
+		47,  // Expr1
+		48,  // Expr2
+		49,  // Expr3
+		50,  // Expr4
+		52,  // Expr5
+		53,  // Expr6
+		55,  // PrimaryExpr
+		450, // TernaryExpr
+		60,  // TernaryArgument
+		61,  // BoolLit
+		64,  // NilLit
+		59,  // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S412
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S413
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S414
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S415
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S416
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S417
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S418
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S419
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S420
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S421
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S422
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S423
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S424
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S425
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S426
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S427
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S428
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S429
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S430
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S431
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S432
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S433
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S434
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S435
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S436
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S437
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S438
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S439
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S440
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S441
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S442
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S443
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S444
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S445
+		-1,  // S'
+		-1,  // Fscript
+		160, // Expr
+		47,  // Expr1
+		48,  // Expr2
+		49,  // Expr3
+		50,  // Expr4
+		52,  // Expr5
+		53,  // Expr6
+		55,  // PrimaryExpr
+		456, // TernaryExpr
+		60,  // TernaryArgument
+		61,  // BoolLit
+		64,  // NilLit
+		59,  // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S446
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S447
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S448
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S449
+		-1,  // S'
+		-1,  // Fscript
+		169, // Expr
+		171, // Expr1
+		172, // Expr2
+		173, // Expr3
+		174, // Expr4
+		176, // Expr5
+		177, // Expr6
+		179, // PrimaryExpr
+		170, // TernaryExpr
+		457, // TernaryArgument
+		185, // BoolLit
+		188, // NilLit
+		183, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S450
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S451
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S452
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S453
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S454
+		-1,  // S'
+		-1,  // Fscript
+		459, // Expr
+		200, // Expr1
+		201, // Expr2
+		202, // Expr3
+		203, // Expr4
+		205, // Expr5
+		206, // Expr6
+		208, // PrimaryExpr
+		460, // TernaryExpr
+		462, // TernaryArgument
+		214, // BoolLit
+		217, // NilLit
+		212, // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S455
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S456
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S457
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S458
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S459
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S460
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S461
+		-1,  // S'
+		-1,  // Fscript
+		339, // Expr
+		47,  // Expr1
+		48,  // Expr2
+		49,  // Expr3
+		50,  // Expr4
+		52,  // Expr5
+		53,  // Expr6
+		55,  // PrimaryExpr
+		464, // TernaryExpr
+		60,  // TernaryArgument
+		61,  // BoolLit
+		64,  // NilLit
+		59,  // Literal
+		-1,  // Ref
+		-1,  // Indexer
+		-1,  // Args
+		-1,  // ExprList
+	},
+	gotoRow{ // S462
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S463
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S464
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
+		-1, // Args
+		-1, // ExprList
+	},
+	gotoRow{ // S465
+		-1, // S'
+		-1, // Fscript
+		-1, // Expr
+		-1, // Expr1
+		-1, // Expr2
+		-1, // Expr3
+		-1, // Expr4
+		-1, // Expr5
+		-1, // Expr6
+		-1, // PrimaryExpr
+		-1, // TernaryExpr
+		-1, // TernaryArgument
+		-1, // BoolLit
+		-1, // NilLit
+		-1, // Literal
+		-1, // Ref
+		-1, // Indexer
 		-1, // Args
 		-1, // ExprList
 	},

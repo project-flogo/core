@@ -2,14 +2,14 @@ package sample
 
 import (
 	"context"
-	"github.com/project-flogo/core/support/log"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/data/metadata"
+	"github.com/project-flogo/core/support/log"
 )
 
 func init() {
-	action.Register(&Action{}, &ActionFactory{})
+	_ = action.Register(&Action{}, &ActionFactory{})
 }
 
 var actionMd = action.ToMetadata(&Settings{}, &Input{}, &Output{})

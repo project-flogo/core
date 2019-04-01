@@ -11,7 +11,7 @@ import (
 var triggerMd = trigger.NewMetadata(&Settings{}, &HandlerSettings{}, &Output{}, &Reply{})
 
 func init() {
-	trigger.Register(&Trigger{}, &Factory{})
+	_ = trigger.Register(&Trigger{}, &Factory{})
 }
 
 type Trigger struct {
@@ -102,7 +102,7 @@ func newActionHandler(handler trigger.Handler) dummyOnEvent {
 			//handle error
 		}
 		reply := &Reply{}
-		reply.FromMap(results)
+		_ = reply.FromMap(results)
 
 		//do something with the reply
 	}

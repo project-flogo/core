@@ -39,8 +39,6 @@ func GetValue(value interface{}, path string) (interface{}, error) {
 			newVal, newPath, err = getSetObjValue(objVal, path, nil, false)
 		} else if paramsVal, ok := value.(map[string]string); ok {
 			newVal, newPath, err = getSetParamsValue(paramsVal, path, nil, false)
-			//} else if objVal, ok := value.(*ComplexObject); ok {
-			//	return PathGetValue(objVal.Value, path)
 		} else {
 
 			val := reflect.ValueOf(value)
@@ -70,18 +68,11 @@ func GetValue(value interface{}, path string) (interface{}, error) {
 			newVal, newPath, err = getSetMapValue(objVal, path, nil, false)
 		} else if paramsVal, ok := value.(map[string]string); ok {
 			newVal, newPath, err = getSetMapParamsValue(paramsVal, path, nil, false)
-			//} else if objVal, ok := value.(*ComplexObject); ok {
-			//	return PathGetValue(objVal.Value, path)
 		} else {
 			return nil, fmt.Errorf("unable to evaluate path: %s", path)
 		}
 	} else if strings.HasPrefix(path, "[") {
-		//if objVal, ok := value.(*ComplexObject); ok {
-		//	newVal, newPath, err = getSetArrayValue(objVal.Value, path, nil, false)
-		//} else {
 		newVal, newPath, err = getSetArrayValue(value, path, nil, false)
-
-		//}
 	} else {
 		return nil, fmt.Errorf("unable to evaluate path: %s", path)
 	}
@@ -113,8 +104,6 @@ func SetValue(attrValue interface{}, path string, value interface{}) error {
 			newVal, newPath, err = getSetObjValue(objVal, path, value, true)
 		} else if paramsVal, ok := attrValue.(map[string]string); ok {
 			newVal, newPath, err = getSetParamsValue(paramsVal, path, value, true)
-			//} else if objVal, ok := value.(*ComplexObject); ok {
-			//	return PathSetValue(objVal.Value, path, value)
 		} else {
 			return fmt.Errorf("Unable to evaluate path: %s", path)
 		}
@@ -123,18 +112,12 @@ func SetValue(attrValue interface{}, path string, value interface{}) error {
 			newVal, newPath, err = getSetMapValue(objVal, path, value, true)
 		} else if paramsVal, ok := attrValue.(map[string]string); ok {
 			newVal, newPath, err = getSetMapParamsValue(paramsVal, path, value, true)
-			//} else if objVal, ok := value.(*ComplexObject); ok {
-			//	return PathSetValue(objVal.Value, path, value)
 		} else {
 			return fmt.Errorf("unable to evaluate path: %s", path)
 		}
 
 	} else if strings.HasPrefix(path, "[") {
-		//if objVal, ok := value.(*ComplexObject); ok {
-		//	newVal, newPath, err = getSetArrayValue(attrValue, path, objVal.Value, true)
-		//} else {
 		newVal, newPath, err = getSetArrayValue(attrValue, path, value, true)
-		//}
 	} else {
 		return fmt.Errorf("Unable to evaluate path: %s", path)
 	}
