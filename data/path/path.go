@@ -105,7 +105,7 @@ func SetValue(attrValue interface{}, path string, value interface{}) error {
 		} else if paramsVal, ok := attrValue.(map[string]string); ok {
 			newVal, newPath, err = getSetParamsValue(paramsVal, path, value, true)
 		} else {
-			return fmt.Errorf("Unable to evaluate path: %s", path)
+			return fmt.Errorf("unable to evaluate path: %s", path)
 		}
 	} else if strings.HasPrefix(path, `["`) {
 		if objVal, ok := attrValue.(map[string]interface{}); ok {
@@ -119,7 +119,7 @@ func SetValue(attrValue interface{}, path string, value interface{}) error {
 	} else if strings.HasPrefix(path, "[") {
 		newVal, newPath, err = getSetArrayValue(attrValue, path, value, true)
 	} else {
-		return fmt.Errorf("Unable to evaluate path: %s", path)
+		return fmt.Errorf("unable to evaluate path: %s", path)
 	}
 
 	if err != nil {
@@ -162,7 +162,7 @@ func getSetArrayValue(obj interface{}, path string, value interface{}, set bool)
 
 	arrValue, valid := obj.([]interface{})
 	if !valid {
-		//Try to convert to a array incase it is a array string
+		//Try to convert to a array in case it is a array string
 		val, err := coerce.ToArray(obj)
 		if err != nil {
 			return nil, path, errors.New("'" + path + "' not an array")

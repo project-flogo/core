@@ -95,8 +95,8 @@ func TestRunNilError(t *testing.T) {
 	assert.NotNil(t, err)
 }
 
-// TestRunInnactiveError test that running an innactive runner trows and error
-func TestRunInnactiveError(t *testing.T) {
+// TestRunInactiveError test that running an inactive runner trows and error
+func TestRunInactiveError(t *testing.T) {
 	config := &PooledConfig{NumWorkers: 5, WorkQueueSize: 5}
 	runner := NewPooled(config)
 	assert.NotNil(t, runner)
@@ -114,7 +114,7 @@ func TestRunErrorInAction(t *testing.T) {
 	err := runner.Start()
 
 	a := new(MockFullAction)
-	a.On("Run", nil, mock.AnythingOfType("map[string]interface {}"), mock.AnythingOfType("*runner.AsyncResultHandler")).Return(errors.New("Error in action"))
+	a.On("Run", nil, mock.AnythingOfType("map[string]interface {}"), mock.AnythingOfType("*runner.AsyncResultHandler")).Return(errors.New("error in action"))
 	_, err = runner.RunAction(nil, a, nil)
 	assert.NotNil(t, err)
 	assert.Equal(t, "Error in action", err.Error())

@@ -80,10 +80,10 @@ func (t *Trigger) Stop() error {
 }
 
 // registerDummyEventHandler is used for dummy event handler registration, this should be replaced
-// with the appropriate event handling mechanism for the trigger.  Some form of a discrimiator
+// with the appropriate event handling mechanism for the trigger.  Some form of a discriminator
 // should be used for dispatching to different handlers.  For example a REST based trigger might
 // dispatch based on the method and path.
-func registerDummyEventHandler(descrimitator string, onEvent dummyOnEvent) {
+func registerDummyEventHandler(discriminator string, onEvent dummyOnEvent) {
 	//ignore
 }
 

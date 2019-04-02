@@ -92,22 +92,24 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 			return nil, fmt.Errorf("trigger factory '%s' not registered", ref)
 		}
 
-		tConfig.FixUp(triggerFactory.Metadata())
+		err := tConfig.FixUp(triggerFactory.Metadata())
+		if err != nil {
+			return nil, err
+		}
 
 		trg, err := triggerFactory.New(tConfig)
-
 		if err != nil {
 			return nil, err
 		}
 
 		if trg == nil {
-			return nil, fmt.Errorf("cannot create Trigger nil for id '%s'", tConfig.Id)
+			return nil, fmt.Errorf("cannot create trigger nil for id '%s'", tConfig.Id)
 		}
 
 		logger := trigger.GetLogger(ref)
 
 		if log.CtxLoggingEnabled() {
-			logger = log.ChildLoggerWithFields(logger, log.String("triggerId", tConfig.Id))
+			logger = log.ChildLoggerWithFields(logger, log.FieldString("triggerId", tConfig.Id))
 		}
 
 		log.ChildLogger(logger, tConfig.Id)
@@ -131,7 +133,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 					if id := act.Id; id != "" {
 						act, _ := a.actions[id]
 						if act == nil {
-							return nil, fmt.Errorf("shared Action '%s' does not exists", id)
+							return nil, fmt.Errorf("shared action '%s' does not exists", id)
 						}
 						acts = append(acts, act)
 					} else {

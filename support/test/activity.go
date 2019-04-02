@@ -7,8 +7,8 @@ import (
 )
 
 func init() {
-	activity.LegacyRegister("testlog", NewLogActivity())
-	activity.LegacyRegister("testcounter", NewCounterActivity())
+	_ = activity.LegacyRegister("testlog", NewLogActivity())
+	_ = activity.LegacyRegister("testcounter", NewCounterActivity())
 }
 
 type TestLogActivity struct {
@@ -37,7 +37,10 @@ func (a *TestLogActivity) Eval(ctx activity.Context) (done bool, err error) {
 
 	ctx.Logger().Infof("message: %s", message)
 
-	ctx.SetOutput("message", message)
+	err = ctx.SetOutput("message", message)
+	if err != nil {
+		return false, err
+	}
 
 	return true, nil
 }
@@ -80,7 +83,10 @@ func (a *TestCounterActivity) Eval(ctx activity.Context) (done bool, err error) 
 
 	ctx.Logger().Debugf("value: %s", count)
 
-	ctx.SetOutput("value", count)
+	err = ctx.SetOutput("value", count)
+	if err != nil {
+		return false, err
+	}
 
 	return true, nil
 }

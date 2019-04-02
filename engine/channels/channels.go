@@ -63,7 +63,7 @@ func Start() error {
 		err := channel.Start()
 		if err != nil {
 			for _, startedChannel := range started {
-				startedChannel.Stop()
+				_ = startedChannel.Stop()
 			}
 			return fmt.Errorf("failed to start channel '%s', error: %s", channel.name, err.Error())
 		}

@@ -51,7 +51,7 @@ func TestResultOk(t *testing.T) {
 	resultData["data"] = "mock data"
 	resultData["code"] = 1
 
-	rh := &SyncResultHandler{resultData: resultData, err: errors.New("New Error")}
+	rh := &SyncResultHandler{resultData: resultData, err: errors.New("new error")}
 	data, err := rh.Result()
 	assert.Equal(t, 1, data["code"])
 	assert.Equal(t, "mock data", data["data"])
@@ -89,7 +89,7 @@ func TestDirectRunErr(t *testing.T) {
 	// Mock Action
 	mockAction := new(MockAsyncAction)
 
-	mockAction.On("Run", nil, mock.AnythingOfType("map[string]interface {}"), mock.AnythingOfType("*runner.SyncResultHandler")).Return(errors.New("Action Error"))
+	mockAction.On("Run", nil, mock.AnythingOfType("map[string]interface {}"), mock.AnythingOfType("*runner.SyncResultHandler")).Return(errors.New("action error"))
 	_, err := runner.RunAction(nil, mockAction, nil)
 	assert.NotNil(t, err)
 }
@@ -127,7 +127,7 @@ func TestDirectRunErrOld(t *testing.T) {
 	assert.NotNil(t, runner)
 	// Mock Action
 	mockAction := new(MockAsyncAction)
-	mockAction.On("Run", context.Background(), mock.AnythingOfType("map[string]interface {}"), mock.AnythingOfType("*runner.SyncResultHandler")).Return(errors.New("Action Error"))
+	mockAction.On("Run", context.Background(), mock.AnythingOfType("map[string]interface {}"), mock.AnythingOfType("*runner.SyncResultHandler")).Return(errors.New("action error"))
 	_, err := runner.RunAction(context.Background(), mockAction, nil)
 	assert.NotNil(t, err)
 }

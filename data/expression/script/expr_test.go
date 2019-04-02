@@ -126,11 +126,11 @@ const testJsonData = `{
 }`
 
 func TestJsonExpr(t *testing.T) {
-	var data interface{}
-	err := json.Unmarshal([]byte(testJsonData), &data)
+	var testData interface{}
+	err := json.Unmarshal([]byte(testJsonData), &testData)
 	assert.Nil(t, err)
 
-	scope := newScope(map[string]interface{}{"foo": data, "key": 2})
+	scope := newScope(map[string]interface{}{"foo": testData, "key": 2})
 
 	expr, err := factory.NewExpr("$.foo.store.book[0].price")
 	assert.Nil(t, err)
@@ -142,11 +142,11 @@ func TestJsonExpr(t *testing.T) {
 }
 
 func TestArrayIndexExpr(t *testing.T) {
-	var data interface{}
-	err := json.Unmarshal([]byte(testJsonData), &data)
+	var testData interface{}
+	err := json.Unmarshal([]byte(testJsonData), &testData)
 	assert.Nil(t, err)
 
-	scope := newScope(map[string]interface{}{"foo": data, "key": 2})
+	scope := newScope(map[string]interface{}{"foo": testData, "key": 2})
 
 	expr, err := factory.NewExpr("$.foo.store.book[$.key].price")
 	assert.Nil(t, err)
@@ -185,7 +185,7 @@ func TestLitExprStaticRef(t *testing.T) {
 
 func TestEnvResolve(t *testing.T) {
 
-	os.Setenv("FOO", "bar")
+	_ = os.Setenv("FOO", "bar")
 	expr, err := factory.NewExpr(`$env[FOO]`)
 	assert.Nil(t, err)
 	assert.NotNil(t, expr)
@@ -709,8 +709,8 @@ func TestExpression(t *testing.T) {
 
 	scope := data.NewSimpleScope(map[string]interface{}{"queryParams": map[string]interface{}{"id": "helloworld"}}, nil)
 	factory := NewExprFactory(resolve.GetBasicResolver())
-	os.Setenv("name", "flogo")
-	os.Setenv("address", "tibco")
+	_ = os.Setenv("name", "flogo")
+	_ = os.Setenv("address", "tibco")
 
 	testcases := make(map[string]interface{})
 	testcases[`1>2?tstring.concat("sss","ddddd"):"fff"`] = "fff"

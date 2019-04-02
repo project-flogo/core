@@ -258,7 +258,7 @@ func BenchmarkExpressionMapperTernaryExpr(b *testing.B) {
 }
 
 func init() {
-	function.Register(&fnConcat{})
+	_ = function.Register(&fnConcat{})
 }
 
 type fnConcat struct {

@@ -76,7 +76,7 @@ func registerDup() (err error) {
 	}()
 
 	act := NewMockActivity()
-	Register(act)
+	_ = Register(act)
 	err = Register(act)
 	return err
 }
@@ -93,7 +93,7 @@ func TestRegisterActivityOk(t *testing.T) {
 	}()
 
 	act := NewMockActivity()
-	Register(act)
+	_ = Register(act)
 	assert.Equal(t, 1, len(activities))
 }
 
@@ -109,7 +109,7 @@ func TestGetFactoriesOk(t *testing.T) {
 	}()
 
 	act := NewMockActivity()
-	Register(act, testFactory)
+	_ = Register(act, testFactory)
 
 	// Get factory
 	f := GetFactory("github.com/project-flogo/core/activity")

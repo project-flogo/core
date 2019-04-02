@@ -119,7 +119,7 @@ func ToInt64(val interface{}) (int64, error) {
 	case nil:
 		return 0, nil
 	default:
-		return 0, fmt.Errorf("Unable to coerce %#v to integer", val)
+		return 0, fmt.Errorf("unable to coerce %#v to integer", val)
 	}
 }
 
