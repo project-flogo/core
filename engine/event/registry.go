@@ -34,8 +34,10 @@ func RegisterListener(name string, listener Listener, eventTypes []string) error
 			emitter = &Emitter{eventType: eType, mutex: &sync.RWMutex{}, listeners: make(map[string]Listener)}
 			emitters[eType] = emitter
 		}
-		emitter.RegisterListener(name, listener)
-		log.RootLogger().Debugf("Event listener - '%s' successfully registered for event type - '%s'", name, eType)
+		err := emitter.RegisterListener(name, listener)
+		if err != nil {
+			log.RootLogger().Debugf("Event listener - '%s' successfully registered for event type - '%s'", name, eType)
+		}
 	}
 
 	emittersMutex.Unlock()
@@ -57,16 +59,19 @@ func UnRegisterListener(name string, eventTypes []string) {
 	if len(eventTypes) > 0 {
 		for _, eventType := range eventTypes {
 			if emitter, ok := emitters[eventType]; ok {
-				emitter.UnRegisterListener(name)
-				log.RootLogger().Debugf("Event listener - '%s' successfully unregistered for event type - '%s'", name, eventType)
-
+				err := emitter.UnRegisterListener(name)
+				if err != nil {
+					log.RootLogger().Debugf("Event listener - '%s' successfully unregistered for event type - '%s'", name, eventType)
+				}
 			}
 		}
 	} else {
 		//unregister from all emitters
 		for _, emitter := range emitters {
-			emitter.UnRegisterListener(name)
-			log.RootLogger().Debugf("Event listener - '%s' successfully unregistered for event type - '%s'", name, emitter.eventType)
+			err := emitter.UnRegisterListener(name)
+			if err != nil {
+				log.RootLogger().Debugf("Event listener - '%s' successfully unregistered for event type - '%s'", name, emitter.eventType)
+			}
 		}
 	}
 

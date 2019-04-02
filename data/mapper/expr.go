@@ -79,8 +79,6 @@ func (m *ExprMapper) Apply(inputScope data.Scope) (map[string]interface{}, error
 	return output, nil
 }
 
-
-
 func IsLiteral(value interface{}) bool {
 	if value != nil {
 		switch t := value.(type) {

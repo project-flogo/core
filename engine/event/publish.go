@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	ENV_PUBLISH_AUDIT_EVENTS_KEY = "FLOGO_PUBLISH_AUDIT_EVENTS"
+	EnvPublishAuditEventsKey = "FLOGO_PUBLISH_AUDIT_EVENTS"
 )
 
 var publishEventsEnabled = PublishEnabled()
@@ -77,7 +77,7 @@ func publishEvent(evtCtx *Context) {
 }
 
 func PublishEnabled() bool {
-	key := os.Getenv(ENV_PUBLISH_AUDIT_EVENTS_KEY)
+	key := os.Getenv(EnvPublishAuditEventsKey)
 	if len(key) > 0 {
 		publish, _ := strconv.ParseBool(key)
 		return publish

@@ -46,7 +46,7 @@ func RunEngine(e Engine) int {
 
 	code := <-exitChan
 
-	e.Stop()
+	_ = e.Stop()
 
 	return code
 }

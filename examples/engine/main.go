@@ -60,7 +60,7 @@ func main() {
 			fmt.Fprintf(os.Stderr, "Failed to write memory profiling data: %v", err)
 			os.Exit(1)
 		}
-		f.Close()
+		_ = f.Close()
 	}
 
 	os.Exit(code)

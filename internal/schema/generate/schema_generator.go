@@ -8,8 +8,8 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/square-it/jsonschema"
 	"github.com/project-flogo/core/app"
+	"github.com/square-it/jsonschema"
 )
 
 func main() {

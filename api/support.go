@@ -54,8 +54,8 @@ func toTriggerConfig(id string, trg *Trigger) *trigger.Config {
 		h := &trigger.HandlerConfig{Settings: handler.Settings()}
 		actions := handler.Actions()
 		h.Actions = make([]*trigger.ActionConfig, len(actions))
-		for i, action := range actions {
-			h.Actions[i] = toActionConfig(action)
+		for i, anAction := range actions {
+			h.Actions[i] = toActionConfig(anAction)
 		}
 		handlerConfigs = append(handlerConfigs, h)
 	}

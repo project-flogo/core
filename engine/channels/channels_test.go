@@ -21,11 +21,9 @@ func TestNew(t *testing.T) {
 	channel, err := New("test1", 5)
 	assert.Nil(t, err)
 	assert.NotNil(t, channel)
-
-
 }
 
-func TestNilChannel(t *testing.T)  {
+func TestNilChannel(t *testing.T) {
 	channels = map[string]*channelImpl{}
 	active = false
 
@@ -33,7 +31,6 @@ func TestNilChannel(t *testing.T)  {
 	assert.Nil(t, c)
 	assert.True(t, c == nil)
 }
-
 
 func TestNewDup(t *testing.T) {
 	channels = map[string]*channelImpl{}
@@ -60,7 +57,7 @@ func TestStart(t *testing.T) {
 	channel, err := New("test1", 5)
 	assert.Nil(t, err)
 	assert.NotNil(t, channel)
-	Start()
+	_ = Start()
 	defer Stop()
 	assert.True(t, active)
 
@@ -109,7 +106,7 @@ func TestChannel_AddListenerStarted(t *testing.T) {
 	assert.NotNil(t, channel)
 
 	cImpl := channel.(*channelImpl)
-	cImpl.Start()
+	_ = cImpl.Start()
 
 	err = cImpl.RegisterCallback(func(msg interface{}) {
 		//dummy
@@ -151,7 +148,7 @@ func TestChannel_Callback(t *testing.T) {
 
 	cbt := &cbTester{}
 	err = cImpl.RegisterCallback(cbt.onMessage)
-	Start()
+	_ = Start()
 
 	channel.Publish(22)
 	time.Sleep(100 * time.Millisecond)

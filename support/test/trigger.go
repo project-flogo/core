@@ -1,15 +1,16 @@
 package test
 
 import (
-	"github.com/project-flogo/core/support/log"
-	"github.com/project-flogo/core/data/expression"
 	"context"
 	"fmt"
+
 	"github.com/project-flogo/core/action"
-	"github.com/project-flogo/core/data/metadata"
-	"github.com/project-flogo/core/engine/runner"
+	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/mapper"
+	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/data/resolve"
+	"github.com/project-flogo/core/engine/runner"
+	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/trigger"
 )
 
@@ -18,38 +19,40 @@ func InitTrigger(factory trigger.Factory, tConfig *trigger.Config, actions map[s
 	r := runner.NewDirect()
 
 	if factory == nil {
-		return nil, fmt.Errorf("Trigger Factory not provided")
+		return nil, fmt.Errorf("trigger factory not provided")
 	}
 
 	trg, err := factory.New(tConfig)
-
 	if err != nil {
-		return nil, fmt.Errorf("error creating trigger")
+		return nil, fmt.Errorf("cannot create trigger '%s': %v", tConfig.Id, err)
 	}
 	if trg == nil {
-		return nil, fmt.Errorf("cannot create Trigger for id '%s'", tConfig.Id)
+		return nil, fmt.Errorf("cannot create trigger '%s'", tConfig.Id)
 	}
 
-	tConfig.FixUp(trigger.NewMetadata())
+	err = tConfig.FixUp(trigger.NewMetadata())
+	if err != nil {
+		return nil, fmt.Errorf("cannot create trigger '%s': %v", tConfig.Id, err)
+	}
+
 	mf := mapper.NewFactory(resolve.GetBasicResolver())
 	ef := expression.NewFactory(resolve.GetBasicResolver())
 
 	initCtx := initContext{handlers: make([]trigger.Handler, 0, len(tConfig.Handlers)), logger: logger}
 	var acts []action.Action
-	//create handlers for that trigger and init
 
+	//create handlers for that trigger and init
 	for _, hConfig := range tConfig.Handlers {
 
 		id := hConfig.Actions[0].Id
 		act := actions[id]
-		
-		acts = append(acts,act)
 
+		acts = append(acts, act)
 
 		handler, _ := trigger.NewHandler(hConfig, acts, mf, ef, r)
 
 		initCtx.handlers = append(initCtx.handlers, handler)
-		
+
 	}
 
 	err = trg.Initialize(initCtx)
@@ -65,15 +68,16 @@ func InitTrigger(factory trigger.Factory, tConfig *trigger.Config, actions map[s
 
 type initContext struct {
 	handlers []trigger.Handler
-	logger log.Logger
+	logger   log.Logger
 }
 
 func (ctx initContext) GetHandlers() []trigger.Handler {
 	return ctx.handlers
 }
-func (ctx initContext) Logger() log.Logger{
+func (ctx initContext) Logger() log.Logger {
 	return ctx.logger
 }
+
 //////////////////////////
 // Dummy Test Action
 

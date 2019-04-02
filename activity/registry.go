@@ -86,7 +86,7 @@ func GetFactory(ref string) Factory {
 // GetLogger gets activity logger by ref
 func GetLogger(ref string) log.Logger {
 	if ref[0] == '#' {
-		ref,_ = support.GetAliasRef("activity", ref[1:])
+		ref, _ = support.GetAliasRef("activity", ref[1:])
 	}
 
 	logger, ok := activityLoggers[ref]
