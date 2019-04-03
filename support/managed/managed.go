@@ -65,7 +65,7 @@ func Start(name string, managed Managed) error {
 		return err
 	}
 
-	log.RootLogger().Debugf("%s: Started", name)
+	log.RootLogger().Infof("%s: Started", name)
 	return nil
 }
 
@@ -81,7 +81,7 @@ func Stop(name string, managed Managed) error {
 		return err
 	}
 
-	log.RootLogger().Debugf("%s: Stopped", name)
+	log.RootLogger().Infof("%s: Stopped", name)
 	return nil
 }
 
