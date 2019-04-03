@@ -32,6 +32,7 @@ func NewSimpleScope(values map[string]interface{}, parentScope Scope) Scope {
 	return scope
 }
 
+// GetValue implements Scope.GetValue
 func (s *SimpleScope) GetValue(name string) (value interface{}, exists bool) {
 	value, found := s.values[name]
 
@@ -46,6 +47,7 @@ func (s *SimpleScope) GetValue(name string) (value interface{}, exists bool) {
 	return nil, false
 }
 
+// SetValue implements Scope.SetValue
 func (s *SimpleScope) SetValue(name string, value interface{}) error {
 	s.values[name] = value
 	return nil
@@ -66,7 +68,7 @@ func NewSimpleSyncScope(values map[string]interface{}, parentScope Scope) Scope 
 	return &syncScope
 }
 
-// GetAttr implements Scope.GetAttr
+// GetValue implements Scope.GetValue
 func (s *SimpleSyncScope) GetValue(name string) (value interface{}, exists bool) {
 
 	s.mutex.RLock()
@@ -76,7 +78,7 @@ func (s *SimpleSyncScope) GetValue(name string) (value interface{}, exists bool)
 	return v,e
 }
 
-// SetAttrValue implements Scope.SetAttrValue
+// SetValue implements Scope.SetValue
 func (s *SimpleSyncScope) SetValue(name string, value interface{}) error {
 
 	s.mutex.Lock()
