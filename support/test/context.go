@@ -5,6 +5,7 @@ import (
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/mapper"
 	"github.com/project-flogo/core/data/metadata"
+	"github.com/project-flogo/core/data/resolve"
 	"github.com/project-flogo/core/support/log"
 )
 
@@ -56,6 +57,10 @@ func NewActivityInitContext(settings interface{}, f mapper.Factory) activity.Ini
 		settingVals = sm
 	} else {
 		settingVals = metadata.StructToMap(settings)
+	}
+
+	if f == nil {
+		f = mapper.NewFactory(resolve.GetBasicResolver())
 	}
 
 	return &TestActivityInitContext{settings: settingVals, factory: f}
