@@ -187,7 +187,7 @@ func (a *App) Start() error {
 			failed = append(failed, id)
 		} else {
 			statusInfo.Status = managed.StatusStarted
-			logger.Infof("Trigger [ %s ]: Started", id)
+			//logger.Infof("Trigger [ %s ]: Started", id)
 			version := ""
 			logger.Debugf("Trigger [ %s ] has ref [ %s ] and version [ %s ]", id, trg.ref, version)
 		}
