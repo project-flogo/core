@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	schema.RegisterFactory("json", &factory{})
+	_ = schema.RegisterFactory("json", &factory{})
 }
 
 type factory struct {

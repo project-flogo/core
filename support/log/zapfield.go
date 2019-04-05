@@ -7,121 +7,121 @@ import (
 	"go.uber.org/zap"
 )
 
-func Binary(key string, val []byte) Field {
+func FieldBinary(key string, val []byte) Field {
 	return zap.Binary(key, val)
 }
 
-func Bool(key string, val bool) Field {
+func FieldBool(key string, val bool) Field {
 	return zap.Bool(key, val)
 }
 
-func Bools(key string, vals []bool) Field {
+func FieldBools(key string, vals []bool) Field {
 	return zap.Bools(key, vals)
 }
 
-func ByteString(key string, val []byte) Field {
+func FieldByteString(key string, val []byte) Field {
 	return zap.ByteString(key, val)
 }
 
-func ByteStrings(key string, vals [][]byte) Field {
+func FieldByteStrings(key string, vals [][]byte) Field {
 	return zap.ByteStrings(key, vals)
 }
 
-func Duration(key string, val time.Duration) Field {
+func FieldDuration(key string, val time.Duration) Field {
 	return zap.Duration(key, val)
 }
 
-func Durations(key string, vals []time.Duration) Field {
+func FieldDurations(key string, vals []time.Duration) Field {
 	return zap.Durations(key, vals)
 }
 
-func Error(err error) Field {
+func FieldError(err error) Field {
 	return zap.Error(err)
 }
 
-func Errors(key string, errs []error) Field {
+func FieldErrors(key string, errs []error) Field {
 	return zap.Errors(key, errs)
 }
 
-func Float64(key string, val float64) Field {
+func FieldFloat64(key string, val float64) Field {
 	return zap.Float64(key, val)
 }
 
-func Float64s(key string, vals []float64) Field {
+func FieldFloat64s(key string, vals []float64) Field {
 	return zap.Float64s(key, vals)
 }
 
-func Float32(key string, val float32) Field {
+func FieldFloat32(key string, val float32) Field {
 	return zap.Float32(key, val)
 }
 
-func Float32s(key string, vals []float32) Field {
+func FieldFloat32s(key string, vals []float32) Field {
 	return zap.Float32s(key, vals)
 }
 
-func Int(key string, val int) Field {
+func FieldInt(key string, val int) Field {
 	return zap.Int(key, val)
 }
 
-func Ints(key string, vals []int) Field {
+func FieldInts(key string, vals []int) Field {
 	return zap.Ints(key, vals)
 }
 
-func Int32(key string, val int32) Field {
+func FieldInt32(key string, val int32) Field {
 	return zap.Int32(key, val)
 }
 
-func Int64(key string, val int64) Field {
+func FieldInt64(key string, val int64) Field {
 	return zap.Int64(key, val)
 }
 
-func Int64s(key string, vals []int64) Field {
+func FieldInt64s(key string, vals []int64) Field {
 	return zap.Int64s(key, vals)
 }
 
-func NamedError(key string, err error) Field {
+func FieldNamedError(key string, err error) Field {
 	return zap.NamedError(key, err)
 }
 
 // Namespace see zap.Namespace
-func Namespace(key string) Field {
+func FieldNamespace(key string) Field {
 	return zap.Namespace(key)
 }
 
 // Object encodes object using reflection
-func Object(key string, val interface{}) Field {
+func FieldObject(key string, val interface{}) Field {
 	return zap.Reflect(key, val)
 }
 
 // Skip see zap.Skip
-func Skip() Field {
+func FieldSkip() Field {
 	return zap.Skip()
 }
 
-func Stack(key string) Field {
+func FieldStack(key string) Field {
 	return zap.Stack(key)
 }
 
-func String(key string, val string) Field {
+func FieldString(key string, val string) Field {
 	return zap.String(key, val)
 }
 
-func Strings(key string, vals []string) Field {
+func FieldStrings(key string, vals []string) Field {
 	return zap.Strings(key, vals)
 }
 
-func Stringer(key string, val fmt.Stringer) Field {
+func FieldStringer(key string, val fmt.Stringer) Field {
 	return zap.Stringer(key, val)
 }
 
-func Time(key string, val time.Time) Field {
+func FieldTime(key string, val time.Time) Field {
 	return zap.Time(key, val)
 }
 
-func Times(key string, vals []time.Time) Field {
+func FieldTimes(key string, vals []time.Time) Field {
 	return zap.Times(key, vals)
 }
 
-func Any(key string, val interface{}) Field {
+func FieldAny(key string, val interface{}) Field {
 	return zap.Any(key, val)
 }

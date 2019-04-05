@@ -83,7 +83,7 @@ func ResolveAliases() {
 		alias := packages[pkg]
 		id := alias + "." + name
 		functions[id] = f
-		log.RootLogger().Tracef("Resolved function '%s'", id)
+		log.RootLogger().Tracef("Resolved function '%s' to '%s", key, id)
 	}
 
 	//remove temp function holder

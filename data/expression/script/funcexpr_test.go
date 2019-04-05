@@ -72,7 +72,7 @@ func TestFunctionWithRef(t *testing.T) {
 }
 
 func init() {
-	function.Register(&fnConcat{})
+	_ = function.Register(&fnConcat{})
 }
 
 type fnConcat struct {
@@ -108,7 +108,7 @@ func TestFuncExprSingleQuote(t *testing.T) {
 }
 
 func init() {
-	function.Register(&tLength{})
+	_ = function.Register(&tLength{})
 }
 
 type tLength struct {

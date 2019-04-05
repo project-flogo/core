@@ -33,7 +33,7 @@ func (runner *DirectRunner) Stop() error {
 func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, inputs map[string]interface{}) (results map[string]interface{}, err error) {
 
 	if act == nil {
-		return nil, errors.New("Action not specified")
+		return nil, errors.New("action not specified")
 	}
 
 	if syncAct, ok := act.(action.SyncAction); ok {

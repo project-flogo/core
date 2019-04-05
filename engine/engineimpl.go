@@ -63,7 +63,11 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 			name, buffSize := channels.Decode(descriptor)
 
 			logger.Debugf("Creating Engine Channel '%s'", name)
-			channels.New(name, buffSize)
+
+			_, err := channels.New(name, buffSize)
+			if err != nil {
+				return nil, err
+			}
 		}
 	}
 
@@ -140,7 +144,7 @@ func (e *engineImpl) Start() error {
 	actionRunner := e.actionRunner.(interface{})
 
 	if managedRunner, ok := actionRunner.(managed.Managed); ok {
-		managed.Start("ActionRunner Service", managedRunner)
+		_ = managed.Start("ActionRunner Service", managedRunner)
 	}
 
 	err := e.serviceManager.Start()
@@ -170,7 +174,7 @@ func (e *engineImpl) Start() error {
 
 	if channels.Count() > 0 {
 		logger.Info("Starting Engine Channels...")
-		channels.Start()
+		_ = channels.Start()
 		logger.Info("Engine Channels Started")
 	}
 
@@ -187,12 +191,12 @@ func (e *engineImpl) Stop() error {
 
 	if channels.Count() > 0 {
 		logger.Info("Stopping Engine Channels...")
-		channels.Stop()
+		_ = channels.Stop()
 		logger.Info("Engine Channels Stopped...")
 	}
 
 	logger.Info("Stopping Application...")
-	e.flogoApp.Stop()
+	_ = e.flogoApp.Stop()
 	logger.Info("Application Stopped")
 
 	//TODO temporarily add services
@@ -201,7 +205,7 @@ func (e *engineImpl) Stop() error {
 	actionRunner := e.actionRunner.(interface{})
 
 	if managedRunner, ok := actionRunner.(managed.Managed); ok {
-		managed.Stop("ActionRunner", managedRunner)
+		_ = managed.Stop("ActionRunner", managedRunner)
 	}
 
 	err := e.serviceManager.Stop()

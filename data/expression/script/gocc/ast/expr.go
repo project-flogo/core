@@ -2,11 +2,11 @@ package ast
 
 import (
 	"fmt"
-	"strings"
-
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/resolve"
+	"strconv"
+	"strings"
 )
 
 type Expr interface {
@@ -105,30 +105,94 @@ func (e *exprTernary) Eval(scope data.Scope) (interface{}, error) {
 }
 
 func NewRefExpr(refNode ...interface{}) (Expr, error) {
-	expr, err := Concat(refNode...)
+	refFields, err := Concat(refNode...)
 	if err != nil {
 		return nil, err
 	}
-	ref := strings.TrimSpace(string(expr.Lit)) //todo is trim overkill
-	return &exprRef{ref: ref}, nil
+	return &exprRef{fields: refFields}, nil
 }
 
 type exprRef struct {
-	ref string
-	res resolve.Resolution
+	fields       []interface{}
+	res          resolve.Resolution
+	resolver     resolve.CompositeResolver
+	hasIndexExpr bool
 }
 
 func (e *exprRef) Init(resolver resolve.CompositeResolver, root bool) error {
-
-	r, err := resolver.GetResolution(e.ref)
-	if err != nil {
-		return err
+	e.resolver = resolver
+	for _, v := range e.fields {
+		switch t := v.(type) {
+		case Expr:
+			e.hasIndexExpr = true
+			err := t.Init(resolver, root)
+			if err != nil {
+				return err
+			}
+		}
 	}
 
-	e.res = r
+	//Make resolution if no index expression
+	if !e.hasIndexExpr {
+		var err error
+		t := make([]string, len(e.fields))
+		for i, v := range e.fields {
+			t[i] = v.(string)
+		}
+		e.res, err = resolver.GetResolution(strings.Join(t, ""))
+		if err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 
-func (e *exprRef) Eval(scope data.Scope) (interface{}, error) {
+func (e *exprRef) Eval(scope data.Scope) (data interface{}, err error) {
+	if e.hasIndexExpr {
+		//Get final resolved ref from index expression
+		e.res, err = e.constructRealRef(scope)
+		if err != nil {
+			return nil, err
+		}
+	}
 	return e.res.GetValue(scope)
+}
+
+func (e *exprRef) constructRealRef(scope data.Scope) (resolve.Resolution, error) {
+	var ref = ""
+	for _, v := range e.fields {
+		switch t := v.(type) {
+		case Expr:
+			indexRef, err := t.Eval(scope)
+			if err != nil {
+				return nil, err
+			}
+			ref = ref + indexRef.(string)
+		case string:
+			ref = ref + t
+		}
+	}
+	return e.resolver.GetResolution(ref)
+}
+
+type arrayIndexerExpr struct {
+	expr Expr
+}
+
+func (e *arrayIndexerExpr) Init(resolver resolve.CompositeResolver, root bool) error {
+	return e.expr.Init(resolver, root)
+}
+
+func (e *arrayIndexerExpr) Eval(scope data.Scope) (interface{}, error) {
+	v, err := e.expr.Eval(scope)
+	if err != nil {
+		return "", fmt.Errorf("eval array index expression error: %s", err.Error())
+	}
+	index, err := coerce.ToInt(v)
+	if err != nil {
+		return "", fmt.Errorf("array index [%s] must be int", v)
+	}
+
+	return "[" + strconv.Itoa(index) + "]", nil
 }

@@ -28,6 +28,7 @@ func TestObjectMappingWithFunction(t *testing.T) {
 	mappings := map[string]interface{}{"addresses": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
+	assert.Nil(t, err)
 
 	results, err := mapper.Apply(nil)
 	assert.Nil(t, err)
@@ -58,6 +59,7 @@ func TestObjectMappingWithArray(t *testing.T) {
 	mappings := map[string]interface{}{"addresses": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
+	assert.Nil(t, err)
 
 	results, err := mapper.Apply(nil)
 	assert.Nil(t, err)
@@ -106,6 +108,7 @@ func TestRootObjectArray(t *testing.T) {
 	mappings := map[string]interface{}{"target": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
+	assert.Nil(t, err)
 
 	results, err := mapper.Apply(scope)
 	assert.Nil(t, err)
@@ -127,6 +130,7 @@ func TestRootLiteralArray(t *testing.T) {
 	mappings := map[string]interface{}{"target": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
+	assert.Nil(t, err)
 
 	results, err := mapper.Apply(nil)
 	assert.Nil(t, err)
@@ -160,6 +164,7 @@ func TestPrimitiveArray(t *testing.T) {
 	mappings := map[string]interface{}{"target": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
+	assert.Nil(t, err)
 
 	attr := make(map[string]interface{})
 
@@ -207,6 +212,7 @@ func TestRootLiteralArrayMapping(t *testing.T) {
 	mappings := map[string]interface{}{"target": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
+	assert.Nil(t, err)
 
 	results, err := mapper.Apply(scope)
 	assert.Nil(t, err)
@@ -244,6 +250,7 @@ func TestRootLiteralNumberArrayMapping(t *testing.T) {
 	mappings := map[string]interface{}{"target": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
+	assert.Nil(t, err)
 
 	results, err := mapper.Apply(scope)
 	assert.Nil(t, err)
@@ -286,6 +293,7 @@ func TestRootArrayMapping(t *testing.T) {
 	mappings := map[string]interface{}{"target": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
+	assert.Nil(t, err)
 
 	results, err := mapper.Apply(scope)
 	assert.Nil(t, err)
@@ -309,6 +317,7 @@ func TestStringStringMap(t *testing.T) {
 	mappings := map[string]interface{}{"target": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
+	assert.Nil(t, err)
 
 	results, err := mapper.Apply(nil)
 	assert.Nil(t, err)
@@ -386,6 +395,7 @@ func TestArrayMappingWithNest(t *testing.T) {
 	mappings := map[string]interface{}{"addresses": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
+	assert.Nil(t, err)
 
 	attrs := map[string]interface{}{"field": arrayData}
 	scope := data.NewSimpleScope(attrs, nil)
@@ -448,6 +458,7 @@ func TestArrayMappingWithFunction(t *testing.T) {
 	mappings := map[string]interface{}{"addresses": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
+	assert.Nil(t, err)
 
 	attrs := map[string]interface{}{"field": arrayData}
 	scope := data.NewSimpleScope(attrs, nil)
@@ -525,6 +536,7 @@ func TestArrayMappingWithFunction3Level(t *testing.T) {
 	mappings := map[string]interface{}{"addresses": arrayMapping}
 	factory := NewFactory(resolve.GetBasicResolver())
 	mapper, err := factory.NewMapper(mappings)
+	assert.Nil(t, err)
 
 	attrs := map[string]interface{}{"field": arrayValue}
 	scope := data.NewSimpleScope(attrs, nil)
