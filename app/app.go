@@ -29,7 +29,10 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 
 	for _, anImport := range config.Imports {
 		matches := flogoImportPattern.FindStringSubmatch(anImport)
-		registerImport(matches[1] + matches[3] + matches[5]) // alias + module path + relative import path
+		err := registerImport(matches[1] + matches[3] + matches[5]) // alias + module path + relative import path
+		if err != nil {
+			log.RootLogger().Errorf("cannot register import '%s' : %v", anImport, err)
+		}
 	}
 
 	function.ResolveAliases()
@@ -53,14 +56,20 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 	property.SetDefaultManager(app.propManager)
 
 	for _, option := range options {
-		option(app)
+		err := option(app)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	resources := make(map[string]*resource.Resource, len(config.Resources))
 	app.resManager = resource.NewManager(resources)
 
 	for _, actionFactory := range action.Factories() {
-		actionFactory.Initialize(app)
+		err := actionFactory.Initialize(app)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	for _, resConfig := range config.Resources {
@@ -178,7 +187,7 @@ func (a *App) Start() error {
 			failed = append(failed, id)
 		} else {
 			statusInfo.Status = managed.StatusStarted
-			logger.Infof("Trigger [ %s ]: Started", id)
+			//logger.Infof("Trigger [ %s ]: Started", id)
 			version := ""
 			logger.Debugf("Trigger [ %s ] has ref [ %s ] and version [ %s ]", id, trg.ref, version)
 		}
@@ -205,7 +214,7 @@ func (a *App) Stop() error {
 
 	// Stop Triggers
 	for id, trg := range a.triggers {
-		managed.Stop("Trigger [ "+id+" ]", trg.trg)
+		_ = managed.Stop("Trigger [ "+id+" ]", trg.trg)
 		trg.status.Status = managed.StatusStopped
 	}
 
@@ -243,7 +252,10 @@ func registerImport(anImport string) error {
 
 	log.RootLogger().Debugf("Registering type alias '%s' for %s [%s]", alias, ct, ref)
 
-	support.RegisterAlias(ct, alias, ref)
+	err := support.RegisterAlias(ct, alias, ref)
+	if err != nil {
+		return err
+	}
 
 	if ct == "function" {
 		function.SetPackageAlias(ref, alias)

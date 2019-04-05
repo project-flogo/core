@@ -20,9 +20,9 @@ func TestSecretKeyDefault(t *testing.T) {
 }
 
 func TestSecretKeyEnv(t *testing.T) {
-	os.Setenv(EnvKeyDataSecretKey, "mysecretkey1")
+	_ = os.Setenv(EnvKeyDataSecretKey, "mysecretkey1")
 	defer func() {
-		os.Unsetenv(EnvKeyDataSecretKey)
+		_ = os.Unsetenv(EnvKeyDataSecretKey)
 		SetSecretValueHandler(nil)
 	}()
 

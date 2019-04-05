@@ -107,7 +107,7 @@ func (runner *PooledRunner) RunAction(ctx context.Context, act action.Action, in
 	logger := runner.logger
 
 	if act == nil {
-		return nil, errors.New("Action not specified")
+		return nil, errors.New("action not specified")
 	}
 
 	if runner.active {
@@ -131,5 +131,5 @@ func (runner *PooledRunner) RunAction(ctx context.Context, act action.Action, in
 	}
 
 	//Run rejected
-	return nil, errors.New("Runner not active")
+	return nil, errors.New("runner not active")
 }

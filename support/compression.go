@@ -20,10 +20,11 @@ func Unzip(compressed []byte) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	bytes, err := ioutil.ReadAll(r)
+
+	uncompressedBytes, err := ioutil.ReadAll(r)
 	if err != nil {
 		return nil, err
 	}
 
-	return bytes, nil
+	return uncompressedBytes, nil
 }

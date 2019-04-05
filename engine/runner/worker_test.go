@@ -37,7 +37,7 @@ func TestWorkerErrorInAction(t *testing.T) {
 	rc := make(chan *ActionResult)
 
 	action := new(MockFullAction)
-	action.On("Run", nil, mock.AnythingOfType("map[string]interface {}"), mock.AnythingOfType("*runner.AsyncResultHandler")).Return(errors.New("Error in action"))
+	action.On("Run", nil, mock.AnythingOfType("map[string]interface {}"), mock.AnythingOfType("*runner.AsyncResultHandler")).Return(errors.New("error in action"))
 
 	actionData := &ActionData{arc: rc, action: action}
 

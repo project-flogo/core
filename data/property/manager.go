@@ -32,7 +32,7 @@ func (m *Manager) GetProperty(name string) (interface{}, bool) {
 func (m *Manager) Finalize(processors ...PostProcessor) error {
 
 	for _, processor := range processors {
-		processor(m.properties)
+		_ = processor(m.properties)
 	}
 
 	return nil

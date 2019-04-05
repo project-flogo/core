@@ -93,7 +93,7 @@ func (am *ObjectMapper) Eval(inputScope data.Scope) (interface{}, error) {
 			objectMapperLog.Debugf("StackTrace: %s", debug.Stack())
 		}
 	}()
-	objectMapperLog.Debugf("Handleing object mapper %+v", am.mappings)
+	objectMapperLog.Debugf("Handling object mapper %+v", am.mappings)
 	return handleObjectMapping(am.mappings, am.exprFactory, inputScope)
 }
 
