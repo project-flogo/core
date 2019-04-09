@@ -115,44 +115,52 @@ func handleObjectMapping(objectMappings interface{}, exprF expression.Factory, i
 			//Go second level to find possible @foreach node
 			if nxtVal, ok := mv.(map[string]interface{}); ok {
 				//second level object
-				for foreachK, foreachV := range nxtVal {
-					if strings.HasPrefix(foreachK, FOREACH) {
-						objectVal[mk], err = newForeach(foreachK, exprF).handle(foreachV.(map[string]interface{}), inputScope)
-						if err != nil {
-							return nil, err
-						}
-					} else {
-						switch t := foreachV.(type) {
-						case []interface{}:
-							arrayResult := make([]interface{}, len(t))
-							for i, element := range t {
-								var err error
-								arrayResult[i], err = handlerArrayElement(element, exprF, inputScope)
+				if hasForeach(nxtVal) {
+					for foreachK, foreachV := range nxtVal {
+						if strings.HasPrefix(foreachK, FOREACH) {
+							objectVal[mk], err = newForeach(foreachK, exprF).handle(foreachV.(map[string]interface{}), inputScope)
+							if err != nil {
+								return nil, err
+							}
+						} else {
+							switch t := foreachV.(type) {
+							case []interface{}:
+								arrayResult := make([]interface{}, len(t))
+								for i, element := range t {
+									var err error
+									arrayResult[i], err = handlerArrayElement(element, exprF, inputScope)
+									if err != nil {
+										return nil, err
+									}
+								}
+								objectVal[foreachK] = arrayResult
+							case map[string]interface{}:
+								if objectVal[mk] == nil {
+									objectVal[mk] = make(map[string]interface{})
+								}
+								v, err := handleObjectMapping(t, exprF, inputScope)
+								if err != nil {
+									return nil, err
+								}
+								objectVal[mk].(map[string]interface{})[foreachK] = v
+							default:
+								if objectVal[mk] == nil {
+									objectVal[mk] = make(map[string]interface{})
+								}
+								err := handleObject(objectVal[mk].(map[string]interface{}), foreachK, foreachV, exprF, inputScope)
 								if err != nil {
 									return nil, err
 								}
 							}
-							objectVal[foreachK] = arrayResult
-						case map[string]interface{}:
-							if objectVal[mk] == nil {
-								objectVal[mk] = make(map[string]interface{})
-							}
-							v, err := handleObjectMapping(t, exprF, inputScope)
-							if err != nil {
-								return nil, err
-							}
-							objectVal[mk].(map[string]interface{})[foreachK] = v
-						default:
-							if objectVal[mk] == nil {
-								objectVal[mk] = make(map[string]interface{})
-							}
-							err := handleObject(objectVal[mk].(map[string]interface{}), foreachK, foreachV, exprF, inputScope)
-							if err != nil {
-								return nil, err
-							}
 						}
 					}
+				} else {
+					objectVal[mk], err = handleObjectMapping(mv, exprF, inputScope)
+					if err != nil {
+						return nil, err
+					}
 				}
+
 			} else if arrayV, ok := mv.([]interface{}); ok {
 				arrayResult := make([]interface{}, len(arrayV))
 				for i, element := range arrayV {
@@ -185,6 +193,15 @@ func handleObjectMapping(objectMappings interface{}, exprF expression.Factory, i
 	default:
 		return nil, fmt.Errorf("unsupport type [%s] for object mapper", reflect.TypeOf(objectMappings))
 	}
+}
+
+func hasForeach(val map[string]interface{}) bool {
+	for foreachK, _ := range val {
+		if strings.HasPrefix(foreachK, FOREACH) {
+			return true
+		}
+	}
+	return false
 }
 
 func handlerArrayElement(element interface{}, exprF expression.Factory, inputScope data.Scope) (interface{}, error) {
