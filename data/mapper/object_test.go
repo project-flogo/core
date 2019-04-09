@@ -2,7 +2,6 @@ package mapper
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/resolve"
 	"testing"
@@ -605,11 +604,7 @@ func TestLiteral(t *testing.T) {
 	assert.Nil(t, err)
 
 	arr := results["addresses"]
-	v, _ := json.Marshal(arr)
-	fmt.Println(string(v))
-	//assert.Equal(t, "person", arr.(map[string]interface{})["person2"])
-	//assert.Equal(t, float64(77479), arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["tozipcode"])
-	//assert.Equal(t, "State is tx", arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["tostate"])
+	assert.Equal(t, "Earth", arr.(map[string]interface{})["Character"].(map[string]interface{})["homePlanet"])
 
 }
 
