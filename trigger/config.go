@@ -55,21 +55,26 @@ func (c *Config) FixUp(md *Metadata) error {
 }
 
 type HandlerConfig struct {
-	parent        *Config
-	Name          string                 `json:"name,omitempty"`
-	Settings      map[string]interface{} `json:"settings"`
-	Actions       []*ActionConfig        `json:"actions"`
-	OutputSchemas map[string]interface{} `json:"outputSchemas,omitempty"`
+	parent   *Config
+	Name     string                 `json:"name,omitempty"`
+	Settings map[string]interface{} `json:"settings"`
+	Actions  []*ActionConfig        `json:"actions"`
+	Schemas  *SchemaConfig          `json:"schemas,omitempty"`
+}
+
+type SchemaConfig struct {
+	Output map[string]interface{} `json:"output,omitempty"`
+	Reply  map[string]interface{} `json:"reply,omitempty"`
 }
 
 // UnmarshalJSON overrides the default UnmarshalJSON for TaskInst
 func (hc *HandlerConfig) UnmarshalJSON(d []byte) error {
 	ser := &struct {
-		Name          string                 `json:"name,omitempty"`
-		Settings      map[string]interface{} `json:"settings"`
-		Actions       []*ActionConfig        `json:"actions"`
-		Action        *ActionConfig          `json:"action"`
-		OutputSchemas map[string]interface{} `json:"outputSchemas,omitempty"`
+		Name     string                 `json:"name,omitempty"`
+		Settings map[string]interface{} `json:"settings"`
+		Actions  []*ActionConfig        `json:"actions"`
+		Action   *ActionConfig          `json:"action"`
+		Schemas  *SchemaConfig          `json:"schemas,omitempty"`
 	}{}
 
 	if err := json.Unmarshal(d, ser); err != nil {
@@ -78,7 +83,7 @@ func (hc *HandlerConfig) UnmarshalJSON(d []byte) error {
 
 	hc.Name = ser.Name
 	hc.Settings = ser.Settings
-	hc.OutputSchemas = ser.OutputSchemas
+	hc.Schemas = ser.Schemas
 
 	if ser.Action != nil {
 		hc.Actions = []*ActionConfig{ser.Action}
@@ -98,36 +103,3 @@ type ActionConfig struct {
 
 	Act action.Action `json:"-,omitempty"`
 }
-
-//// UnmarshalJSON overrides the default UnmarshalJSON for TaskInst
-//func (ac *ActionConfig) UnmarshalJSON(d []byte) error {
-//	ser := &struct {
-//		If       string                 `json:"if,omitempty"`
-//		Ref      string                 `json:"ref"`
-//		Settings map[string]interface{} `json:"settings,omitempty"`
-//		Input    map[string]interface{} `json:"input,omitempty"`
-//		Output   map[string]interface{} `json:"output,omitempty"`
-//
-//		//referenced action
-//		Id string `json:"id"`
-//	}{}
-//
-//	if err := json.Unmarshal(d, ser); err != nil {
-//		return err
-//	}
-//
-//	ac.Config = &action.Config{}
-//
-//	ac.Ref = ser.Ref
-//	ac.Id = ser.Id
-//	ac.If = ser.If
-//	ac.Input = ser.Input
-//	ac.Output = ser.Output
-//	ac.Settings = ser.Settings
-//
-//	if ac.Settings == nil {
-//		ac.Settings = make(map[string]interface{})
-//	}
-//
-//	return nil
-//}

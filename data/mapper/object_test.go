@@ -10,7 +10,7 @@ import (
 )
 
 func TestObjectMappingWithFunction(t *testing.T) {
-	mappingValue := `{
+	mappingValue := `{"mapping": {
         "person2" : "person",
         "addresses": {
               "tostate"   : "=tstring.concat(\"State is \", \"tx\")",
@@ -19,7 +19,8 @@ func TestObjectMappingWithFunction(t *testing.T) {
 					"tofield2": "=tstring.concat(\"field is \", \"ffff\")"
               }
         }
-    }`
+    }
+}`
 
 	arrayMapping := make(map[string]interface{})
 	err := json.Unmarshal([]byte(mappingValue), &arrayMapping)
@@ -40,7 +41,7 @@ func TestObjectMappingWithFunction(t *testing.T) {
 }
 
 func TestObjectMappingWithArray(t *testing.T) {
-	mappingValue := `{
+	mappingValue := `{"mapping": {
   "person2": "person",
   "addresses": {
     "array": [
@@ -50,6 +51,7 @@ func TestObjectMappingWithArray(t *testing.T) {
       }
     ]
   }
+}
 }`
 
 	arrayMapping := make(map[string]interface{})
@@ -66,13 +68,13 @@ func TestObjectMappingWithArray(t *testing.T) {
 	arr := results["addresses"]
 
 	assert.Equal(t, "person", arr.(map[string]interface{})["person2"])
-	assert.Equal(t, "ddd is tx", arr.(map[string]interface{})["array"].([]interface{})[0].(map[string]interface{})["ddd"])
-	assert.Equal(t, "ccc is tx", arr.(map[string]interface{})["array"].([]interface{})[0].(map[string]interface{})["ccc"])
+	assert.Equal(t, "ddd is tx", arr.(map[string]interface{})["addresses"].(map[string]interface{})["array"].([]interface{})[0].(map[string]interface{})["ddd"])
+	assert.Equal(t, "ccc is tx", arr.(map[string]interface{})["addresses"].(map[string]interface{})["array"].([]interface{})[0].(map[string]interface{})["ccc"])
 
 }
 
 func TestRootObjectArray(t *testing.T) {
-	mappingValue := `[
+	mappingValue := `{"mapping": [
    {
       "id":"11111",
       "name":"nnnnn",
@@ -83,7 +85,8 @@ func TestRootObjectArray(t *testing.T) {
 			}
       }
    }
-]`
+]
+}`
 
 	arrayData := `{
    "person": "name",
@@ -142,7 +145,7 @@ func TestRootLiteralArray(t *testing.T) {
 }
 
 func TestPrimitiveArray(t *testing.T) {
-	mappingValue := `
+	mappingValue := `{"mapping": 
 {
   "features": [
     {
@@ -155,6 +158,7 @@ func TestPrimitiveArray(t *testing.T) {
       ]
     }
   ]
+}
 }`
 
 	var arrayMapping interface{}
@@ -186,7 +190,7 @@ func TestPrimitiveArray(t *testing.T) {
 }
 
 func TestRootLiteralArrayMapping(t *testing.T) {
-	mappingValue := `["=$.field.name", "=$.field.id"]`
+	mappingValue := `{"mapping": ["=$.field.name", "=$.field.id"]}`
 	arrayData := `{
    "name": "name",
 	"id":"1001",
@@ -223,7 +227,7 @@ func TestRootLiteralArrayMapping(t *testing.T) {
 }
 
 func TestRootLiteralNumberArrayMapping(t *testing.T) {
-	mappingValue := `["=$.field.id2", "=$.field.id"]`
+	mappingValue := `{"mapping": ["=$.field.id2", "=$.field.id"]}`
 	arrayData := `{
 	"id2": 1002,
 	"id":1001,
@@ -261,12 +265,12 @@ func TestRootLiteralNumberArrayMapping(t *testing.T) {
 }
 
 func TestRootArrayMapping(t *testing.T) {
-	mappingValue := `{
+	mappingValue := `{"mapping": {
 			"@foreach($.field.addresses, index)":{
 				"id":"dddddd",
 				"name":"=$.state"
 			}
-   }`
+   }}`
 
 	arrayData := `{
    "person": "name",
@@ -277,7 +281,8 @@ func TestRootArrayMapping(t *testing.T) {
            "state": "tx"
 		}
    ]
-}`
+}
+`
 	var arrayValue interface{}
 	err := json.Unmarshal([]byte(arrayData), &arrayValue)
 	assert.Nil(t, err)
@@ -329,7 +334,7 @@ func TestStringStringMap(t *testing.T) {
 }
 
 func TestArrayMappingWithNest(t *testing.T) {
-	mappingValue := `{
+	mappingValue := `{"mapping": {
         "person2" : "person",
         "addresses": {
             "@foreach($.field.addresses, index)":
@@ -346,7 +351,7 @@ func TestArrayMappingWithNest(t *testing.T) {
               }
             }
         }
-    }`
+    }}`
 
 	arrayData := `{
    "person": "name",
@@ -409,7 +414,7 @@ func TestArrayMappingWithNest(t *testing.T) {
 }
 
 func TestArrayMappingWithFunction(t *testing.T) {
-	mappingValue := `{
+	mappingValue := `{"mapping": {
         "person2" : "person",
         "addresses": {
             "@foreach($.field.addresses, index)":
@@ -426,7 +431,8 @@ func TestArrayMappingWithFunction(t *testing.T) {
               }
             }
         }
-    }`
+    }
+}`
 
 	arrayData := `{
    "person": "name",
@@ -472,7 +478,7 @@ func TestArrayMappingWithFunction(t *testing.T) {
 }
 
 func TestArrayMappingWithFunction3Level(t *testing.T) {
-	mappingValue := `{
+	mappingValue := `{"mapping": {
    "person2":"person",
    "addresses":{
       "@foreach($.field.addresses, index)":{
@@ -494,6 +500,7 @@ func TestArrayMappingWithFunction3Level(t *testing.T) {
          }
       }
    }
+}
 }`
 
 	arrayData := `{
@@ -548,6 +555,57 @@ func TestArrayMappingWithFunction3Level(t *testing.T) {
 	assert.Equal(t, "person", arr.(map[string]interface{})["person2"])
 	assert.Equal(t, float64(77479), arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["tozipcode"])
 	assert.Equal(t, "State is tx", arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["tostate"])
+}
+
+func TestLiteral(t *testing.T) {
+	mappingValue := `{"mapping": {
+                      "Character": {
+                        "appearsIn": [
+                          "EMPIRE",
+                          "JEDI"
+                        ],
+                        "friends": [
+                          {
+                            "appearsIn": [
+                              "JEDI"
+                            ],
+                            "friends": [],
+                            "id": "d123",
+                            "name": "r2-d2",
+                            "primaryFunction": "robot"
+                          },
+                          {
+                            "appearsIn": [
+                              "JEDI",
+                              "NEWHOPE"
+                            ],
+                            "friends": [],
+                            "homePlanet": "Mars",
+                            "id": "h234",
+                            "name": "Robert"
+                          }
+                        ],
+                        "homePlanet": "Earth",
+                        "id": "h123",
+                        "name": "Luke"
+                      }
+                    }}`
+
+	arrayMapping := make(map[string]interface{})
+	err := json.Unmarshal([]byte(mappingValue), &arrayMapping)
+	assert.Nil(t, err)
+
+	mappings := map[string]interface{}{"addresses": arrayMapping}
+	factory := NewFactory(resolve.GetBasicResolver())
+	mapper, err := factory.NewMapper(mappings)
+	assert.Nil(t, err)
+
+	results, err := mapper.Apply(nil)
+	assert.Nil(t, err)
+
+	arr := results["addresses"]
+	assert.Equal(t, "Earth", arr.(map[string]interface{})["Character"].(map[string]interface{})["homePlanet"])
+
 }
 
 func TestGetSource(t *testing.T) {
