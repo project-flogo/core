@@ -96,3 +96,26 @@ func GetLogger(ref string) log.Logger {
 		return log.RootLogger()
 	}
 }
+
+func CleanupSingletons() {
+	for ref, activity := range activities {
+
+		if _, ok := activityFactories[ref]; ok {
+			//shared activities don't have factories
+			if needsCleanup, ok := activity.(support.NeedsCleanup); ok {
+				err := needsCleanup.Cleanup()
+				if err != nil {
+					log.RootLogger().Errorf("Error cleaning up activity '%s' : ", ref, err)
+				}
+			}
+		}
+	}
+}
+
+func IsSingleton(activity Activity) bool {
+	ref := support.GetRef(activity)
+	_, hasFactory := activityFactories[ref]
+
+	//if it doesn't have a factory, it is a singleton/shared activity
+	return !hasFactory
+}
