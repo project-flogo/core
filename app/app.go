@@ -2,8 +2,6 @@ package app
 
 import (
 	"fmt"
-	"github.com/project-flogo/core/data/expression/function"
-	"github.com/project-flogo/core/data/schema"
 	"path"
 	"regexp"
 	"runtime/debug"
@@ -12,7 +10,9 @@ import (
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/app/resource"
+	"github.com/project-flogo/core/data/expression/function"
 	"github.com/project-flogo/core/data/property"
+	"github.com/project-flogo/core/data/schema"
 	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/support/managed"
@@ -251,8 +251,10 @@ func registerImport(anImport string) error {
 	}
 
 	ct := getContribType(ref)
-	if ct == "" {
-		return fmt.Errorf("invalid import, contribution '%s' not registered", anImport)
+	if ct == "other" {
+		log.RootLogger().Debugf("Added Non-Contribution Import: %s", ref)
+		return nil
+		//return fmt.Errorf("invalid import, contribution '%s' not registered", anImport)
 	}
 
 	log.RootLogger().Debugf("Registering type alias '%s' for %s [%s]", alias, ct, ref)
@@ -280,6 +282,6 @@ func getContribType(ref string) string {
 	} else if function.IsFunctionPackage(ref) {
 		return "function"
 	} else {
-		return ""
+		return "other"
 	}
 }
