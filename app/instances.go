@@ -48,6 +48,10 @@ func (a *App) createSharedActions(actionConfigs []*action.Config) (map[string]ac
 		}
 
 		actions[config.Id] = act
+
+		//if needsCleanup, ok := act.(support.NeedsCleanup); ok {
+		//	a.toCleanup = append(a.toCleanup, needsCleanup)
+		//}
 	}
 
 	return actions, nil
@@ -167,6 +171,10 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 						if err != nil {
 							return nil, err
 						}
+						//if needsDisposal, ok := act.(support.NeedsCleanup); ok {
+						//	a.toDispose = append(a.toDispose, needsDisposal)
+						//}
+
 						acts = append(acts, act)
 					}
 				}

@@ -3,6 +3,9 @@ package resource
 import (
 	"errors"
 	"strings"
+
+	"github.com/project-flogo/core/support"
+	"github.com/project-flogo/core/support/log"
 )
 
 const UriScheme = "res://"
@@ -47,6 +50,18 @@ func (m *Manager) GetResource(id string) *Resource {
 	}
 
 	return m.resources[resId]
+}
+
+func (m *Manager) CleanupResources() {
+
+	for id, res := range m.resources {
+		if needsCleanup, ok := res.resObj.(support.NeedsCleanup); ok {
+			err := needsCleanup.Cleanup()
+			if err != nil {
+				log.RootLogger().Errorf("Error cleaning up resource '%s' : ", id, err)
+			}
+		}
+	}
 }
 
 func GetTypeFromID(id string) (string, error) {

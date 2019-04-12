@@ -220,7 +220,12 @@ func (a *App) Stop() error {
 
 	logger.Info("Triggers Stopped")
 
-	//a.active = false - this will allow restart
+	logger.Debugf("Cleaning up singleton activities")
+	activity.CleanupSingletons()
+
+	logger.Debugf("Cleaning up resources")
+	a.resManager.CleanupResources()
+
 	return nil
 }
 
