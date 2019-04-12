@@ -100,8 +100,8 @@ func GetLogger(ref string) log.Logger {
 func CleanupSingletons() {
 	for ref, activity := range activities {
 
-		if _, ok := activityFactories[ref]; ok {
-			//shared activities don't have factories
+		if _, ok := activityFactories[ref]; !ok {
+			//singleton activities don't have factories
 			if needsCleanup, ok := activity.(support.NeedsCleanup); ok {
 				err := needsCleanup.Cleanup()
 				if err != nil {
