@@ -2,11 +2,11 @@ package propertyresolver
 
 import (
 	"encoding/json"
-	"github.com/project-flogo/core/data/property"
-	"github.com/project-flogo/core/engine"
 	"os"
 	"strings"
 
+	"github.com/project-flogo/core/data/property"
+	"github.com/project-flogo/core/engine"
 	"github.com/project-flogo/core/support/log"
 )
 
@@ -16,21 +16,27 @@ type PropertyMappings struct {
 	Mappings map[string]string `json:"mappings"`
 }
 
-var mapping PropertyMappings
-
 func init() {
 
 	logger := log.RootLogger()
+	mappingsEnv := getEnvValue()
 
-	_ = property.RegisterPropertyResolver(&EnvVariableValueResolver{})
+	if mappingsEnv != "" {
 
-	mappings := getEnvValue()
-	if mappings != "" {
-		e := json.Unmarshal([]byte(mappings), &mapping)
-		if e != nil {
-			logger.Errorf("Can not parse value set to '%s' due to error - '%v'", EnvAppPropertyEnvConfigKey, e)
-			panic("")
+		resolver := &EnvVariableValueResolver{}
+
+		if strings.EqualFold(mappingsEnv, "auto") {
+			resolver.autoMapping = true
+		} else {
+
+			var mappings *PropertyMappings
+			e := json.Unmarshal([]byte(mappingsEnv), &mappings)
+			if e != nil {
+				logger.Errorf("Can not parse value set to '%s' due to error - '%v'", EnvAppPropertyEnvConfigKey, e)
+				panic("")
+			}
 		}
+		_ = property.RegisterPropertyResolver(resolver)
 	}
 }
 
@@ -44,6 +50,8 @@ func getEnvValue() string {
 
 // Resolve property value from environment variable
 type EnvVariableValueResolver struct {
+	autoMapping bool
+	mappings    PropertyMappings
 }
 
 func (resolver *EnvVariableValueResolver) Name() string {
@@ -51,26 +59,32 @@ func (resolver *EnvVariableValueResolver) Name() string {
 }
 
 func (resolver *EnvVariableValueResolver) LookupValue(key string) (interface{}, bool) {
-	value, exists := os.LookupEnv(key) // first try with the name of the property as is
-	if exists {
+
+	if resolver.autoMapping {
+		value, exists := os.LookupEnv(key) // first try with the name of the property as is
+		if exists {
+			return value, exists
+		}
+
+		// Replace dot with underscore e.g. a.b would be a_b
+		key = strings.Replace(key, ".", "_", -1)
+		value, exists = os.LookupEnv(key)
+		if exists {
+			return value, exists
+		}
+
+		// Try upper case form e.g. a.b would be A_B
+		key = strings.ToUpper(key)
+		value, exists = os.LookupEnv(key) // if not found try with the canonical form
 		return value, exists
+
+	} else {
+		// Lookup based on mapping defined
+		keyMapping, ok := resolver.mappings.Mappings[key]
+		if ok {
+			return os.LookupEnv(keyMapping)
+		}
 	}
 
-	// Lookup based on mapping defined
-	keyMapping, ok := mapping.Mappings[key]
-	if ok {
-		return os.LookupEnv(keyMapping)
-	}
-
-	// Replace dot with underscore e.g. a.b would be a_b
-	key = strings.Replace(key, ".", "_", -1)
-	value, exists = os.LookupEnv(key)
-	if exists {
-		return value, exists
-	}
-
-	// Try upper case form e.g. a.b would be A_B
-	key = strings.ToUpper(key)
-	value, exists = os.LookupEnv(key) // if not found try with the canonical form
-	return value, exists
+	return nil, false
 }
