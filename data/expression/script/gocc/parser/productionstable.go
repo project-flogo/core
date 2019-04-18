@@ -491,13 +491,13 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Indexer : index	<< ast.Concat(X[0]) >>`,
+		String: `Indexer : "[" ident "]"	<< ast.Concat(X[0], X[1], X[2]) >>`,
 		Id:         "Indexer",
 		NTType:     16,
 		Index:      47,
-		NumSymbols: 1,
+		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.Concat(X[0])
+			return ast.Concat(X[0], X[1], X[2])
 		},
 	},
 	ProdTabEntry{
