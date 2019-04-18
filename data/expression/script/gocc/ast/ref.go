@@ -25,10 +25,10 @@ func Concat(items ...interface{}) ([]interface{}, error) {
 	return array, nil
 }
 
-func Indexer(indexer interface{}) (interface{}, error) {
+func Key(indexer interface{}) (interface{}, error) {
 	switch t := indexer.(type) {
 	case Expr:
-		return &arrayIndexerExpr{t}, nil
+		return &keyIndexExpr{t}, nil
 	}
 	return nil, fmt.Errorf("invalid array indexer")
 }
