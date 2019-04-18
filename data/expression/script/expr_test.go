@@ -169,7 +169,7 @@ func TestArrayIndexExpr(t *testing.T) {
 	assert.NotNil(t, expr)
 
 	v, err = expr.Eval(scope)
-	assert.EqualError(t, err, "array index [aa] must be int")
+	assert.EqualError(t, err, "Invalid array index: aa")
 }
 
 func TestArrayIndexExprWithFunction(t *testing.T) {
@@ -194,6 +194,39 @@ func TestArrayIndexExprWithFunction(t *testing.T) {
 	v, err = expr.Eval(scope)
 	assert.Nil(t, err)
 	assert.Equal(t, 8.99, v)
+
+}
+
+func TestRefWithQuotes(t *testing.T) {
+	var testData interface{}
+	err := json.Unmarshal([]byte(testJsonData), &testData)
+	assert.Nil(t, err)
+
+	scope := newScope(map[string]interface{}{"foo": testData, "key": 2})
+
+	expr, err := factory.NewExpr(`$.foo["store"].book[script.length("123")].price`)
+	assert.Nil(t, err)
+	assert.NotNil(t, expr)
+
+	v, err := expr.Eval(scope)
+	assert.Nil(t, err)
+	assert.Equal(t, 22.99, v)
+
+	expr, err = factory.NewExpr("$.foo['store'].book[2].price")
+	assert.Nil(t, err)
+	assert.NotNil(t, expr)
+
+	v, err = expr.Eval(scope)
+	assert.Nil(t, err)
+	assert.Equal(t, 8.99, v)
+
+	expr, err = factory.NewExpr("$.foo[`store`].book[0].price")
+	assert.Nil(t, err)
+	assert.NotNil(t, expr)
+
+	v, err = expr.Eval(scope)
+	assert.Nil(t, err)
+	assert.Equal(t, 8.95, v)
 
 }
 

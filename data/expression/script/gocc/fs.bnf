@@ -136,7 +136,7 @@ Ref
     ;
 Indexer
     : "[" ident "]"     << ast.Concat($0, $1, $2)  >>
-    | "[" Fscript "]"   << ast.Indexer($1) >>
+    | "[" Fscript "]"   << ast.Key($1) >>
     ;
 
 Args
