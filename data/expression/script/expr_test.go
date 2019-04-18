@@ -202,6 +202,7 @@ func TestRefWithQuotes(t *testing.T) {
 	err := json.Unmarshal([]byte(testJsonData), &testData)
 	assert.Nil(t, err)
 
+	os.Setenv("index", "2")
 	scope := newScope(map[string]interface{}{"foo": testData, "key": 2})
 
 	expr, err := factory.NewExpr(`$.foo["store"].book[script.length("123")].price`)
@@ -227,6 +228,15 @@ func TestRefWithQuotes(t *testing.T) {
 	v, err = expr.Eval(scope)
 	assert.Nil(t, err)
 	assert.Equal(t, 8.95, v)
+
+	expr, err = factory.NewExpr("$.foo[`store`].book[$env[index]].price")
+	assert.Nil(t, err)
+	assert.NotNil(t, expr)
+
+	v, err = expr.Eval(scope)
+	assert.Nil(t, err)
+	assert.Equal(t, 8.99, v)
+	defer os.Unsetenv("index")
 
 }
 
