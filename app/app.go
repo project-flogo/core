@@ -3,13 +3,16 @@ package app
 import (
 	"fmt"
 	"path"
+	"regexp"
 	"runtime/debug"
 	"strings"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/app/resource"
+	"github.com/project-flogo/core/data/expression/function"
 	"github.com/project-flogo/core/data/property"
+	"github.com/project-flogo/core/data/schema"
 	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/support/managed"
@@ -18,13 +21,31 @@ import (
 
 type Option func(*App) error
 
+var flogoImportPattern = regexp.MustCompile(`^(([^ ]*)[ ]+)?([^@:]*)@?([^:]*)?:?(.*)?$`) // extract import path even if there is an alias and/or a version
+
 func New(config *Config, runner action.Runner, options ...Option) (*App, error) {
 
 	app := &App{stopOnError: true, name: config.Name, version: config.Version}
 
 	for _, anImport := range config.Imports {
-		registerImport(anImport)
+		matches := flogoImportPattern.FindStringSubmatch(anImport)
+		err := registerImport(matches[1] + matches[3] + matches[5]) // alias + module path + relative import path
+		if err != nil {
+			log.RootLogger().Errorf("cannot register import '%s' : %v", anImport, err)
+		}
 	}
+
+	function.ResolveAliases()
+
+	// register schemas, assumes appropriate schema factories have been registered
+	for id, def := range config.Schemas {
+		_, err := schema.Register(id, def)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	schema.ResolveSchemas()
 
 	properties := make(map[string]interface{}, len(config.Properties))
 	for _, attr := range config.Properties {
@@ -35,14 +56,20 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 	property.SetDefaultManager(app.propManager)
 
 	for _, option := range options {
-		option(app)
+		err := option(app)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	resources := make(map[string]*resource.Resource, len(config.Resources))
 	app.resManager = resource.NewManager(resources)
 
 	for _, actionFactory := range action.Factories() {
-		actionFactory.Initialize(app)
+		err := actionFactory.Initialize(app)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	for _, resConfig := range config.Resources {
@@ -160,7 +187,7 @@ func (a *App) Start() error {
 			failed = append(failed, id)
 		} else {
 			statusInfo.Status = managed.StatusStarted
-			logger.Infof("Trigger [ %s ]: Started", id)
+			//logger.Infof("Trigger [ %s ]: Started", id)
 			version := ""
 			logger.Debugf("Trigger [ %s ] has ref [ %s ] and version [ %s ]", id, trg.ref, version)
 		}
@@ -187,13 +214,18 @@ func (a *App) Stop() error {
 
 	// Stop Triggers
 	for id, trg := range a.triggers {
-		managed.Stop("Trigger [ "+id+" ]", trg.trg)
+		_ = managed.Stop("Trigger [ "+id+" ]", trg.trg)
 		trg.status.Status = managed.StatusStopped
 	}
 
 	logger.Info("Triggers Stopped")
 
-	//a.active = false - this will allow restart
+	logger.Debugf("Cleaning up singleton activities")
+	activity.CleanupSingletons()
+
+	logger.Debugf("Cleaning up resources")
+	a.resManager.CleanupResources()
+
 	return nil
 }
 
@@ -219,13 +251,23 @@ func registerImport(anImport string) error {
 	}
 
 	ct := getContribType(ref)
-	if ct == "" {
-		return fmt.Errorf("invalid import, contribution '%s' not registered", anImport)
+	if ct == "other" {
+		log.RootLogger().Debugf("Added Non-Contribution Import: %s", ref)
+		return nil
+		//return fmt.Errorf("invalid import, contribution '%s' not registered", anImport)
 	}
 
 	log.RootLogger().Debugf("Registering type alias '%s' for %s [%s]", alias, ct, ref)
 
-	support.RegisterAlias(ct, alias, ref)
+	err := support.RegisterAlias(ct, alias, ref)
+	if err != nil {
+		return err
+	}
+
+	if ct == "function" {
+		function.SetPackageAlias(ref, alias)
+	}
+
 	return nil
 }
 
@@ -237,7 +279,9 @@ func getContribType(ref string) string {
 		return "action"
 	} else if trigger.GetFactory(ref) != nil {
 		return "trigger"
+	} else if function.IsFunctionPackage(ref) {
+		return "function"
 	} else {
-		return ""
+		return "other"
 	}
 }

@@ -9,7 +9,7 @@ type Settings struct {
 }
 
 type HandlerSettings struct {
-	ASetting string `md:aSetting,required"`
+	ASetting string `md:"aSetting,required"`
 }
 
 type Output struct {

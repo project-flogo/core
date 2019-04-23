@@ -12,6 +12,7 @@ var defaultResolver = NewCompositeResolver(map[string]Resolver{
 	".":        &ScopeResolver{},
 	"env":      &EnvResolver{},
 	"property": &PropertyResolver{},
+	"loop":     &LoopResolver{},
 })
 
 func GetBasicResolver() CompositeResolver {
@@ -61,7 +62,7 @@ func (r *basicResolver) Resolve(directive string, scope data.Scope) (value inter
 
 	if r.cleanDirective != nil {
 
-		sansDerefrencer, ok := r.cleanDirective(directive)
+		sansDereferencer, ok := r.cleanDirective(directive)
 		if !ok {
 			if scope == nil {
 				//todo should we throw an error in this circumstance?
@@ -72,7 +73,7 @@ func (r *basicResolver) Resolve(directive string, scope data.Scope) (value inter
 			return val, nil
 		}
 
-		directive = sansDerefrencer
+		directive = sansDereferencer
 	}
 
 	resolverName, nextIdx := GetResolverInfo(directive)

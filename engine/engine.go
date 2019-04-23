@@ -33,21 +33,6 @@ func LifeCycle(managedEntity managed.Managed) {
 	managedServices = append(managedServices, managedEntity)
 }
 
-// NewFromConfigProvider creates a new Engine using the specified AppConfigProvider
-func NewFromConfigProvider(provider AppConfigProvider) (Engine, error) {
-
-	if provider == nil {
-		provider = DefaultAppConfigProvider()
-	}
-
-	appConfig, err := provider.GetAppConfig()
-	if err != nil {
-		return nil, err
-	}
-
-	return New(appConfig)
-}
-
 func RunEngine(e Engine) int {
 
 	err := e.Start()
@@ -61,7 +46,7 @@ func RunEngine(e Engine) int {
 
 	code := <-exitChan
 
-	e.Stop()
+	_ = e.Stop()
 
 	return code
 }

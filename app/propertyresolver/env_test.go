@@ -8,12 +8,12 @@ import (
 )
 
 func TestEnvValueResolver(t *testing.T) {
-	os.Setenv("Test", "Test")
-	os.Setenv("TEST_PROP", "test.Prop")
+	_ = os.Setenv("Test", "Test")
+	_ = os.Setenv("TEST_PROP", "test.Prop")
 
 	defer func() {
-		os.Unsetenv("Test")
-		os.Unsetenv("TEST_PROP")
+		_ = os.Unsetenv("Test")
+		_ = os.Unsetenv("TEST_PROP")
 	}()
 	resolver := &EnvVariableValueResolver{}
 

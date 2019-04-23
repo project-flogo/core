@@ -63,7 +63,11 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 			name, buffSize := channels.Decode(descriptor)
 
 			logger.Debugf("Creating Engine Channel '%s'", name)
-			channels.New(name, buffSize)
+
+			_, err := channels.New(name, buffSize)
+			if err != nil {
+				return nil, err
+			}
 		}
 	}
 
@@ -89,21 +93,21 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 		appOptions = append(appOptions, app.ContinueOnError)
 	}
 
-	propResolvers := GetAppPropertyValueResolvers()
-	enableExternalPropResolution := false
+	propResolvers := GetAppPropertyValueResolvers(logger)
+	enablePropertiesResolution := false
 	if len(propResolvers) > 0 {
-		err := property.EnableExternalResolvers(propResolvers)
+		err := property.EnablePropertyResolvers(propResolvers)
 		if err != nil {
 			return nil, err
 		}
 
-		enableExternalPropResolution = true
+		enablePropertiesResolution = true
 	}
 
-	// properties post processors (external properties resolver if enabled, secret property replacer)
+	// properties post processors (properties resolver if enabled, secret properties replacer)
 	var postProcessors []property.PostProcessor
-	if enableExternalPropResolution {
-		postProcessors = append(postProcessors, property.ExternalPropertyResolverProcessor)
+	if enablePropertiesResolution {
+		postProcessors = append(postProcessors, property.PropertyResolverProcessor)
 	}
 	postProcessors = append(postProcessors, secret.PropertyProcessor)
 
@@ -140,7 +144,7 @@ func (e *engineImpl) Start() error {
 	actionRunner := e.actionRunner.(interface{})
 
 	if managedRunner, ok := actionRunner.(managed.Managed); ok {
-		managed.Start("ActionRunner Service", managedRunner)
+		_ = managed.Start("ActionRunner Service", managedRunner)
 	}
 
 	err := e.serviceManager.Start()
@@ -170,7 +174,7 @@ func (e *engineImpl) Start() error {
 
 	if channels.Count() > 0 {
 		logger.Info("Starting Engine Channels...")
-		channels.Start()
+		_ = channels.Start()
 		logger.Info("Engine Channels Started")
 	}
 
@@ -187,12 +191,12 @@ func (e *engineImpl) Stop() error {
 
 	if channels.Count() > 0 {
 		logger.Info("Stopping Engine Channels...")
-		channels.Stop()
+		_ = channels.Stop()
 		logger.Info("Engine Channels Stopped...")
 	}
 
 	logger.Info("Stopping Application...")
-	e.flogoApp.Stop()
+	_ = e.flogoApp.Stop()
 	logger.Info("Application Stopped")
 
 	//TODO temporarily add services
@@ -201,7 +205,7 @@ func (e *engineImpl) Stop() error {
 	actionRunner := e.actionRunner.(interface{})
 
 	if managedRunner, ok := actionRunner.(managed.Managed); ok {
-		managed.Stop("ActionRunner", managedRunner)
+		_ = managed.Stop("ActionRunner", managedRunner)
 	}
 
 	err := e.serviceManager.Stop()

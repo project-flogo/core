@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	function.Register(&fnLen{})
+	_ = function.Register(&fnLen{})
 }
 
 type fnLen struct {

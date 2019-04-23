@@ -28,8 +28,8 @@ func TestNewPooledConfigOverride(t *testing.T) {
 	newQueueValue := 60
 
 	// Change values
-	os.Setenv(EnvKeyRunnerWorkers, strconv.Itoa(newWorkersValue))
-	os.Setenv(EnvKeyRunnerQueueSize, strconv.Itoa(newQueueValue))
+	_ = os.Setenv(EnvKeyRunnerWorkers, strconv.Itoa(newWorkersValue))
+	_ = os.Setenv(EnvKeyRunnerQueueSize, strconv.Itoa(newQueueValue))
 
 	pooledConfig := NewPooledRunnerConfig()
 

@@ -11,7 +11,7 @@ import (
 var triggerMd = trigger.NewMetadata(&Settings{}, &HandlerSettings{}, &Output{}, &Reply{})
 
 func init() {
-	trigger.Register(&Trigger{}, &Factory{})
+	_ = trigger.Register(&Trigger{}, &Factory{})
 }
 
 type Trigger struct {
@@ -80,10 +80,10 @@ func (t *Trigger) Stop() error {
 }
 
 // registerDummyEventHandler is used for dummy event handler registration, this should be replaced
-// with the appropriate event handling mechanism for the trigger.  Some form of a discrimiator
+// with the appropriate event handling mechanism for the trigger.  Some form of a discriminator
 // should be used for dispatching to different handlers.  For example a REST based trigger might
 // dispatch based on the method and path.
-func registerDummyEventHandler(descrimitator string, onEvent dummyOnEvent) {
+func registerDummyEventHandler(discriminator string, onEvent dummyOnEvent) {
 	//ignore
 }
 
@@ -102,7 +102,7 @@ func newActionHandler(handler trigger.Handler) dummyOnEvent {
 			//handle error
 		}
 		reply := &Reply{}
-		reply.FromMap(results)
+		_ = reply.FromMap(results)
 
 		//do something with the reply
 	}

@@ -57,7 +57,7 @@ var productionsTable = ProdTab{
 		Index:      3,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewBoolExpr(X[0], X[1], X[2])
+			return ast.NewBoolExpr(X[0],X[1],X[2])
 		},
 	},
 	ProdTabEntry{
@@ -77,7 +77,7 @@ var productionsTable = ProdTab{
 		Index:      5,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewBoolExpr(X[0], X[1], X[2])
+			return ast.NewBoolExpr(X[0],X[1],X[2])
 		},
 	},
 	ProdTabEntry{
@@ -97,7 +97,7 @@ var productionsTable = ProdTab{
 		Index:      7,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewCmpExpr(X[0], X[1], X[2])
+			return ast.NewCmpExpr(X[0],X[1],X[2])
 		},
 	},
 	ProdTabEntry{
@@ -107,7 +107,7 @@ var productionsTable = ProdTab{
 		Index:      8,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewCmpExpr(X[0], X[1], X[2])
+			return ast.NewCmpExpr(X[0],X[1],X[2])
 		},
 	},
 	ProdTabEntry{
@@ -117,7 +117,7 @@ var productionsTable = ProdTab{
 		Index:      9,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewCmpExpr(X[0], X[1], X[2])
+			return ast.NewCmpExpr(X[0],X[1],X[2])
 		},
 	},
 	ProdTabEntry{
@@ -127,7 +127,7 @@ var productionsTable = ProdTab{
 		Index:      10,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewCmpExpr(X[0], X[1], X[2])
+			return ast.NewCmpExpr(X[0],X[1],X[2])
 		},
 	},
 	ProdTabEntry{
@@ -137,7 +137,7 @@ var productionsTable = ProdTab{
 		Index:      11,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewCmpExpr(X[0], X[1], X[2])
+			return ast.NewCmpExpr(X[0],X[1],X[2])
 		},
 	},
 	ProdTabEntry{
@@ -147,7 +147,7 @@ var productionsTable = ProdTab{
 		Index:      12,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewCmpExpr(X[0], X[1], X[2])
+			return ast.NewCmpExpr(X[0],X[1],X[2])
 		},
 	},
 	ProdTabEntry{
@@ -167,7 +167,7 @@ var productionsTable = ProdTab{
 		Index:      14,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewArithExpr(X[0], X[1], X[2])
+			return ast.NewArithExpr(X[0],X[1],X[2])
 		},
 	},
 	ProdTabEntry{
@@ -177,7 +177,7 @@ var productionsTable = ProdTab{
 		Index:      15,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewArithExpr(X[0], X[1], X[2])
+			return ast.NewArithExpr(X[0],X[1],X[2])
 		},
 	},
 	ProdTabEntry{
@@ -197,7 +197,7 @@ var productionsTable = ProdTab{
 		Index:      17,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewArithExpr(X[0], X[1], X[2])
+			return ast.NewArithExpr(X[0],X[1],X[2])
 		},
 	},
 	ProdTabEntry{
@@ -207,7 +207,7 @@ var productionsTable = ProdTab{
 		Index:      18,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewArithExpr(X[0], X[1], X[2])
+			return ast.NewArithExpr(X[0],X[1],X[2])
 		},
 	},
 	ProdTabEntry{
@@ -217,7 +217,7 @@ var productionsTable = ProdTab{
 		Index:      19,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewArithExpr(X[0], X[1], X[2])
+			return ast.NewArithExpr(X[0],X[1],X[2])
 		},
 	},
 	ProdTabEntry{
@@ -311,7 +311,7 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `TernaryExpr : Expr "?" Expr ":" Expr	<< ast.NewTernaryExpr(X[0], X[2], X[4]) >>`,
+		String: `TernaryExpr : TernaryArgument "?" TernaryArgument ":" TernaryArgument	<< ast.NewTernaryExpr(X[0], X[2], X[4]) >>`,
 		Id:         "TernaryExpr",
 		NTType:     10,
 		Index:      29,
@@ -321,8 +321,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `BoolLit : "true"	<<  >>`,
-		Id:         "BoolLit",
+		String: `TernaryArgument : Expr	<<  >>`,
+		Id:         "TernaryArgument",
 		NTType:     11,
 		Index:      30,
 		NumSymbols: 1,
@@ -331,8 +331,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `BoolLit : "false"	<<  >>`,
-		Id:         "BoolLit",
+		String: `TernaryArgument : TernaryExpr	<<  >>`,
+		Id:         "TernaryArgument",
 		NTType:     11,
 		Index:      31,
 		NumSymbols: 1,
@@ -341,18 +341,18 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `NilLit : "nil"	<<  >>`,
-		Id:         "NilLit",
-		NTType:     12,
+		String: `TernaryArgument : "(" TernaryExpr ")"	<< ast.NewTernaryArgument(X[1]) >>`,
+		Id:         "TernaryArgument",
+		NTType:     11,
 		Index:      32,
-		NumSymbols: 1,
+		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return X[0], nil
+			return ast.NewTernaryArgument(X[1])
 		},
 	},
 	ProdTabEntry{
-		String: `NilLit : "null"	<<  >>`,
-		Id:         "NilLit",
+		String: `BoolLit : "true"	<<  >>`,
+		Id:         "BoolLit",
 		NTType:     12,
 		Index:      33,
 		NumSymbols: 1,
@@ -361,60 +361,90 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Literal : intLit	<< ast.NewLiteral("int",X[0]) >>`,
-		Id:         "Literal",
-		NTType:     13,
+		String: `BoolLit : "false"	<<  >>`,
+		Id:         "BoolLit",
+		NTType:     12,
 		Index:      34,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewLiteral("int", X[0])
+			return X[0], nil
+		},
+	},
+	ProdTabEntry{
+		String: `NilLit : "nil"	<<  >>`,
+		Id:         "NilLit",
+		NTType:     13,
+		Index:      35,
+		NumSymbols: 1,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return X[0], nil
+		},
+	},
+	ProdTabEntry{
+		String: `NilLit : "null"	<<  >>`,
+		Id:         "NilLit",
+		NTType:     13,
+		Index:      36,
+		NumSymbols: 1,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return X[0], nil
+		},
+	},
+	ProdTabEntry{
+		String: `Literal : intLit	<< ast.NewLiteral("int",X[0]) >>`,
+		Id:         "Literal",
+		NTType:     14,
+		Index:      37,
+		NumSymbols: 1,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return ast.NewLiteral("int",X[0])
 		},
 	},
 	ProdTabEntry{
 		String: `Literal : floatLit	<< ast.NewLiteral("float",X[0]) >>`,
 		Id:         "Literal",
-		NTType:     13,
-		Index:      35,
+		NTType:     14,
+		Index:      38,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewLiteral("float", X[0])
+			return ast.NewLiteral("float",X[0])
 		},
 	},
 	ProdTabEntry{
 		String: `Literal : stringLit	<< ast.NewLiteral("string",X[0]) >>`,
 		Id:         "Literal",
-		NTType:     13,
-		Index:      36,
+		NTType:     14,
+		Index:      39,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewLiteral("string", X[0])
+			return ast.NewLiteral("string",X[0])
 		},
 	},
 	ProdTabEntry{
 		String: `Literal : BoolLit	<< ast.NewLiteral("bool",X[0]) >>`,
 		Id:         "Literal",
-		NTType:     13,
-		Index:      37,
+		NTType:     14,
+		Index:      40,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewLiteral("bool", X[0])
+			return ast.NewLiteral("bool",X[0])
 		},
 	},
 	ProdTabEntry{
 		String: `Literal : NilLit	<< ast.NewLiteral("nil",X[0]) >>`,
 		Id:         "Literal",
-		NTType:     13,
-		Index:      38,
+		NTType:     14,
+		Index:      41,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewLiteral("nil", X[0])
+			return ast.NewLiteral("nil",X[0])
 		},
 	},
 	ProdTabEntry{
 		String: `Literal : ref Ref	<< ast.NewRefExpr(X[0], X[1]) >>`,
 		Id:         "Literal",
-		NTType:     13,
-		Index:      39,
+		NTType:     14,
+		Index:      42,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewRefExpr(X[0], X[1])
@@ -423,18 +453,18 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Ref : selector	<< ast.Concat(X[0]) >>`,
 		Id:         "Ref",
-		NTType:     14,
-		Index:      40,
+		NTType:     15,
+		Index:      43,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.Concat(X[0])
 		},
 	},
 	ProdTabEntry{
-		String: `Ref : index	<< ast.Concat(X[0]) >>`,
+		String: `Ref : Indexer	<< ast.Concat(X[0]) >>`,
 		Id:         "Ref",
-		NTType:     14,
-		Index:      41,
+		NTType:     15,
+		Index:      44,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.Concat(X[0])
@@ -443,28 +473,48 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Ref : Ref selector	<< ast.Concat(X[0], X[1]) >>`,
 		Id:         "Ref",
-		NTType:     14,
-		Index:      42,
+		NTType:     15,
+		Index:      45,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.Concat(X[0], X[1])
 		},
 	},
 	ProdTabEntry{
-		String: `Ref : Ref index	<< ast.Concat(X[0], X[1]) >>`,
+		String: `Ref : Ref Indexer	<< ast.Concat(X[0], X[1]) >>`,
 		Id:         "Ref",
-		NTType:     14,
-		Index:      43,
+		NTType:     15,
+		Index:      46,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.Concat(X[0], X[1])
+		},
+	},
+	ProdTabEntry{
+		String: `Indexer : "[" ident "]"	<< ast.Concat(X[0], X[1], X[2]) >>`,
+		Id:         "Indexer",
+		NTType:     16,
+		Index:      47,
+		NumSymbols: 3,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return ast.Concat(X[0], X[1], X[2])
+		},
+	},
+	ProdTabEntry{
+		String: `Indexer : "[" Fscript "]"	<< ast.Key(X[1]) >>`,
+		Id:         "Indexer",
+		NTType:     16,
+		Index:      48,
+		NumSymbols: 3,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return ast.Key(X[1])
 		},
 	},
 	ProdTabEntry{
 		String: `Args : empty	<<  >>`,
 		Id:         "Args",
-		NTType:     15,
-		Index:      44,
+		NTType:     17,
+		Index:      49,
 		NumSymbols: 0,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return nil, nil
@@ -473,8 +523,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Args : ExprList	<<  >>`,
 		Id:         "Args",
-		NTType:     15,
-		Index:      45,
+		NTType:     17,
+		Index:      50,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return X[0], nil
@@ -483,8 +533,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ExprList : Expr	<< ast.NewExprList(X[0]) >>`,
 		Id:         "ExprList",
-		NTType:     16,
-		Index:      46,
+		NTType:     18,
+		Index:      51,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewExprList(X[0])
@@ -493,8 +543,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ExprList : ExprList "," Expr	<< ast.AppendToExprList(X[0], X[2]) >>`,
 		Id:         "ExprList",
-		NTType:     16,
-		Index:      47,
+		NTType:     18,
+		Index:      52,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.AppendToExprList(X[0], X[2])

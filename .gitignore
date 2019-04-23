@@ -41,9 +41,10 @@ _cgo_export.*
 
 _testmain.go
 
-
+.vscode/
 tags
 .vscode/symbols.json
+.idea
 .build-cache
 submodules/flogo-cicd/.build-cache
 ./Dockerfile

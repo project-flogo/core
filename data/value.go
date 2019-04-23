@@ -1,33 +1,31 @@
 package data
 
+import "github.com/project-flogo/core/data/schema"
+
 type TypedValue interface {
 	Type() Type
 	Value() interface{}
 }
 
-type CompoundValue interface {
-	TypedValue
-	KeyType() Type
-	ElemType() Type
-}
+//type CompoundValue interface {
+//	TypedValue
+//	KeyType() Type
+//	ElemType() Type
+//}
 
-type WithSchema interface {
-	Schema() interface{}
-}
+//func ToCompoundValue(value TypedValue) (CompoundValue, bool) {
+//	if value.Type() == TypeArray || value.Type() == TypeMap {
+//		ctv, ok := value.(CompoundValue)
+//		return ctv, ok
+//	}
+//
+//	return nil, false
+//}
 
-func ToCompoundValue(value TypedValue) (CompoundValue, bool) {
-	if value.Type() == TypeArray || value.Type() == TypeMap {
-		ctv, ok := value.(CompoundValue)
-		return ctv, ok
-	}
-
-	return nil, false
-}
-
-func GetSchema(value TypedValue) (interface{}, bool) {
+func GetSchema(value TypedValue) (schema.Schema, bool) {
 	if value.Type() == TypeObject || value.Type() == TypeArray || value.Type() == TypeMap {
-		ws, ok := value.(WithSchema)
-		return ws, ok
+		ws, ok := value.(schema.HasSchema)
+		return ws.Schema(), ok
 	}
 
 	return nil, false
@@ -107,14 +105,14 @@ func (ta *refCompoundValue) Value() interface{} {
 	return ta.value
 }
 
-func (ta *refCompoundValue) KeyType() Type {
-	return ta.attr.KeyType()
-}
+//func (ta *refCompoundValue) KeyType() Type {
+//	return ta.attr.KeyType()
+//}
+//
+//func (ta *refCompoundValue) ElemType() Type {
+//	return ta.attr.ElemType()
+//}
 
-func (ta *refCompoundValue) ElemType() Type {
-	return ta.attr.ElemType()
-}
-
-func (ta *refCompoundValue) Schema() interface{} {
+func (ta *refCompoundValue) Schema() schema.Schema {
 	return ta.attr.Schema()
 }

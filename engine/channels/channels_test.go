@@ -1,7 +1,6 @@
 package channels
 
 import (
-	"fmt"
 	"testing"
 	"time"
 
@@ -22,6 +21,15 @@ func TestNew(t *testing.T) {
 	channel, err := New("test1", 5)
 	assert.Nil(t, err)
 	assert.NotNil(t, channel)
+}
+
+func TestNilChannel(t *testing.T) {
+	channels = map[string]*channelImpl{}
+	active = false
+
+	c := Get("dne")
+	assert.Nil(t, c)
+	assert.True(t, c == nil)
 }
 
 func TestNewDup(t *testing.T) {
@@ -49,7 +57,7 @@ func TestStart(t *testing.T) {
 	channel, err := New("test1", 5)
 	assert.Nil(t, err)
 	assert.NotNil(t, channel)
-	Start()
+	_ = Start()
 	defer Stop()
 	assert.True(t, active)
 
@@ -98,7 +106,7 @@ func TestChannel_AddListenerStarted(t *testing.T) {
 	assert.NotNil(t, channel)
 
 	cImpl := channel.(*channelImpl)
-	cImpl.Start()
+	_ = cImpl.Start()
 
 	err = cImpl.RegisterCallback(func(msg interface{}) {
 		//dummy
@@ -128,7 +136,6 @@ type cbTester struct {
 func (cbt *cbTester) onMessage(msg interface{}) {
 	cbt.called++
 	cbt.val = msg
-	fmt.Printf("HERE\n")
 }
 
 func TestChannel_Callback(t *testing.T) {
@@ -141,7 +148,7 @@ func TestChannel_Callback(t *testing.T) {
 
 	cbt := &cbTester{}
 	err = cImpl.RegisterCallback(cbt.onMessage)
-	Start()
+	_ = Start()
 
 	channel.Publish(22)
 	time.Sleep(100 * time.Millisecond)

@@ -3,17 +3,17 @@
 package parser
 
 import (
-	"bytes"
 	"fmt"
+	"strings"
 
 	parseError "github.com/project-flogo/core/data/expression/script/gocc/errors"
 	"github.com/project-flogo/core/data/expression/script/gocc/token"
 )
 
 const (
-	numProductions = 48
-	numStates      = 332
-	numSymbols     = 51
+	numProductions = 53
+	numStates      = 472
+	numSymbols     = 54
 )
 
 // Stack
@@ -66,7 +66,7 @@ func (s *stack) popN(items int) []Attrib {
 }
 
 func (s *stack) String() string {
-	w := new(bytes.Buffer)
+	w := new(strings.Builder)
 	fmt.Fprintf(w, "stack:\n")
 	for i, st := range s.state {
 		fmt.Fprintf(w, "\t%d: %d , ", i, st)

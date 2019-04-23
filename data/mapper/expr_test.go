@@ -3,6 +3,7 @@ package mapper
 import (
 	"bytes"
 	"fmt"
+	"reflect"
 	"testing"
 
 	"github.com/project-flogo/core/data"
@@ -258,14 +259,16 @@ func BenchmarkExpressionMapperTernaryExpr(b *testing.B) {
 }
 
 func init() {
-	function.Register(&fnConcat{})
+	_ = function.Register(&fnConcat{})
+	function.SetPackageAlias(reflect.ValueOf(fnConcat{}).Type().PkgPath(), "tstring")
+	function.ResolveAliases()
 }
 
 type fnConcat struct {
 }
 
 func (fnConcat) Name() string {
-	return "tstring.concat"
+	return "concat"
 }
 
 func (fnConcat) Sig() (paramTypes []data.Type, isVariadic bool) {

@@ -98,7 +98,7 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 	var triggerValues map[string]interface{}
 
 	if triggerData == nil {
-
+		triggerValues = make(map[string]interface{})
 	} else if values, ok := triggerData.(map[string]interface{}); ok {
 		triggerValues = values
 	} else if value, ok := triggerData.(data.StructValue); ok {

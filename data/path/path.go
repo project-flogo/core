@@ -1,6 +1,7 @@
 package path
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"reflect"
@@ -23,13 +24,21 @@ func GetValue(value interface{}, path string) (interface{}, error) {
 	var err error
 	var newPath string
 
+	//To interface if it is an string
+	if val, ok := value.(string); ok {
+		var in interface{}
+		err = json.Unmarshal([]byte(val), &in)
+		if err != nil {
+			return nil, err
+		}
+		value = in
+	}
+
 	if strings.HasPrefix(path, ".") {
 		if objVal, ok := value.(map[string]interface{}); ok {
 			newVal, newPath, err = getSetObjValue(objVal, path, nil, false)
 		} else if paramsVal, ok := value.(map[string]string); ok {
 			newVal, newPath, err = getSetParamsValue(paramsVal, path, nil, false)
-			//} else if objVal, ok := value.(*ComplexObject); ok {
-			//	return PathGetValue(objVal.Value, path)
 		} else {
 
 			val := reflect.ValueOf(value)
@@ -59,18 +68,11 @@ func GetValue(value interface{}, path string) (interface{}, error) {
 			newVal, newPath, err = getSetMapValue(objVal, path, nil, false)
 		} else if paramsVal, ok := value.(map[string]string); ok {
 			newVal, newPath, err = getSetMapParamsValue(paramsVal, path, nil, false)
-			//} else if objVal, ok := value.(*ComplexObject); ok {
-			//	return PathGetValue(objVal.Value, path)
 		} else {
 			return nil, fmt.Errorf("unable to evaluate path: %s", path)
 		}
 	} else if strings.HasPrefix(path, "[") {
-		//if objVal, ok := value.(*ComplexObject); ok {
-		//	newVal, newPath, err = getSetArrayValue(objVal.Value, path, nil, false)
-		//} else {
 		newVal, newPath, err = getSetArrayValue(value, path, nil, false)
-
-		//}
 	} else {
 		return nil, fmt.Errorf("unable to evaluate path: %s", path)
 	}
@@ -102,30 +104,22 @@ func SetValue(attrValue interface{}, path string, value interface{}) error {
 			newVal, newPath, err = getSetObjValue(objVal, path, value, true)
 		} else if paramsVal, ok := attrValue.(map[string]string); ok {
 			newVal, newPath, err = getSetParamsValue(paramsVal, path, value, true)
-			//} else if objVal, ok := value.(*ComplexObject); ok {
-			//	return PathSetValue(objVal.Value, path, value)
 		} else {
-			return fmt.Errorf("Unable to evaluate path: %s", path)
+			return fmt.Errorf("unable to evaluate path: %s", path)
 		}
 	} else if strings.HasPrefix(path, `["`) {
 		if objVal, ok := attrValue.(map[string]interface{}); ok {
 			newVal, newPath, err = getSetMapValue(objVal, path, value, true)
 		} else if paramsVal, ok := attrValue.(map[string]string); ok {
 			newVal, newPath, err = getSetMapParamsValue(paramsVal, path, value, true)
-			//} else if objVal, ok := value.(*ComplexObject); ok {
-			//	return PathSetValue(objVal.Value, path, value)
 		} else {
 			return fmt.Errorf("unable to evaluate path: %s", path)
 		}
 
 	} else if strings.HasPrefix(path, "[") {
-		//if objVal, ok := value.(*ComplexObject); ok {
-		//	newVal, newPath, err = getSetArrayValue(attrValue, path, objVal.Value, true)
-		//} else {
 		newVal, newPath, err = getSetArrayValue(attrValue, path, value, true)
-		//}
 	} else {
-		return fmt.Errorf("Unable to evaluate path: %s", path)
+		return fmt.Errorf("unable to evaluate path: %s", path)
 	}
 
 	if err != nil {
@@ -168,7 +162,7 @@ func getSetArrayValue(obj interface{}, path string, value interface{}, set bool)
 
 	arrValue, valid := obj.([]interface{})
 	if !valid {
-		//Try to convert to a array incase it is a array string
+		//Try to convert to a array in case it is a array string
 		val, err := coerce.ToArray(obj)
 		if err != nil {
 			return nil, path, errors.New("'" + path + "' not an array")

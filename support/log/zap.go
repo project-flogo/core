@@ -226,6 +226,6 @@ func zapSync(logger Logger) {
 	impl, ok := logger.(*zapLoggerImpl)
 
 	if ok {
-		impl.mainLogger.Sync()
+		_ = impl.mainLogger.Sync()
 	}
 }

@@ -18,17 +18,28 @@ func (a *App) createSharedActions(actionConfigs []*action.Config) (map[string]ac
 
 	for _, config := range actionConfigs {
 
+		if config.Ref == "" && config.Type != "" {
+			log.RootLogger().Warnf("action configuration 'type' deprecated, use 'ref' in the future")
+			config.Ref = "#" + config.Type
+		}
+
 		if config.Ref == "" {
+			return nil, fmt.Errorf("ref not specified for action: %s", config.Id)
+		}
+
+		ref := config.Ref
+
+		if config.Ref[0] == '#' {
 			var ok bool
-			config.Ref, ok =support.GetAliasRef("action", config.Type)
+			ref, ok = support.GetAliasRef("action", config.Ref)
 			if !ok {
-				return nil, fmt.Errorf("Action type '%s' not registered", config.Type)
+				return nil, fmt.Errorf("action '%s' not imported", config.Ref)
 			}
 		}
 
-		actionFactory := action.GetFactory(config.Ref)
+		actionFactory := action.GetFactory(ref)
 		if actionFactory == nil {
-			return nil, fmt.Errorf("Action Factory '%s' not registered", config.Ref)
+			return nil, fmt.Errorf("action factory '%s' not registered", ref)
 		}
 
 		act, err := actionFactory.New(config)
@@ -37,6 +48,10 @@ func (a *App) createSharedActions(actionConfigs []*action.Config) (map[string]ac
 		}
 
 		actions[config.Id] = act
+
+		//if needsCleanup, ok := act.(support.NeedsCleanup); ok {
+		//	a.toCleanup = append(a.toCleanup, needsCleanup)
+		//}
 	}
 
 	return actions, nil
@@ -53,39 +68,52 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 
 		_, exists := triggers[tConfig.Id]
 		if exists {
-			return nil, fmt.Errorf("Trigger with id '%s' already registered, trigger ids have to be unique", tConfig.Id)
+			return nil, fmt.Errorf("trigger with id '%s' already registered, trigger ids have to be unique", tConfig.Id)
 		}
 
+		if tConfig.Ref == "" && tConfig.Type != "" {
+			log.RootLogger().Warnf("trigger configuration 'type' deprecated, use 'ref' in the future")
+			tConfig.Ref = "#" + tConfig.Type
+		}
+
+		ref := tConfig.Ref
+
 		if tConfig.Ref == "" {
+			return nil, fmt.Errorf("ref not specified for trigger: %s", tConfig.Id)
+		}
+
+		if tConfig.Ref[0] == '#' {
 			var ok bool
-			tConfig.Ref, ok =support.GetAliasRef("trigger", tConfig.Type)
+			ref, ok = support.GetAliasRef("trigger", tConfig.Ref)
 			if !ok {
-				return nil, fmt.Errorf("Trigger type '%s' not registered", tConfig.Type)
+				return nil, fmt.Errorf("trigger '%s' not imported", tConfig.Ref)
 			}
 		}
 
-		triggerFactory := trigger.GetFactory(tConfig.Ref)
+		triggerFactory := trigger.GetFactory(ref)
 
 		if triggerFactory == nil {
-			return nil, fmt.Errorf("Trigger Factory '%s' not registered", tConfig.Ref)
+			return nil, fmt.Errorf("trigger factory '%s' not registered", ref)
 		}
 
-		tConfig.FixUp(triggerFactory.Metadata())
+		err := tConfig.FixUp(triggerFactory.Metadata())
+		if err != nil {
+			return nil, err
+		}
 
 		trg, err := triggerFactory.New(tConfig)
-
 		if err != nil {
 			return nil, err
 		}
 
 		if trg == nil {
-			return nil, fmt.Errorf("cannot create Trigger nil for id '%s'", tConfig.Id)
+			return nil, fmt.Errorf("cannot create trigger nil for id '%s'", tConfig.Id)
 		}
 
-		logger := trigger.GetLogger(tConfig.Ref)
+		logger := trigger.GetLogger(ref)
 
 		if log.CtxLoggingEnabled() {
-			logger = log.ChildLoggerWithFields(logger, log.String("triggerId", tConfig.Id))
+			logger = log.ChildLoggerWithFields(logger, log.FieldString("triggerId", tConfig.Id))
 		}
 
 		log.ChildLogger(logger, tConfig.Id)
@@ -109,29 +137,44 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 					if id := act.Id; id != "" {
 						act, _ := a.actions[id]
 						if act == nil {
-							return nil, fmt.Errorf("shared Action '%s' does not exists", id)
+							return nil, fmt.Errorf("shared action '%s' does not exists", id)
 						}
 						acts = append(acts, act)
 					} else {
 						//create the action
 
+						if act.Ref == "" && act.Type != "" {
+							log.RootLogger().Warnf("action configuration 'type' deprecated, use 'ref' in the future")
+							act.Ref = "#" + act.Type
+						}
+
 						if act.Ref == "" {
+							return nil, fmt.Errorf("ref not specified for action in trigger '%s", tConfig.Id)
+						}
+
+						ref := act.Ref
+
+						if act.Ref[0] == '#' {
 							var ok bool
-							act.Ref, ok =support.GetAliasRef("action", act.Type)
+							ref, ok = support.GetAliasRef("action", act.Ref)
 							if !ok {
-								return nil, fmt.Errorf("Action type '%s' not registered", act.Type)
+								return nil, fmt.Errorf("action '%s' not imported", act.Ref)
 							}
 						}
 
-						actionFactory := action.GetFactory(act.Ref)
+						actionFactory := action.GetFactory(ref)
 						if actionFactory == nil {
-							return nil, fmt.Errorf("Action Factory '%s' not registered", act.Ref)
+							return nil, fmt.Errorf("action factory '%s' not registered", ref)
 						}
 
 						act, err := actionFactory.New(act.Config)
 						if err != nil {
 							return nil, err
 						}
+						//if needsDisposal, ok := act.(support.NeedsCleanup); ok {
+						//	a.toDispose = append(a.toDispose, needsDisposal)
+						//}
+
 						acts = append(acts, act)
 					}
 				}
@@ -150,7 +193,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 			return nil, err
 		}
 
-		triggers[tConfig.Id] = &triggerWrapper{ref: tConfig.Ref, trg: trg, status: &managed.StatusInfo{Name: tConfig.Id}}
+		triggers[tConfig.Id] = &triggerWrapper{ref: ref, trg: trg, status: &managed.StatusInfo{Name: tConfig.Id}}
 	}
 
 	return triggers, nil

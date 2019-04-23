@@ -52,5 +52,5 @@ func (sq *SyncQueue) IsEmpty() bool {
 	sq.lock.Lock()
 	defer sq.lock.Unlock()
 
-	return (sq.List.Len() == 0)
+	return sq.List.Len() == 0
 }

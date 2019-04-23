@@ -1,5 +1,7 @@
 package data
 
+import "sync"
+
 // Scope is a set of attributes that are accessible
 type Scope interface {
 	// GetValue gets the specified value
@@ -30,6 +32,7 @@ func NewSimpleScope(values map[string]interface{}, parentScope Scope) Scope {
 	return scope
 }
 
+// GetValue implements Scope.GetValue
 func (s *SimpleScope) GetValue(name string) (value interface{}, exists bool) {
 	value, found := s.values[name]
 
@@ -44,16 +47,43 @@ func (s *SimpleScope) GetValue(name string) (value interface{}, exists bool) {
 	return nil, false
 }
 
+// SetValue implements Scope.SetValue
 func (s *SimpleScope) SetValue(name string, value interface{}) error {
-
 	s.values[name] = value
 	return nil
-	//attr, found := s.values[name]
-	//
-	//if found {
-	//	attr.SetValue(value)
-	//	return nil
-	//}
+}
 
-	//return errors.New("attribute not in scope")
+// SimpleSyncScope is a basic implementation of a synchronized scope
+type SimpleSyncScope struct {
+	scope Scope
+	mutex sync.RWMutex
+}
+
+// NewSimpleSyncScope creates a new SimpleSyncScope
+func NewSimpleSyncScope(values map[string]interface{}, parentScope Scope) Scope {
+
+	var syncScope SimpleSyncScope
+	syncScope.scope = NewSimpleScope(values, parentScope)
+
+	return &syncScope
+}
+
+// GetValue implements Scope.GetValue
+func (s *SimpleSyncScope) GetValue(name string) (value interface{}, exists bool) {
+
+	s.mutex.RLock()
+	v,e := s.scope.GetValue(name)
+	s.mutex.RUnlock()
+
+	return v,e
+}
+
+// SetValue implements Scope.SetValue
+func (s *SimpleSyncScope) SetValue(name string, value interface{}) error {
+
+	s.mutex.Lock()
+	err := s.scope.SetValue(name, value)
+	s.mutex.Unlock()
+
+	return err
 }

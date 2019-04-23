@@ -1,19 +1,34 @@
 package ast
 
-import "github.com/project-flogo/core/data/expression/script/gocc/token"
+import (
+	"fmt"
+	"github.com/project-flogo/core/data/expression/script/gocc/token"
+)
 
-func Concat(items ...interface{}) (*token.Token, error) {
-	s := ""
+func Concat(items ...interface{}) ([]interface{}, error) {
+	var array []interface{}
 	for _, item := range items {
 		if item == nil {
 			continue
 		}
 		switch t := item.(type) {
 		case string:
-			s += t
+			array = append(array, t)
 		case *token.Token:
-			s += string(t.Lit)
+			array = append(array, string(t.Lit))
+		case Expr:
+			array = append(array, t)
+		case []interface{}:
+			array = append(array, t...)
 		}
 	}
-	return &token.Token{Lit: []byte(s)}, nil
+	return array, nil
+}
+
+func Key(indexer interface{}) (interface{}, error) {
+	switch t := indexer.(type) {
+	case Expr:
+		return &keyIndexExpr{t}, nil
+	}
+	return nil, fmt.Errorf("invalid array indexer")
 }

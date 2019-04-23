@@ -1,17 +1,14 @@
 package action
 
-import "encoding/json"
-
 // Config is the configuration for the Action
 type Config struct {
 	//inline action
-	Ref      string                 `json:"ref"`
-	Type     string                 `json:"type"` //an alias to the ref, can be used if imported
-	Settings map[string]interface{} `json:"settings"`
+	Ref      string                 `json:"ref,omitempty"`
+	Settings map[string]interface{} `json:"settings,omitempty"`
 
 	//referenced action
-	Id string `json:"id"`
+	Id string `json:"id,omitempty"`
 
 	//DEPRECATED
-	Data json.RawMessage `json:"data"`
+	Type string `json:"type,omitempty"`
 }

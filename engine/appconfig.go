@@ -2,6 +2,7 @@ package engine
 
 import (
 	"encoding/json"
+	"github.com/project-flogo/core/data/schema"
 	"io/ioutil"
 	"os"
 
@@ -10,12 +11,17 @@ import (
 	"github.com/project-flogo/core/support"
 )
 
-// AppConfigProvider interface to implement to provide the app configuration
-type AppConfigProvider interface {
-	GetAppConfig() (*app.Config, error)
-}
-
 var appName, appVersion string
+
+func init() {
+	if IsSchemaSupportEnabled() {
+		schema.Enable()
+
+		if !IsSchemaValidationEnabled() {
+			schema.DisableValidation()
+		}
+	}
+}
 
 // Returns name of the application
 func GetAppName() string {
@@ -73,18 +79,4 @@ func LoadAppConfig(flogoJson string, compressed bool) (*app.Config, error) {
 	appVersion = appConfig.Version
 
 	return appConfig, nil
-}
-
-// DefaultAppConfigProvider returns the default App Config Provider
-func DefaultAppConfigProvider() AppConfigProvider {
-	return &defaultConfigProvider{}
-}
-
-// defaultConfigProvider implementation of AppConfigProvider
-type defaultConfigProvider struct {
-}
-
-// GetApp returns the app configuration
-func (d *defaultConfigProvider) GetAppConfig() (*app.Config, error) {
-	return LoadAppConfig("", false)
 }
