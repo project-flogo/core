@@ -147,7 +147,11 @@ func TestIsResolveExprWithExpr(t *testing.T) {
 	isResolve = IsResolveExpr(str)
 	assert.True(t, isResolve)
 
-	str = "$activity[REST].[\"123\"][$.index]"
+	str = "$activity[REST][\"123\"][$.index]"
+	isResolve = IsResolveExpr(str)
+	assert.False(t, isResolve)
+
+	str = "$.body.addresses[$.index]"
 	isResolve = IsResolveExpr(str)
 	assert.False(t, isResolve)
 

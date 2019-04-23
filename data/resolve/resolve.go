@@ -168,11 +168,25 @@ func IsResolveExpr(exprStr string) bool {
 			switch c := exprStr[i]; c {
 			case ' ':
 				return false
-			case '[', '"', '\'', '`':
+			case '"', '\'', '`':
 				end := ends[c]
 				i++
 				for i < len(exprStr) {
 					if exprStr[i] == end {
+						break
+					}
+					i++
+				}
+			case '[':
+				end := ends[c]
+				i++
+				j := i
+				for i < len(exprStr) {
+					if exprStr[i] == end {
+						//Checking whether value insde [] is expr
+						if hasExprChar(exprStr[j:i]) {
+							return false
+						}
 						break
 					}
 					i++
@@ -182,9 +196,10 @@ func IsResolveExpr(exprStr string) bool {
 					return false
 				}
 
-			case '(', '=', '>', '<', '*', '/', '!', '&', '%', '+', '-', '|', '?', ':', '$':
-				//condition expression, tenray expression, array indexer expression
-				return false
+			default:
+				if isExprChar(c) {
+					return false
+				}
 			}
 
 		}
@@ -193,4 +208,31 @@ func IsResolveExpr(exprStr string) bool {
 	}
 
 	return true
+}
+
+func hasExprChar(str string) bool {
+	//condition expression, tenray expression, array indexer expression
+	if len(str) > 0 {
+		//String
+		if str[0] == '"' || str[0] == '\'' || str[0] == '`' {
+			return false
+		} else {
+			strLen := len(str)
+			for i := 0; i < strLen; i++ {
+				if isExprChar(str[i]) {
+					return true
+				}
+			}
+		}
+	}
+	return false
+}
+
+func isExprChar(ch byte) bool {
+	//condition expression, tenray expression, array indexer expression
+	switch ch {
+	case '(', '=', '>', '<', '*', '/', '!', '&', '%', '+', '-', '|', '?', ':', '$':
+		return true
+	}
+	return false
 }
