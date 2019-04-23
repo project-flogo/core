@@ -133,3 +133,26 @@ func TestIsResolveExpr(t *testing.T) {
 	isResolve = IsResolveExpr(str)
 	assert.False(t, isResolve)
 }
+
+func TestIsResolveExprWithExpr(t *testing.T) {
+	str := "$activity[REST].id"
+	isResolve := IsResolveExpr(str)
+	assert.True(t, isResolve)
+
+	str = "$activity[REST].id==1"
+	isResolve = IsResolveExpr(str)
+	assert.False(t, isResolve)
+
+	str = "$activity[REST][\"123\"]"
+	isResolve = IsResolveExpr(str)
+	assert.True(t, isResolve)
+
+	str = "$activity[REST].[\"123\"][$.index]"
+	isResolve = IsResolveExpr(str)
+	assert.False(t, isResolve)
+
+	str = "$activity[REST].abc ? $.ok: $.false"
+	isResolve = IsResolveExpr(str)
+	assert.False(t, isResolve)
+
+}
