@@ -168,7 +168,7 @@ func IsResolveExpr(exprStr string) bool {
 			switch c := exprStr[i]; c {
 			case ' ':
 				return false
-			case '[', '(', '"', '\'', '`':
+			case '[', '"', '\'', '`':
 				end := ends[c]
 				i++
 				for i < len(exprStr) {
@@ -181,6 +181,10 @@ func IsResolveExpr(exprStr string) bool {
 				if i+1 >= strLen || !isLetter(exprStr[i+1]) {
 					return false
 				}
+
+			case '(', '=', '>', '<', '*', '/', '!', '&', '%', '+', '-', '|', '?', ':', '$':
+				//condition expression, tenray expression, array indexer expression
+				return false
 			}
 
 		}
