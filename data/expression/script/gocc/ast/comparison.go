@@ -1,12 +1,14 @@
 package ast
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/expression/script/gocc/token"
 	"github.com/project-flogo/core/data/resolve"
 	"reflect"
+	"strings"
 )
 
 func NewCmpExpr(left, operand, right interface{}) (Expr, error) {
@@ -74,6 +76,16 @@ func (e *cmpEqExpr) Eval(scope data.Scope) (interface{}, error) {
 			rf, _ := coerce.ToFloat64(rv)
 			return lf == rf, nil
 		}
+	case json.Number:
+		if strings.Contains(le.String(), ".") {
+			li, _ := le.Float64()
+			ri, _ := coerce.ToFloat64(rv)
+			return li == ri, nil
+		} else {
+			li, _ := le.Int64()
+			ri, _ := coerce.ToInt64(rv)
+			return li == ri, nil
+		}
 	case string:
 		if rt == reflect.String {
 			rs, _ := coerce.ToString(rv)
@@ -131,6 +143,16 @@ func (e *cmpNotEqExpr) Eval(scope data.Scope) (interface{}, error) {
 			lf, _ := coerce.ToFloat64(lv)
 			rf, _ := coerce.ToFloat64(rv)
 			return lf != rf, nil
+		}
+	case json.Number:
+		if strings.Contains(le.String(), ".") {
+			li, _ := le.Float64()
+			ri, _ := coerce.ToFloat64(rv)
+			return li != ri, nil
+		} else {
+			li, _ := le.Int64()
+			ri, _ := coerce.ToInt64(rv)
+			return li != ri, nil
 		}
 	case string:
 		if rt == reflect.String {
@@ -190,6 +212,16 @@ func (e *cmpGtExpr) Eval(scope data.Scope) (interface{}, error) {
 			rf, _ := coerce.ToFloat64(rv)
 			return lf > rf, nil
 		}
+	case json.Number:
+		if strings.Contains(le.String(), ".") {
+			li, _ := le.Float64()
+			ri, _ := coerce.ToFloat64(rv)
+			return li > ri, nil
+		} else {
+			li, _ := le.Int64()
+			ri, _ := coerce.ToInt64(rv)
+			return li > ri, nil
+		}
 	case string:
 		if rt == reflect.String {
 			rs, _ := coerce.ToString(rv)
@@ -243,6 +275,16 @@ func (e *cmpGtEqExpr) Eval(scope data.Scope) (interface{}, error) {
 			lf, _ := coerce.ToFloat64(lv)
 			rf, _ := coerce.ToFloat64(rv)
 			return lf >= rf, nil
+		}
+	case json.Number:
+		if strings.Contains(le.String(), ".") {
+			li, _ := le.Float64()
+			ri, _ := coerce.ToFloat64(rv)
+			return li >= ri, nil
+		} else {
+			li, _ := le.Int64()
+			ri, _ := coerce.ToInt64(rv)
+			return li >= ri, nil
 		}
 	case string:
 		if rt == reflect.String {
@@ -302,6 +344,16 @@ func (e *cmpLtExpr) Eval(scope data.Scope) (interface{}, error) {
 			rf, _ := coerce.ToFloat64(rv)
 			return lf < rf, nil
 		}
+	case json.Number:
+		if strings.Contains(le.String(), ".") {
+			li, _ := le.Float64()
+			ri, _ := coerce.ToFloat64(rv)
+			return li < ri, nil
+		} else {
+			li, _ := le.Int64()
+			ri, _ := coerce.ToInt64(rv)
+			return li < ri, nil
+		}
 	case string:
 		if rt == reflect.String {
 			rs, _ := coerce.ToString(rv)
@@ -357,6 +409,16 @@ func (e *cmpLtEqExpr) Eval(scope data.Scope) (interface{}, error) {
 			lf, _ := coerce.ToFloat64(lv)
 			rf, _ := coerce.ToFloat64(rv)
 			return lf <= rf, nil
+		}
+	case json.Number:
+		if strings.Contains(le.String(), ".") {
+			li, _ := le.Float64()
+			ri, _ := coerce.ToFloat64(rv)
+			return li <= ri, nil
+		} else {
+			li, _ := le.Int64()
+			ri, _ := coerce.ToInt64(rv)
+			return li <= ri, nil
 		}
 	case string:
 		if rt == reflect.String {

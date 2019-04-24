@@ -81,7 +81,7 @@ func TestRootObjectArray(t *testing.T) {
       "addresses": {
 			"@foreach($.field.addresses, index)":{
 				"id":"dddddd",
-				"name":"=$.state"
+				"name":"=$loop.state"
 			}
       }
    }
@@ -268,7 +268,7 @@ func TestRootArrayMapping(t *testing.T) {
 	mappingValue := `{"mapping": {
 			"@foreach($.field.addresses, index)":{
 				"id":"dddddd",
-				"name":"=$.state"
+				"name":"=$loop.state"
 			}
    }}`
 
@@ -340,13 +340,13 @@ func TestArrayMappingWithNest(t *testing.T) {
             "@foreach($.field.addresses, index)":
             {
               "tostate"   : "=$loop[index].state",
-               "tostreet": "=$.street",
-               "tozipcode":"=$.zipcode",
+               "tostreet": "=$loop.street",
+               "tozipcode":"=$loop.zipcode",
               "addresses2": {
-                  "@foreach($.array)":{
+                  "@foreach($loop.array)":{
                         "tofield1"  : "=$loop[index].street",
-               			"tofield2": "=$.field2",
-               			"tofield3":"=$.field3"
+               			"tofield2": "=$loop.field2",
+               			"tofield3":"=$loop.field3"
                   }
               }
             }
@@ -420,13 +420,13 @@ func TestArrayMappingWithFunction(t *testing.T) {
             "@foreach($.field.addresses, index)":
             {
               "tostate"   : "=tstring.concat(\"State is \", $loop[index].state)",
-               "tostreet": "=$.street",
-               "tozipcode":"=$.zipcode",
+               "tostreet": "=$loop.street",
+               "tozipcode":"=$loop.zipcode",
               "addresses2": {
-                  "@foreach($.array)":{
+                  "@foreach($loop.array)":{
                         "tofield1"  : "=$loop[index].street",
-               			"tofield2": "=tstring.concat(\"field is \", $.field2)",
-               			"tofield3":"=$.field3"
+               			"tofield2": "=tstring.concat(\"field is \", $loop.field2)",
+               			"tofield3":"=$loop.field3"
                   }
               }
             }
@@ -477,23 +477,109 @@ func TestArrayMappingWithFunction(t *testing.T) {
 	assert.Equal(t, "State is tx", arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["tostate"])
 }
 
+func TestArrayMappingWithNestComplexObject(t *testing.T) {
+	mappingValue := `{"mapping": {
+        "person2" : "person",
+        "addresses": {
+            "@foreach($.field.addresses, index)":
+            {
+              "tostate"   : "=$loop[index].state",
+               "tostreet": "=$loop.street.number",
+               "tozipcode":"=$loop.zipcode",
+              "addresses2": {
+                  "@foreach($loop.array)":{
+                        "tofield1"  : "=$loop[index].street.number",
+               			"tofield2": "=$loop.field2",
+               			"tofield3":"=$loop.field3"
+                  }
+              }
+            }
+        }
+    }}`
+
+	arrayData := `{
+   "person": "name",
+   "addresses": [
+       {
+           "street": {
+				"number":"1234"
+           },
+           "zipcode": 77479,
+           "state": "tx",
+			"array":[
+				{
+					"field1":"field1value",
+					"field2":"field2value",
+					"field3":"field3value"
+				},
+				{
+					"field1":"field1value2",
+					"field2":"field2value2",
+					"field3":"field3value2"
+				}
+			]
+       },
+ {
+          "street": {
+				"number":"3333"
+           },
+           "zipcode": 774792,
+           "state": "tx2",
+			"array":[
+				{
+					"field1":"field1value2",
+					"field2":"field2value2",
+					"field3":"field3value2"
+				},
+				{
+					"field1":"field1value22",
+					"field2":"field2value22",
+					"field3":"field3value22"
+				}
+			]
+       }
+   ]
+}`
+
+	arrayMapping := make(map[string]interface{})
+	err := json.Unmarshal([]byte(mappingValue), &arrayMapping)
+	assert.Nil(t, err)
+	assert.False(t, IsLiteral(arrayMapping))
+	mappings := map[string]interface{}{"addresses": arrayMapping}
+	factory := NewFactory(resolve.GetBasicResolver())
+	mapper, err := factory.NewMapper(mappings)
+	assert.Nil(t, err)
+
+	attrs := map[string]interface{}{"field": arrayData}
+	scope := data.NewSimpleScope(attrs, nil)
+	results, err := mapper.Apply(scope)
+	assert.Nil(t, err)
+	arr := results["addresses"]
+	assert.Equal(t, "person", arr.(map[string]interface{})["person2"])
+	assert.Equal(t, float64(77479), arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["tozipcode"])
+	assert.Equal(t, "1234", arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["tostreet"])
+	assert.Equal(t, "tx", arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["tostate"])
+	assert.Equal(t, "1234", arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["addresses2"].([]interface{})[0].(map[string]interface{})["tofield1"])
+
+}
+
 func TestArrayMappingWithFunction3Level(t *testing.T) {
 	mappingValue := `{"mapping": {
    "person2":"person",
    "addresses":{
       "@foreach($.field.addresses, index)":{
          "tostate":"=tstring.concat(\"State is \", $loop[index].state)",
-         "tostreet":"=$.street",
-         "tozipcode":"=$.zipcode",
+         "tostreet":"=$loop.street",
+         "tozipcode":"=$loop.zipcode",
          "addresses2":{
-            "@foreach($.array, index2)":{
+            "@foreach($loop.array, index2)":{
                "tofield1":"=$loop[index].street",
-               "tofield2":"=tstring.concat(\"field is \", $.field2)",
-               "tofield3":"=$.field3",
+               "tofield2":"=tstring.concat(\"field is \", $loop.field2)",
+               "tofield3":"=$loop.field3",
                "addresses4":{
-                  "@foreach($.level3)":{
+                  "@foreach($loop.level3)":{
                      "level3":"=$loop[index2].field1",
-                     "level3-1":"=tstring.concat(\"field is \", $.field3)"
+                     "level3-1":"=tstring.concat(\"field is \", $loop.field3)"
                   }
                }
             }
