@@ -81,7 +81,7 @@ func TestRootObjectArray(t *testing.T) {
       "addresses": {
 			"@foreach($.field.addresses, index)":{
 				"id":"dddddd",
-				"name":"=$.state"
+				"name":"=$loop.state"
 			}
       }
    }

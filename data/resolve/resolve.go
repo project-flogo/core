@@ -41,10 +41,15 @@ func NewResolverInfo(isStatic, usesItemFormat bool) *ResolverInfo {
 	return &ResolverInfo{isStatic: isStatic, usesItemFormat: usesItemFormat}
 }
 
+func NewImplicitResolverInfo(isStatic, isImplicit bool) *ResolverInfo {
+	return &ResolverInfo{isStatic: isStatic, isImplicit: isImplicit}
+}
+
 // ResolverInfo structure that contains information about the resolver
 type ResolverInfo struct {
 	usesItemFormat bool
 	isStatic       bool
+	isImplicit     bool
 }
 
 // IsStatic determines if the resolver's values are static and can be resolved immediately without a scope
@@ -55,6 +60,10 @@ func (i *ResolverInfo) IsStatic() bool {
 // UsesItemFormat determines if the resolver uses the item format (ex. $test[itemName])
 func (i *ResolverInfo) UsesItemFormat() bool {
 	return i.usesItemFormat
+}
+
+func (i *ResolverInfo) IsImplicit() bool {
+	return i.isImplicit
 }
 
 // GetResolverInfo gets the resolver name and position to start parsing the ResolutionDetails from
@@ -81,7 +90,7 @@ type ResolveDirectiveDetails struct {
 }
 
 // GetResolveDirectiveDetails breaks Resolution Directive into components
-func GetResolveDirectiveDetails(directive string, hasItems bool) (*ResolveDirectiveDetails, error) {
+func GetResolveDirectiveDetails(directive string, hasItems, isImplicit bool) (*ResolveDirectiveDetails, error) {
 
 	//todo optimize
 	details := &ResolveDirectiveDetails{}
@@ -90,35 +99,47 @@ func GetResolveDirectiveDetails(directive string, hasItems bool) (*ResolveDirect
 	strLen := len(directive)
 	hasNamedValue := true
 
-	if hasItems {
+	if isImplicit || hasItems {
 		//uses the "item format" (ex. foo[bar].valueName; where 'bar' is the item)
-		hasNamedValue = false
-
 		if directive[0] != '[' {
-			return nil, fmt.Errorf("invalid resolve directive: '%s' needs to start with [item]", directive)
+			if hasItems {
+				return nil, fmt.Errorf("invalid resolve directive: '%s' needs to start with [item]", directive)
+			}
+
+			if isImplicit {
+				hasItems = false
+				hasNamedValue = true
+			}
+		} else {
+			hasItems = true
+			hasNamedValue = false
 		}
-		start = 1
 
-		for i := 1; i < strLen; i++ {
-			if directive[i] == ']' {
-				details.ItemName = directive[start:i]
-				start = i + 1
+		if hasItems {
+			start = 1
 
-				//if we started with an item, it must either end or the next segment should start with '.' or '['
-				if start < strLen {
-					if directive[start] != '.' && directive[start] != '[' {
-						return nil, fmt.Errorf("invalid resolve directive: '%s'", directive)
+			for i := 1; i < strLen; i++ {
+				if directive[i] == ']' {
+					details.ItemName = directive[start:i]
+					start = i + 1
+
+					//if we started with an item, it must either end or the next segment should start with '.' or '['
+					if start < strLen {
+						if directive[start] != '.' && directive[start] != '[' {
+							return nil, fmt.Errorf("invalid resolve directive: '%s'", directive)
+						}
+
+						if directive[start] == '.' {
+							hasNamedValue = true
+							start++
+						}
 					}
 
-					if directive[start] == '.' {
-						hasNamedValue = true
-						start++
-					}
+					break
 				}
-
-				break
 			}
 		}
+
 	}
 	var i int
 
