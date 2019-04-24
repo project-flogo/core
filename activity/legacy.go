@@ -52,9 +52,9 @@ func LegacyRegister(ref string, activity Activity) error {
 	return nil
 }
 
-//type LegacyCtx interface {
-//
-//	// GetOutput gets the value of the specified output attribute
-//	GetOutput(name string) interface{}
-//}
+type LegacyCtx interface {
+
+	// GetOutput gets the value of the specified output attribute
+	GetOutput(name string) interface{}
+}
 
