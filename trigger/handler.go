@@ -176,5 +176,15 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 }
 
 func (h *handlerImpl) String() string {
-	return fmt.Sprintf("Handler")
+
+	triggerId := ""
+	if h.config.parent != nil {
+		triggerId = h.config.parent.Id
+	}
+	handlerId := "Handler"
+	if h.config.Name != "" {
+		handlerId = h.config.Name
+	}
+
+	return fmt.Sprintf("Trigger[%s].%s", triggerId, handlerId)
 }
