@@ -62,6 +62,7 @@ func (i *ResolverInfo) UsesItemFormat() bool {
 	return i.usesItemFormat
 }
 
+// IsImplicit determines if the resolver try to uses the item format and no item format then
 func (i *ResolverInfo) IsImplicit() bool {
 	return i.isImplicit
 }
