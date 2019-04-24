@@ -83,7 +83,7 @@ func (r *basicResolver) Resolve(directive string, scope data.Scope) (value inter
 		return nil, fmt.Errorf("unable to find a '%s' resolver", resolverName)
 	}
 
-	details, err := GetResolveDirectiveDetails(directive[nextIdx:], resolver.GetResolverInfo().UsesItemFormat())
+	details, err := GetResolveDirectiveDetails(directive[nextIdx:], resolver.GetResolverInfo().UsesItemFormat(), resolver.GetResolverInfo().IsImplicit())
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +122,7 @@ func (r *basicResolver) GetResolution(directive string) (Resolution, error) {
 		return nil, fmt.Errorf("unable to find a '%s' resolver", resolverName)
 	}
 
-	details, err := GetResolveDirectiveDetails(directive[nextIdx:], resolver.GetResolverInfo().UsesItemFormat())
+	details, err := GetResolveDirectiveDetails(directive[nextIdx:], resolver.GetResolverInfo().UsesItemFormat(), resolver.GetResolverInfo().IsImplicit())
 	if err != nil {
 		return nil, err
 	}
