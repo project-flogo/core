@@ -268,7 +268,7 @@ func TestRootArrayMapping(t *testing.T) {
 	mappingValue := `{"mapping": {
 			"@foreach($.field.addresses, index)":{
 				"id":"dddddd",
-				"name":"=$.state"
+				"name":"=$loop.state"
 			}
    }}`
 
@@ -340,13 +340,13 @@ func TestArrayMappingWithNest(t *testing.T) {
             "@foreach($.field.addresses, index)":
             {
               "tostate"   : "=$loop[index].state",
-               "tostreet": "=$.street",
-               "tozipcode":"=$.zipcode",
+               "tostreet": "=$loop.street",
+               "tozipcode":"=$loop.zipcode",
               "addresses2": {
-                  "@foreach($.array)":{
+                  "@foreach($loop.array)":{
                         "tofield1"  : "=$loop[index].street",
-               			"tofield2": "=$.field2",
-               			"tofield3":"=$.field3"
+               			"tofield2": "=$loop.field2",
+               			"tofield3":"=$loop.field3"
                   }
               }
             }
@@ -420,13 +420,13 @@ func TestArrayMappingWithFunction(t *testing.T) {
             "@foreach($.field.addresses, index)":
             {
               "tostate"   : "=tstring.concat(\"State is \", $loop[index].state)",
-               "tostreet": "=$.street",
-               "tozipcode":"=$.zipcode",
+               "tostreet": "=$loop.street",
+               "tozipcode":"=$loop.zipcode",
               "addresses2": {
-                  "@foreach($.array)":{
+                  "@foreach($loop.array)":{
                         "tofield1"  : "=$loop[index].street",
-               			"tofield2": "=tstring.concat(\"field is \", $.field2)",
-               			"tofield3":"=$.field3"
+               			"tofield2": "=tstring.concat(\"field is \", $loop.field2)",
+               			"tofield3":"=$loop.field3"
                   }
               }
             }
@@ -483,17 +483,17 @@ func TestArrayMappingWithFunction3Level(t *testing.T) {
    "addresses":{
       "@foreach($.field.addresses, index)":{
          "tostate":"=tstring.concat(\"State is \", $loop[index].state)",
-         "tostreet":"=$.street",
-         "tozipcode":"=$.zipcode",
+         "tostreet":"=$loop.street",
+         "tozipcode":"=$loop.zipcode",
          "addresses2":{
-            "@foreach($.array, index2)":{
+            "@foreach($loop.array, index2)":{
                "tofield1":"=$loop[index].street",
-               "tofield2":"=tstring.concat(\"field is \", $.field2)",
-               "tofield3":"=$.field3",
+               "tofield2":"=tstring.concat(\"field is \", $loop.field2)",
+               "tofield3":"=$loop.field3",
                "addresses4":{
-                  "@foreach($.level3)":{
+                  "@foreach($loop.level3)":{
                      "level3":"=$loop[index2].field1",
-                     "level3-1":"=tstring.concat(\"field is \", $.field3)"
+                     "level3-1":"=tstring.concat(\"field is \", $loop.field3)"
                   }
                }
             }

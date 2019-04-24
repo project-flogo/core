@@ -99,6 +99,7 @@ func GetResolveDirectiveDetails(directive string, hasItems, isImplicit bool) (*R
 	strLen := len(directive)
 	hasNamedValue := true
 
+	//isImplicit will try to support both ithem or without item
 	if isImplicit || hasItems {
 		//uses the "item format" (ex. foo[bar].valueName; where 'bar' is the item)
 		if directive[0] != '[' {
