@@ -224,6 +224,12 @@ func (f *foreach) handle(arrayMappingFields map[string]interface{}, inputScope d
 		objectMapperLog.Errorf("foreach source [%+v] not an array, cast to array error %s", fromValue, err.Error())
 		return nil, fmt.Errorf("foreach source [%+v] not an array", fromValue)
 	}
+
+	if arrayMappingFields == nil || len(arrayMappingFields) <= 0 {
+		//No child mapping, return original
+		return newSourceArray, nil
+	}
+
 	targetValues := make([]interface{}, len(newSourceArray))
 	for i, sourceValue := range newSourceArray {
 		inputScope = newLoopScope(sourceValue, f.index, inputScope)
