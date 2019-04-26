@@ -91,7 +91,7 @@ func getFieldValueByName(object interface{}, name string) (interface{}, error) {
 		}
 	}
 
-	return reflect.Value{}, nil
+	return nil, nil
 }
 
 func SetValue(attrValue interface{}, path string, value interface{}) error {
