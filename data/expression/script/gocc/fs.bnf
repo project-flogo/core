@@ -39,7 +39,8 @@ selector : '.' _ident ;
 
 // -- [ Functions ]
 
-functionName : _letter { _letter | _digit | '.' } ;
+functionname : _ident { _ident | '.' | '_' } ;
+itemname :_ident { _ident | '.' | '_' | '-'} ;
 
 << import "github.com/project-flogo/core/data/expression/script/gocc/ast" >>
 
@@ -91,8 +92,8 @@ Expr5
 
 Expr6
 	: PrimaryExpr
-    | ident "(" Args ")"            << ast.NewFuncExpr($0, $2) >>
-    | functionName "(" Args ")"     << ast.NewFuncExpr($0, $2) >>
+	| ident "(" Args ")"     << ast.NewFuncExpr($0, $2) >>
+    | functionname "(" Args ")"     << ast.NewFuncExpr($0, $2) >>
 ;
 
 PrimaryExpr
@@ -136,6 +137,7 @@ Ref
     ;
 Indexer
     : "[" ident "]"     << ast.Concat($0, $1, $2)  >>
+    | "[" itemname "]"     << ast.Concat($0, $1, $2)  >>
     | "[" Fscript "]"   << ast.Key($1) >>
     ;
 

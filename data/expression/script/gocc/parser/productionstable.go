@@ -281,7 +281,7 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr6 : functionName "(" Args ")"	<< ast.NewFuncExpr(X[0], X[2]) >>`,
+		String: `Expr6 : functionname "(" Args ")"	<< ast.NewFuncExpr(X[0], X[2]) >>`,
 		Id:         "Expr6",
 		NTType:     8,
 		Index:      26,
@@ -501,10 +501,20 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Indexer : "[" Fscript "]"	<< ast.Key(X[1]) >>`,
+		String: `Indexer : "[" itemname "]"	<< ast.Concat(X[0], X[1], X[2]) >>`,
 		Id:         "Indexer",
 		NTType:     16,
 		Index:      48,
+		NumSymbols: 3,
+		ReduceFunc: func(X []Attrib) (Attrib, error) {
+			return ast.Concat(X[0], X[1], X[2])
+		},
+	},
+	ProdTabEntry{
+		String: `Indexer : "[" Fscript "]"	<< ast.Key(X[1]) >>`,
+		Id:         "Indexer",
+		NTType:     16,
+		Index:      49,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.Key(X[1])
@@ -514,7 +524,7 @@ var productionsTable = ProdTab{
 		String: `Args : empty	<<  >>`,
 		Id:         "Args",
 		NTType:     17,
-		Index:      49,
+		Index:      50,
 		NumSymbols: 0,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return nil, nil
@@ -524,7 +534,7 @@ var productionsTable = ProdTab{
 		String: `Args : ExprList	<<  >>`,
 		Id:         "Args",
 		NTType:     17,
-		Index:      50,
+		Index:      51,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return X[0], nil
@@ -534,7 +544,7 @@ var productionsTable = ProdTab{
 		String: `ExprList : Expr	<< ast.NewExprList(X[0]) >>`,
 		Id:         "ExprList",
 		NTType:     18,
-		Index:      51,
+		Index:      52,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.NewExprList(X[0])
@@ -544,7 +554,7 @@ var productionsTable = ProdTab{
 		String: `ExprList : ExprList "," Expr	<< ast.AppendToExprList(X[0], X[2]) >>`,
 		Id:         "ExprList",
 		NTType:     18,
-		Index:      52,
+		Index:      53,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
 			return ast.AppendToExprList(X[0], X[2])
