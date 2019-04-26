@@ -40,6 +40,8 @@ selector : '.' _ident ;
 // -- [ Functions ]
 
 functionname : _ident { _ident | '.' | '_' } ;
+
+//-- Items
 itemname :_ident { _ident | '.' | '_' | '-'} ;
 
 << import "github.com/project-flogo/core/data/expression/script/gocc/ast" >>
