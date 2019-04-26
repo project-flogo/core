@@ -8,6 +8,7 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
 //todo consolidate and optimize code
@@ -71,7 +72,7 @@ func getFieldValueByName(object interface{}, name string) (interface{}, error) {
 		val = val.Elem()
 	}
 
-	field := val.FieldByName(name)
+	field := val.FieldByName(NormalizeFieldName(name))
 	if field.IsValid() {
 		return field.Interface(), nil
 	}
@@ -91,7 +92,13 @@ func getFieldValueByName(object interface{}, name string) (interface{}, error) {
 		}
 	}
 
-	return nil, nil
+	return nil, fmt.Errorf("unable to evaluate path: %s", name)
+}
+
+func NormalizeFieldName(name string) string {
+	symbols := []rune(name)
+	symbols[0] = unicode.ToUpper(symbols[0])
+	return string(symbols)
 }
 
 func SetValue(attrValue interface{}, path string, value interface{}) error {
