@@ -74,3 +74,16 @@ func TestCoerceToBoolean(t *testing.T) {
 	cval, _ = ToBool(valNil)
 	assert.Equal(t, false, cval, "not equal")
 }
+
+func TestCoerceToObject(t *testing.T) {
+
+	s := struct {
+		Id   int
+		Name string
+	}{Id: 1001,
+		Name: "flogo"}
+
+	obj, err := ToObject(s)
+	assert.Nil(t, err)
+	assert.Equal(t, "flogo", obj["Name"])
+}
