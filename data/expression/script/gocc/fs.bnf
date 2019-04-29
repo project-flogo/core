@@ -28,7 +28,7 @@ stringLit   :  _dq_string | _sq_string | _lit_string ;
 
 // -- [ Identifiers ]
 
-_ident : _letter { _letter | _digit } ;
+_ident : _letter { _letter | _digit | '_' } ;
 
 ident : _ident ;
 
@@ -39,10 +39,7 @@ selector : '.' _ident ;
 
 // -- [ Functions ]
 
-functionname : _ident { _ident | '.' | '_' } ;
-
-//-- Items
-itemname :_ident { _ident | '.' | '_' | '-'} ;
+functionname : _ident { _ident | '.' } ;
 
 << import "github.com/project-flogo/core/data/expression/script/gocc/ast" >>
 
@@ -139,7 +136,6 @@ Ref
     ;
 Indexer
     : "[" ident "]"     << ast.Concat($0, $1, $2)  >>
-    | "[" itemname "]"     << ast.Concat($0, $1, $2)  >>
     | "[" Fscript "]"   << ast.Key($1) >>
     ;
 

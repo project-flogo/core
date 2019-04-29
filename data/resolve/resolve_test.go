@@ -134,6 +134,16 @@ func TestIsResolveExpr(t *testing.T) {
 	assert.False(t, isResolve)
 }
 
+func TestPropertyEncodeQuotes(t *testing.T) {
+	a := `["foo.bar.item"]`
+	details, err := GetResolveDirectiveDetails(a, true, false)
+	assert.Nil(t, err)
+	assert.Equal(t, "foo.bar.item", details.ItemName)
+	assert.Equal(t, "", details.ValueName)
+	assert.Equal(t, "", details.Path)
+
+}
+
 func TestIsResolveExprWithExpr(t *testing.T) {
 	str := "$activity[REST].id"
 	isResolve := IsResolveExpr(str)
