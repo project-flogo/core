@@ -39,7 +39,7 @@ selector : '.' _ident ;
 
 // -- [ Functions ]
 
-functionname : _ident { _ident | '.' } ;
+functionName : _ident { _ident | '.' } ;
 
 << import "github.com/project-flogo/core/data/expression/script/gocc/ast" >>
 
@@ -92,7 +92,7 @@ Expr5
 Expr6
 	: PrimaryExpr
 	| ident "(" Args ")"     << ast.NewFuncExpr($0, $2) >>
-    | functionname "(" Args ")"     << ast.NewFuncExpr($0, $2) >>
+    | functionName "(" Args ")"     << ast.NewFuncExpr($0, $2) >>
 ;
 
 PrimaryExpr
