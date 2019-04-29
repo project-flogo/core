@@ -281,7 +281,7 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr6 : functionname "(" Args ")"	<< ast.NewFuncExpr(X[0], X[2]) >>`,
+		String: `Expr6 : functionName "(" Args ")"	<< ast.NewFuncExpr(X[0], X[2]) >>`,
 		Id:         "Expr6",
 		NTType:     8,
 		Index:      26,
