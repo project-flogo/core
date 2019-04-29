@@ -233,6 +233,8 @@ func (f *foreach) handle(arrayMappingFields map[string]interface{}, inputScope d
 		}
 	}
 
+	arrayMappingFields = removeAssignFromArrayMappingFeild(arrayMappingFields)
+
 	if len(arrayMappingFields) > 0 {
 		for i, sourceValue := range newSourceArray {
 			inputScope = newLoopScope(sourceValue, f.index, inputScope)
@@ -272,6 +274,17 @@ func (f *foreach) handle(arrayMappingFields map[string]interface{}, inputScope d
 	return targetValues, nil
 }
 
+func removeAssignFromArrayMappingFeild(arrayMappingFields map[string]interface{}) map[string]interface{} {
+	tmpArrayField := make(map[string]interface{})
+	for k, v := range arrayMappingFields {
+		if k != "=" {
+			tmpArrayField[k] = v
+		}
+	}
+
+	return tmpArrayField
+}
+
 func hasArrayAssign(arrayMappingFields map[string]interface{}) bool {
 	field, ok := arrayMappingFields["="]
 	if ok && field != nil {
@@ -296,8 +309,6 @@ func (f *foreach) handleArrayAssign(sourceArray []interface{}, arrayMappingField
 				targetValues[i] = fromValue
 			}
 		}
-		//delete = element from array to make it continue on all possible child field which for updating
-		delete(arrayMappingFields, "=")
 	}
 	return targetValues, nil
 }

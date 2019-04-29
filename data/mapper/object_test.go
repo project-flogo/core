@@ -2,7 +2,6 @@ package mapper
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/resolve"
 	"testing"
@@ -640,8 +639,6 @@ func TestArrayMappingNoChildMapping(t *testing.T) {
 	scope := data.NewSimpleScope(attrs, nil)
 	results, err := mapper.Apply(scope)
 	assert.Nil(t, err)
-	v, _ := json.Marshal(results)
-	fmt.Println(string(v))
 	arr := results["addresses"]
 	assert.Equal(t, "person", arr.(map[string]interface{})["person2"])
 	assert.Equal(t, float64(77479), arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["tozipcode"])
@@ -650,6 +647,10 @@ func TestArrayMappingNoChildMapping(t *testing.T) {
 	assert.Equal(t, "hello", arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["addresses2"].([]interface{})[0].(map[string]interface{})["field1"])
 	assert.Equal(t, "field2value", arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["addresses2"].([]interface{})[0].(map[string]interface{})["field2"])
 	assert.Equal(t, "field3value", arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["addresses2"].([]interface{})[0].(map[string]interface{})["field3"])
+
+	assert.Equal(t, "hello", arr.(map[string]interface{})["addresses"].([]interface{})[1].(map[string]interface{})["addresses2"].([]interface{})[1].(map[string]interface{})["field1"])
+	assert.Equal(t, "field2value22", arr.(map[string]interface{})["addresses"].([]interface{})[1].(map[string]interface{})["addresses2"].([]interface{})[1].(map[string]interface{})["field2"])
+	assert.Equal(t, "field3value22", arr.(map[string]interface{})["addresses"].([]interface{})[1].(map[string]interface{})["addresses2"].([]interface{})[1].(map[string]interface{})["field3"])
 
 }
 
