@@ -92,7 +92,6 @@ var TokMap = TokenMap{
 		"selector",
 		"[",
 		"]",
-		"itemname",
 		"empty",
 		",",
 	},
@@ -131,8 +130,7 @@ var TokMap = TokenMap{
 		"selector":     30,
 		"[":            31,
 		"]":            32,
-		"itemname":     33,
-		"empty":        34,
-		",":            35,
+		"empty":        33,
+		",":            34,
 	},
 }

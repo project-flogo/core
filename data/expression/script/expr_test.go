@@ -254,7 +254,7 @@ func TestLitExprStaticRef(t *testing.T) {
 
 func TestPropertyName(t *testing.T) {
 	property.SetDefaultManager(property.NewManager(map[string]interface{}{"Marketo.Connection.client_id.secret-id": "abc"}))
-	expr, err := factory.NewExpr(`$property[Marketo.Connection.client_id.secret-id]`)
+	expr, err := factory.NewExpr(`$property["Marketo.Connection.client_id.secret-id"]`)
 	assert.Nil(t, err)
 	assert.NotNil(t, expr)
 	v, err := expr.Eval(nil)
