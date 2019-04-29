@@ -224,17 +224,93 @@ func (f *foreach) handle(arrayMappingFields map[string]interface{}, inputScope d
 		objectMapperLog.Errorf("foreach source [%+v] not an array, cast to array error %s", fromValue, err.Error())
 		return nil, fmt.Errorf("foreach source [%+v] not an array", fromValue)
 	}
+
 	targetValues := make([]interface{}, len(newSourceArray))
-	for i, sourceValue := range newSourceArray {
-		inputScope = newLoopScope(sourceValue, f.index, inputScope)
-		item, err := handleObjectMapping(arrayMappingFields, f.exprFactory, inputScope)
+	if hasArrayAssign(arrayMappingFields) {
+		targetValues, err = f.handleArrayAssign(newSourceArray, arrayMappingFields, inputScope)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("array assign error, %s", err.Error())
 		}
-		targetValues[i] = item
+	}
+
+	arrayMappingFields = removeAssignFromArrayMappingFeild(arrayMappingFields)
+
+	if len(arrayMappingFields) > 0 {
+		for i, sourceValue := range newSourceArray {
+			inputScope = newLoopScope(sourceValue, f.index, inputScope)
+			item, err := handleObjectMapping(arrayMappingFields, f.exprFactory, inputScope)
+			if err != nil {
+				return nil, err
+			}
+			if targetValues[i] == nil {
+				targetValues[i] = item
+			} else {
+				//update value
+				switch t := item.(type) {
+				case map[string]interface{}:
+					targetValue, ok := targetValues[i].(map[string]interface{})
+					if ok {
+						for k, v := range t {
+							targetValue[k] = v
+						}
+					} else {
+						return nil, fmt.Errorf("cannot assign map[string]interface to [%s]", reflect.TypeOf(targetValues[i]))
+					}
+				case []interface{}:
+					targetValue, ok := targetValues[i].([]interface{})
+					if ok {
+						for k, v := range t {
+							targetValue[k] = v
+						}
+					} else {
+						return nil, fmt.Errorf("cannot assign []interface to [%s]", reflect.TypeOf(targetValues[i]))
+					}
+				}
+			}
+		}
+		return targetValues, nil
+	}
+
+	return targetValues, nil
+}
+
+func removeAssignFromArrayMappingFeild(arrayMappingFields map[string]interface{}) map[string]interface{} {
+	tmpArrayField := make(map[string]interface{})
+	for k, v := range arrayMappingFields {
+		if k != "=" {
+			tmpArrayField[k] = v
+		}
+	}
+
+	return tmpArrayField
+}
+
+func hasArrayAssign(arrayMappingFields map[string]interface{}) bool {
+	field, ok := arrayMappingFields["="]
+	if ok && field != nil {
+		return true
+	}
+	return false
+}
+
+func (f *foreach) handleArrayAssign(sourceArray []interface{}, arrayMappingFields map[string]interface{}, inputScope data.Scope) ([]interface{}, error) {
+	targetValues := make([]interface{}, len(sourceArray))
+	field, ok := arrayMappingFields["="]
+	if ok && field != nil {
+		if v, ok := field.(string); ok && v == "$loop" {
+			targetValues = sourceArray
+		} else {
+			for i, sourceValue := range sourceArray {
+				inputScope = newLoopScope(sourceValue, f.index, inputScope)
+				fromValue, err := getExpressionValue(field, f.exprFactory, inputScope)
+				if err != nil {
+					return nil, fmt.Errorf("eval expression failed %s", err.Error())
+				}
+				targetValues[i] = fromValue
+			}
+		}
 	}
 	return targetValues, nil
-
 }
 
 func handleObject(targetValue map[string]interface{}, targetName string, source interface{}, exprF expression.Factory, scope data.Scope) error {
