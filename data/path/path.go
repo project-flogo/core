@@ -72,26 +72,29 @@ func getFieldValueByName(object interface{}, name string) (interface{}, error) {
 		val = val.Elem()
 	}
 
-	field := val.FieldByName(NormalizeFieldName(name))
-	if field.IsValid() {
-		return field.Interface(), nil
-	}
+	if val.Kind() == reflect.Struct {
 
-	typ := reflect.TypeOf(object)
-	if typ.Kind() == reflect.Ptr {
-		typ = typ.Elem()
-	}
-	for i := 0; i < typ.NumField(); i++ {
-		p := typ.Field(i)
-		if !p.Anonymous {
-			if p.Tag != "" && len(p.Tag) > 0 {
-				if name == p.Tag.Get("json") {
-					return val.FieldByName(typ.Field(i).Name).Interface(), nil
+		field := val.FieldByName(NormalizeFieldName(name))
+		if field.IsValid() {
+			return field.Interface(), nil
+		}
+
+		typ := reflect.TypeOf(object)
+		if typ.Kind() == reflect.Ptr {
+			typ = typ.Elem()
+		}
+		for i := 0; i < typ.NumField(); i++ {
+			p := typ.Field(i)
+			if !p.Anonymous {
+				if p.Tag != "" && len(p.Tag) > 0 {
+					if name == p.Tag.Get("json") {
+						return val.FieldByName(typ.Field(i).Name).Interface(), nil
+					}
 				}
 			}
 		}
-	}
 
+	}
 	return nil, fmt.Errorf("unable to evaluate path: %s", name)
 }
 
