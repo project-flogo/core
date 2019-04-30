@@ -3,6 +3,7 @@ package script
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/project-flogo/core/data/property"
 	"os"
 	"testing"
 
@@ -11,7 +12,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var resolver = resolve.NewCompositeResolver(map[string]resolve.Resolver{"static": &TestStaticResolver{}, ".": &TestResolver{}, "env": &resolve.EnvResolver{}})
+var resolver = resolve.NewCompositeResolver(map[string]resolve.Resolver{"static": &TestStaticResolver{}, ".": &TestResolver{}, "env": &resolve.EnvResolver{}, "property": &resolve.PropertyResolver{}})
 var factory = NewExprFactory(resolver)
 
 func TestLitExprInt(t *testing.T) {
@@ -239,7 +240,6 @@ func TestRefWithQuotes(t *testing.T) {
 	defer os.Unsetenv("index")
 
 }
-
 func TestLitExprStaticRef(t *testing.T) {
 
 	expr, err := factory.NewExpr(`$static.foo`)
@@ -249,10 +249,20 @@ func TestLitExprStaticRef(t *testing.T) {
 	v, err := expr.Eval(nil)
 	assert.Nil(t, err)
 	assert.Equal(t, "bar", v)
+
+}
+
+func TestPropertyName(t *testing.T) {
+	property.SetDefaultManager(property.NewManager(map[string]interface{}{"Marketo.Connection.client_id.secret-id": "abc"}))
+	expr, err := factory.NewExpr(`$property["Marketo.Connection.client_id.secret-id"]`)
+	assert.Nil(t, err)
+	assert.NotNil(t, expr)
+	v, err := expr.Eval(nil)
+	assert.Nil(t, err)
+	assert.Equal(t, "abc", v)
 }
 
 func TestEnvResolve(t *testing.T) {
-
 	_ = os.Setenv("FOO", "bar")
 	expr, err := factory.NewExpr(`$env[FOO]`)
 	assert.Nil(t, err)

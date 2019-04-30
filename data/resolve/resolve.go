@@ -2,6 +2,7 @@ package resolve
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/project-flogo/core/data"
 )
@@ -122,7 +123,7 @@ func GetResolveDirectiveDetails(directive string, hasItems, isImplicit bool) (*R
 
 			for i := 1; i < strLen; i++ {
 				if directive[i] == ']' {
-					details.ItemName = directive[start:i]
+					details.ItemName = removeQuotes(directive[start:i])
 					start = i + 1
 
 					//if we started with an item, it must either end or the next segment should start with '.' or '['
@@ -258,4 +259,17 @@ func isExprChar(ch byte) bool {
 		return true
 	}
 	return false
+}
+
+func removeQuotes(str string) string {
+	if strings.HasPrefix(str, `"`) && strings.HasSuffix(str, `"`) {
+		return str[1 : len(str)-1]
+	}
+	if strings.HasPrefix(str, "'") && strings.HasSuffix(str, "'") {
+		return str[1 : len(str)-1]
+	}
+	if strings.HasPrefix(str, "`") && strings.HasSuffix(str, "`") {
+		return str[1 : len(str)-1]
+	}
+	return str
 }

@@ -28,7 +28,7 @@ stringLit   :  _dq_string | _sq_string | _lit_string ;
 
 // -- [ Identifiers ]
 
-_ident : _letter { _letter | _digit } ;
+_ident : _letter { _letter | _digit | '_' } ;
 
 ident : _ident ;
 
@@ -39,7 +39,7 @@ selector : '.' _ident ;
 
 // -- [ Functions ]
 
-functionName : _letter { _letter | _digit | '.' } ;
+functionName : _ident { _ident | '.' } ;
 
 << import "github.com/project-flogo/core/data/expression/script/gocc/ast" >>
 
@@ -91,7 +91,7 @@ Expr5
 
 Expr6
 	: PrimaryExpr
-    | ident "(" Args ")"            << ast.NewFuncExpr($0, $2) >>
+	| ident "(" Args ")"     << ast.NewFuncExpr($0, $2) >>
     | functionName "(" Args ")"     << ast.NewFuncExpr($0, $2) >>
 ;
 
