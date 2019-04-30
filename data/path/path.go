@@ -94,6 +94,9 @@ func getFieldValueByName(object interface{}, name string) (interface{}, error) {
 			}
 		}
 
+	} else if val.Kind() == reflect.Map {
+		v := val.MapIndex(reflect.ValueOf(name))
+		return v.Interface(), nil
 	}
 	return nil, fmt.Errorf("unable to evaluate path: %s", name)
 }
