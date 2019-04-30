@@ -27,7 +27,7 @@ func GetLiteral(strVal string) (interface{}, bool) {
 	}
 
 	//check if is string
-	s, isStr := isQuotesString(newStrVal)
+	s, isStr := isQuotedString(newStrVal)
 	if isStr {
 		return s, true
 	}
@@ -51,7 +51,7 @@ func GetLiteral(strVal string) (interface{}, bool) {
 	return nil, false
 }
 
-func isQuotesString(newStrVal string) (string, bool) {
+func isQuotedString(newStrVal string) (string, bool) {
 	//String must surround with quotes and only one pair
 	if newStrVal[0] == '"' {
 		newStrVal = newStrVal[1:]
