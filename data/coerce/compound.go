@@ -67,6 +67,12 @@ func ToParams(val interface{}) (map[string]string, error) {
 			m[mKey] = mVal
 		}
 		return m, nil
+	case interface{}:
+		s, err := ToString(t)
+		if err != nil {
+			return nil, err
+		}
+		return toParams(s)
 	case nil:
 		return nil, nil
 	default:
