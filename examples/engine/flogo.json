@@ -58,8 +58,7 @@
               "ref": "#log",
               "input": {
                 "message": "=$flow.in",
-                "flowInfo": "false",
-                "addToFlow": "false"
+                "addDetails": "false"
               }
             }
           }
