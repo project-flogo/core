@@ -55,20 +55,25 @@ func removeQuotedAndEscaped(str string) string {
 		if strings.Contains(str, "\\\"") {
 			str = strings.Replace(str, `\"`, `"`, -1)
 		}
+		str = handleNewline(str)
 	case '\'':
 		str = str[1 : len(str)-1]
 		//Eascap string
 		if strings.Contains(str, "\\'") {
 			str = strings.Replace(str, "\\'", "'", -1)
 		}
+		str = handleNewline(str)
 	default:
 		str = str[1 : len(str)-1]
 	}
 
+	return str
+}
+
+func handleNewline(str string) string {
 	//Handle \n,\r and \t
 	str = strings.Replace(str, `\n`, string('\n'), -1)
 	str = strings.Replace(str, `\r`, string('\r'), -1)
 	str = strings.Replace(str, `\t`, string('\t'), -1)
 	return str
-
 }
