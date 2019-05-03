@@ -700,7 +700,7 @@ func TestArrayMappingPrimitiveArray(t *testing.T) {
 	assert.Nil(t, err)
 	arr := results["addresses"]
 	assert.Equal(t, "person", arr.(map[string]interface{})["person2"])
-	assert.Equal(t, []string{"tx", "tx2"}, arr.(map[string]interface{})["states"])
+	assert.Equal(t, []interface{}{"tx", "tx2"}, arr.(map[string]interface{})["states"])
 
 }
 
