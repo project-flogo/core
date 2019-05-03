@@ -38,11 +38,32 @@ func NewLiteral(litType string, lit interface{}) (Expr, error) {
 		b, err := coerce.ToBool(litAsStr)
 		return &literalExpr{val: b, typ: "bool"}, err
 	case "string":
-		s := litAsStr[1 : len(litAsStr)-1] //remove quotes
-		return &literalExpr{val: s, typ: "string"}, nil
+		return &literalExpr{val: removeQuotedAndEscaped(litAsStr), typ: "string"}, nil
 	case "nil":
 		return &literalExpr{val: nil, typ: "nil"}, nil
 	}
 
 	return nil, fmt.Errorf("unsupported literal type '%s'", litType)
+}
+
+func removeQuotedAndEscaped(str string) string {
+	//Eascap string
+	firstChar := str[0]
+	switch firstChar {
+	case '"':
+		str = str[1 : len(str)-1]
+		if strings.Contains(str, "\\\"") {
+			str = strings.Replace(str, `\"`, `"`, -1)
+		}
+	case '\'':
+		str = str[1 : len(str)-1]
+		//Eascap string
+		if strings.Contains(str, "\\'") {
+			str = strings.Replace(str, "\\'", "'", -1)
+		}
+	default:
+		str = str[1 : len(str)-1]
+	}
+	return str
+
 }

@@ -851,6 +851,20 @@ func TestExpression(t *testing.T) {
 	}
 }
 
+func TestEscapedExpr(t *testing.T) {
+	expr, err := factory.NewExpr(`script.concat("\"Hello\" ", '\'FLOGO\'')`)
+	assert.Nil(t, err)
+	v, err := expr.Eval(nil)
+	assert.Nil(t, err)
+	assert.Equal(t, `"Hello" 'FLOGO'`, v)
+
+	expr, err = factory.NewExpr("script.concat(`Hello `, `'FLOGO'`)")
+	assert.Nil(t, err)
+	v, err = expr.Eval(nil)
+	assert.Nil(t, err)
+	assert.Equal(t, `Hello 'FLOGO'`, v)
+}
+
 var result interface{}
 
 func BenchmarkLit(b *testing.B) {
