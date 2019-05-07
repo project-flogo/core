@@ -864,8 +864,13 @@ func TestEscapedExpr(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, `Hello 'FLOGO'`, v)
 
-	//Newline
+	expr, err = factory.NewExpr(`script.concat("Hello", "\world")`)
+	assert.Nil(t, err)
+	v, err = expr.Eval(nil)
+	assert.Nil(t, err)
+	assert.Equal(t, `Hello\world`, v)
 
+	//Newline
 	expr, err = factory.NewExpr("script.concat(\"Hello\n\", \"FLOGO\")")
 	assert.Nil(t, err)
 	v, err = expr.Eval(nil)
