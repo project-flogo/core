@@ -18,10 +18,10 @@ _exponent   : ( 'e' | 'E' ) [ '+' | '-' ] _decimals ;
 
 // -- [ String literals ]
 
-_escapeChar : '\\' 'n' | '\\' 'r' | '\\' 't' ;
+_quotedpair : '\\' . ;
 
-_dq_string  : '"' { . | '\\' '"' | _escapeChar } '"' ;
-_sq_string  : '\'' { . | '\\' '\'' | _escapeChar } '\'' ;
+_dq_string  : '"' { _quotedpair | . } '"' ;
+_sq_string  : '\'' {_quotedpair | . } '\'' ;
 _lit_string : '`' { . } '`' ;
 
 stringLit   :  _dq_string | _sq_string | _lit_string ;
