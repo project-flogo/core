@@ -53,13 +53,6 @@ func LegacyRegister(ref string, activity Activity) error {
 }
 
 type LegacyCtx interface {
-<<<<<<< HEAD
-=======
-
-	// GetOutput gets the value of the specified output attribute
-	GetOutput(name string) interface{}
-}
->>>>>>> add handler name; add legacy context
 
 	// GetOutput gets the value of the specified output attribute
 	GetOutput(name string) interface{}
