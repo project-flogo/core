@@ -19,12 +19,12 @@ func (d *IsDefinedExpr) Eval(scope data.Scope) (interface{}, error) {
 	return isDefine, err
 }
 
-type DefaultToExpr struct {
+type GetValueExpr struct {
 	refExpr   Expr
 	valueExpr Expr
 }
 
-func (d *DefaultToExpr) Init(resolver resolve.CompositeResolver, root bool) error {
+func (d *GetValueExpr) Init(resolver resolve.CompositeResolver, root bool) error {
 	err := d.refExpr.Init(resolver, root)
 	if err != nil {
 		return err
@@ -33,7 +33,7 @@ func (d *DefaultToExpr) Init(resolver resolve.CompositeResolver, root bool) erro
 
 }
 
-func (d *DefaultToExpr) Eval(scope data.Scope) (interface{}, error) {
+func (d *GetValueExpr) Eval(scope data.Scope) (interface{}, error) {
 	v, isDefine, err := isDefined(d.refExpr, scope)
 	if err != nil {
 		return nil, err
