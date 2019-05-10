@@ -100,12 +100,12 @@ func TestGetValue(t *testing.T) {
 
 	path = ".test.gah.foo"
 	newVal, err = GetValue(multiLevel, path)
-	assert.Nil(t, err)
+	assert.NotNil(t, err)
 	assert.Nil(t, newVal)
 
 	path = ".test.gah"
 	newVal, err = GetValue(multiLevel, path)
-	assert.Nil(t, err)
+	assert.NotNil(t, err)
 	assert.Nil(t, newVal)
 }
 

@@ -15,7 +15,7 @@ const (
 func GetDataResolving() string {
 	dataResolver := os.Getenv(EnvDataResolving)
 	if len(dataResolver) > 0 {
-		if dataResolver != EnvDataResolvingRelaxed || dataResolver != EnvDataResolvingStrict {
+		if dataResolver != EnvDataResolvingRelaxed && dataResolver != EnvDataResolvingStrict {
 			log.RootLogger().Warnf("Unknow FLOGO_DATA_RESOLVING [%s], we only support [STRICT] or [RELAXED]", dataResolver)
 			return EnvDataResolvingStrict
 		}
