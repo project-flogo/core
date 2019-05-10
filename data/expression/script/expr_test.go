@@ -893,7 +893,7 @@ rld`, v)
 FLOGO`, v)
 }
 
-func TestNotExistPath(t *testing.T) {
+func TestNotExistAndBuiltInFunction(t *testing.T) {
 
 	var testData interface{}
 	err := json.Unmarshal([]byte(testJsonData), &testData)
@@ -917,6 +917,22 @@ func TestNotExistPath(t *testing.T) {
 			Expr:         "$.foo['store'].book[2].price != nil ? $.foo['store'].book[2].price : false",
 			ExpectResult: 8.99,
 		},
+		{
+			Expr:         "isDefined($.foo['store'].book[2].price)",
+			ExpectResult: true,
+		},
+		{
+			Expr:         "isDefined($.foo.store.exit)",
+			ExpectResult: false,
+		},
+		{
+			Expr:         "getValue($.foo.store.exit, \"flogo\")",
+			ExpectResult: "flogo",
+		},
+		{
+			Expr:         "getValue($.foo['store'].book[2].price, \"flogo\")",
+			ExpectResult: 8.99,
+		},
 	}
 
 	for i, tt := range tests {
@@ -930,7 +946,7 @@ func TestNotExistPath(t *testing.T) {
 				t,
 				tt.ExpectResult,
 				v,
-				"Unexpected expression output: expected to %v.", tt.Expr,
+				"Unexpected expression output: expected to %v.", tt.ExpectResult,
 			)
 		}
 	}
