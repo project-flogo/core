@@ -893,6 +893,53 @@ rld`, v)
 FLOGO`, v)
 }
 
+func TestBuiltInFunction(t *testing.T) {
+
+	var testData interface{}
+	err := json.Unmarshal([]byte(testJsonData), &testData)
+	assert.Nil(t, err)
+
+	scope := newScope(map[string]interface{}{"foo": testData, "key": 2})
+
+	tests := []struct {
+		Expr         string
+		ExpectResult interface{}
+	}{
+		{
+			Expr:         "isDefined($.foo['store'].book[2].price)",
+			ExpectResult: true,
+		},
+		{
+			Expr:         "isDefined($.foo.store.exit)",
+			ExpectResult: false,
+		},
+		{
+			Expr:         "DefaultTo($.foo.store.exit, \"flogo\")",
+			ExpectResult: "flogo",
+		},
+		{
+			Expr:         "DefaultTo($.foo['store'].book[2].price, \"flogo\")",
+			ExpectResult: 8.99,
+		},
+	}
+
+	for i, tt := range tests {
+
+		expr, err := factory.NewExpr(tt.Expr)
+		assert.Nil(t, err)
+		v, err := expr.Eval(scope)
+		assert.Nil(t, err)
+		if assert.NoError(t, err, "Unexpected error in case #%d.", i) {
+			assert.Equal(
+				t,
+				tt.ExpectResult,
+				v,
+				"Unexpected expression output: expected to %v.", tt.ExpectResult,
+			)
+		}
+	}
+}
+
 var result interface{}
 
 func BenchmarkLit(b *testing.B) {
