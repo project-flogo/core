@@ -893,6 +893,49 @@ rld`, v)
 FLOGO`, v)
 }
 
+func TestNotExistPath(t *testing.T) {
+
+	var testData interface{}
+	err := json.Unmarshal([]byte(testJsonData), &testData)
+	assert.Nil(t, err)
+
+	scope := newScope(map[string]interface{}{"foo": testData, "key": 2})
+
+	tests := []struct {
+		Expr         string
+		ExpectResult interface{}
+	}{
+		{
+			Expr:         "$.foo.store.exit",
+			ExpectResult: nil,
+		},
+		{
+			Expr:         "$.foo.store.exist != nil ? $.store.exist : false",
+			ExpectResult: false,
+		},
+		{
+			Expr:         "$.foo['store'].book[2].price != nil ? $.foo['store'].book[2].price : false",
+			ExpectResult: 8.99,
+		},
+	}
+
+	for i, tt := range tests {
+
+		expr, err := factory.NewExpr(tt.Expr)
+		assert.Nil(t, err)
+		v, err := expr.Eval(scope)
+		assert.Nil(t, err)
+		if assert.NoError(t, err, "Unexpected error in case #%d.", i) {
+			assert.Equal(
+				t,
+				tt.ExpectResult,
+				v,
+				"Unexpected expression output: expected to %v.", tt.Expr,
+			)
+		}
+	}
+}
+
 var result interface{}
 
 func BenchmarkLit(b *testing.B) {
