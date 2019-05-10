@@ -914,11 +914,11 @@ func TestBuiltInFunction(t *testing.T) {
 			ExpectResult: false,
 		},
 		{
-			Expr:         "DefaultTo($.foo.store.exit, \"flogo\")",
+			Expr:         "getValue($.foo.store.exit, \"flogo\")",
 			ExpectResult: "flogo",
 		},
 		{
-			Expr:         "DefaultTo($.foo['store'].book[2].price, \"flogo\")",
+			Expr:         "getValue($.foo['store'].book[2].price, \"flogo\")",
 			ExpectResult: 8.99,
 		},
 	}
