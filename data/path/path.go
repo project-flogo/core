@@ -35,7 +35,7 @@ func GetValue(value interface{}, path string) (interface{}, error) {
 
 	if strings.HasPrefix(path, ".") {
 		if objVal, ok := value.(map[string]interface{}); ok {
-			newVal, newPath, err = getSetObjValue(objVal, path, nil, false)
+			newVal, newPath = getSetObjValue(objVal, path, nil, false)
 		} else if paramsVal, ok := value.(map[string]string); ok {
 			newVal, newPath, err = getSetParamsValue(paramsVal, path, nil, false)
 		} else {
@@ -46,7 +46,7 @@ func GetValue(value interface{}, path string) (interface{}, error) {
 			}
 			newPath = path[npIdx:]
 		}
-	} else if strings.HasPrefix(path, `["`) {
+	} else if hasMapKey(path) {
 		if objVal, ok := value.(map[string]interface{}); ok {
 			newVal, newPath, err = getSetMapValue(objVal, path, nil, false)
 		} else if paramsVal, ok := value.(map[string]string); ok {
@@ -98,7 +98,7 @@ func getFieldValueByName(object interface{}, name string) (interface{}, error) {
 		v := val.MapIndex(reflect.ValueOf(name))
 		return v.Interface(), nil
 	}
-	return nil, fmt.Errorf("unable to evaluate path: %s", name)
+	return nil, nil
 }
 
 func NormalizeFieldName(name string) string {
@@ -119,13 +119,13 @@ func SetValue(attrValue interface{}, path string, value interface{}) error {
 	if strings.HasPrefix(path, ".") {
 
 		if objVal, ok := attrValue.(map[string]interface{}); ok {
-			newVal, newPath, err = getSetObjValue(objVal, path, value, true)
+			newVal, newPath = getSetObjValue(objVal, path, value, true)
 		} else if paramsVal, ok := attrValue.(map[string]string); ok {
 			newVal, newPath, err = getSetParamsValue(paramsVal, path, value, true)
 		} else {
 			return fmt.Errorf("unable to evaluate path: %s", path)
 		}
-	} else if strings.HasPrefix(path, `["`) {
+	} else if hasMapKey(path) {
 		if objVal, ok := attrValue.(map[string]interface{}); ok {
 			newVal, newPath, err = getSetMapValue(objVal, path, value, true)
 		} else if paramsVal, ok := attrValue.(map[string]string); ok {
@@ -144,6 +144,14 @@ func SetValue(attrValue interface{}, path string, value interface{}) error {
 		return err
 	}
 	return SetValue(newVal, newPath, value)
+}
+
+func hasMapKey(path string) bool {
+	return strings.HasPrefix(path, `["`) || strings.HasPrefix(path, `['`)
+}
+
+func equalMapKey(val string) bool {
+	return val == `["` || val == `['`
 }
 
 func getObjectKey(s string) (string, int) {
@@ -166,7 +174,7 @@ func getMapKey(s string) (string, int) {
 
 	for i < len(s) {
 
-		if s[i] == '"' {
+		if s[i] == '"' || s[i] == '\'' {
 			return s[:i], i + 4 // [" "]
 		}
 
@@ -211,26 +219,22 @@ func getSetArrayValue(obj interface{}, path string, value interface{}, set bool)
 	return arrValue[arrayIdx], path[closeIdx+1:], nil
 }
 
-func getSetObjValue(objValue map[string]interface{}, path string, value interface{}, set bool) (interface{}, string, error) {
+func getSetObjValue(objValue map[string]interface{}, path string, value interface{}, set bool) (interface{}, string) {
 
 	key, npIdx := getObjectKey(path[1:])
 	if set && key == path[1:] {
 		//end of path so set the value
 		objValue[key] = value
-		return nil, "", nil
+		return nil, ""
 	}
 
 	val, found := objValue[key]
 
 	if !found {
-		if path == "."+key {
-			return nil, "", nil
-		}
-
-		return nil, "", errors.New("Invalid path '" + path + "'. path not found.")
+		return nil, ""
 	}
 
-	return val, path[npIdx:], nil
+	return val, path[npIdx:]
 }
 
 func getSetParamsValue(params map[string]string, path string, value interface{}, set bool) (interface{}, string, error) {
@@ -260,7 +264,7 @@ func getSetMapValue(objValue map[string]interface{}, path string, value interfac
 
 	key, npIdx := getMapKey(path[2:])
 
-	if set && key+`"]` == path[2:] {
+	if set && (key+`"]` == path[2:] || key+`']` == path[2:]) {
 		//end of path so set the value
 		objValue[key] = value
 		return nil, "", nil
@@ -269,11 +273,7 @@ func getSetMapValue(objValue map[string]interface{}, path string, value interfac
 	val, found := objValue[key]
 
 	if !found {
-		if path == "."+key {
-			return nil, "", nil
-		}
-
-		return nil, "", errors.New("Invalid path '" + path + "'. path not found.")
+		return nil, "", nil
 	}
 
 	return val, path[npIdx:], nil
