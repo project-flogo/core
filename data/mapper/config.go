@@ -1,29 +1,20 @@
 package mapper
 
 import (
-	"github.com/project-flogo/core/support/log"
 	"os"
-	"strings"
+	"strconv"
 )
 
 const (
-	EnvDataResolving        = "FLOGO_RESOLVING"
-	EnvDataResolvingStrict  = "STRICT"
-	EnvDataResolvingRelaxed = "RELAXED"
+	EnvMappingRelexed        = "FLOGO_MAPPING_RELAXED"
+	EnvMappingRelexedDefault = false
 )
 
-func GetDataResolving() string {
-	dataResolver := os.Getenv(EnvDataResolving)
-	if len(dataResolver) > 0 {
-		if dataResolver != EnvDataResolvingRelaxed && dataResolver != EnvDataResolvingStrict {
-			log.RootLogger().Warnf("Unknow FLOGO_DATA_RESOLVING [%s], we only support [STRICT] or [RELAXED]", dataResolver)
-			return EnvDataResolvingStrict
-		}
-		return dataResolver
+func IsMappingRelaxed() bool {
+	relaxed := os.Getenv(EnvMappingRelexed)
+	if len(relaxed) <= 0 {
+		return EnvMappingRelexedDefault
 	}
-	return EnvDataResolvingStrict
-}
-
-func isRelexed() bool {
-	return strings.EqualFold(GetDataResolving(), EnvDataResolvingRelaxed)
+	b, _ := strconv.ParseBool(relaxed)
+	return b
 }
