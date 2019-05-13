@@ -3,9 +3,9 @@ package ssl
 import (
 	"crypto/tls"
 	"crypto/x509"
-	"github.com/project-flogo/core/data/coerce"
 	"io/ioutil"
 
+	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/support/log"
 )
 
