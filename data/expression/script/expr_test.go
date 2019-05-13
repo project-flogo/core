@@ -893,7 +893,7 @@ rld`, v)
 FLOGO`, v)
 }
 
-func TestNotExistAndBuiltInFunction(t *testing.T) {
+func TestBuiltInFunction(t *testing.T) {
 
 	var testData interface{}
 	err := json.Unmarshal([]byte(testJsonData), &testData)
@@ -905,18 +905,6 @@ func TestNotExistAndBuiltInFunction(t *testing.T) {
 		Expr         string
 		ExpectResult interface{}
 	}{
-		{
-			Expr:         "$.foo.store.exit",
-			ExpectResult: nil,
-		},
-		{
-			Expr:         "$.foo.store.exist != nil ? $.store.exist : false",
-			ExpectResult: false,
-		},
-		{
-			Expr:         "$.foo['store'].book[2].price != nil ? $.foo['store'].book[2].price : false",
-			ExpectResult: 8.99,
-		},
 		{
 			Expr:         "isDefined($.foo['store'].book[2].price)",
 			ExpectResult: true,
