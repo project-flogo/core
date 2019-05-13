@@ -3,6 +3,7 @@ package ssl
 import (
 	"crypto/tls"
 	"crypto/x509"
+	"github.com/project-flogo/core/data/coerce"
 	"io/ioutil"
 
 	"github.com/project-flogo/core/support/log"
@@ -37,6 +38,43 @@ type Config struct {
 	KeyFile       string `json:"keyFile"`
 	SkipVerify    bool   `json:"skipVerify"`
 	UseSystemCert bool   `json:"useSystemCert"`
+}
+
+func (i *Config) ToMap() map[string]interface{} {
+	return map[string]interface{}{
+		"caFile":        i.CAFile,
+		"certFile":      i.CertFile,
+		"keyFile":       i.KeyFile,
+		"skipVerify":    i.SkipVerify,
+		"useSystemCert": i.UseSystemCert,
+	}
+}
+
+func (i *Config) FromMap(values map[string]interface{}) error {
+
+	var err error
+	i.CAFile, err = coerce.ToString(values["caFile"])
+	if err != nil {
+		return err
+	}
+	i.CertFile, err = coerce.ToString(values["certFile"])
+	if err != nil {
+		return err
+	}
+	i.KeyFile, err = coerce.ToString(values["keyFile"])
+	if err != nil {
+		return err
+	}
+	i.SkipVerify, err = coerce.ToBool(values["skipVerify"])
+	if err != nil {
+		return err
+	}
+	i.UseSystemCert, err = coerce.ToBool(values["useSystemCert"])
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func NewClientTLSConfig(config *Config) (*tls.Config, error) {
