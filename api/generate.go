@@ -12,6 +12,7 @@ import (
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/app"
 	"github.com/project-flogo/core/app/resource"
+	"github.com/project-flogo/core/data"
 )
 
 // Import is a package import
@@ -73,8 +74,29 @@ type Generator interface {
 	Generate(settingsName string, imports *Imports, config *action.Config) (code string, err error)
 }
 
+var dataTypes = map[data.Type]string{
+	data.TypeUnknown: "TypeUnknown",
+	data.TypeAny:     "TypeAny",
+	data.TypeString:  "TypeString",
+	data.TypeInt:     "TypeInt",
+	data.TypeInt32:   "TypeInt32",
+	data.TypeInt64:   "TypeInt64",
+	data.TypeFloat32: "TypeFloat32",
+	data.TypeFloat64: "TypeFloat64",
+	data.TypeBool:    "TypeBool",
+	data.TypeObject:  "TypeObject",
+	data.TypeBytes:   "TypeBytes",
+	data.TypeParams:  "TypeParams",
+	data.TypeArray:   "TypeArray",
+	data.TypeMap:     "TypeMap",
+}
+
 // Generate generates flogo go API code
 func Generate(config *app.Config, file string) {
+	if config.Type != "flogo:app" {
+		panic("invalid app type")
+	}
+
 	app := generator{}
 
 	for _, anImport := range config.Imports {
@@ -107,9 +129,23 @@ func Generate(config *app.Config, file string) {
 		resources[resConfig.ID] = res
 	}
 
-	output := "func main() {\n"
+	output := "/*\n"
+	output += fmt.Sprintf("* Name: %s\n", config.Name)
+	output += fmt.Sprintf("* Type: %s\n", config.Type)
+	output += fmt.Sprintf("* Version: %s\n", config.Version)
+	output += fmt.Sprintf("* Description: %s\n", config.Description)
+	output += fmt.Sprintf("* AppModel: %s\n", config.AppModel)
+	output += "*/\n\n"
+
+	output += "func main() {\n"
 	app.imports.Add("github.com/project-flogo/core/api")
 	output += "app := api.NewApp()\n"
+	if len(config.Properties) > 0 {
+		app.imports.Add("github.com/project-flogo/core/data")
+		for _, property := range config.Properties {
+			output += fmt.Sprintf("app.AddProperty(%s, data.%s, %#v)\n", property.Name(), dataTypes[property.Type()], property.Value())
+		}
+	}
 	for i, trigger := range config.Triggers {
 		port := app.imports.AddWithAlias("", trigger.Ref)
 		output += fmt.Sprintf("trg%d := app.NewTrigger(&%s.Trigger{}, %#v)\n", i, port.Alias, trigger.Settings)
@@ -139,7 +175,7 @@ func Generate(config *app.Config, file string) {
 					output += code
 					output += "\n"
 				} else {
-					output += fmt.Sprintf("var %s map[string]interface{}\n", settingsName)
+					output += fmt.Sprintf("%s := %#v\n", settingsName, actionConfig.Settings)
 				}
 				output += fmt.Sprintf("action%d_%d_%d, err := handler%d_%d.NewAction(&%s.Action{}, %s)\n", i, j, k, i, j, port.Alias, settingsName)
 				if act.If != "" {
@@ -168,6 +204,12 @@ func Generate(config *app.Config, file string) {
 		}
 		output += fmt.Sprintf("_ = trg%d\n", i)
 	}
+	output += "e, err := api.NewEngine(app)\n"
+	output += "if err != nil {\n"
+	output += "panic(err)\n"
+	output += "}\n"
+	app.imports.Add("github.com/project-flogo/core/engine")
+	output += "engine.RunEngine(e)\n"
 	output += "}\n"
 
 	header := "package main\n\n"
