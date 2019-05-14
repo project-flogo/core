@@ -199,7 +199,6 @@ func Generate(config *app.Config, file string) {
 					}
 					output += fmt.Sprintf("action%d_%d_%d.SetOutputMappings(%#v)\n", i, j, k, mappings)
 				}
-				errorCheck()
 				output += fmt.Sprintf("_ = action%d_%d_%d\n", i, j, k)
 			}
 			output += fmt.Sprintf("_ = handler%d_%d\n", i, j)
