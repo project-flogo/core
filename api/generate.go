@@ -138,6 +138,7 @@ func Generate(config *app.Config, file string) {
 	output += "*/\n\n"
 
 	output += "func main() {\n"
+	output += "var err error\n"
 	app.imports.Add("github.com/project-flogo/core/api")
 	output += "app := api.NewApp()\n"
 	if len(config.Properties) > 0 {
@@ -145,6 +146,25 @@ func Generate(config *app.Config, file string) {
 		for _, property := range config.Properties {
 			output += fmt.Sprintf("app.AddProperty(%s, data.%s, %#v)\n", property.Name(), dataTypes[property.Type()], property.Value())
 		}
+	}
+	for i, act := range config.Actions {
+		port := app.imports.AddWithAlias("", act.Ref)
+		factory, settingsName := action.GetFactory(act.Ref), fmt.Sprintf("actionSettings%d", i)
+		if generator, ok := factory.(Generator); ok {
+			code, err := generator.Generate(settingsName, &app.imports, act)
+			if err != nil {
+				panic(err)
+			}
+			output += "\n"
+			output += code
+			output += "\n"
+		} else {
+			output += fmt.Sprintf("%s := %#v\n", settingsName, act.Settings)
+		}
+		output += fmt.Sprintf("err = app.AddAction(\"%s\", &%s.Action{}, %s)\n", act.Id, port.Alias, settingsName)
+		output += "if err != nil {\n"
+		output += "panic(err)\n"
+		output += "}\n"
 	}
 	for i, trigger := range config.Triggers {
 		port := app.imports.AddWithAlias("", trigger.Ref)
@@ -155,29 +175,27 @@ func Generate(config *app.Config, file string) {
 			output += "panic(err)\n"
 			output += "}\n"
 			for k, act := range handler.Actions {
-				actionConfig := act.Config
-				if actionConfig.Id != "" {
-					for _, act := range config.Actions {
-						if actionConfig.Id == act.Id {
-							actionConfig = act
-							break
-						}
-					}
-				}
-				port := app.imports.AddWithAlias("", actionConfig.Ref)
-				factory, settingsName := action.GetFactory(actionConfig.Ref), fmt.Sprintf("settings%d_%d_%d", i, j, k)
-				if generator, ok := factory.(Generator); ok {
-					code, err := generator.Generate(settingsName, &app.imports, actionConfig)
-					if err != nil {
-						panic(err)
-					}
-					output += "\n"
-					output += code
-					output += "\n"
+				if act.Id != "" {
+					output += fmt.Sprintf("action%d_%d_%d, err := handler%d_%d.NewAction(\"%s\")\n", i, j, k, i, j, act.Id)
 				} else {
-					output += fmt.Sprintf("%s := %#v\n", settingsName, actionConfig.Settings)
+					port := app.imports.AddWithAlias("", act.Ref)
+					factory, settingsName := action.GetFactory(act.Ref), fmt.Sprintf("settings%d_%d_%d", i, j, k)
+					if generator, ok := factory.(Generator); ok {
+						code, err := generator.Generate(settingsName, &app.imports, act.Config)
+						if err != nil {
+							panic(err)
+						}
+						output += "\n"
+						output += code
+						output += "\n"
+					} else {
+						output += fmt.Sprintf("%s := %#v\n", settingsName, act.Settings)
+					}
+					output += fmt.Sprintf("action%d_%d_%d, err := handler%d_%d.NewAction(&%s.Action{}, %s)\n", i, j, k, i, j, port.Alias, settingsName)
 				}
-				output += fmt.Sprintf("action%d_%d_%d, err := handler%d_%d.NewAction(&%s.Action{}, %s)\n", i, j, k, i, j, port.Alias, settingsName)
+				output += "if err != nil {\n"
+				output += "panic(err)\n"
+				output += "}\n"
 				if act.If != "" {
 					output += fmt.Sprintf("action%d_%d_%d.SetCondition(%s)\n", i, j, k, act.If)
 				}

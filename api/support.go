@@ -2,10 +2,11 @@ package api
 
 import (
 	"context"
-	"github.com/project-flogo/core/support/log"
 	"reflect"
 	"strconv"
 	"strings"
+
+	"github.com/project-flogo/core/support/log"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/activity"
@@ -41,6 +42,15 @@ func toAppConfig(a *App) *app.Config {
 
 	appCfg.Properties = properties
 
+	for key, value := range a.actions {
+		act := &action.Config{
+			Ref:      value.ref,
+			Id:       key,
+			Settings: value.settings,
+		}
+		appCfg.Actions = append(appCfg.Actions, act)
+	}
+
 	return appCfg
 }
 
@@ -75,6 +85,7 @@ func toActionConfig(act *Action) *trigger.ActionConfig {
 		return actionCfg
 	}
 
+	actionCfg.Id = act.id
 	actionCfg.Ref = act.ref
 	actionCfg.Settings = act.settings
 	actionCfg.If = act.condition
