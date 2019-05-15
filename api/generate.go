@@ -127,7 +127,7 @@ func Generate(config *app.Config, file string) {
 	if len(config.Properties) > 0 {
 		port := app.imports.Ensure("github.com/project-flogo/core/data")
 		for _, property := range config.Properties {
-			output += fmt.Sprintf("app.AddProperty(%s, %s.%s, %#v)\n", property.Name(), port.Alias,
+			output += fmt.Sprintf("app.AddProperty(\"%s\", %s.%s, %#v)\n", property.Name(), port.Alias,
 				property.Type().Name(), property.Value())
 		}
 	}

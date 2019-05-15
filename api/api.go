@@ -57,7 +57,8 @@ type Action struct {
 // NewApp creates a new Flogo application
 func NewApp() *App {
 	return &App{
-		actions: make(map[string]*Action),
+		properties: make(map[string]data.TypedValue),
+		actions:    make(map[string]*Action),
 	}
 }
 
