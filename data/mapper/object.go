@@ -237,7 +237,10 @@ func (f *foreach) handle(arrayMappingFields map[string]interface{}, inputScope d
 
 	if len(arrayMappingFields) > 0 {
 		for i, sourceValue := range newSourceArray {
-			inputScope = newLoopScope(sourceValue, f.index, inputScope)
+			inputScope, err = newLoopScope(sourceValue, f.index, inputScope)
+			if err != nil {
+				return nil, err
+			}
 			item, err := handleObjectMapping(arrayMappingFields, f.exprFactory, inputScope)
 			if err != nil {
 				return nil, err
@@ -248,8 +251,8 @@ func (f *foreach) handle(arrayMappingFields map[string]interface{}, inputScope d
 				//update value
 				switch t := item.(type) {
 				case map[string]interface{}:
-					targetValue, ok := targetValues[i].(map[string]interface{})
-					if ok {
+					targetValue, err := ToObjectMap(targetValues[i])
+					if err == nil {
 						for k, v := range t {
 							targetValue[k] = v
 						}
@@ -257,8 +260,8 @@ func (f *foreach) handle(arrayMappingFields map[string]interface{}, inputScope d
 						return nil, fmt.Errorf("cannot assign map[string]interface to [%s]", reflect.TypeOf(targetValues[i]))
 					}
 				case []interface{}:
-					targetValue, ok := targetValues[i].([]interface{})
-					if ok {
+					targetValue, err := coerce.ToArray(targetValues[i])
+					if err == nil {
 						for k, v := range t {
 							targetValue[k] = v
 						}
@@ -301,7 +304,11 @@ func (f *foreach) handleArrayAssign(sourceArray []interface{}, arrayMappingField
 			targetValues = sourceArray
 		} else {
 			for i, sourceValue := range sourceArray {
-				inputScope = newLoopScope(sourceValue, f.index, inputScope)
+				var err error
+				inputScope, err = newLoopScope(sourceValue, f.index, inputScope)
+				if err != nil {
+					return nil, err
+				}
 				fromValue, err := getExpressionValue(field, f.exprFactory, inputScope)
 				if err != nil {
 					return nil, fmt.Errorf("eval expression failed %s", err.Error())
@@ -356,12 +363,57 @@ func newForeach(foreachpath string, exprF expression.Factory) *foreach {
 	return foreach
 }
 
-func newLoopScope(arrayItem interface{}, indexName string, scope data.Scope) data.Scope {
+func newLoopScope(arrayItem interface{}, indexName string, scope data.Scope) (data.Scope, error) {
+	mapData, err := ToObjectMap(arrayItem)
+	if err != nil {
+		return nil, fmt.Errorf("convert array item data [%+v] to map failed, due to [%s]", arrayItem, err.Error())
+	}
 	if len(indexName) <= 0 {
-		return data.NewSimpleScope(arrayItem.(map[string]interface{}), scope)
+		return data.NewSimpleScope(mapData, scope), nil
 	} else {
-		values := arrayItem.(map[string]interface{})
-		values[indexName] = arrayItem
-		return data.NewSimpleScope(values, scope)
+		values := mapData
+		values[indexName] = mapData
+		return data.NewSimpleScope(values, scope), nil
+	}
+}
+
+func ToObjectMap(value interface{}) (map[string]interface{}, error) {
+	switch t := value.(type) {
+	case map[string]interface{}:
+		return t, nil
+	case map[string]string, string:
+		return coerce.ToObject(value)
+	default:
+		out := make(map[string]interface{})
+		v := reflect.ValueOf(t)
+		if v.Kind() == reflect.Ptr {
+			v = v.Elem()
+		}
+		if v.Kind() == reflect.Map {
+			for _, k := range v.MapKeys() {
+				key, err := coerce.ToString(k.Interface())
+				if err != nil {
+					return nil, fmt.Errorf("unable to convert key [%+v] to string: %s", k.Interface(), err.Error())
+				}
+				out[key] = v.MapIndex(k).Interface()
+			}
+		} else if v.Kind() == reflect.Struct {
+			typ := v.Type()
+			for i := 0; i < v.NumField(); i++ {
+				// gets us a StructField
+				fi := typ.Field(i)
+				if !fi.Anonymous {
+					if tagv := fi.Tag.Get("json"); tagv != "" {
+						out[tagv] = v.Field(i).Interface()
+					} else {
+						out[fi.Name] = v.Field(i).Interface()
+					}
+				}
+			}
+		} else {
+			return coerce.ToObject(t)
+		}
+
+		return out, nil
 	}
 }
