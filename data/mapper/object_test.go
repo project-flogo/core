@@ -477,6 +477,80 @@ func TestArrayMappingWithFunction(t *testing.T) {
 	assert.Equal(t, "State is tx", arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["tostate"])
 }
 
+func TestArrayMappingWithStruct(t *testing.T) {
+	mappingValue := `{"mapping": {
+        "person2" : "person",
+        "addresses": {
+            "@foreach($.field.addresses, index)":
+            {
+              "tostate"   : "=tstring.concat(\"State is \", $loop[index].state)",
+               "tostreet": "=$loop.street",
+               "tozipcode":"=$loop.zipcode",
+              "addresses2": {
+                  "@foreach($loop.Array)":{
+                        "tofield1"  : "=$loop[index].street",
+               			"tofield2": "=tstring.concat(\"field is \", $loop.feild1)",
+               			"tofield3":"=$loop.feild1"
+                  }
+              }
+            }
+        }
+    }
+}`
+
+	array := []struct {
+		Feild1 string `json:"feild1"`
+	}{
+		{
+			Feild1: "field1value",
+		},
+	}
+
+	address := []struct {
+		Street  string `json:"street"`
+		Zipcode int    `json:"zipcode"`
+		State   string `json:"state"`
+		Array   interface{}
+	}{
+		{
+			Street:  "street",
+			Zipcode: 77479,
+			State:   "tx",
+			Array:   array,
+		},
+	}
+
+	arrayData := struct {
+		Person    string `json:"person"`
+		Addresses interface{}
+	}{
+		Person:    "name",
+		Addresses: address,
+	}
+
+	arrayMapping := make(map[string]interface{})
+	err := json.Unmarshal([]byte(mappingValue), &arrayMapping)
+	assert.Nil(t, err)
+	assert.False(t, IsLiteral(arrayMapping))
+	mappings := map[string]interface{}{"addresses": arrayMapping}
+	factory := NewFactory(resolve.GetBasicResolver())
+	mapper, err := factory.NewMapper(mappings)
+	assert.Nil(t, err)
+
+	attrs := map[string]interface{}{"field": arrayData}
+	scope := data.NewSimpleScope(attrs, nil)
+	results, err := mapper.Apply(scope)
+	assert.Nil(t, err)
+
+	arr := results["addresses"]
+
+	assert.Equal(t, "person", arr.(map[string]interface{})["person2"])
+	assert.Equal(t, int(77479), arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["tozipcode"])
+	assert.Equal(t, "State is tx", arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["tostate"])
+	assert.Equal(t, "street", arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["addresses2"].([]interface{})[0].(map[string]interface{})["tofield1"])
+
+}
+
 func TestArrayMappingWithNestComplexObject(t *testing.T) {
 	mappingValue := `{"mapping": {
         "person2" : "person",
