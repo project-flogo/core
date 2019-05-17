@@ -499,7 +499,7 @@ func TestArrayMappingWithStruct(t *testing.T) {
 }`
 
 	array := []struct {
-		Feild1 string `json:"feild1"`
+		Feild1 string `json:"feild1, ,omitempty"`
 	}{
 		{
 			Feild1: "field1value",
@@ -507,9 +507,9 @@ func TestArrayMappingWithStruct(t *testing.T) {
 	}
 
 	address := []struct {
-		Street  string `json:"street"`
-		Zipcode int    `json:"zipcode"`
-		State   string `json:"state"`
+		Street  string `json:"street,omitempty"`
+		Zipcode int    `json:"zipcode,omitempty"`
+		State   string `json:"state,omitempty"`
 		Array   interface{}
 	}{
 		{

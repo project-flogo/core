@@ -86,10 +86,9 @@ func getFieldValueByName(object interface{}, name string) (interface{}, error) {
 		for i := 0; i < typ.NumField(); i++ {
 			p := typ.Field(i)
 			if !p.Anonymous {
-				if p.Tag != "" && len(p.Tag) > 0 {
-					if name == p.Tag.Get("json") {
-						return val.FieldByName(typ.Field(i).Name).Interface(), nil
-					}
+				jsonTag := GetJsonTag(p)
+				if len(jsonTag) > 0 && name == jsonTag {
+					return val.FieldByName(typ.Field(i).Name).Interface(), nil
 				}
 			}
 		}
@@ -99,6 +98,17 @@ func getFieldValueByName(object interface{}, name string) (interface{}, error) {
 		return v.Interface(), nil
 	}
 	return nil, fmt.Errorf("unable to evaluate path: %s", name)
+}
+
+func GetJsonTag(t reflect.StructField) string {
+	if jsonTag := t.Tag.Get("json"); jsonTag != "" && jsonTag != "-" {
+		var commaIdx int
+		if commaIdx = strings.Index(jsonTag, ","); commaIdx < 0 {
+			commaIdx = len(jsonTag)
+		}
+		return jsonTag[:commaIdx]
+	}
+	return ""
 }
 
 func NormalizeFieldName(name string) string {
