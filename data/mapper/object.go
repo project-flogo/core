@@ -5,6 +5,7 @@ import (
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/expression"
+	"github.com/project-flogo/core/data/path"
 	"github.com/project-flogo/core/support/log"
 	"reflect"
 	"runtime/debug"
@@ -403,8 +404,9 @@ func ToObjectMap(value interface{}) (map[string]interface{}, error) {
 				// gets us a StructField
 				fi := typ.Field(i)
 				if !fi.Anonymous {
-					if tagv := fi.Tag.Get("json"); tagv != "" {
-						out[tagv] = v.Field(i).Interface()
+					jsonTag := path.GetJsonTag(fi)
+					if len(jsonTag) > 0 {
+						out[jsonTag] = v.Field(i).Interface()
 					} else {
 						out[fi.Name] = v.Field(i).Interface()
 					}
