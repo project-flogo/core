@@ -7,7 +7,6 @@ import (
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/api"
 	"github.com/project-flogo/core/app/resource"
-	_ "github.com/project-flogo/core/data/expression/script"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/support/log"
 )

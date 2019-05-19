@@ -15,6 +15,11 @@ var testFlogoJSON = `{
   "type": "flogo:app",
   "version": "1.0.0",
   "description": "This is a test application.",
+	"imports": [
+		"github.com/project-flogo/core/examples/action",
+		"github.com/project-flogo/core/examples/trigger",
+		"_ github.com/project-flogo/core/data/expression/script"
+	],
   "properties": [
 		{"name": "test0", "type": "string", "value": "test"},
 		{"name": "test1", "type": "int", "value": 1},

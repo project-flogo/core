@@ -38,10 +38,12 @@ func (i *Imports) Ensure(path string, name ...string) Import {
 	if len(name) == 1 {
 		alias = name[0]
 	}
-	for _, port := range i.Imports {
-		if port.Alias == alias {
-			alias = fmt.Sprintf("port%d", len(i.Imports))
-			break
+	if alias != "_" {
+		for _, port := range i.Imports {
+			if port.Alias == alias {
+				alias = fmt.Sprintf("port%d", len(i.Imports))
+				break
+			}
 		}
 	}
 	port := Import{
@@ -78,7 +80,12 @@ func Generate(config *app.Config, file string) {
 
 	for _, anImport := range config.Imports {
 		matches := flogoImportPattern.FindStringSubmatch(anImport)
-		app.imports.Ensure(matches[3], matches[1])
+		alias, ref := matches[1], matches[3]
+		if alias == "" {
+			app.imports.Ensure(ref)
+		} else {
+			app.imports.Ensure(ref, alias)
+		}
 	}
 
 	resources := make(map[string]*resource.Resource, len(config.Resources))
