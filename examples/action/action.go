@@ -2,17 +2,31 @@ package sample
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/project-flogo/core/action"
+	"github.com/project-flogo/core/api"
+	"github.com/project-flogo/core/app/resource"
+	_ "github.com/project-flogo/core/data/expression/script"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/support/log"
 )
 
 func init() {
 	_ = action.Register(&Action{}, &ActionFactory{})
+	resource.RegisterLoader("action", &Manager{})
 }
 
 var actionMd = action.ToMetadata(&Settings{}, &Input{}, &Output{})
+
+// Manager loads the action definition resource
+type Manager struct {
+}
+
+// LoadResource loads the action definition
+func (m *Manager) LoadResource(config *resource.Config) (*resource.Resource, error) {
+	return resource.New("action", "test data"), nil
+}
 
 type ActionFactory struct {
 }
@@ -35,6 +49,11 @@ func (f *ActionFactory) New(config *action.Config) (action.Action, error) {
 
 	return act, nil
 
+}
+
+// Generate generates Flogo API code for this action
+func (f *ActionFactory) Generate(settingsName string, imports *api.Imports, config *action.Config) (code string, err error) {
+	return fmt.Sprintf("var %s = %#v\n", settingsName, config.Settings), nil
 }
 
 type Action struct {

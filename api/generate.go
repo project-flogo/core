@@ -133,9 +133,13 @@ func Generate(config *app.Config, file string) {
 	}
 	if len(config.Channels) > 0 {
 		port := app.imports.Ensure("github.com/project-flogo/core/engine/channels")
-		for _, channel := range config.Channels {
-			output += fmt.Sprintf("name, buffSize := %s.Decode(\"%s\")\n", port.Alias, channel)
-			output += fmt.Sprintf("_, err := %s.New(name, buffSize)\n", port.Alias)
+		for i, channel := range config.Channels {
+			if i == 0 {
+				output += fmt.Sprintf("name, buffSize := %s.Decode(\"%s\")\n", port.Alias, channel)
+			} else {
+				output += fmt.Sprintf("name, buffSize = %s.Decode(\"%s\")\n", port.Alias, channel)
+			}
+			output += fmt.Sprintf("_, err = %s.New(name, buffSize)\n", port.Alias)
 			errorCheck()
 		}
 	}
@@ -183,21 +187,21 @@ func Generate(config *app.Config, file string) {
 				}
 				errorCheck()
 				if act.If != "" {
-					output += fmt.Sprintf("action%d_%d_%d.SetCondition(%s)\n", i, j, k, act.If)
+					output += fmt.Sprintf("action%d_%d_%d.SetCondition(\"%s\")\n", i, j, k, act.If)
 				}
 				if length := len(act.Input); length > 0 {
-					mappings := make([]string, length)
+					mappings := make([]string, 0, length)
 					for key, value := range act.Input {
-						mappings = append(mappings, fmt.Sprintf("%s=%v", key, value))
+						mappings = append(mappings, fmt.Sprintf("%s%v", key, value))
 					}
-					output += fmt.Sprintf("action%d_%d_%d.SetInputMappings(%#v)\n", i, j, k, mappings)
+					output += fmt.Sprintf("action%d_%d_%d.SetInputMappings(%#v...)\n", i, j, k, mappings)
 				}
 				if length := len(act.Output); length > 0 {
-					mappings := make([]string, length)
+					mappings := make([]string, 0, length)
 					for key, value := range act.Output {
-						mappings = append(mappings, fmt.Sprintf("%s=%v", key, value))
+						mappings = append(mappings, fmt.Sprintf("%s%v", key, value))
 					}
-					output += fmt.Sprintf("action%d_%d_%d.SetOutputMappings(%#v)\n", i, j, k, mappings)
+					output += fmt.Sprintf("action%d_%d_%d.SetOutputMappings(%#v...)\n", i, j, k, mappings)
 				}
 				output += fmt.Sprintf("_ = action%d_%d_%d\n", i, j, k)
 			}
