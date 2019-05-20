@@ -34,7 +34,7 @@ var testFlogoJSON = `{
     {
       "name": "flogo-test0",
       "id": "test0",
-      "ref": "github.com/project-flogo/core/examples/trigger",
+      "ref": "#trigger",
       "settings": {
         "aSetting": 123
       },
@@ -54,7 +54,7 @@ var testFlogoJSON = `{
 		{
       "name": "flogo-test1",
       "id": "test1",
-      "ref": "github.com/project-flogo/core/examples/trigger",
+      "ref": "#trigger",
       "settings": {
         "aSetting": 123
       },

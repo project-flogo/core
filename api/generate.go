@@ -13,6 +13,10 @@ import (
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/app"
 	"github.com/project-flogo/core/app/resource"
+	"github.com/project-flogo/core/data/expression/function"
+	"github.com/project-flogo/core/data/property"
+	"github.com/project-flogo/core/data/schema"
+	"github.com/project-flogo/core/support"
 )
 
 // Import is a package import
@@ -28,6 +32,15 @@ type Imports struct {
 
 // Ensure looks up an import and adds it if it is missing
 func (i *Imports) Ensure(path string, name ...string) Import {
+	if strings.HasPrefix(path, "#") {
+		alias := strings.TrimPrefix(path, "#")
+		for _, port := range i.Imports {
+			if port.Alias == alias {
+				return port
+			}
+		}
+		panic(fmt.Errorf("ref %s not found", path))
+	}
 	for _, port := range i.Imports {
 		if port.Import == path {
 			return port
@@ -81,12 +94,41 @@ func Generate(config *app.Config, file string) {
 	for _, anImport := range config.Imports {
 		matches := flogoImportPattern.FindStringSubmatch(anImport)
 		alias, ref := matches[1], matches[3]
+		var port Import
 		if alias == "" {
-			app.imports.Ensure(ref)
+			port = app.imports.Ensure(ref)
 		} else {
-			app.imports.Ensure(ref, alias)
+			port = app.imports.Ensure(ref, alias)
+		}
+
+		for _, typ := range [...]string{"activity", "action", "trigger", "function", "other"} {
+			err := support.RegisterAlias(typ, port.Alias, port.Import)
+			if err != nil {
+				panic(err)
+			}
+		}
+
+		function.SetPackageAlias(port.Import, port.Alias)
+	}
+
+	function.ResolveAliases()
+
+	for id, def := range config.Schemas {
+		_, err := schema.Register(id, def)
+		if err != nil {
+			panic(err)
 		}
 	}
+
+	schema.ResolveSchemas()
+
+	properties := make(map[string]interface{}, len(config.Properties))
+	for _, attr := range config.Properties {
+		properties[attr.Name()] = attr.Value()
+	}
+
+	propertyManager := property.NewManager(properties)
+	property.SetDefaultManager(propertyManager)
 
 	resources := make(map[string]*resource.Resource, len(config.Resources))
 	app.resManager = resource.NewManager(resources)
