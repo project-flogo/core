@@ -23,15 +23,22 @@ import (
 type Import struct {
 	Alias  string
 	Import string
+	Used   bool
+}
+
+// GetAlias gets the import alias and marks it as used
+func (i *Import) GetAlias() string {
+	i.Used = true
+	return i.Alias
 }
 
 // Imports are the package imports
 type Imports struct {
-	Imports []Import
+	Imports []*Import
 }
 
 // Ensure looks up an import and adds it if it is missing
-func (i *Imports) Ensure(path string, name ...string) Import {
+func (i *Imports) Ensure(path string, name ...string) *Import {
 	if strings.HasPrefix(path, "#") {
 		alias := strings.TrimPrefix(path, "#")
 		for _, port := range i.Imports {
@@ -59,7 +66,7 @@ func (i *Imports) Ensure(path string, name ...string) Import {
 			}
 		}
 	}
-	port := Import{
+	port := &Import{
 		Alias:  alias,
 		Import: path,
 	}
@@ -99,7 +106,7 @@ func Generate(config *app.Config, file string) {
 	for _, anImport := range config.Imports {
 		matches := flogoImportPattern.FindStringSubmatch(anImport)
 		alias, ref := matches[1], matches[3]
-		var port Import
+		var port *Import
 		if alias == "" {
 			port = app.imports.Ensure(ref)
 		} else {
@@ -162,7 +169,7 @@ func Generate(config *app.Config, file string) {
 	output += "func main() {\n"
 	output += "var err error\n"
 	port := app.imports.Ensure("github.com/project-flogo/core/api")
-	output += fmt.Sprintf("app := %s.NewApp()\n", port.Alias)
+	output += fmt.Sprintf("app := %s.NewApp()\n", port.GetAlias())
 
 	for i, resConfig := range config.Resources {
 		resType, err := resource.GetTypeFromID(resConfig.ID)
@@ -181,8 +188,8 @@ func Generate(config *app.Config, file string) {
 			generate = g.Generate()
 		}
 		if generate {
-			app.imports.Ensure("encoding/json")
-			output += fmt.Sprintf("resource%d := json.RawMessage(`%s`)\n", i, string(resConfig.Data))
+			port := app.imports.Ensure("encoding/json")
+			output += fmt.Sprintf("resource%d := %s.RawMessage(`%s`)\n", i, port.GetAlias(), string(resConfig.Data))
 			output += fmt.Sprintf("app.AddResource(\"%s\", resource%d)\n", resConfig.ID, i)
 		}
 
@@ -192,7 +199,7 @@ func Generate(config *app.Config, file string) {
 	if len(config.Properties) > 0 {
 		port := app.imports.Ensure("github.com/project-flogo/core/data")
 		for _, property := range config.Properties {
-			output += fmt.Sprintf("app.AddProperty(\"%s\", %s.%s, %#v)\n", property.Name(), port.Alias,
+			output += fmt.Sprintf("app.AddProperty(\"%s\", %s.%s, %#v)\n", property.Name(), port.GetAlias(),
 				property.Type().Name(), property.Value())
 		}
 	}
@@ -200,11 +207,11 @@ func Generate(config *app.Config, file string) {
 		port := app.imports.Ensure("github.com/project-flogo/core/engine/channels")
 		for i, channel := range config.Channels {
 			if i == 0 {
-				output += fmt.Sprintf("name, buffSize := %s.Decode(\"%s\")\n", port.Alias, channel)
+				output += fmt.Sprintf("name, buffSize := %s.Decode(\"%s\")\n", port.GetAlias(), channel)
 			} else {
-				output += fmt.Sprintf("name, buffSize = %s.Decode(\"%s\")\n", port.Alias, channel)
+				output += fmt.Sprintf("name, buffSize = %s.Decode(\"%s\")\n", port.GetAlias(), channel)
 			}
-			output += fmt.Sprintf("_, err = %s.New(name, buffSize)\n", port.Alias)
+			output += fmt.Sprintf("_, err = %s.New(name, buffSize)\n", port.GetAlias())
 			errorCheck()
 		}
 	}
@@ -222,12 +229,12 @@ func Generate(config *app.Config, file string) {
 		} else {
 			output += fmt.Sprintf("%s := %#v\n", settingsName, act.Settings)
 		}
-		output += fmt.Sprintf("err = app.AddAction(\"%s\", &%s.Action{}, %s)\n", act.Id, port.Alias, settingsName)
+		output += fmt.Sprintf("err = app.AddAction(\"%s\", &%s.Action{}, %s)\n", act.Id, port.GetAlias(), settingsName)
 		errorCheck()
 	}
 	for i, trigger := range config.Triggers {
 		port := app.imports.Ensure(trigger.Ref)
-		output += fmt.Sprintf("trg%d := app.NewTrigger(&%s.Trigger{}, %#v)\n", i, port.Alias, trigger.Settings)
+		output += fmt.Sprintf("trg%d := app.NewTrigger(&%s.Trigger{}, %#v)\n", i, port.GetAlias(), trigger.Settings)
 		for j, handler := range trigger.Handlers {
 			output += fmt.Sprintf("handler%d_%d, err := trg%d.NewHandler(%#v)\n", i, j, i, handler.Settings)
 			errorCheck()
@@ -248,7 +255,7 @@ func Generate(config *app.Config, file string) {
 					} else {
 						output += fmt.Sprintf("%s := %#v\n", settingsName, act.Settings)
 					}
-					output += fmt.Sprintf("action%d_%d_%d, err := handler%d_%d.NewAction(&%s.Action{}, %s)\n", i, j, k, i, j, port.Alias, settingsName)
+					output += fmt.Sprintf("action%d_%d_%d, err := handler%d_%d.NewAction(&%s.Action{}, %s)\n", i, j, k, i, j, port.GetAlias(), settingsName)
 				}
 				errorCheck()
 				if act.If != "" {
@@ -275,16 +282,20 @@ func Generate(config *app.Config, file string) {
 		output += fmt.Sprintf("_ = trg%d\n", i)
 	}
 	port = app.imports.Ensure("github.com/project-flogo/core/api")
-	output += fmt.Sprintf("e, err := %s.NewEngine(app)\n", port.Alias)
+	output += fmt.Sprintf("e, err := %s.NewEngine(app)\n", port.GetAlias())
 	errorCheck()
 	port = app.imports.Ensure("github.com/project-flogo/core/engine")
-	output += fmt.Sprintf("%s.RunEngine(e)\n", port.Alias)
+	output += fmt.Sprintf("%s.RunEngine(e)\n", port.GetAlias())
 	output += "}\n"
 
 	header := "package main\n\n"
 	header += "import (\n"
 	for _, port := range app.imports.Imports {
-		header += fmt.Sprintf("%s \"%s\"\n", port.Alias, port.Import)
+		if port.Used {
+			header += fmt.Sprintf("%s \"%s\"\n", port.Alias, port.Import)
+			continue
+		}
+		header += fmt.Sprintf("_ \"%s\"\n", port.Import)
 	}
 	header += ")\n"
 
