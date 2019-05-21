@@ -83,6 +83,11 @@ type Generator interface {
 	Generate(settingsName string, imports *Imports, config *action.Config) (code string, err error)
 }
 
+// GenerateResource is used to determine if a resource is generated, defaults to true
+type GenerateResource interface {
+	Generate() bool
+}
+
 // Generate generates flogo go API code
 func Generate(config *app.Config, file string) {
 	if config.Type != "flogo:app" {
@@ -140,21 +145,6 @@ func Generate(config *app.Config, file string) {
 		}
 	}
 
-	for _, resConfig := range config.Resources {
-		resType, err := resource.GetTypeFromID(resConfig.ID)
-		if err != nil {
-			panic(err)
-		}
-
-		loader := resource.GetLoader(resType)
-		res, err := loader.LoadResource(resConfig)
-		if err != nil {
-			panic(err)
-		}
-
-		resources[resConfig.ID] = res
-	}
-
 	output := "/*\n"
 	output += fmt.Sprintf("* Name: %s\n", config.Name)
 	output += fmt.Sprintf("* Type: %s\n", config.Type)
@@ -173,6 +163,32 @@ func Generate(config *app.Config, file string) {
 	output += "var err error\n"
 	port := app.imports.Ensure("github.com/project-flogo/core/api")
 	output += fmt.Sprintf("app := %s.NewApp()\n", port.Alias)
+
+	for i, resConfig := range config.Resources {
+		resType, err := resource.GetTypeFromID(resConfig.ID)
+		if err != nil {
+			panic(err)
+		}
+
+		loader := resource.GetLoader(resType)
+		res, err := loader.LoadResource(resConfig)
+		if err != nil {
+			panic(err)
+		}
+
+		generate := true
+		if g, ok := loader.(GenerateResource); ok {
+			generate = g.Generate()
+		}
+		if generate {
+			app.imports.Ensure("encoding/json")
+			output += fmt.Sprintf("resource%d := json.RawMessage(`%s`)\n", i, string(resConfig.Data))
+			output += fmt.Sprintf("app.AddResource(\"%s\", resource%d)\n", resConfig.ID, i)
+		}
+
+		resources[resConfig.ID] = res
+	}
+
 	if len(config.Properties) > 0 {
 		port := app.imports.Ensure("github.com/project-flogo/core/data")
 		for _, property := range config.Properties {

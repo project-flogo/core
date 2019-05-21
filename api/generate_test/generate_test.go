@@ -113,7 +113,9 @@ var testFlogoJSON = `{
     {
       "id": "action:Test",
       "compressed": false,
-      "data": {}
+      "data": {
+				"message": "hello world"
+			}
     }
   ],
   "actions": [
