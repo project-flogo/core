@@ -973,6 +973,141 @@ func TestArrayMappingWithFilter(t *testing.T) {
 	assert.Equal(t, "1935182722", arr.(map[string]interface{})["books"].([]interface{})[0].(map[string]interface{})["isbn"])
 }
 
+func TestArrayMappingWithFilterNested(t *testing.T) {
+	mappingValue := `{
+  "mapping": {
+    "books": {
+      "@foreach($.books, index, $loop.title == \"IOS\")": {
+        "title": "=tstring.concat(\"title is \", $loop.title)",
+        "isbn": "=$loop.isbn",
+        "status": "=$loop.status",
+        "categories": "=$loop.categories",
+        "author": {
+          "@foreach($.authors, authorLoop, $loop.age > 45)": {
+            "firstName": "=$loop.firstName",
+            "lastName": "=$loop.lastName",
+            "age": "=$loop.age"
+          }
+        }
+      }
+    }
+  }
+}`
+
+	arrayData := `[
+  {
+    "title": "Android",
+    "isbn": "1933988673",
+    "pageCount": 416,
+    "publishedDate": {
+      "$date": "2009-04-01T00:00:00.000-0700"
+    },
+    "status": "PUBLISH",
+    "authors": [
+      {
+        "firstName": "abc",
+        "lastName": "ddd",
+        "age": 40
+      },
+      {
+        "firstName": "xxxx",
+        "lastName": "yyyy",
+        "age": 43
+      },
+      {
+        "firstName": "bbbb",
+        "lastName": "ssss",
+        "age": 22
+      }
+    ],
+    "categories": [
+      "Open Source",
+      "Mobile"
+    ]
+  },
+  {
+    "title": "IOS",
+    "isbn": "1935182722",
+    "pageCount": 592,
+    "publishedDate": {
+      "$date": "2011-01-14T00:00:00.000-0800"
+    },
+    "status": "PUBLISH",
+    "authors": [
+      {
+        "firstName": "abc",
+        "lastName": "ddd",
+        "age": 33
+      },
+      {
+        "firstName": "xxxx",
+        "lastName": "yyyy",
+        "age": 55
+      },
+      {
+        "firstName": "bbbb",
+        "lastName": "ssss",
+        "age": 44
+      }
+    ],
+    "categories": [
+      "Java"
+    ]
+  },
+  {
+    "title": "IOS2",
+    "isbn": "1935182722",
+    "pageCount": 592,
+    "publishedDate": {
+      "$date": "2011-01-14T00:00:00.000-0800"
+    },
+    "status": "PUBLISH",
+    "authors": [
+      {
+        "firstName": "abc",
+        "lastName": "ddd",
+        "age": 12
+      },
+      {
+        "firstName": "xxxx",
+        "lastName": "yyyy",
+        "age": 66
+      },
+      {
+        "firstName": "bbbb",
+        "lastName": "ssss",
+        "age": 32
+      }
+    ],
+    "categories": [
+      "Java"
+    ]
+  }
+]`
+
+	arrayMapping := make(map[string]interface{})
+	err := json.Unmarshal([]byte(mappingValue), &arrayMapping)
+	assert.Nil(t, err)
+	assert.False(t, IsLiteral(arrayMapping))
+	mappings := map[string]interface{}{"store": arrayMapping}
+	factory := NewFactory(resolve.GetBasicResolver())
+	mapper, err := factory.NewMapper(mappings)
+	assert.Nil(t, err)
+
+	attrs := map[string]interface{}{"books": arrayData}
+	scope := data.NewSimpleScope(attrs, nil)
+	results, err := mapper.Apply(scope)
+	assert.Nil(t, err)
+
+	arr := results["store"]
+	assert.Equal(t, 1, len(arr.(map[string]interface{})["books"].([]interface{})))
+	assert.Equal(t, "1935182722", arr.(map[string]interface{})["books"].([]interface{})[0].(map[string]interface{})["isbn"])
+	authors := arr.(map[string]interface{})["books"].([]interface{})[0].(map[string]interface{})["author"].([]interface{})
+	assert.Equal(t, 1, len(authors))
+	assert.Equal(t, float64(55), authors[0].(map[string]interface{})["age"])
+
+}
+
 func TestArrayMappingWithFilterAndUpdate(t *testing.T) {
 	mappingValue := `{
    "mapping":{
