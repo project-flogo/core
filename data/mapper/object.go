@@ -101,6 +101,7 @@ func (am *ObjectMapper) Eval(inputScope data.Scope) (interface{}, error) {
 type foreach struct {
 	sourceFrom  string
 	index       string
+	filterExpr  expression.Expr
 	exprFactory expression.Factory
 }
 
@@ -111,7 +112,11 @@ func handleObjectMapping(objectMappings interface{}, exprF expression.Factory, i
 		objectVal := make(map[string]interface{})
 		for mk, mv := range t {
 			if strings.HasPrefix(mk, FOREACH) {
-				return newForeach(mk, exprF).handle(mv.(map[string]interface{}), inputScope)
+				foreach, err := newForeach(mk, exprF)
+				if err != nil {
+					return nil, err
+				}
+				return foreach.handle(mv.(map[string]interface{}), inputScope)
 			}
 			//Go second level to find possible @foreach node
 			if nxtVal, ok := mv.(map[string]interface{}); ok {
@@ -119,7 +124,11 @@ func handleObjectMapping(objectMappings interface{}, exprF expression.Factory, i
 				if hasForeach(nxtVal) {
 					for foreachK, foreachV := range nxtVal {
 						if strings.HasPrefix(foreachK, FOREACH) {
-							objectVal[mk], err = newForeach(foreachK, exprF).handle(foreachV.(map[string]interface{}), inputScope)
+							foreach, err := newForeach(foreachK, exprF)
+							if err != nil {
+								return nil, err
+							}
+							objectVal[mk], err = foreach.handle(foreachV.(map[string]interface{}), inputScope)
 							if err != nil {
 								return nil, err
 							}
@@ -226,7 +235,7 @@ func (f *foreach) handle(arrayMappingFields map[string]interface{}, inputScope d
 		return nil, fmt.Errorf("foreach source [%+v] not an array", fromValue)
 	}
 
-	targetValues := make([]interface{}, len(newSourceArray))
+	var targetValues []interface{}
 	if hasArrayAssign(arrayMappingFields) {
 		targetValues, err = f.handleArrayAssign(newSourceArray, arrayMappingFields, inputScope)
 		if err != nil {
@@ -236,46 +245,79 @@ func (f *foreach) handle(arrayMappingFields map[string]interface{}, inputScope d
 
 	arrayMappingFields = removeAssignFromArrayMappingFeild(arrayMappingFields)
 
+	requireUpdate := len(targetValues) > 0
+
 	if len(arrayMappingFields) > 0 {
+		var skipped = 0
 		for i, sourceValue := range newSourceArray {
 			inputScope, err = newLoopScope(sourceValue, f.index, inputScope)
 			if err != nil {
 				return nil, err
 			}
-			item, err := handleObjectMapping(arrayMappingFields, f.exprFactory, inputScope)
+			passFilter, err := f.passFilter(inputScope)
 			if err != nil {
 				return nil, err
 			}
-			if targetValues[i] == nil {
-				targetValues[i] = item
-			} else {
-				//update value
-				switch t := item.(type) {
-				case map[string]interface{}:
-					targetValue, err := ToObjectMap(targetValues[i])
-					if err == nil {
-						for k, v := range t {
-							targetValue[k] = v
-						}
-					} else {
-						return nil, fmt.Errorf("cannot assign map[string]interface to [%s]", reflect.TypeOf(targetValues[i]))
-					}
-				case []interface{}:
-					targetValue, err := coerce.ToArray(targetValues[i])
-					if err == nil {
-						for k, v := range t {
-							targetValue[k] = v
-						}
-					} else {
-						return nil, fmt.Errorf("cannot assign []interface to [%s]", reflect.TypeOf(targetValues[i]))
-					}
+			if passFilter {
+				item, err := handleObjectMapping(arrayMappingFields, f.exprFactory, inputScope)
+				if err != nil {
+					return nil, err
 				}
+				if requireUpdate {
+					targetValueIndex := i - skipped
+					if len(targetValues) <= 0 {
+						// no need to update just append
+						targetValues = append(targetValues, item)
+					} else if (len(targetValues) < targetValueIndex) || (targetValues[targetValueIndex] == nil) {
+						// No target value, just append
+						targetValues = append(targetValues, item)
+					} else {
+						//update value
+						switch t := item.(type) {
+						case map[string]interface{}:
+							targetValue, err := ToObjectMap(targetValues[targetValueIndex])
+							if err == nil {
+								for k, v := range t {
+									targetValue[k] = v
+								}
+							} else {
+								return nil, fmt.Errorf("cannot assign map[string]interface to [%s]", reflect.TypeOf(targetValues[targetValueIndex]))
+							}
+						case []interface{}:
+							targetValue, err := coerce.ToArray(targetValues[targetValueIndex])
+							if err == nil {
+								for k, v := range t {
+									targetValue[k] = v
+								}
+							} else {
+								return nil, fmt.Errorf("cannot assign []interface to [%s]", reflect.TypeOf(targetValues[targetValueIndex]))
+							}
+						}
+					}
+				} else {
+					// No updated required, just go over the array mapping fields
+					targetValues = append(targetValues, item)
+				}
+			} else {
+				skipped++
 			}
 		}
 		return targetValues, nil
 	}
 
 	return targetValues, nil
+}
+
+func (f *foreach) passFilter(inputScope data.Scope) (bool, error) {
+	if f.filterExpr != nil {
+
+		v, err := f.filterExpr.Eval(inputScope)
+		if err != nil {
+			return false, fmt.Errorf("execute expression [%+v] error %s", f.filterExpr, err.Error())
+		}
+		return coerce.ToBool(v)
+	}
+	return true, nil
 }
 
 func removeAssignFromArrayMappingFeild(arrayMappingFields map[string]interface{}) map[string]interface{} {
@@ -298,23 +340,45 @@ func hasArrayAssign(arrayMappingFields map[string]interface{}) bool {
 }
 
 func (f *foreach) handleArrayAssign(sourceArray []interface{}, arrayMappingFields map[string]interface{}, inputScope data.Scope) ([]interface{}, error) {
-	targetValues := make([]interface{}, len(sourceArray))
+	var targetValues []interface{}
 	field, ok := arrayMappingFields["="]
 	if ok && field != nil {
 		if v, ok := field.(string); ok && v == "$loop" {
-			targetValues = sourceArray
-		} else {
-			for i, sourceValue := range sourceArray {
+			for _, sourceValue := range sourceArray {
 				var err error
 				inputScope, err = newLoopScope(sourceValue, f.index, inputScope)
 				if err != nil {
 					return nil, err
 				}
-				fromValue, err := getExpressionValue(field, f.exprFactory, inputScope)
+				passFilter, err := f.passFilter(inputScope)
 				if err != nil {
-					return nil, fmt.Errorf("eval expression failed %s", err.Error())
+					return nil, err
 				}
-				targetValues[i] = fromValue
+				if passFilter {
+					targetValues = append(targetValues, sourceValue)
+				}
+			}
+		} else {
+			for _, sourceValue := range sourceArray {
+				var err error
+				inputScope, err = newLoopScope(sourceValue, f.index, inputScope)
+				if err != nil {
+					return nil, err
+				}
+
+				passFilter, err := f.passFilter(inputScope)
+				if err != nil {
+					return nil, err
+				}
+
+				if passFilter {
+					fromValue, err := getExpressionValue(field, f.exprFactory, inputScope)
+					if err != nil {
+						return nil, fmt.Errorf("eval expression failed %s", err.Error())
+					}
+					targetValues = append(targetValues, fromValue)
+				}
+
 			}
 		}
 	}
@@ -348,20 +412,43 @@ func getExpressionValue(path interface{}, exprF expression.Factory, scope data.S
 	return finalExpr.Eval(scope)
 }
 
-func newForeach(foreachpath string, exprF expression.Factory) *foreach {
+func newForeach(foreachpath string, exprF expression.Factory) (*foreach, error) {
 	foreach := &foreach{exprFactory: exprF}
 	foreachpath = strings.TrimSpace(foreachpath)
 	if strings.HasPrefix(foreachpath, FOREACH) && strings.Contains(foreachpath, "(") && strings.Contains(foreachpath, ")") {
-		paramsStr := foreachpath[strings.Index(foreachpath, "(")+1 : strings.Index(foreachpath, ")")]
-		params := strings.Split(paramsStr, ",")
-		if len(params) >= 2 {
-			foreach.sourceFrom = strings.TrimSpace(params[0])
-			foreach.index = strings.TrimSpace(params[1])
+		paramsStr := foreachpath[strings.Index(foreachpath, "(")+1 : strings.LastIndex(foreachpath, ")")]
+		sourceIdx := strings.Index(paramsStr, ",")
+		if sourceIdx <= 0 {
+			foreach.sourceFrom = strings.TrimSpace(paramsStr)
 		} else {
-			foreach.sourceFrom = strings.TrimSpace(params[0])
+
+			foreach.sourceFrom = strings.TrimSpace(paramsStr[:sourceIdx])
+			if len(paramsStr) > sourceIdx+1 {
+				//No more argument
+				afterLoopNameParamStr := strings.TrimSpace(paramsStr[sourceIdx+1:])
+				loopNameIdx := strings.Index(afterLoopNameParamStr, ",")
+				if loopNameIdx >= 0 {
+					foreach.index = strings.TrimSpace(afterLoopNameParamStr[:loopNameIdx])
+				} else {
+					foreach.index = afterLoopNameParamStr
+					return foreach, nil
+				}
+
+				if len(afterLoopNameParamStr) > loopNameIdx+1 {
+					filter := strings.TrimSpace(afterLoopNameParamStr[loopNameIdx+1:])
+					if len(filter) > 0 {
+						//create new filter expression
+						filterExpr, err := exprF.NewExpr(filter)
+						if err != nil {
+							return nil, fmt.Errorf("create foreach filtering expression error: %s", err.Error())
+						}
+						foreach.filterExpr = filterExpr
+					}
+				}
+			}
 		}
 	}
-	return foreach
+	return foreach, nil
 }
 
 func newLoopScope(arrayItem interface{}, indexName string, scope data.Scope) (data.Scope, error) {
