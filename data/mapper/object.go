@@ -245,28 +245,26 @@ func (f *foreach) handle(arrayMappingFields map[string]interface{}, inputScope d
 
 	arrayMappingFields = removeAssignFromArrayMappingFeild(arrayMappingFields)
 
-	requireUpdate := len(targetValues) > 0
-
 	if len(arrayMappingFields) > 0 {
-		var skipped = 0
+		requireUpdate := len(targetValues) > 0
+		var skippedCount = 0
 		for i, sourceValue := range newSourceArray {
 			inputScope, err = newLoopScope(sourceValue, f.index, inputScope)
 			if err != nil {
 				return nil, err
 			}
-			passFilter, err := f.passFilter(inputScope)
+			passedFilter, err := f.Filter(inputScope)
 			if err != nil {
 				return nil, err
 			}
-			if passFilter {
+			if passedFilter {
 				item, err := handleObjectMapping(arrayMappingFields, f.exprFactory, inputScope)
 				if err != nil {
 					return nil, err
 				}
 				if requireUpdate {
-					targetValueIndex := i - skipped
+					targetValueIndex := i - skippedCount
 					if len(targetValues) <= 0 {
-						// no need to update just append
 						targetValues = append(targetValues, item)
 					} else if (len(targetValues) < targetValueIndex) || (targetValues[targetValueIndex] == nil) {
 						// No target value, just append
@@ -299,7 +297,7 @@ func (f *foreach) handle(arrayMappingFields map[string]interface{}, inputScope d
 					targetValues = append(targetValues, item)
 				}
 			} else {
-				skipped++
+				skippedCount++
 			}
 		}
 		return targetValues, nil
@@ -308,7 +306,7 @@ func (f *foreach) handle(arrayMappingFields map[string]interface{}, inputScope d
 	return targetValues, nil
 }
 
-func (f *foreach) passFilter(inputScope data.Scope) (bool, error) {
+func (f *foreach) Filter(inputScope data.Scope) (bool, error) {
 	if f.filterExpr != nil {
 
 		v, err := f.filterExpr.Eval(inputScope)
@@ -350,7 +348,7 @@ func (f *foreach) handleArrayAssign(sourceArray []interface{}, arrayMappingField
 				if err != nil {
 					return nil, err
 				}
-				passFilter, err := f.passFilter(inputScope)
+				passFilter, err := f.Filter(inputScope)
 				if err != nil {
 					return nil, err
 				}
@@ -366,7 +364,7 @@ func (f *foreach) handleArrayAssign(sourceArray []interface{}, arrayMappingField
 					return nil, err
 				}
 
-				passFilter, err := f.passFilter(inputScope)
+				passFilter, err := f.Filter(inputScope)
 				if err != nil {
 					return nil, err
 				}
