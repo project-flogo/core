@@ -56,4 +56,5 @@ type LegacyCtx interface {
 
 	// GetOutput gets the value of the specified output attribute
 	GetOutput(name string) interface{}
+	GetSetting(name string) (value interface{}, exists bool)
 }
