@@ -373,3 +373,14 @@ func (a *independentAction) Run(ctx context.Context, inputs map[string]interface
 	return a.app.actRunner.RunAction(ctx, a.act, inputs)
 }
 
+
+func RunAction(ctx context.Context, act action.Action, inputs map[string]interface{}) (results map[string]interface{}, err error) {
+
+	ia, ok := act.(*independentAction)
+
+	if !ok {
+		return nil, fmt.Errorf("must be an Independent Action to execute directly")
+	}
+
+	return ia.Run(ctx, inputs)
+}
