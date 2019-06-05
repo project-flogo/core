@@ -56,8 +56,31 @@ func (t Type) String() string {
 	return types[t]
 }
 
+// IsSimple returns wither a type is simple
 func (t Type) IsSimple() bool {
 	return t > 1 && t < 8
+}
+
+var names = map[Type]string{
+	TypeUnknown: "TypeUnknown",
+	TypeAny:     "TypeAny",
+	TypeString:  "TypeString",
+	TypeInt:     "TypeInt",
+	TypeInt32:   "TypeInt32",
+	TypeInt64:   "TypeInt64",
+	TypeFloat32: "TypeFloat32",
+	TypeFloat64: "TypeFloat64",
+	TypeBool:    "TypeBool",
+	TypeObject:  "TypeObject",
+	TypeBytes:   "TypeBytes",
+	TypeParams:  "TypeParams",
+	TypeArray:   "TypeArray",
+	TypeMap:     "TypeMap",
+}
+
+// Name returns the name of the type
+func (t Type) Name() string {
+	return names[t]
 }
 
 // ToTypeEnum get the data type that corresponds to the specified name
