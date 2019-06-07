@@ -5,12 +5,12 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/project-flogo/core/data/coerce"
-
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/data"
+	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/mapper"
+	"github.com/project-flogo/core/support/log"
 )
 
 type Handler interface {
@@ -41,6 +41,10 @@ func (h *handlerImpl) Settings() map[string]interface{} {
 }
 
 func NewHandler(config *HandlerConfig, acts []action.Action, mf mapper.Factory, ef expression.Factory, runner action.Runner) (Handler, error) {
+
+	if len(acts) == 0 {
+		return nil, errors.New("no action specified for handler")
+	}
 
 	handler := &handlerImpl{config: config, acts: make([]actImpl, len(acts)), runner: runner}
 
@@ -132,7 +136,8 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 	}
 
 	if act.act == nil {
-		return nil, errors.New("no action to execute")
+		log.RootLogger().Warnf("no action to execute")
+		return nil, nil
 	}
 
 	var inputMap map[string]interface{}
@@ -176,5 +181,15 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 }
 
 func (h *handlerImpl) String() string {
-	return fmt.Sprintf("Handler")
+
+	triggerId := ""
+	if h.config.parent != nil {
+		triggerId = h.config.parent.Id
+	}
+	handlerId := "Handler"
+	if h.config.Name != "" {
+		handlerId = h.config.Name
+	}
+
+	return fmt.Sprintf("Trigger[%s].%s", triggerId, handlerId)
 }

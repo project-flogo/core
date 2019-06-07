@@ -491,23 +491,23 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Indexer : index	<< ast.Concat(X[0]) >>`,
+		String: `Indexer : "[" ident "]"	<< ast.Concat(X[0], X[1], X[2]) >>`,
 		Id:         "Indexer",
 		NTType:     16,
 		Index:      47,
-		NumSymbols: 1,
+		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.Concat(X[0])
+			return ast.Concat(X[0], X[1], X[2])
 		},
 	},
 	ProdTabEntry{
-		String: `Indexer : "[" Fscript "]"	<< ast.Indexer(X[1]) >>`,
+		String: `Indexer : "[" Fscript "]"	<< ast.Key(X[1]) >>`,
 		Id:         "Indexer",
 		NTType:     16,
 		Index:      48,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.Indexer(X[1])
+			return ast.Key(X[1])
 		},
 	},
 	ProdTabEntry{

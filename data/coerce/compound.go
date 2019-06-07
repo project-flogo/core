@@ -67,6 +67,12 @@ func ToParams(val interface{}) (map[string]string, error) {
 			m[mKey] = mVal
 		}
 		return m, nil
+	case interface{}:
+		s, err := ToString(t)
+		if err != nil {
+			return nil, err
+		}
+		return toParams(s)
 	case nil:
 		return nil, nil
 	default:
@@ -112,6 +118,13 @@ func ToObject(val interface{}) (map[string]interface{}, error) {
 			}
 		}
 		return m, nil
+	case interface{}:
+		//Try to convert interface to an object.
+		s, err := ToString(t)
+		if err != nil {
+			return nil, fmt.Errorf("unable to coerce %#v to string", val)
+		}
+		return ToObject(s)
 	case nil:
 		return nil, nil
 	default:

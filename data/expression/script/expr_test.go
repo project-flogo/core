@@ -3,6 +3,7 @@ package script
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/project-flogo/core/data/property"
 	"os"
 	"testing"
 
@@ -11,7 +12,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var resolver = resolve.NewCompositeResolver(map[string]resolve.Resolver{"static": &TestStaticResolver{}, ".": &TestResolver{}, "env": &resolve.EnvResolver{}})
+var resolver = resolve.NewCompositeResolver(map[string]resolve.Resolver{"static": &TestStaticResolver{}, ".": &TestResolver{}, "env": &resolve.EnvResolver{}, "property": &resolve.PropertyResolver{}})
 var factory = NewExprFactory(resolver)
 
 func TestLitExprInt(t *testing.T) {
@@ -169,9 +170,76 @@ func TestArrayIndexExpr(t *testing.T) {
 	assert.NotNil(t, expr)
 
 	v, err = expr.Eval(scope)
-	assert.EqualError(t, err, "array index [aa] must be int")
+	assert.EqualError(t, err, "Invalid array index: aa")
 }
 
+func TestArrayIndexExprWithFunction(t *testing.T) {
+	var testData interface{}
+	err := json.Unmarshal([]byte(testJsonData), &testData)
+	assert.Nil(t, err)
+
+	scope := newScope(map[string]interface{}{"foo": testData, "key": 2})
+
+	expr, err := factory.NewExpr("$.foo.store.book[script.length(\"23\")].price")
+	assert.Nil(t, err)
+	assert.NotNil(t, expr)
+
+	v, err := expr.Eval(scope)
+	assert.Nil(t, err)
+	assert.Equal(t, 8.99, v)
+
+	expr, err = factory.NewExpr("$.foo.store.book[2].price")
+	assert.Nil(t, err)
+	assert.NotNil(t, expr)
+
+	v, err = expr.Eval(scope)
+	assert.Nil(t, err)
+	assert.Equal(t, 8.99, v)
+
+}
+
+func TestRefWithQuotes(t *testing.T) {
+	var testData interface{}
+	err := json.Unmarshal([]byte(testJsonData), &testData)
+	assert.Nil(t, err)
+
+	os.Setenv("index", "2")
+	scope := newScope(map[string]interface{}{"foo": testData, "key": 2})
+
+	expr, err := factory.NewExpr(`$.foo["store"].book[script.length("123")].price`)
+	assert.Nil(t, err)
+	assert.NotNil(t, expr)
+
+	v, err := expr.Eval(scope)
+	assert.Nil(t, err)
+	assert.Equal(t, 22.99, v)
+
+	expr, err = factory.NewExpr("$.foo['store'].book[2].price")
+	assert.Nil(t, err)
+	assert.NotNil(t, expr)
+
+	v, err = expr.Eval(scope)
+	assert.Nil(t, err)
+	assert.Equal(t, 8.99, v)
+
+	expr, err = factory.NewExpr("$.foo[`store`].book[0].price")
+	assert.Nil(t, err)
+	assert.NotNil(t, expr)
+
+	v, err = expr.Eval(scope)
+	assert.Nil(t, err)
+	assert.Equal(t, 8.95, v)
+
+	expr, err = factory.NewExpr("$.foo[`store`].book[$env[index]].price")
+	assert.Nil(t, err)
+	assert.NotNil(t, expr)
+
+	v, err = expr.Eval(scope)
+	assert.Nil(t, err)
+	assert.Equal(t, 8.99, v)
+	defer os.Unsetenv("index")
+
+}
 func TestLitExprStaticRef(t *testing.T) {
 
 	expr, err := factory.NewExpr(`$static.foo`)
@@ -181,10 +249,20 @@ func TestLitExprStaticRef(t *testing.T) {
 	v, err := expr.Eval(nil)
 	assert.Nil(t, err)
 	assert.Equal(t, "bar", v)
+
+}
+
+func TestPropertyName(t *testing.T) {
+	property.SetDefaultManager(property.NewManager(map[string]interface{}{"Marketo.Connection.client_id.secret-id": "abc"}))
+	expr, err := factory.NewExpr(`$property["Marketo.Connection.client_id.secret-id"]`)
+	assert.Nil(t, err)
+	assert.NotNil(t, expr)
+	v, err := expr.Eval(nil)
+	assert.Nil(t, err)
+	assert.Equal(t, "abc", v)
 }
 
 func TestEnvResolve(t *testing.T) {
-
 	_ = os.Setenv("FOO", "bar")
 	expr, err := factory.NewExpr(`$env[FOO]`)
 	assert.Nil(t, err)
@@ -713,30 +791,30 @@ func TestExpression(t *testing.T) {
 	_ = os.Setenv("address", "tibco")
 
 	testcases := make(map[string]interface{})
-	testcases[`1>2?tstring.concat("sss","ddddd"):"fff"`] = "fff"
+	testcases[`1>2?script.concat("sss","ddddd"):"fff"`] = "fff"
 	testcases[`1<2?"helloworld":"fff"`] = "helloworld"
 	testcases["200>100?true:false"] = true
 	testcases["1 + 2 * 3 + 2 * 6"] = 19
-	testcases[`tstring.length($.queryParams.id) == 0 ? "Query Id cannot be null" : tstring.length($.queryParams.id)`] = 10
-	testcases[`tstring.length("helloworld")>11?"helloworld":"fff"`] = "fff"
+	testcases[`script.length($.queryParams.id) == 0 ? "Query Id cannot be null" : script.length($.queryParams.id)`] = 10
+	testcases[`script.length("helloworld")>11?"helloworld":"fff"`] = "fff"
 	testcases["123==456"] = false
 	testcases["123==123"] = true
-	testcases[`tstring.concat("123","456")=="123456"`] = true
-	testcases[`tstring.concat("123","456") == tstring.concat("12","3456")`] = true
+	testcases[`script.concat("123","456")=="123456"`] = true
+	testcases[`script.concat("123","456") == script.concat("12","3456")`] = true
 	testcases[`("dddddd" == "dddd3dd") && ("133" == "123")`] = false
-	testcases[`tstring.length("helloworld") == 10`] = true
-	testcases[`tstring.length("helloworld") > 10`] = false
-	testcases[`tstring.length("helloworld") >= 10`] = true
-	testcases[`tstring.length("helloworld") < 10`] = false
-	testcases[`tstring.length("helloworld") >= 10`] = true
-	testcases[`(tstring.length("sea") == 3) == true`] = true
+	testcases[`script.length("helloworld") == 10`] = true
+	testcases[`script.length("helloworld") > 10`] = false
+	testcases[`script.length("helloworld") >= 10`] = true
+	testcases[`script.length("helloworld") < 10`] = false
+	testcases[`script.length("helloworld") >= 10`] = true
+	testcases[`(script.length("sea") == 3) == true`] = true
 
 	testcases[`(1&&1)==(1&&1)`] = true
 	testcases[`(true && true) == false`] = false
 	testcases[`nil==nil`] = true
 
 	//Nested Ternary
-	testcases[`(tstring.length("1234") == 4 ? true : false) ? (2 >1 ? (3>2?"Yes":"nono"):"No") : "false"`] = "Yes"
+	testcases[`(script.length("1234") == 4 ? true : false) ? (2 >1 ? (3>2?"Yes":"nono"):"No") : "false"`] = "Yes"
 	testcases[`(4 == 4 ? true : false) ? "yes" : "no"`] = "yes"
 	testcases[`(4 == 4 ? true : false) ? 4 < 3 ? "good" :"false" : "no"`] = "false"
 	testcases[`4 > 3 ? 6<4 ?  "good2" : "false2" : "false"`] = "false2"
@@ -758,7 +836,7 @@ func TestExpression(t *testing.T) {
 	testcases[`3+-2`] = 1
 	testcases[`3- -2`] = 5
 
-	//testcases[`tstring.length("helloworld")>11?$env[name]:$env[address]`] = "tibco"
+	//testcases[`script.length("helloworld")>11?$env[name]:$env[address]`] = "tibco"
 	//testcases[`$env[name] != nil`] = true
 	//testcases[`$env[name] == "flogo"`] = true
 
@@ -769,6 +847,95 @@ func TestExpression(t *testing.T) {
 		assert.Nil(t, err)
 		if !assert.ObjectsAreEqual(v, result) {
 			assert.Fail(t, fmt.Sprintf("test expr [%s] failed, expected [%+v] but actual [%+v]", k, v, result))
+		}
+	}
+}
+
+func TestEscapedExpr(t *testing.T) {
+	expr, err := factory.NewExpr(`script.concat("\"Hello\" ", '\'FLOGO\'')`)
+	assert.Nil(t, err)
+	v, err := expr.Eval(nil)
+	assert.Nil(t, err)
+	assert.Equal(t, `"Hello" 'FLOGO'`, v)
+
+	expr, err = factory.NewExpr("script.concat(`Hello `, `'FLOGO'`)")
+	assert.Nil(t, err)
+	v, err = expr.Eval(nil)
+	assert.Nil(t, err)
+	assert.Equal(t, `Hello 'FLOGO'`, v)
+
+	expr, err = factory.NewExpr(`script.concat("Hello", "\world")`)
+	assert.Nil(t, err)
+	v, err = expr.Eval(nil)
+	assert.Nil(t, err)
+	assert.Equal(t, `Hello\world`, v)
+
+	expr, err = factory.NewExpr(`script.concat("Hello", "wo\'rld")`)
+	assert.Nil(t, err)
+	v, err = expr.Eval(nil)
+	assert.Nil(t, err)
+	assert.Equal(t, `Hellowo\'rld`, v)
+
+	expr, err = factory.NewExpr("script.concat('Hello', ` wo\nrld`)")
+	assert.Nil(t, err)
+	v, err = expr.Eval(nil)
+	assert.Nil(t, err)
+	fmt.Println("=====", v)
+	assert.Equal(t, `Hello wo
+rld`, v)
+
+	//Newline
+	expr, err = factory.NewExpr("script.concat(\"Hello\n\", \"FLOGO\")")
+	assert.Nil(t, err)
+	v, err = expr.Eval(nil)
+	assert.Nil(t, err)
+	assert.Equal(t, `Hello
+FLOGO`, v)
+}
+
+func TestBuiltInFunction(t *testing.T) {
+
+	var testData interface{}
+	err := json.Unmarshal([]byte(testJsonData), &testData)
+	assert.Nil(t, err)
+
+	scope := newScope(map[string]interface{}{"foo": testData, "key": 2})
+
+	tests := []struct {
+		Expr         string
+		ExpectResult interface{}
+	}{
+		{
+			Expr:         "isDefined($.foo['store'].book[2].price)",
+			ExpectResult: true,
+		},
+		{
+			Expr:         "isDefined($.foo.store.exit)",
+			ExpectResult: false,
+		},
+		{
+			Expr:         "getValue($.foo.store.exit, \"flogo\")",
+			ExpectResult: "flogo",
+		},
+		{
+			Expr:         "getValue($.foo['store'].book[2].price, \"flogo\")",
+			ExpectResult: 8.99,
+		},
+	}
+
+	for i, tt := range tests {
+
+		expr, err := factory.NewExpr(tt.Expr)
+		assert.Nil(t, err)
+		v, err := expr.Eval(scope)
+		assert.Nil(t, err)
+		if assert.NoError(t, err, "Unexpected error in case #%d.", i) {
+			assert.Equal(
+				t,
+				tt.ExpectResult,
+				v,
+				"Unexpected expression output: expected to %v.", tt.ExpectResult,
+			)
 		}
 	}
 }

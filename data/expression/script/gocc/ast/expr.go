@@ -5,7 +5,6 @@ import (
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/resolve"
-	"strconv"
 	"strings"
 )
 
@@ -176,23 +175,31 @@ func (e *exprRef) constructRealRef(scope data.Scope) (resolve.Resolution, error)
 	return e.resolver.GetResolution(ref)
 }
 
-type arrayIndexerExpr struct {
+type keyIndexExpr struct {
 	expr Expr
 }
 
-func (e *arrayIndexerExpr) Init(resolver resolve.CompositeResolver, root bool) error {
+func (e *keyIndexExpr) Init(resolver resolve.CompositeResolver, root bool) error {
 	return e.expr.Init(resolver, root)
 }
 
-func (e *arrayIndexerExpr) Eval(scope data.Scope) (interface{}, error) {
+func (e *keyIndexExpr) Eval(scope data.Scope) (interface{}, error) {
 	v, err := e.expr.Eval(scope)
 	if err != nil {
 		return "", fmt.Errorf("eval array index expression error: %s", err.Error())
 	}
-	index, err := coerce.ToInt(v)
-	if err != nil {
-		return "", fmt.Errorf("array index [%s] must be int", v)
+
+	switch t := e.expr.(type) {
+	case *literalExpr:
+		if t.typ == "string" {
+			//Add double quotes for string, no matter single qutoes or one tick
+			v = `"` + v.(string) + `"`
+		}
 	}
 
-	return "[" + strconv.Itoa(index) + "]", nil
+	index, err := coerce.ToString(v)
+	if err != nil {
+		return nil, err
+	}
+	return "[" + index + "]", nil
 }

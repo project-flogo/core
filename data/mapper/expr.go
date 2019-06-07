@@ -4,6 +4,7 @@ import (
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/resolve"
+	"github.com/project-flogo/core/support/log"
 	"strings"
 )
 
@@ -70,6 +71,11 @@ func (m *ExprMapper) Apply(inputScope data.Scope) (map[string]interface{}, error
 	for key, expr := range m.mappings {
 		val, err := expr.Eval(inputScope)
 		if err != nil {
+			if IsMappingRelaxed() {
+				log.RootLogger().Warnf("expresson eval error; %s", err.Error())
+				//Skip value set.
+				continue
+			}
 			//todo add some context to error (consider adding String() to exprImpl)
 			return nil, err
 		}

@@ -2,6 +2,7 @@ package resolve
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/project-flogo/core/data"
 )
@@ -41,10 +42,15 @@ func NewResolverInfo(isStatic, usesItemFormat bool) *ResolverInfo {
 	return &ResolverInfo{isStatic: isStatic, usesItemFormat: usesItemFormat}
 }
 
+func NewImplicitResolverInfo(isStatic, isImplicit bool) *ResolverInfo {
+	return &ResolverInfo{isStatic: isStatic, isImplicit: isImplicit}
+}
+
 // ResolverInfo structure that contains information about the resolver
 type ResolverInfo struct {
 	usesItemFormat bool
 	isStatic       bool
+	isImplicit     bool
 }
 
 // IsStatic determines if the resolver's values are static and can be resolved immediately without a scope
@@ -55,6 +61,11 @@ func (i *ResolverInfo) IsStatic() bool {
 // UsesItemFormat determines if the resolver uses the item format (ex. $test[itemName])
 func (i *ResolverInfo) UsesItemFormat() bool {
 	return i.usesItemFormat
+}
+
+// IsImplicit determines if the resolver try to uses the item format and no item format then
+func (i *ResolverInfo) IsImplicit() bool {
+	return i.isImplicit
 }
 
 // GetResolverInfo gets the resolver name and position to start parsing the ResolutionDetails from
@@ -81,7 +92,7 @@ type ResolveDirectiveDetails struct {
 }
 
 // GetResolveDirectiveDetails breaks Resolution Directive into components
-func GetResolveDirectiveDetails(directive string, hasItems bool) (*ResolveDirectiveDetails, error) {
+func GetResolveDirectiveDetails(directive string, hasItems, isImplicit bool) (*ResolveDirectiveDetails, error) {
 
 	//todo optimize
 	details := &ResolveDirectiveDetails{}
@@ -90,35 +101,48 @@ func GetResolveDirectiveDetails(directive string, hasItems bool) (*ResolveDirect
 	strLen := len(directive)
 	hasNamedValue := true
 
-	if hasItems {
+	//isImplicit will try to support both ithem or without item
+	if isImplicit || hasItems {
 		//uses the "item format" (ex. foo[bar].valueName; where 'bar' is the item)
-		hasNamedValue = false
-
 		if directive[0] != '[' {
-			return nil, fmt.Errorf("invalid resolve directive: '%s' needs to start with [item]", directive)
+			if hasItems {
+				return nil, fmt.Errorf("invalid resolve directive: '%s' needs to start with [item]", directive)
+			}
+
+			if isImplicit {
+				hasItems = false
+				hasNamedValue = true
+			}
+		} else {
+			hasItems = true
+			hasNamedValue = false
 		}
-		start = 1
 
-		for i := 1; i < strLen; i++ {
-			if directive[i] == ']' {
-				details.ItemName = directive[start:i]
-				start = i + 1
+		if hasItems {
+			start = 1
 
-				//if we started with an item, it must either end or the next segment should start with '.' or '['
-				if start < strLen {
-					if directive[start] != '.' && directive[start] != '[' {
-						return nil, fmt.Errorf("invalid resolve directive: '%s'", directive)
+			for i := 1; i < strLen; i++ {
+				if directive[i] == ']' {
+					details.ItemName = removeQuotes(directive[start:i])
+					start = i + 1
+
+					//if we started with an item, it must either end or the next segment should start with '.' or '['
+					if start < strLen {
+						if directive[start] != '.' && directive[start] != '[' {
+							return nil, fmt.Errorf("invalid resolve directive: '%s'", directive)
+						}
+
+						if directive[start] == '.' {
+							hasNamedValue = true
+							start++
+						}
 					}
 
-					if directive[start] == '.' {
-						hasNamedValue = true
-						start++
-					}
+					break
 				}
-
-				break
 			}
 		}
+
 	}
 	var i int
 
@@ -168,7 +192,7 @@ func IsResolveExpr(exprStr string) bool {
 			switch c := exprStr[i]; c {
 			case ' ':
 				return false
-			case '[', '(', '"', '\'', '`':
+			case '"', '\'', '`':
 				end := ends[c]
 				i++
 				for i < len(exprStr) {
@@ -177,8 +201,27 @@ func IsResolveExpr(exprStr string) bool {
 					}
 					i++
 				}
+			case '[':
+				end := ends[c]
+				i++
+				j := i
+				for i < len(exprStr) {
+					if exprStr[i] == end {
+						//Checking whether value insde [] is expr
+						if hasExprChar(exprStr[j:i]) {
+							return false
+						}
+						break
+					}
+					i++
+				}
 			case '.':
 				if i+1 >= strLen || !isLetter(exprStr[i+1]) {
+					return false
+				}
+
+			default:
+				if isExprChar(c) {
 					return false
 				}
 			}
@@ -189,4 +232,44 @@ func IsResolveExpr(exprStr string) bool {
 	}
 
 	return true
+}
+
+func hasExprChar(str string) bool {
+	//condition expression, tenray expression, array indexer expression
+	if len(str) > 0 {
+		//String
+		if str[0] == '"' || str[0] == '\'' || str[0] == '`' {
+			return false
+		} else {
+			strLen := len(str)
+			for i := 0; i < strLen; i++ {
+				if isExprChar(str[i]) {
+					return true
+				}
+			}
+		}
+	}
+	return false
+}
+
+func isExprChar(ch byte) bool {
+	//condition expression, tenray expression, array indexer expression
+	switch ch {
+	case '(', '=', '>', '<', '*', '/', '!', '&', '%', '+', '-', '|', '?', ':', '$':
+		return true
+	}
+	return false
+}
+
+func removeQuotes(str string) string {
+	if strings.HasPrefix(str, `"`) && strings.HasSuffix(str, `"`) {
+		return str[1 : len(str)-1]
+	}
+	if strings.HasPrefix(str, "'") && strings.HasSuffix(str, "'") {
+		return str[1 : len(str)-1]
+	}
+	if strings.HasPrefix(str, "`") && strings.HasSuffix(str, "`") {
+		return str[1 : len(str)-1]
+	}
+	return str
 }

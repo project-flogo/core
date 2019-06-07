@@ -27,14 +27,9 @@ func GetLiteral(strVal string) (interface{}, bool) {
 	}
 
 	//check if is string
-	if newStrVal[0] == '`' && newStrVal[len(newStrVal)-1] == '`' {
-		return newStrVal[1 : len(newStrVal)-1], true
-	}
-	if newStrVal[0] == '\'' && newStrVal[len(newStrVal)-1] == '\'' {
-		return newStrVal[1 : len(newStrVal)-1], true
-	}
-	if newStrVal[0] == '"' && newStrVal[len(newStrVal)-1] == '"' {
-		return newStrVal[1 : len(newStrVal)-1], true
+	s, isStr := isQuotedString(newStrVal)
+	if isStr {
+		return s, true
 	}
 
 	//check for booleans
@@ -54,4 +49,29 @@ func GetLiteral(strVal string) (interface{}, bool) {
 	}
 
 	return nil, false
+}
+
+func isQuotedString(newStrVal string) (string, bool) {
+	//String must surround with quotes and only one pair
+	if newStrVal[0] == '"' {
+		newStrVal = newStrVal[1:]
+		if len(newStrVal) == strings.Index(newStrVal, `"`)+1 {
+			return newStrVal[:len(newStrVal)-1], true
+		}
+		return "", false
+	} else if newStrVal[0] == '\'' {
+		newStrVal = newStrVal[1:]
+		if len(newStrVal) == strings.Index(newStrVal, `'`)+1 {
+			return newStrVal[:len(newStrVal)-1], true
+		}
+		return "", false
+
+	} else if newStrVal[0] == '`' {
+		newStrVal = newStrVal[1:]
+		if len(newStrVal) == strings.Index(newStrVal, "`")+1 {
+			return newStrVal[:len(newStrVal)-1], true
+		}
+		return "", false
+	}
+	return "", false
 }
