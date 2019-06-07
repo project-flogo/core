@@ -299,8 +299,8 @@ func (a *App) NewIndependentAction(act action.Action, settings interface{}) (act
 
 	var settingsMap map[string]interface{}
 
-	if settings, ok := settings.(map[string]interface{}); ok {
-		settingsMap = settings
+	if s, ok := settings.(map[string]interface{}); ok {
+		settingsMap = s
 	} else {
 		settingsMap = metadata.StructToMap(settings)
 	}
