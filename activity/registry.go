@@ -45,30 +45,6 @@ func Register(activity Activity, f ...Factory) error {
 	return nil
 }
 
-//DEPRECATED
-func LegacyRegister(ref string, activity Activity) error {
-
-	if ref == "" {
-		return fmt.Errorf("'ref' must be specified when registering")
-	}
-
-	if activity == nil {
-		return fmt.Errorf("cannot register 'nil' activity")
-	}
-
-	if _, dup := activities[ref]; dup {
-		return fmt.Errorf("activity already registered: %s", ref)
-	}
-
-	log.RootLogger().Debugf("Registering legacy activity: %s", ref)
-
-	activities[ref] = activity
-	name := path.Base(ref) //todo should probably get this from the descriptor? or on registration provide a short name
-	activityLoggers[ref] = log.ChildLogger(activityLogger, name)
-
-	return nil
-}
-
 func GetRef(activity Activity) string {
 	return support.GetRef(activity)
 }
@@ -95,4 +71,27 @@ func GetLogger(ref string) log.Logger {
 	} else {
 		return log.RootLogger()
 	}
+}
+
+func CleanupSingletons() {
+	for ref, activity := range activities {
+
+		if _, ok := activityFactories[ref]; !ok {
+			//singleton activities don't have factories
+			if needsCleanup, ok := activity.(support.NeedsCleanup); ok {
+				err := needsCleanup.Cleanup()
+				if err != nil {
+					log.RootLogger().Errorf("Error cleaning up activity '%s' : ", ref, err)
+				}
+			}
+		}
+	}
+}
+
+func IsSingleton(activity Activity) bool {
+	ref := support.GetRef(activity)
+	_, hasFactory := activityFactories[ref]
+
+	//if it doesn't have a factory, it is a singleton/shared activity
+	return !hasFactory
 }

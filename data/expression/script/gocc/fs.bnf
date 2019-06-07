@@ -18,17 +18,17 @@ _exponent   : ( 'e' | 'E' ) [ '+' | '-' ] _decimals ;
 
 // -- [ String literals ]
 
-_escapeChar : '\\' 'n' | '\\' 'r' | '\\' 't' ;
+_quotedpair : '\\' . ;
 
-_dq_string  : '"' { . | '\\' '"' | _escapeChar } '"' ;
-_sq_string  : '\'' { . | '\\' '\'' | _escapeChar } '\'' ;
+_dq_string  : '"' { _quotedpair | . } '"' ;
+_sq_string  : '\'' {_quotedpair | . } '\'' ;
 _lit_string : '`' { . } '`' ;
 
 stringLit   :  _dq_string | _sq_string | _lit_string ;
 
 // -- [ Identifiers ]
 
-_ident : _letter { _letter | _digit } ;
+_ident : _letter { _letter | _digit | '_' } ;
 
 ident : _ident ;
 
@@ -36,11 +36,10 @@ ident : _ident ;
 
 ref : '$' [ _ident ];
 selector : '.' _ident ;
-index : '[' ( _dq_string | _sq_string | _lit_string | _decimals | _ident) ']' ;
 
 // -- [ Functions ]
 
-functionName : _letter { _letter | _digit | '.' } ;
+functionName : _ident { _ident | '.' } ;
 
 << import "github.com/project-flogo/core/data/expression/script/gocc/ast" >>
 
@@ -92,14 +91,12 @@ Expr5
 
 Expr6
 	: PrimaryExpr
-    | ident "(" Args ")"            << ast.NewFuncExpr($0, $2) >>
+	| ident "(" Args ")"     << ast.NewFuncExpr($0, $2) >>
     | functionName "(" Args ")"     << ast.NewFuncExpr($0, $2) >>
 ;
 
 PrimaryExpr
     : Literal
-    //| ident
-    //| functionName
     | "(" Expr ")"  << $1, nil >>
     ;
 
@@ -138,8 +135,8 @@ Ref
     | Ref Indexer    << ast.Concat($0, $1) >>
     ;
 Indexer
-    : index          << ast.Concat($0) >>
-    | "[" Fscript "]"   << ast.Indexer($1) >>
+    : "[" ident "]"     << ast.Concat($0, $1, $2)  >>
+    | "[" Fscript "]"   << ast.Key($1) >>
     ;
 
 Args

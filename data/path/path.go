@@ -4,12 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/project-flogo/core/data/coerce"
 	"reflect"
 	"strconv"
 	"strings"
 	"unicode"
-
-	"github.com/project-flogo/core/data/coerce"
 )
 
 //todo consolidate and optimize code
@@ -40,30 +39,14 @@ func GetValue(value interface{}, path string) (interface{}, error) {
 		} else if paramsVal, ok := value.(map[string]string); ok {
 			newVal, newPath, err = getSetParamsValue(paramsVal, path, nil, false)
 		} else {
-
-			val := reflect.ValueOf(value)
-			if val.Kind() == reflect.Ptr {
-				val = val.Elem()
+			fieldName, npIdx := getObjectKey(path[1:])
+			newVal, err = getFieldValueByName(value, fieldName)
+			if err != nil {
+				return nil, err
 			}
-
-			if val.Kind() == reflect.Struct {
-				fieldName, npIdx := getObjectKey(path[1:])
-				fieldName = NormalizeFieldName(fieldName)
-				newPath = path[npIdx:]
-				f := val.FieldByName(fieldName)
-				if !f.IsValid() {
-					if newPath == "" {
-						return nil, nil
-					}
-					return nil, errors.New("Invalid path '" + path + "'. path not found.")
-				}
-
-				newVal = f.Interface()
-			} else {
-				return nil, fmt.Errorf("unable to evaluate path: %s", path)
-			}
+			newPath = path[npIdx:]
 		}
-	} else if strings.HasPrefix(path, `["`) {
+	} else if hasMapKey(path) {
 		if objVal, ok := value.(map[string]interface{}); ok {
 			newVal, newPath, err = getSetMapValue(objVal, path, nil, false)
 		} else if paramsVal, ok := value.(map[string]string); ok {
@@ -81,6 +64,51 @@ func GetValue(value interface{}, path string) (interface{}, error) {
 		return nil, err
 	}
 	return GetValue(newVal, newPath)
+}
+
+func getFieldValueByName(object interface{}, name string) (interface{}, error) {
+	val := reflect.ValueOf(object)
+	if val.Kind() == reflect.Ptr {
+		val = val.Elem()
+	}
+
+	if val.Kind() == reflect.Struct {
+
+		field := val.FieldByName(NormalizeFieldName(name))
+		if field.IsValid() {
+			return field.Interface(), nil
+		}
+
+		typ := reflect.TypeOf(object)
+		if typ.Kind() == reflect.Ptr {
+			typ = typ.Elem()
+		}
+		for i := 0; i < typ.NumField(); i++ {
+			p := typ.Field(i)
+			if !p.Anonymous {
+				jsonTag := GetJsonTag(p)
+				if len(jsonTag) > 0 && name == jsonTag {
+					return val.FieldByName(typ.Field(i).Name).Interface(), nil
+				}
+			}
+		}
+
+	} else if val.Kind() == reflect.Map {
+		v := val.MapIndex(reflect.ValueOf(name))
+		return v.Interface(), nil
+	}
+	return nil, fmt.Errorf("unable to evaluate path: %s", name)
+}
+
+func GetJsonTag(t reflect.StructField) string {
+	if jsonTag := t.Tag.Get("json"); jsonTag != "" && jsonTag != "-" {
+		var commaIdx int
+		if commaIdx = strings.Index(jsonTag, ","); commaIdx < 0 {
+			commaIdx = len(jsonTag)
+		}
+		return jsonTag[:commaIdx]
+	}
+	return ""
 }
 
 func NormalizeFieldName(name string) string {
@@ -107,7 +135,7 @@ func SetValue(attrValue interface{}, path string, value interface{}) error {
 		} else {
 			return fmt.Errorf("unable to evaluate path: %s", path)
 		}
-	} else if strings.HasPrefix(path, `["`) {
+	} else if hasMapKey(path) {
 		if objVal, ok := attrValue.(map[string]interface{}); ok {
 			newVal, newPath, err = getSetMapValue(objVal, path, value, true)
 		} else if paramsVal, ok := attrValue.(map[string]string); ok {
@@ -126,6 +154,14 @@ func SetValue(attrValue interface{}, path string, value interface{}) error {
 		return err
 	}
 	return SetValue(newVal, newPath, value)
+}
+
+func hasMapKey(path string) bool {
+	return strings.HasPrefix(path, `["`) || strings.HasPrefix(path, `['`)
+}
+
+func equalMapKey(val string) bool {
+	return val == `["` || val == `['`
 }
 
 func getObjectKey(s string) (string, int) {
@@ -148,7 +184,7 @@ func getMapKey(s string) (string, int) {
 
 	for i < len(s) {
 
-		if s[i] == '"' {
+		if s[i] == '"' || s[i] == '\'' {
 			return s[:i], i + 4 // [" "]
 		}
 
@@ -203,12 +239,10 @@ func getSetObjValue(objValue map[string]interface{}, path string, value interfac
 	}
 
 	val, found := objValue[key]
-
 	if !found {
 		if path == "."+key {
 			return nil, "", nil
 		}
-
 		return nil, "", errors.New("Invalid path '" + path + "'. path not found.")
 	}
 
@@ -242,7 +276,7 @@ func getSetMapValue(objValue map[string]interface{}, path string, value interfac
 
 	key, npIdx := getMapKey(path[2:])
 
-	if set && key+`"]` == path[2:] {
+	if set && (key+`"]` == path[2:] || key+`']` == path[2:]) {
 		//end of path so set the value
 		objValue[key] = value
 		return nil, "", nil
@@ -254,7 +288,6 @@ func getSetMapValue(objValue map[string]interface{}, path string, value interfac
 		if path == "."+key {
 			return nil, "", nil
 		}
-
 		return nil, "", errors.New("Invalid path '" + path + "'. path not found.")
 	}
 

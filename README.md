@@ -26,7 +26,7 @@ Project Flogo is an open source framework to simplify building efficient & moder
 Flogo Core is the core flogo library which contains the apis to create and extend Flogo applications.
 
 ## Getting started
-If you want to get started with [Project Flogo](flogo.io), you should install the install the [Flogo CLI](https://github.com/project-flogo/core).  You can find details there on creating a quick sample application.  You also might want to check out the [getting started](https://tibcosoftware.github.io/flogo/getting-started/) guide in our docs or check out the [Labs](https://tibcosoftware.github.io/flogo/labs/) section in our docs for in depth tutorials.
+If you want to get started with [Project Flogo](flogo.io), you should install the install the [Flogo CLI](https://github.com/project-flogo/cli).  You can find details there on creating a quick sample application.  You also might want to check out the [getting started](https://tibcosoftware.github.io/flogo/getting-started/) guide in our docs or check out the [Labs](https://tibcosoftware.github.io/flogo/labs/) section in our docs for in depth tutorials.
 
 ## Documentation
 Here is some documentation to help you get started understanding some of the fundamentals of the Flogo Core library. 

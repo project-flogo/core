@@ -61,3 +61,28 @@ func TestGetLiteral(t *testing.T) {
 	assert.True(t, ok2)
 	assert.False(t, b)
 }
+
+func TestIsString(t *testing.T) {
+	_, b := isQuotedString("lixingwang")
+	assert.False(t, b)
+
+	v, b := isQuotedString(`"ddddd"`)
+	assert.True(t, b)
+	assert.Equal(t, "ddddd", v)
+	_, b = isQuotedString(`"ddddd" ==  "dddddd"`)
+	assert.False(t, b)
+
+	_, b = isQuotedString(`"ddddd" ==  'ddddd'`)
+	assert.False(t, b)
+
+	//Single
+
+	v, b = isQuotedString(`'ddddd'`)
+	assert.True(t, b)
+	assert.Equal(t, "ddddd", v)
+	_, b = isQuotedString(`'ddddd' ==  'dddd'`)
+	assert.False(t, b)
+
+	_, b = isQuotedString("`ddddd` ==  `ddddd`")
+	assert.False(t, b)
+}

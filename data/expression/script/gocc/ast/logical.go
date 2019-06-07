@@ -14,8 +14,6 @@ func NewBoolExpr(left, operand, right interface{}) (Expr, error) {
 	re := right.(Expr)
 	op := string(operand.(*token.Token).Lit)
 
-	fmt.Printf("bool: %v %s %v\n", le, op, re)
-
 	switch op {
 	case "||":
 		return &boolOrExpr{left: le, right: re}, nil

@@ -13,7 +13,7 @@ import (
 
 func TestBuiltinFuncExpr(t *testing.T) {
 
-	expr, err := factory.NewExpr(`len("test")`)
+	expr, err := factory.NewExpr(`builtin.len("test")`)
 	assert.Nil(t, err)
 
 	v, err := expr.Eval(nil)
@@ -23,7 +23,7 @@ func TestBuiltinFuncExpr(t *testing.T) {
 }
 
 func TestFuncExprNoSpace(t *testing.T) {
-	expr, err := factory.NewExpr(`tstring.concat("a","b")`)
+	expr, err := factory.NewExpr(`script.concat("a","b")`)
 	assert.Nil(t, err)
 	v, err := expr.Eval(nil)
 	assert.Nil(t, err)
@@ -32,7 +32,7 @@ func TestFuncExprNoSpace(t *testing.T) {
 
 func TestFuncExprNested(t *testing.T) {
 
-	expr, err := factory.NewExpr(`tstring.concat("This", "is",tstring.concat("my","first"),"gocc",tstring.concat("lexer","and","parser"),tstring.concat("go","program","!!!"))`)
+	expr, err := factory.NewExpr(`script.concat("This", "is",script.concat("my","first"),"gocc",script.concat("lexer","and","parser"),script.concat("go","program","!!!"))`)
 	assert.Nil(t, err)
 
 	v, err := expr.Eval(nil)
@@ -43,7 +43,7 @@ func TestFuncExprNested(t *testing.T) {
 
 func TestFuncExprNestedMultiSpace(t *testing.T) {
 
-	expr, err := factory.NewExpr(`tstring.concat("This",   " is" , " Flogo")`)
+	expr, err := factory.NewExpr(`script.concat("This",   " is" , " Flogo")`)
 	assert.Nil(t, err)
 
 	v, err := expr.Eval(nil)
@@ -57,7 +57,7 @@ func TestFunctionWithRef(t *testing.T) {
 	scope := data.NewSimpleScope(map[string]interface{}{"queryParams": map[string]interface{}{"id": "flogo"}}, nil)
 	factory := NewExprFactory(resolve.GetBasicResolver())
 	testcases := make(map[string]interface{})
-	testcases[`tstring.concat("This", " is ", $.queryParams.id)`] = "This is flogo"
+	testcases[`script.concat("This", " is ", $.queryParams.id)`] = "This is flogo"
 
 	for k, v := range testcases {
 		vv, err := factory.NewExpr(k)
@@ -79,7 +79,7 @@ type fnConcat struct {
 }
 
 func (fnConcat) Name() string {
-	return "tstring.concat"
+	return "concat"
 }
 
 func (fnConcat) Sig() (paramTypes []data.Type, isVariadic bool) {
@@ -100,7 +100,7 @@ func (fnConcat) Eval(params ...interface{}) (interface{}, error) {
 }
 
 func TestFuncExprSingleQuote(t *testing.T) {
-	expr, err := factory.NewExpr("tstring.concat('abc','def')")
+	expr, err := factory.NewExpr("script.concat('abc','def')")
 	assert.Nil(t, err)
 	v, err := expr.Eval(nil)
 	assert.Nil(t, err)
@@ -108,14 +108,16 @@ func TestFuncExprSingleQuote(t *testing.T) {
 }
 
 func init() {
-	_ = function.Register(&tLength{})
+	function.Register(&tLength{})
+	function.ResolveAliases()
+
 }
 
 type tLength struct {
 }
 
 func (tLength) Name() string {
-	return "tstring.length"
+	return "length"
 }
 
 func (tLength) Sig() (paramTypes []data.Type, isVariadic bool) {
