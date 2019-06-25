@@ -25,8 +25,8 @@ type App struct {
 	actions    map[string]*Action
 	resources  []*resource.Config
 
-	realApp   *app.App
-	actRunner *runner.DirectRunner
+	realApp    *app.App
+	actRunner  *runner.DirectRunner
 	indActions []*independentAction
 }
 
@@ -62,7 +62,10 @@ type Action struct {
 
 // NewApp creates a new Flogo application
 func NewApp() *App {
-	return &App{}
+	return &App{
+		properties: make(map[string]data.TypedValue),
+		actions:    make(map[string]*Action),
+	}
 }
 
 // NewTrigger adds a new trigger to the application
@@ -94,6 +97,7 @@ func (a *App) NewTrigger(trg trigger.Trigger, settings interface{}) *Trigger {
 	return newTrg
 }
 
+// AddAction adds an action to the application
 func (a *App) AddAction(id string, act action.Action, settings interface{}) error {
 
 	newAct, err := newAction(act, settings)
@@ -245,7 +249,7 @@ func (a *Action) OutputMappings() []string {
 func NewEngine(a *App) (engine.Engine, error) {
 	appConfig := toAppConfig(a)
 
-	e, err :=  engine.New(appConfig)
+	e, err := engine.New(appConfig)
 	if err != nil {
 		return nil, err
 	}
@@ -295,8 +299,8 @@ func (a *App) NewIndependentAction(act action.Action, settings interface{}) (act
 
 	var settingsMap map[string]interface{}
 
-	if settings, ok := settings.(map[string]interface{}); ok {
-		settingsMap = settings
+	if s, ok := settings.(map[string]interface{}); ok {
+		settingsMap = s
 	} else {
 		settingsMap = metadata.StructToMap(settings)
 	}
@@ -309,9 +313,9 @@ func (a *App) NewIndependentAction(act action.Action, settings interface{}) (act
 		ref = support.GetRef(act)
 	}
 
-	cfg := &action.Config{Ref:ref, Settings:settingsMap}
+	cfg := &action.Config{Ref: ref, Settings: settingsMap}
 
-	ia :=  &independentAction{app: a, cfg: cfg}
+	ia := &independentAction{app: a, cfg: cfg}
 
 	if a.realApp == nil {
 		//engine not created, so lets hold on to it for init
@@ -326,7 +330,6 @@ func (a *App) NewIndependentAction(act action.Action, settings interface{}) (act
 	return ia, nil
 }
 
-
 type independentAction struct {
 	app *App
 	cfg *action.Config
@@ -335,14 +338,14 @@ type independentAction struct {
 
 func (a *independentAction) Metadata() *action.Metadata {
 	if a.act != nil {
-		return  a.act.Metadata()
+		return a.act.Metadata()
 	}
 	return nil
 }
 
 func (a *independentAction) IOMetadata() *metadata.IOMetadata {
 	if a.act != nil {
-		return  a.act.IOMetadata()
+		return a.act.IOMetadata()
 	}
 	return nil
 }
@@ -363,7 +366,6 @@ func (a *independentAction) init(initCtx action.InitContext) error {
 	return nil
 }
 
-
 func (a *independentAction) Run(ctx context.Context, inputs map[string]interface{}) (results map[string]interface{}, err error) {
 
 	if a.act == nil {
@@ -372,7 +374,6 @@ func (a *independentAction) Run(ctx context.Context, inputs map[string]interface
 
 	return a.app.actRunner.RunAction(ctx, a.act, inputs)
 }
-
 
 func RunAction(ctx context.Context, act action.Action, inputs map[string]interface{}) (results map[string]interface{}, err error) {
 
