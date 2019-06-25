@@ -7,11 +7,13 @@ import (
 	"reflect"
 
 	"github.com/project-flogo/core/action"
+	"github.com/project-flogo/core/app"
 	"github.com/project-flogo/core/app/resource"
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/engine"
+	"github.com/project-flogo/core/engine/runner"
 	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/trigger"
 )
@@ -22,6 +24,10 @@ type App struct {
 	triggers   []*Trigger
 	actions    map[string]*Action
 	resources  []*resource.Config
+
+	realApp   *app.App
+	actRunner *runner.DirectRunner
+	indActions []*independentAction
 }
 
 // Trigger is the structure that defines a Trigger for the application
@@ -238,7 +244,26 @@ func (a *Action) OutputMappings() []string {
 // NewEngine creates a new flogo Engine from the specified App
 func NewEngine(a *App) (engine.Engine, error) {
 	appConfig := toAppConfig(a)
-	return engine.New(appConfig)
+
+	e, err :=  engine.New(appConfig)
+	if err != nil {
+		return nil, err
+	}
+
+	a.realApp = e.App()
+	a.actRunner = &runner.DirectRunner{}
+
+	//init any independent actions
+	if len(a.indActions) > 0 {
+		for _, act := range a.indActions {
+			err := act.init(a.realApp)
+			if err != nil {
+				return nil, err
+			}
+		}
+	}
+
+	return e, nil
 }
 
 func newAction(act action.Action, settings interface{}) (*Action, error) {
@@ -264,4 +289,98 @@ func newAction(act action.Action, settings interface{}) (*Action, error) {
 	newAct := &Action{ref: ref, settings: settingsMap}
 
 	return newAct, nil
+}
+
+func (a *App) NewIndependentAction(act action.Action, settings interface{}) (action.Action, error) {
+
+	var settingsMap map[string]interface{}
+
+	if settings, ok := settings.(map[string]interface{}); ok {
+		settingsMap = settings
+	} else {
+		settingsMap = metadata.StructToMap(settings)
+	}
+
+	var ref string
+
+	if hr, ok := act.(support.HasRef); ok {
+		ref = hr.Ref()
+	} else {
+		ref = support.GetRef(act)
+	}
+
+	cfg := &action.Config{Ref:ref, Settings:settingsMap}
+
+	ia :=  &independentAction{app: a, cfg: cfg}
+
+	if a.realApp == nil {
+		//engine not created, so lets hold on to it for init
+		a.indActions = append(a.indActions, ia)
+	} else {
+		err := ia.init(a.realApp)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return ia, nil
+}
+
+
+type independentAction struct {
+	app *App
+	cfg *action.Config
+	act action.Action
+}
+
+func (a *independentAction) Metadata() *action.Metadata {
+	if a.act != nil {
+		return  a.act.Metadata()
+	}
+	return nil
+}
+
+func (a *independentAction) IOMetadata() *metadata.IOMetadata {
+	if a.act != nil {
+		return  a.act.IOMetadata()
+	}
+	return nil
+}
+
+func (a *independentAction) init(initCtx action.InitContext) error {
+	f := action.GetFactory(a.cfg.Ref)
+	err := f.Initialize(initCtx)
+	if err != nil {
+		return err
+	}
+
+	act, err := f.New(a.cfg)
+	if err != nil {
+		return err
+	}
+
+	a.act = act
+	return nil
+}
+
+
+func (a *independentAction) Run(ctx context.Context, inputs map[string]interface{}) (results map[string]interface{}, err error) {
+
+	if a.act == nil {
+		return nil, fmt.Errorf("the engine must be created in order to run the Action")
+	}
+
+	return a.app.actRunner.RunAction(ctx, a.act, inputs)
+}
+
+
+func RunAction(ctx context.Context, act action.Action, inputs map[string]interface{}) (results map[string]interface{}, err error) {
+
+	ia, ok := act.(*independentAction)
+
+	if !ok {
+		return nil, fmt.Errorf("must be an Independent Action to execute directly")
+	}
+
+	return ia.Run(ctx, inputs)
 }
