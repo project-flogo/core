@@ -183,13 +183,23 @@ func (a *App) Start() error {
 
 	logger := log.RootLogger()
 
-	// Start the connection managers
-	logger.Info("Starting Connection Managers...")
-	err := connection.StartManagers()
-	if err != nil {
-		return err
+	managers := connection.Managers()
+
+	if len(managers) > 0 {
+		// Start the connection managers
+		logger.Info("Starting Connection Managers...")
+
+		for id, manager := range managers {
+			if m, ok:= manager.(managed.Managed); ok {
+				err := m.Start()
+				if err != nil {
+					return fmt.Errorf("unable to start connection manager for '%s': %v", id, err)
+				}
+			}
+		}
+
+		logger.Info("Connection Managers Started")
 	}
-	logger.Info("Connection Managers Started")
 
 	// Start the triggers
 	logger.Info("Starting Triggers...")
@@ -243,15 +253,23 @@ func (a *App) Stop() error {
 
 	logger.Info("Triggers Stopped")
 
-	// Stop the connection managers
-	logger.Info("Stopping Connection Managers...")
-	errors := connection.StopManagers()
-	if len(errors) >0  {
-		for _, err := range errors {
-			logger.Debugf("error: %v", err)
+	managers := connection.Managers()
+
+	if len(managers) > 0 {
+		// Stop the connection managers
+		logger.Info("Stopping Connection Managers...")
+
+		for id, manager := range managers {
+			if m, ok:= manager.(managed.Managed); ok {
+				err := m.Stop()
+				if err != nil {
+					logger.Warnf("Unable to start connection manager for '%s': %v", id, err)
+				}
+			}
 		}
+
+		logger.Info("Connection Managers Stopped")
 	}
-	logger.Info("Connection Managers Stopped")
 
 	logger.Debugf("Cleaning up singleton activities")
 	activity.CleanupSingletons()
