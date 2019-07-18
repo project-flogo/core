@@ -3,6 +3,7 @@ package ssl
 import (
 	"crypto/tls"
 	"crypto/x509"
+	"fmt"
 	"io/ioutil"
 
 	"github.com/project-flogo/core/data/coerce"
@@ -99,7 +100,7 @@ func NewClientTLSConfig(config *Config) (*tls.Config, error) {
 	if config.CAFile != "" {
 		caCert, err := ioutil.ReadFile(config.CAFile)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("unable to read CAfile '%s' : %v", config.CAFile, err)
 		}
 		caCertPool.AppendCertsFromPEM(caCert)
 	}

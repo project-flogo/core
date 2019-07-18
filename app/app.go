@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"github.com/project-flogo/core/support/connection"
 	"path"
 	"regexp"
 	"runtime/debug"
@@ -57,6 +58,20 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 
 	for _, option := range options {
 		err := option(app)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	for id, config := range config.Connections {
+		f := connection.GetManagerFactory(config.Type)
+		//todo resolve settings values
+		cm, err := f.NewManager(config.Settings)
+		if err != nil {
+			return nil, err
+		}
+
+		err = connection.RegisterManager(id, cm)
 		if err != nil {
 			return nil, err
 		}
@@ -168,6 +183,14 @@ func (a *App) Start() error {
 
 	logger := log.RootLogger()
 
+	// Start the connection managers
+	logger.Info("Starting Connection Managers...")
+	err := connection.StartManagers()
+	if err != nil {
+		return err
+	}
+	logger.Info("Connection Managers Started")
+
 	// Start the triggers
 	logger.Info("Starting Triggers...")
 
@@ -219,6 +242,16 @@ func (a *App) Stop() error {
 	}
 
 	logger.Info("Triggers Stopped")
+
+	// Stop the connection managers
+	logger.Info("Stopping Connection Managers...")
+	errors := connection.StopManagers()
+	if len(errors) >0  {
+		for _, err := range errors {
+			logger.Debugf("error: %v", err)
+		}
+	}
+	logger.Info("Connection Managers Stopped")
 
 	logger.Debugf("Cleaning up singleton activities")
 	activity.CleanupSingletons()

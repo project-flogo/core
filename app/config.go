@@ -5,6 +5,7 @@ import (
 	"github.com/project-flogo/core/app/resource"
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/schema"
+	"github.com/project-flogo/core/support/connection"
 	"github.com/project-flogo/core/trigger"
 )
 
@@ -16,11 +17,12 @@ type Config struct {
 	Description string `json:"description"`
 	AppModel    string `json:"appModel"`
 
-	Imports    []string               `json:"imports,omitempty"`
-	Properties []*data.Attribute      `json:"properties,omitempty"`
-	Channels   []string               `json:"channels,omitempty"`
-	Triggers   []*trigger.Config      `json:"triggers"`
-	Resources  []*resource.Config     `json:"resources,omitempty"`
-	Actions    []*action.Config       `json:"actions,omitempty"`
-	Schemas    map[string]*schema.Def `json:"schemas,omitempty"`
+	Imports     []string                      `json:"imports,omitempty"`
+	Properties  []*data.Attribute             `json:"properties,omitempty"`
+	Channels    []string                      `json:"channels,omitempty"`
+	Triggers    []*trigger.Config             `json:"triggers"`
+	Resources   []*resource.Config            `json:"resources,omitempty"`
+	Actions     []*action.Config              `json:"actions,omitempty"`
+	Schemas     map[string]*schema.Def        `json:"schemas,omitempty"`
+	Connections map[string]*connection.Config `json:"connections,omitempty"`
 }
