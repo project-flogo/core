@@ -62,29 +62,11 @@ func GetManager(id string) Manager {
 	return managers[id]
 }
 
-func StartManagers() error {
+func Managers() map[string]Manager {
+	ret := make(map[string]Manager,len(managers) )
 	for id, manager := range managers {
-		if m, ok:= manager.(managed.Managed); ok {
-			err := m.Start()
-			if err != nil {
-				return fmt.Errorf("unable to start connection manager for '%s': %v", id, err)
-			}
-		}
+		ret[id] = manager
 	}
 
-	return nil
-}
-
-func StopManagers() []error {
-	var errors []error
-	for id, manager := range managers {
-		if m, ok:= manager.(managed.Managed); ok {
-			err := m.Stop()
-			if err != nil {
-				errors = append(errors, fmt.Errorf("unable to start connection manager for '%s': %v", id, err))
-			}
-		}
-	}
-
-	return errors
+	return ret
 }
