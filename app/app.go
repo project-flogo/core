@@ -65,6 +65,11 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 
 	for id, config := range config.Connections {
 		f := connection.GetManagerFactory(config.Type)
+
+		if f == nil {
+			return nil, fmt.Errorf("connection factory for type '%s' not registered", config.Type)
+		}
+
 		//todo resolve settings values
 		cm, err := f.NewManager(config.Settings)
 		if err != nil {
