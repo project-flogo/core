@@ -2,8 +2,8 @@ package connection
 
 import (
 	"fmt"
+	"github.com/project-flogo/core/support"
 
-	"github.com/project-flogo/core/support/managed"
 	"github.com/project-flogo/core/support/log"
 )
 
@@ -12,29 +12,27 @@ var (
 	managers = make(map[string]Manager)
 )
 
-func RegisterManagerFactory(connectionType string, factory ManagerFactory) error {
-
-	if connectionType == "" {
-		return fmt.Errorf("'connectionType' must be specified when registering")
-	}
+func RegisterManagerFactory(factory ManagerFactory) error {
 
 	if factory == nil {
 		return fmt.Errorf("cannot register with 'nil' manager factory")
 	}
 
-	if _, dup := managerFactories[connectionType]; dup {
-		return fmt.Errorf("manager factory already registered for type: %s", connectionType)
+	ref := support.GetRef(factory)
+
+	if _, dup := managerFactories[ref]; dup {
+		return fmt.Errorf("manager factory already registered: %s", ref)
 	}
 
-	log.RootLogger().Debugf("Registering manager factory for type: %s", connectionType)
+	managerFactories[ref] = factory
 
-	managerFactories[connectionType] = factory
+	log.RootLogger().Debugf("Registering '%s' manager factory: %s", factory.Type, ref )
 
 	return nil
 }
 
-func GetManagerFactory(id string) ManagerFactory {
-	return managerFactories[id]
+func GetManagerFactory(ref string) ManagerFactory {
+	return managerFactories[ref]
 }
 
 func RegisterManager(connectionId string, manager Manager) error {

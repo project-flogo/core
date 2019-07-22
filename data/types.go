@@ -33,6 +33,9 @@ const (
 	TypeParams // map[string]string
 	TypeArray  // []interface{}
 	TypeMap    // map[interface{}]interface{}
+
+	//Special Type
+	TypeConnection
 )
 
 var types = [...]string{
@@ -50,6 +53,7 @@ var types = [...]string{
 	"params",
 	"array",
 	"map",
+	"connection",
 }
 
 func (t Type) String() string {
@@ -76,6 +80,7 @@ var names = map[Type]string{
 	TypeParams:  "TypeParams",
 	TypeArray:   "TypeArray",
 	TypeMap:     "TypeMap",
+	TypeConnection: "TypeConnection",
 }
 
 // Name returns the name of the type
@@ -113,6 +118,8 @@ func ToTypeEnum(typeStr string) (Type, error) {
 		return TypeArray, nil
 	case "map":
 		return TypeMap, nil
+	case "connection":
+		return TypeConnection, nil
 	default:
 		return TypeUnknown, errors.New("unknown type: " + typeStr)
 	}

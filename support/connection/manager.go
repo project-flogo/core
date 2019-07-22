@@ -1,12 +1,16 @@
 package connection
 
 type Manager interface {
+	Type()
+
 	GetConnection() interface{}
 
 	//ReleaseConnection(connection interface{})
 }
 
 type ManagerFactory interface {
-	NewManager(settings map[string]string) (Manager, error)
+	Type()
+
+	NewManager(settings map[string]interface{}) (Manager, error)
 }
 
