@@ -64,10 +64,10 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 	}
 
 	for id, config := range config.Connections {
-		f := connection.GetManagerFactory(config.Type)
+		f := connection.GetManagerFactory(config.Ref)
 
 		if f == nil {
-			return nil, fmt.Errorf("connection factory for type '%s' not registered", config.Type)
+			return nil, fmt.Errorf("connection factory '%s' not registered", config.Ref)
 		}
 
 		//todo resolve settings values
