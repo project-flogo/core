@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"github.com/project-flogo/core/support/connection"
 	"path"
 	"regexp"
 	"runtime/debug"
@@ -57,6 +58,25 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 
 	for _, option := range options {
 		err := option(app)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	for id, config := range config.Connections {
+		f := connection.GetManagerFactory(config.Ref)
+
+		if f == nil {
+			return nil, fmt.Errorf("connection factory '%s' not registered", config.Ref)
+		}
+
+		//todo resolve settings values
+		cm, err := f.NewManager(config.Settings)
+		if err != nil {
+			return nil, err
+		}
+
+		err = connection.RegisterManager(id, cm)
 		if err != nil {
 			return nil, err
 		}
@@ -168,6 +188,24 @@ func (a *App) Start() error {
 
 	logger := log.RootLogger()
 
+	managers := connection.Managers()
+
+	if len(managers) > 0 {
+		// Start the connection managers
+		logger.Info("Starting Connection Managers...")
+
+		for id, manager := range managers {
+			if m, ok:= manager.(managed.Managed); ok {
+				err := m.Start()
+				if err != nil {
+					return fmt.Errorf("unable to start connection manager for '%s': %v", id, err)
+				}
+			}
+		}
+
+		logger.Info("Connection Managers Started")
+	}
+
 	// Start the triggers
 	logger.Info("Starting Triggers...")
 
@@ -219,6 +257,24 @@ func (a *App) Stop() error {
 	}
 
 	logger.Info("Triggers Stopped")
+
+	managers := connection.Managers()
+
+	if len(managers) > 0 {
+		// Stop the connection managers
+		logger.Info("Stopping Connection Managers...")
+
+		for id, manager := range managers {
+			if m, ok:= manager.(managed.Managed); ok {
+				err := m.Stop()
+				if err != nil {
+					logger.Warnf("Unable to start connection manager for '%s': %v", id, err)
+				}
+			}
+		}
+
+		logger.Info("Connection Managers Stopped")
+	}
 
 	logger.Debugf("Cleaning up singleton activities")
 	activity.CleanupSingletons()

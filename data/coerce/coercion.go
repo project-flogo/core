@@ -50,10 +50,11 @@ func ToType(value interface{}, dataType data.Type) (interface{}, error) {
 		coerced, err = ToObject(value)
 	case data.TypeArray:
 		coerced, err = ToArrayIfNecessary(value)
+	case data.TypeConnection:
+		coerced, err = ToConnection(value)
 	case data.TypeUnknown:
 		coerced = value
 	}
-
 	if err != nil {
 		return nil, err
 	}
