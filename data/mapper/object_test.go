@@ -983,7 +983,7 @@ func TestArrayMappingWithFilterNested(t *testing.T) {
         "status": "=$loop.status",
         "categories": "=$loop.categories",
         "author": {
-          "@foreach($.authors, authorLoop, $loop.age > 45)": {
+          "@foreach($loop.authors, authorLoop, $loop.age > 45)": {
             "firstName": "=$loop.firstName",
             "lastName": "=$loop.lastName",
             "age": "=$loop.age"

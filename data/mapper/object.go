@@ -455,13 +455,13 @@ func newLoopScope(arrayItem interface{}, indexName string, scope data.Scope) (da
 		return nil, fmt.Errorf("convert array item data [%+v] to map failed, due to [%s]", arrayItem, err.Error())
 	}
 
-	newScope := data.NewSimpleScope(mapData, scope)
+	loopData := make(map[string]interface{})
+	loopData["_loop"] = mapData
 	if len(indexName) > 0 {
-		tmpMap := make(map[string]interface{})
-		tmpMap[indexName] = mapData
-		return data.NewSimpleScope(tmpMap, newScope), nil
+		loopData[indexName] = mapData
 	}
-	return newScope, nil
+
+	return data.NewSimpleScope(loopData, scope), nil
 }
 
 func ToObjectMap(value interface{}) (map[string]interface{}, error) {
