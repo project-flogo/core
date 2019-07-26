@@ -1,7 +1,9 @@
 package connection
 
+import "fmt"
+
 type Manager interface {
-	Type()
+	Type() string
 
 	GetConnection() interface{}
 
@@ -9,8 +11,48 @@ type Manager interface {
 }
 
 type ManagerFactory interface {
-	Type()
+	Type() string
 
 	NewManager(settings map[string]interface{}) (Manager, error)
+}
+
+
+func NewManager(config *Config) (Manager, error)  {
+	f := GetManagerFactory(config.Ref)
+
+	if f == nil {
+		return nil, fmt.Errorf("connection factory '%s' not registered", config.Ref)
+	}
+
+	cm, err := f.NewManager(config.Settings)
+	if err != nil {
+		return nil, err
+	}
+
+	return cm, err
+}
+
+func NewSharedManager(id string, config *Config) (Manager, error)  {
+
+	cm, err := NewManager(config)
+	if err != nil {
+		return nil, err
+	}
+
+	err = RegisterManager(id, cm)
+	if err != nil {
+		return nil, err
+	}
+
+	return cm, err
+}
+
+func IsShared(manager Manager) bool{
+	for _, mgr := range managers {
+		if manager == mgr {
+			return true
+		}
+	}
+	return false
 }
 

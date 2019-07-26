@@ -30,12 +30,7 @@ func ToConnection(val interface{}) (connection.Manager, error) {
 				}
 			}
 
-			f := connection.GetManagerFactory(cc.Ref)
-			if f == nil {
-				return nil, fmt.Errorf("no connection factory registered for '%s'", cc.Ref)
-			}
-
-			cm, err := f.NewManager(cc.Settings)
+			cm, err := connection.NewManager(cc)
 			if err != nil {
 				return nil, err
 			}
@@ -44,8 +39,21 @@ func ToConnection(val interface{}) (connection.Manager, error) {
 		}
 	case connection.Manager:
 		return t, nil
+	case map[string]interface{}:
+		cfg, err := connection.ToConfig(t)
+		if err != nil {
+			return nil, err
+		}
+
+		cm, err := connection.NewManager(cfg)
+		if err != nil {
+			return nil, err
+		}
+
+		return cm, nil
 	default:
 		// try to create config from map[string]interface{}
 		return nil, fmt.Errorf("unable to create connection from '%#v'", val)
 	}
 }
+
