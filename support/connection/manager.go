@@ -11,7 +11,7 @@ type Manager interface {
 }
 
 type ManagerFactory interface {
-	Type()
+	Type() string
 
 	NewManager(settings map[string]interface{}) (Manager, error)
 }
