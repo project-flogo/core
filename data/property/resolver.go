@@ -6,6 +6,8 @@ import (
 	"strings"
 
 	"github.com/project-flogo/core/support/log"
+	"github.com/vijaynalawade/core/data"
+	"github.com/vijaynalawade/core/data/coerce"
 )
 
 var (
@@ -97,6 +99,15 @@ func PropertyResolverProcessor(properties map[string]interface{}) error {
 		if !found {
 			logger.Warnf("Property '%s' could not be resolved using property resolver(s). Using default value from flogo.json.", name)
 		} else {
+			// Get datatype of old value
+			dType, _ := data.GetType(properties[name])
+			if dType != data.TypeUnknown {
+				coercedVal, err := coerce.ToType(newVal, dType)
+				if err == nil {
+					properties[name] = coercedVal
+					continue
+				}
+			}
 			properties[name] = newVal
 		}
 	}
