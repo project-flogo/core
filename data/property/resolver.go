@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/coerce"
+	"github.com/project-flogo/core/support/log"
 )
 
 var (
