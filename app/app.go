@@ -64,19 +64,7 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 	}
 
 	for id, config := range config.Connections {
-		f := connection.GetManagerFactory(config.Ref)
-
-		if f == nil {
-			return nil, fmt.Errorf("connection factory '%s' not registered", config.Ref)
-		}
-
-		//todo resolve settings values
-		cm, err := f.NewManager(config.Settings)
-		if err != nil {
-			return nil, err
-		}
-
-		err = connection.RegisterManager(id, cm)
+		_, err := connection.NewSharedManager(id, config)
 		if err != nil {
 			return nil, err
 		}
