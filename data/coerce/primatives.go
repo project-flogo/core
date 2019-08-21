@@ -44,6 +44,14 @@ func ToInt(val interface{}) (int, error) {
 		return t, nil
 	case int64:
 		return int(t), nil
+	case uint:
+		return int(t), nil
+	case uint8:
+		return int(t), nil
+	case uint16:
+		return int(t), nil
+	case uint32:
+		return int(t), nil
 	case float64:
 		return int(t), nil
 	case json.Number:
@@ -71,6 +79,14 @@ func ToInt32(val interface{}) (int32, error) {
 	case int32:
 		return t, nil
 	case int64:
+		return int32(t), nil
+	case uint:
+		return int32(t), nil
+	case uint8:
+		return int32(t), nil
+	case uint16:
+		return int32(t), nil
+	case uint32:
 		return int32(t), nil
 	case float32:
 		return int32(t), nil
@@ -103,6 +119,14 @@ func ToInt64(val interface{}) (int64, error) {
 		return int64(t), nil
 	case int64:
 		return t, nil
+	case uint:
+		return int64(t), nil
+	case uint8:
+		return int64(t), nil
+	case uint16:
+		return int64(t), nil
+	case uint32:
+		return int64(t), nil
 	case float32:
 		return int64(t), nil
 	case float64:
@@ -123,7 +147,7 @@ func ToInt64(val interface{}) (int64, error) {
 	}
 }
 
-// ToFloat64 coerce a value to a double/float64
+// ToFloat32 coerce a value to a double/float32
 func ToFloat32(val interface{}) (float32, error) {
 	switch t := val.(type) {
 	case int:
@@ -135,6 +159,16 @@ func ToFloat32(val interface{}) (float32, error) {
 	case float32:
 		return t, nil
 	case float64:
+		return float32(t), nil
+	case uint:
+		return float32(t), nil
+	case uint8:
+		return float32(t), nil
+	case uint16:
+		return float32(t), nil
+	case uint32:
+		return float32(t), nil
+	case uint64:
 		return float32(t), nil
 	case json.Number:
 		f, err := t.Float64()
@@ -160,6 +194,14 @@ func ToFloat64(val interface{}) (float64, error) {
 	case int:
 		return float64(t), nil
 	case int32:
+		return float64(t), nil
+	case uint:
+		return float64(t), nil
+	case uint8:
+		return float64(t), nil
+	case uint16:
+		return float64(t), nil
+	case uint32:
 		return float64(t), nil
 	case int64:
 		return float64(t), nil
