@@ -12,7 +12,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var resolver = resolve.NewCompositeResolver(map[string]resolve.Resolver{"static": &TestStaticResolver{}, ".": &TestResolver{}, "env": &resolve.EnvResolver{}, "property": &resolve.PropertyResolver{}})
+var resolver = resolve.NewCompositeResolver(map[string]resolve.Resolver{"static": &TestStaticResolver{}, ".": &TestResolver{}, "env": &resolve.EnvResolver{}, "property": &property.Resolver{}})
 var factory = NewExprFactory(resolver)
 
 func TestLitExprInt(t *testing.T) {

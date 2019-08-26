@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/project-flogo/core/data/coerce"
 	"reflect"
 	"strconv"
 	"strings"
@@ -199,7 +198,7 @@ func getSetArrayValue(obj interface{}, path string, value interface{}, set bool)
 	arrValue, valid := obj.([]interface{})
 	if !valid {
 		//Try to convert to a array in case it is a array string
-		val, err := coerce.ToArray(obj)
+		val, err := toArray(obj)
 		if err != nil {
 			return nil, path, errors.New("'" + path + "' not an array")
 		}
@@ -254,7 +253,7 @@ func getSetParamsValue(params map[string]string, path string, value interface{},
 	key, _ := getObjectKey(path[1:])
 	if set && key == path[1:] {
 		//end of path so set the value
-		paramVal, err := coerce.ToString(value)
+		paramVal, err := toString(value)
 
 		if err != nil {
 			return nil, "", err
@@ -299,7 +298,7 @@ func getSetMapParamsValue(params map[string]string, path string, value interface
 	key, _ := getMapKey(path[2:])
 	if set && key+`"]` == path[2:] {
 		//end of path so set the value
-		paramVal, err := coerce.ToString(value)
+		paramVal, err := toString(value)
 
 		if err != nil {
 			return nil, "", err
@@ -330,4 +329,72 @@ func Deconstruct(fullPath string) (attrName string, path string, err error) {
 
 func isSep(r rune) bool {
 	return r == '.' || r == '['
+}
+
+
+func toString(val interface{}) (string, error) {
+
+	switch t := val.(type) {
+	case string:
+		return t, nil
+	case int:
+		return strconv.Itoa(t), nil
+	case int64:
+		return strconv.FormatInt(t, 10), nil
+	case float32:
+		return strconv.FormatFloat(float64(t), 'f', -1, 64), nil
+	case float64:
+		return strconv.FormatFloat(t, 'f', -1, 64), nil
+	case json.Number:
+		return t.String(), nil
+	case bool:
+		return strconv.FormatBool(t), nil
+	case nil:
+		return "", nil
+	case []byte:
+		return string(t), nil
+	default:
+		b, err := json.Marshal(t)
+		if err != nil {
+			return "", fmt.Errorf("unable to coerce %#v to string", t)
+		}
+		return string(b), nil
+	}
+}
+
+func toArray(val interface{}) ([]interface{}, error) {
+
+	switch t := val.(type) {
+	case []interface{}:
+		return t, nil
+
+	case []map[string]interface{}:
+		var a []interface{}
+		for _, v := range t {
+			a = append(a, v)
+		}
+		return a, nil
+	case string:
+		a := make([]interface{}, 0)
+		if t != "" {
+			err := json.Unmarshal([]byte(t), &a)
+			if err != nil {
+				a = append(a, t)
+			}
+		}
+		return a, nil
+	case nil:
+		return nil, nil
+	default:
+		s := reflect.ValueOf(val)
+		if s.Kind() == reflect.Slice {
+			a := make([]interface{}, s.Len())
+
+			for i := 0; i < s.Len(); i++ {
+				a[i] = s.Index(i).Interface()
+			}
+			return a, nil
+		}
+		return nil, fmt.Errorf("unable to coerce %#v to []interface{}", val)
+	}
 }

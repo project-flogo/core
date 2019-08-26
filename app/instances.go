@@ -2,10 +2,10 @@ package app
 
 import (
 	"fmt"
+
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/mapper"
-	"github.com/project-flogo/core/data/resolve"
 	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/support/managed"
@@ -61,8 +61,8 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 
 	triggers := make(map[string]*triggerWrapper)
 
-	mapperFactory := mapper.NewFactory(resolve.GetBasicResolver())
-	expressionFactory := expression.NewFactory(resolve.GetBasicResolver())
+	mapperFactory := mapper.NewFactory(a.resolver)
+	expressionFactory := expression.NewFactory(a.resolver)
 
 	for _, tConfig := range tConfigs {
 
@@ -96,7 +96,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 			return nil, fmt.Errorf("trigger factory '%s' not registered", ref)
 		}
 
-		err := tConfig.FixUp(triggerFactory.Metadata())
+		err := tConfig.FixUp(triggerFactory.Metadata(), a.resolver)
 		if err != nil {
 			return nil, err
 		}
