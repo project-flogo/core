@@ -11,47 +11,52 @@ import (
 )
 
 var (
-	RegisteredResolvers = make(map[string]Resolver)
-	EnabledResolvers    []Resolver
+	RegisteredResolvers = make(map[string]ExternalResolver)
+	EnabledResolvers    []ExternalResolver
 )
 
 // Resolver used to resolve property value from external configuration like env, file etc
-type Resolver interface {
+type ExternalResolver interface {
 	Name() string
 	// Should return value and true if the given key exists in the external configuration otherwise should return nil and false.
 	LookupValue(key string) (interface{}, bool)
 }
 
-func RegisterPropertyResolver(resolver Resolver) error {
+//DEPRECATED
+func RegisterPropertyResolver(resolver ExternalResolver) error {
+	return RegisterExternalResolver(resolver)
+}
+
+func RegisterExternalResolver(resolver ExternalResolver) error {
 
 	logger := log.RootLogger()
 
 	resolverName := resolver.Name()
 
 	if resolverName == "" {
-		return fmt.Errorf("a property resolver must have a non-empty name")
+		return fmt.Errorf("an external property resolver must have a non-empty name")
 	}
 
 	if resolver == nil {
-		return fmt.Errorf("cannot register a 'nil' property resolver")
+		return fmt.Errorf("cannot register a 'nil' external property resolver")
 	}
 
 	if _, dup := RegisteredResolvers[resolverName]; dup {
-		return fmt.Errorf("property resolver already registered: %s", resolverName)
+		return fmt.Errorf("external property resolver already registered: %s", resolverName)
 	}
 
-	logger.Debugf("Registering property resolver [ %s ]", resolverName)
+	logger.Debugf("Registering external property resolver [ %s ]", resolverName)
 
 	RegisteredResolvers[resolverName] = resolver
 
 	return nil
 }
 
-func GetPropertyResolver(resolverType string) Resolver {
+func GetExternalPropertyResolver(resolverType string) ExternalResolver {
 	return RegisteredResolvers[resolverType]
 }
 
-func EnablePropertyResolvers(resolverTypes string) error {
+func EnableExternalPropertyResolvers(resolverTypes string) error {
 
 	for _, resolverType := range strings.Split(resolverTypes, ",") {
 		resolver := RegisteredResolvers[resolverType]
@@ -65,7 +70,7 @@ func EnablePropertyResolvers(resolverTypes string) error {
 	return nil
 }
 
-func ResolveProperty(propertyName string) (interface{}, bool) {
+func ResolvePropertyExternally(propertyName string) (interface{}, bool) {
 
 	for _, resolver := range EnabledResolvers {
 		// Use resolver
@@ -78,23 +83,23 @@ func ResolveProperty(propertyName string) (interface{}, bool) {
 	return nil, false
 }
 
-func PropertyResolverProcessor(properties map[string]interface{}) error {
+func ExternalResolverProcessor(properties map[string]interface{}) error {
 
 	logger := log.RootLogger()
 
 	var enabledResolvers []string
-	var resolver Resolver
+	var resolver ExternalResolver
 	for _, resolver = range EnabledResolvers {
 		enabledResolvers = append(enabledResolvers, resolver.Name())
 	}
 	if len(enabledResolvers) == 1 {
-		logger.Infof("Properties will be resolved with the '%s' resolver", resolver.Name())
+		logger.Infof("Properties will be resolved with the '%s' resolver", EnabledResolvers[0].Name())
 	} else {
 		logger.Infof("Properties will be resolved with these resolvers (in decreasing order of priority): %v", enabledResolvers)
 	}
 
 	for name := range properties {
-		newVal, found := ResolveProperty(name)
+		newVal, found := ResolvePropertyExternally(name)
 
 		if !found {
 			logger.Warnf("Property '%s' could not be resolved using property resolver(s). Using default value from flogo.json.", name)

@@ -19,9 +19,9 @@ type Config struct {
 	Type string `json:"type,omitempty"`
 }
 
-func (c *Config) FixUp(md *Metadata) error {
+func (c *Config) FixUp(md *Metadata, resolver resolve.CompositeResolver) error {
 
-	ef := expression.NewFactory(resolve.GetBasicResolver())
+	ef := expression.NewFactory(resolver)
 
 	//fix up settings
 	if len(c.Settings) > 0 {

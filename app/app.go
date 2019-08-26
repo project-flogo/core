@@ -2,7 +2,6 @@ package app
 
 import (
 	"fmt"
-	"github.com/project-flogo/core/support/connection"
 	"path"
 	"regexp"
 	"runtime/debug"
@@ -10,11 +9,14 @@ import (
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/activity"
+	appresolve "github.com/project-flogo/core/app/resolve"
 	"github.com/project-flogo/core/app/resource"
 	"github.com/project-flogo/core/data/expression/function"
 	"github.com/project-flogo/core/data/property"
+	"github.com/project-flogo/core/data/resolve"
 	"github.com/project-flogo/core/data/schema"
 	"github.com/project-flogo/core/support"
+	"github.com/project-flogo/core/support/connection"
 	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/support/managed"
 	"github.com/project-flogo/core/trigger"
@@ -27,6 +29,15 @@ var flogoImportPattern = regexp.MustCompile(`^(([^ ]*)[ ]+)?([^@:]*)@?([^:]*)?:?
 func New(config *Config, runner action.Runner, options ...Option) (*App, error) {
 
 	app := &App{stopOnError: true, name: config.Name, version: config.Version}
+
+	resolver := resolve.NewCompositeResolver(map[string]resolve.Resolver{
+		".":        &resolve.ScopeResolver{},
+		"env":      &resolve.EnvResolver{},
+		"property": &property.Resolver{},
+	})
+
+	app.resolver = resolver
+	appresolve.SetAppResolver(resolver)
 
 	for _, anImport := range config.Imports {
 		matches := flogoImportPattern.FindStringSubmatch(anImport)
@@ -64,7 +75,13 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 	}
 
 	for id, config := range config.Connections {
-		_, err := connection.NewSharedManager(id, config)
+
+		//resolve settings
+		err := connection.ResolveConfig(config)
+		if err != nil {
+			return nil, err
+		}
+		_, err = connection.NewSharedManager(id, config)
 		if err != nil {
 			return nil, err
 		}
@@ -130,6 +147,7 @@ type App struct {
 	triggers    map[string]*triggerWrapper
 	stopOnError bool
 	started     bool
+	resolver    resolve.CompositeResolver
 }
 
 type triggerWrapper struct {
@@ -183,7 +201,7 @@ func (a *App) Start() error {
 		logger.Info("Starting Connection Managers...")
 
 		for id, manager := range managers {
-			if m, ok:= manager.(managed.Managed); ok {
+			if m, ok := manager.(managed.Managed); ok {
 				err := m.Start()
 				if err != nil {
 					return fmt.Errorf("unable to start connection manager for '%s': %v", id, err)
@@ -253,7 +271,7 @@ func (a *App) Stop() error {
 		logger.Info("Stopping Connection Managers...")
 
 		for id, manager := range managers {
-			if m, ok:= manager.(managed.Managed); ok {
+			if m, ok := manager.(managed.Managed); ok {
 				err := m.Stop()
 				if err != nil {
 					logger.Warnf("Unable to start connection manager for '%s': %v", id, err)
