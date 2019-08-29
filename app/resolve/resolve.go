@@ -2,10 +2,10 @@ package resolve
 
 import "github.com/project-flogo/core/data"
 
-var sr simpleResolve
+var r simpleResolve
 
 func SetAppResolver(sr simpleResolve) {
-	sr = sr
+	r = sr
 }
 
 type simpleResolve interface {
@@ -13,5 +13,5 @@ type simpleResolve interface {
 }
 
 func Resolve(resolveDirective string, scope data.Scope) (value interface{}, err error) {
-	return sr.Resolve(resolveDirective, scope)
+	return r.Resolve(resolveDirective, scope)
 }
