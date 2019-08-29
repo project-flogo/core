@@ -6,10 +6,15 @@ type Error struct {
 	errorStr     string
 	errorCode    string
 	errorData    interface{}
+	retriable    bool
 }
 
 func NewError(errorText string, code string, errorData interface{}) *Error {
-	return &Error{errorStr: errorText, errorData: errorData, errorCode: code}
+	return &Error{errorStr: errorText, errorData: errorData, errorCode: code, retriable: false}
+}
+
+func NewRetriableError(errorText string, code string, errorData interface{}) *Error {
+	return &Error{errorStr: errorText, errorData: errorData, errorCode: code, retriable: true}
 }
 
 // Error implements error.Error()
@@ -35,4 +40,9 @@ func (e *Error) Data() interface{} {
 // Code returns any associated error code
 func (e *Error) Code() string {
 	return e.errorCode
+}
+
+// Retriable returns wether error is retriable
+func (e *Error) Retriable() bool {
+	return e.retriable
 }
