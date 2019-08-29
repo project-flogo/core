@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/project-flogo/core/app/resolve"
+	"github.com/project-flogo/core/support"
 )
 
 type Config struct {
@@ -15,8 +16,14 @@ func ToConfig(config map[string]interface{}) (*Config, error) {
 
 	if v, ok := config["ref"]; ok {
 		if ref, ok := v.(string); ok {
+
 			cfg := &Config{}
 			cfg.Ref = ref
+
+			err := resolveRef(cfg)
+			if err != nil {
+				return nil, err
+			}
 			if v, ok := config["settings"]; ok {
 				if settings, ok := v.(map[string]interface{}); ok {
 					// Resolve property/env value
@@ -42,6 +49,11 @@ func ToConfig(config map[string]interface{}) (*Config, error) {
 
 func ResolveConfig(config *Config) error {
 
+	err := resolveRef(config)
+	if err != nil {
+		return err
+	}
+
 	for name, value := range config.Settings {
 
 		if strVal, ok := value.(string); ok && len(strVal) > 0 && strVal[0] == '=' {
@@ -57,3 +69,14 @@ func ResolveConfig(config *Config) error {
 	return nil
 }
 
+
+func resolveRef(config *Config ) error {
+	if config.Ref[0] == '#' {
+		var ok bool
+		config.Ref, ok = support.GetAliasRef("connection", config.Ref)
+		if !ok {
+			return fmt.Errorf("connection '%s' not imported", config.Ref)
+		}
+	}
+	return nil
+}

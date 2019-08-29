@@ -343,6 +343,8 @@ func getContribType(ref string) string {
 		return "trigger"
 	} else if function.IsFunctionPackage(ref) {
 		return "function"
+	} else if connection.GetManagerFactory(ref) != nil {
+		return "connection"
 	} else {
 		return "other"
 	}
