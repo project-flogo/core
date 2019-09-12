@@ -2,7 +2,9 @@ package engine
 
 import (
 	"fmt"
+
 	"github.com/project-flogo/core/data/property"
+
 	"strings"
 
 	"github.com/project-flogo/core/action"
@@ -168,8 +170,10 @@ func (e *engineImpl) Start() error {
 	logger.Info("Starting Application...")
 	err = e.flogoApp.Start()
 	if err != nil {
+		e.flogoApp.PostAppEvent(app.FAILED)
 		return err
 	}
+	e.flogoApp.PostAppEvent(app.STARTED)
 	logger.Info("Application Started")
 
 	if channels.Count() > 0 {
@@ -198,6 +202,7 @@ func (e *engineImpl) Stop() error {
 	logger.Info("Stopping Application...")
 	_ = e.flogoApp.Stop()
 	logger.Info("Application Stopped")
+	e.flogoApp.PostAppEvent(app.STOPPED)
 
 	//TODO temporarily add services
 	logger.Info("Stopping Services...")

@@ -15,6 +15,7 @@ import (
 	"github.com/project-flogo/core/data/property"
 	"github.com/project-flogo/core/data/resolve"
 	"github.com/project-flogo/core/data/schema"
+	"github.com/project-flogo/core/engine/event"
 	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/support/connection"
 	"github.com/project-flogo/core/support/log"
@@ -23,6 +24,39 @@ import (
 )
 
 type Option func(*App) error
+
+type Status string
+
+const (
+	FAILED  = "Failed"
+	STARTED = "Started"
+	STOPPED = "Stopped"
+)
+
+const AppEventType = "appevent"
+
+type AppEvent interface {
+	AppName() string
+	AppVersion() string
+	AppStatus() Status
+}
+
+type appEvent struct {
+	status        Status
+	name, version string
+}
+
+func (ae *appEvent) AppName() string {
+	return ae.name
+}
+
+func (ae *appEvent) AppVersion() string {
+	return ae.version
+}
+
+func (ae *appEvent) AppStatus() Status {
+	return ae.status
+}
 
 var flogoImportPattern = regexp.MustCompile(`^(([^ ]*)[ ]+)?([^@:]*)@?([^:]*)?:?(.*)?$`) // extract import path even if there is an alias and/or a version
 
@@ -347,5 +381,12 @@ func getContribType(ref string) string {
 		return "connection"
 	} else {
 		return "other"
+	}
+}
+
+func (a *App) PostAppEvent(appStatus Status) {
+	if event.HasListener(AppEventType) {
+		ae := &appEvent{name: a.name, version: a.version, status: appStatus}
+		event.Post(AppEventType, ae)
 	}
 }
