@@ -150,7 +150,7 @@ func ToArray(val interface{}) ([]interface{}, error) {
 		if t != "" {
 			err := json.Unmarshal([]byte(t), &a)
 			if err != nil {
-				return nil, fmt.Errorf("unable to coerce %#v to map[string]interface{}", val)
+				a = append(a, t)
 			}
 		}
 		return a, nil
@@ -189,7 +189,7 @@ func ToArrayIfNecessary(val interface{}) (interface{}, error) {
 		if t != "" {
 			err := json.Unmarshal([]byte(t), &a)
 			if err != nil {
-				return nil, fmt.Errorf("unable to coerce %#v to map[string]interface{}", val)
+				return t, nil
 			}
 		}
 		return a, nil

@@ -1,5 +1,7 @@
 package property
 
+import "github.com/project-flogo/core/data/property/tmp"
+
 func init() {
 	SetDefaultManager(NewManager(make(map[string]interface{})))
 }
@@ -8,6 +10,8 @@ var defaultManager *Manager
 
 func SetDefaultManager(manager *Manager) {
 	defaultManager = manager
+
+	tmp.SetDefaultManager(manager)
 }
 
 func DefaultManager() *Manager {

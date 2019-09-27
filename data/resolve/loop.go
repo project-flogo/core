@@ -2,6 +2,7 @@ package resolve
 
 import (
 	"fmt"
+
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/path"
 )

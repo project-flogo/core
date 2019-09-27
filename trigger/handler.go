@@ -16,6 +16,7 @@ import (
 type Handler interface {
 	Name() string
 	Settings() map[string]interface{}
+	Schemas() *SchemaConfig
 	Handle(ctx context.Context, triggerData interface{}) (map[string]interface{}, error)
 }
 
@@ -34,6 +35,10 @@ type handlerImpl struct {
 
 func (h *handlerImpl) Name() string {
 	return h.config.Name
+}
+
+func (h *handlerImpl) Schemas() *SchemaConfig {
+	return h.config.Schemas
 }
 
 func (h *handlerImpl) Settings() map[string]interface{} {

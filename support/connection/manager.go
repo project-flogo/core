@@ -7,7 +7,7 @@ type Manager interface {
 
 	GetConnection() interface{}
 
-	//ReleaseConnection(connection interface{})
+	ReleaseConnection(connection interface{})
 }
 
 type ManagerFactory interface {
