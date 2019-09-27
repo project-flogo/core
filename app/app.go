@@ -28,9 +28,10 @@ type Option func(*App) error
 type Status string
 
 const (
-	FAILED  = "Failed"
-	STARTED = "Started"
-	STOPPED = "Stopped"
+	FAILED   = "Failed"
+	STARTED  = "Started"
+	STARTING = "Starting"
+	STOPPED  = "Stopped"
 )
 
 const AppEventType = "appevent"
