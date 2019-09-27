@@ -168,6 +168,7 @@ func (e *engineImpl) Start() error {
 	}
 
 	logger.Info("Starting Application...")
+	e.flogoApp.PostAppEvent(app.STARTING)
 	err = e.flogoApp.Start()
 	if err != nil {
 		e.flogoApp.PostAppEvent(app.FAILED)
