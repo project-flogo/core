@@ -20,7 +20,7 @@ func isTracerRegistered() bool {
 // If no tracer is registered, a noop tracer is returned
 func GetTracer() FlogoTracer {
 	if tracer == nil {
-		log.RootLogger().Debugf("No tracing configuration found. registering noop-tracer")
+		log.RootLogger().Warn("No tracing configuration found. registering noop-tracer")
 		tracer = &nooptracer{}
 	}
 	return tracer
