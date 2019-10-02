@@ -20,26 +20,26 @@ const (
 	HTTPHeaders
 )
 
-// FlogoTracer interface to configure individual tracers
-type FlogoTracer interface {
+// Tracer interface to configure individual tracers
+type Tracer interface {
 	// Name() returns the name of the registered tracer
 	Name() string
 
-	// configure() sets up the tracer by gathering required configuration from the trace config
+	// Configure() sets up the tracer by gathering required configuration from the trace config
 	// environment variable. The tracer must also register as an event listenerbefore tracing can
 	// begin.
-	configure() error
+	Configure() error
 
-	// Inject() takes the `flowId` and `taskInstanceId` and injects the current span context for
+	// Inject() takes the `flowId` and `taskInstanceId` and injects the current trace context for
 	// propagation within `carrier`. The actual type of `carrier` depends on the value of `format`.
 	//
-	// FlogoTracer defines a common set of `format` values, and each has an expected `carrier` type.
+	// trace.Tracer defines a common set of `format` values, and each has an expected `carrier` type.
 	//
 	// Example usage:
 	//
 	// tracer := trace.GetTracer()
 	// ti := ctx.(*instance.TaskInst)
-	// err = tracer.Inject(ctx.ActivityHost().ID(), ti.InstanceId(), trace.HttpHeaders, req)
+	// err = tracer.Inject(ctx.ActivityHost().ID(), ti.InstanceId(), trace.HTTPHeaders, req)
 	Inject(flowID string, taskInstanceID string, format CarrierFormat, carrier interface{}) error
 
 	// Extract() returns a TraceContext instance given `format` and `carrier`.
@@ -52,8 +52,8 @@ type FlogoTracer interface {
 	//
 	// Example usage:
 	//
-	//	ft := trace.GetTracer()
-	//	tctx, err := ft.Extract(trace.HttpHeaders, httpReq)
+	//	tr := trace.GetTracer()
+	//	tctx, err := tr.Extract(trace.HTTPHeaders, httpReq)
 	//	if err != nil {
 	//		log.Errorf("failed to extract tracing context due to error: %s", err.Error())
 	//	}
