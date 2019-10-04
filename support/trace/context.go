@@ -15,13 +15,29 @@ func ExtractTracingContext(goCtx context.Context) TracingContext {
 	return tc
 }
 
-type TracingContext struct {
-	tContext interface{}
+type TracingContext interface {
+	// TraceObject() returns underlying tracing implementation
+	TraceObject() interface{}
+	// SetTags() allows you to set one or more tags to tracing object
+	SetTags(tags map[string]interface{}) bool
+	// SetTags() allows you to add tag to tracing object
+	SetTag(tagKey string, tagValue interface{}) bool
+	// LogKV() allows you to log additional details about the entity being traced
+	LogKV(kvs map[string]interface{}) bool
+
+	// Inject() injects the current trace context for
+	// propagation within `carrier`. The actual type of `carrier` depends on the value of `format`.
+	//
+	// trace.Tracer defines a common set of `format` values, and each has an expected `carrier` type.
+	//
+	// Example usage in activity:
+	//
+	// tc := ctx.GetTracingContext()
+	// err = tc.Inject(trace.HTTPHeaders, req)
+	Inject(format CarrierFormat, carrier interface{}) error
 }
 
-func (tc TracingContext) WrappedContext() interface{} {
-	return tc.tContext
-}
+
 
 type Config struct {
 	Operation string
