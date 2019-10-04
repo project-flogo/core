@@ -42,6 +42,6 @@ func (tc dummycontext) TraceObject() interface{} {
 	return nil
 }
 
-func (nt dummycontext) Inject(format CarrierFormat, carrier interface{}) error {
+func (nt *nooptracer) Inject(tracingContext TracingContext, format CarrierFormat, carrier interface{}) error {
 	return nil
 }
