@@ -18,6 +18,6 @@ type TracingContext struct {
 	spanContext interface{}
 }
 
-func (tc *TracingContext) WrappedContext() interface{} {
+func (tc TracingContext) WrappedContext() interface{} {
 	return tc.spanContext
 }
