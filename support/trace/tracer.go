@@ -30,7 +30,7 @@ type Tracer interface {
 	// begin.
 	Configure() error
 
-	// Inject() takes the `flowId` and `taskInstanceId` and injects the current trace context for
+	// Inject() takes the tracing context `tctx` and injects the current trace context for
 	// propagation within `carrier`. The actual type of `carrier` depends on the value of `format`.
 	//
 	// trace.Tracer defines a common set of `format` values, and each has an expected `carrier` type.
@@ -38,11 +38,10 @@ type Tracer interface {
 	// Example usage:
 	//
 	// tracer := trace.GetTracer()
-	// ti := ctx.(*instance.TaskInst)
-	// err = tracer.Inject(ctx.ActivityHost().ID(), ti.InstanceId(), trace.HTTPHeaders, req)
-	Inject(flowID string, taskInstanceID string, format CarrierFormat, carrier interface{}) error
+	// err = tracer.Inject(ctx.TracingContext(), trace.HTTPHeaders, req)
+	Inject(tCtx TracingContext, format CarrierFormat, carrier interface{}) error
 
-	// Extract() returns a TraceContext instance given `format` and `carrier`.
+	// Extract() returns a TracingContext given `format` and `carrier`.
 	//
 	// FlogoTracer defines a common set of `format` values, and each has an expected `carrier` type.
 	//
@@ -60,20 +59,19 @@ type Tracer interface {
 	//	ctx := trace.AppendTracingContext(context.Background(), tctx)
 	//	..
 	//	results, err := handler.Handle(ctx, outputData)
-	Extract(format CarrierFormat, carrier interface{}) (interface{}, error)
+	Extract(format CarrierFormat, carrier interface{}) (TracingContext, error)
 
-	// SetTag() adds a tag to the span defined by the `spanKey`.
-	// The `spanKey` is the flowId at the flow level and `flowId + taskInstanceId` at the activity level.
+	// SetTag() adds a tag to the span defined by the `tctx`.
 	//
 	// If there is a pre-existing tag set for `key`, it is overwritten.
 	//
-	// Returns true if the span for the `spanKey` was found and a tag was set. Else returns false.
-	SetTag(spanKey string, TagKey string, TagValue interface{}) bool
+	// Returns true if the span for the `tctx` was found and a tag was set. Else returns false.
+	SetTag(tCtx TracingContext, TagKey string, TagValue interface{}) bool
 
 	// LogKV() is a concise, readable way to record key:value logging data about a span.
-	// Similar to `SetTag()`, LogKV() takes a `spanKey` to log data about the specific span.
+	// Similar to `SetTag()`, LogKV() takes a `tctx` to log data about the specific span.
 	//
 	// The keys must all be strings.
 	//
-	LogKV(spanKey string, alternatingKeyValues ...interface{}) bool
+	LogKV(tCtx TracingContext, alternatingKeyValues ...interface{}) bool
 }
