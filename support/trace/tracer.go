@@ -1,5 +1,7 @@
 package trace
 
+import "github.com/project-flogo/core/support/managed"
+
 // CarrierFormat defines the format of the propogation that needs to injected or extracted
 type CarrierFormat byte
 
@@ -22,13 +24,11 @@ const (
 
 // Tracer interface to configure individual tracers
 type Tracer interface {
+    // Implement Start() and Stop() methods to manage tracer lifecycle. These methods will be called during engine startup and engine shutdown.
+	managed.Managed
+
 	// Name() returns the name of the registered tracer
 	Name() string
-
-	// Configure() sets up the tracer by gathering required configuration from the trace config
-	// environment variable. The tracer must also register as an event listenerbefore tracing can
-	// begin.
-	Configure() error
 
 	// Inject() takes the tracing context `tctx` and injects the current trace context for
 	// propagation within `carrier`. The actual type of `carrier` depends on the value of `format`.

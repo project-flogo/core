@@ -1,15 +1,18 @@
 package trace
 
-import "github.com/project-flogo/core/support/log"
+import (
+	"github.com/project-flogo/core/support/log"
+)
 
 var tracer Tracer
 
 // RegisterTracer registers the configured tracer
-func registerTracer(t Tracer) {
+func RegisterTracer(t Tracer) error {
 	if !isTracerRegistered() {
 		log.RootLogger().Infof("Registering tracer: %s", t.Name())
 		tracer = t
 	}
+	return nil
 }
 
 func isTracerRegistered() bool {
