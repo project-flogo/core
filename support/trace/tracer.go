@@ -51,6 +51,18 @@ type Tracer interface {
 	Extract(format CarrierFormat, carrier interface{}) (TracingContext, error)
 
 
+	// Inject() takes the tracing context `tctx` and injects the current trace context for
+	// propagation within `carrier`. The actual type of `carrier` depends on the value of `format`.
+	//
+	// trace.Tracer defines a common set of `format` values, and each has an expected `carrier` type.
+	//
+	// Example usage:
+	//
+	// tracer := trace.GetTracer()
+	// err = tracer.Inject(ctx.TracingContext(), trace.HTTPHeaders, req)
+	Inject(tCtx TracingContext, format CarrierFormat, carrier interface{}) error
+
+
 	// StartTrace() returns a wrapped implementation specific trace created by the underlying tracing implementation.
 	// Non nil parent can be used to establish parent-child relationship between trace object.
 	StartTrace(config Config, parent TracingContext) (TracingContext, error)
