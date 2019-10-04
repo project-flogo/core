@@ -25,7 +25,6 @@ func (nt *nooptracer) FinishSpan(tContext TracingContext, err error) error {
 	return nil
 }
 func (nt *nooptracer) Start() error {
-	//fmt.Println(engine.GetAppName(),"-", engine.GetAppVersion())
 	return nil
 }
 func (nt *nooptracer) Stop() error {
