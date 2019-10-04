@@ -51,11 +51,11 @@ type Tracer interface {
 	Extract(format CarrierFormat, carrier interface{}) (TracingContext, error)
 
 
-	// StartSpan() returns a wrapped span created by the underlying tracing implementation.
-	// Non nil parent indicates child span.
-	StartSpan(config Config, parent TracingContext) (TracingContext, error)
+	// StartTrace() returns a wrapped implementation specific trace created by the underlying tracing implementation.
+	// Non nil parent can be used to establish parent-child relationship between trace object.
+	StartTrace(config Config, parent TracingContext) (TracingContext, error)
 
-	// FinishSpan() finishes a span wrapped span
+	// FinishTrace() finishes a wrapped implementation specific trace
 	// Non nil error indicates failure
-	FinishSpan(tContext TracingContext, err error) error
+	FinishTrace(tContext TracingContext, err error) error
 }

@@ -14,10 +14,10 @@ func (nt *nooptracer) Extract(format CarrierFormat, data interface{}) (TracingCo
 	return dummycontext{}, nil
 }
 
-func (nt *nooptracer) StartSpan(config Config, parent TracingContext) (TracingContext, error) {
+func (nt *nooptracer) StartTrace(config Config, parent TracingContext) (TracingContext, error) {
 	return dummycontext{}, nil
 }
-func (nt *nooptracer) FinishSpan(tContext TracingContext, err error) error {
+func (nt *nooptracer) FinishTrace(tContext TracingContext, err error) error {
 	return nil
 }
 func (nt *nooptracer) Start() error {
