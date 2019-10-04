@@ -4,6 +4,7 @@ import (
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/support/log"
+	"github.com/project-flogo/core/support/trace"
 )
 
 // Context describes the execution context for an Activity.
@@ -33,6 +34,9 @@ type Context interface {
 
 	// Logger the logger for the activity
 	Logger() log.Logger
+
+	// GetTracingContext returns tracing context associated with the activity
+	GetTracingContext() trace.TracingContext
 }
 
 type Host interface {
