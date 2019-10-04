@@ -30,17 +30,6 @@ type Tracer interface {
 	// Name() returns the name of the registered tracer
 	Name() string
 
-	// Inject() takes the tracing context `tctx` and injects the current trace context for
-	// propagation within `carrier`. The actual type of `carrier` depends on the value of `format`.
-	//
-	// trace.Tracer defines a common set of `format` values, and each has an expected `carrier` type.
-	//
-	// Example usage:
-	//
-	// tracer := trace.GetTracer()
-	// err = tracer.Inject(ctx.TracingContext(), trace.HTTPHeaders, req)
-	Inject(tCtx TracingContext, format CarrierFormat, carrier interface{}) error
-
 	// Extract() returns a TracingContext given `format` and `carrier`.
 	//
 	// FlogoTracer defines a common set of `format` values, and each has an expected `carrier` type.
@@ -61,19 +50,6 @@ type Tracer interface {
 	//	results, err := handler.Handle(ctx, outputData)
 	Extract(format CarrierFormat, carrier interface{}) (TracingContext, error)
 
-	// SetTag() adds a tag to the span defined by the `tctx`.
-	//
-	// If there is a pre-existing tag set for `key`, it is overwritten.
-	//
-	// Returns true if the span for the `tctx` was found and a tag was set. Else returns false.
-	SetTag(tCtx TracingContext, TagKey string, TagValue interface{}) bool
-
-	// LogKV() is a concise, readable way to record key:value logging data about a span.
-	// Similar to `SetTag()`, LogKV() takes a `tctx` to log data about the specific span.
-	//
-	// The keys must all be strings.
-	//
-	LogKV(tCtx TracingContext, alternatingKeyValues ...interface{}) bool
 
 	// StartSpan() returns a wrapped span created by the underlying tracing implementation.
 	// Non nil parent indicates child span.
