@@ -9,7 +9,7 @@ var tracer Tracer
 // RegisterTracer registers the configured tracer
 func RegisterTracer(t Tracer) error {
 	if !isTracerRegistered() {
-		log.RootLogger().Infof("Registering tracer: %s", t.Name())
+		log.RootLogger().Debugf("Registering tracer: %s", t.Name())
 		tracer = t
 	}
 	return nil
