@@ -19,11 +19,17 @@ type Context interface {
 	// GetInput gets the value of the specified input attribute
 	GetInput(name string) interface{}
 
+	// GetOutput gets the value of the specified output attribute
+	GetOutput(name string) interface{}
+
 	// SetOutput sets the value of the specified output attribute
 	SetOutput(name string, value interface{}) error
 
 	// GetInputObject gets all the activity input as the specified object.
 	GetInputObject(input data.StructValue) error
+
+	// GetOutputObject gets all the activity output as the specified object.
+	GetOutputObject(input data.StructValue) error
 
 	// SetOutputObject sets the activity output as the specified object.
 	SetOutputObject(output data.StructValue) error
