@@ -17,7 +17,7 @@ func ToConfig(config map[string]interface{}) (*Config, error) {
 	if v, ok := config["ref"]; ok {
 		if ref, ok := v.(string); ok {
 
-			cfg := &Config{}
+			cfg := &Config{Settings: make(map[string]interface{})}
 			cfg.Ref = ref
 
 			err := resolveRef(cfg)
@@ -69,8 +69,7 @@ func ResolveConfig(config *Config) error {
 	return nil
 }
 
-
-func resolveRef(config *Config ) error {
+func resolveRef(config *Config) error {
 	if config.Ref[0] == '#' {
 		var ok bool
 		config.Ref, ok = support.GetAliasRef("connection", config.Ref)
