@@ -30,7 +30,7 @@ func InitTrigger(factory trigger.Factory, tConfig *trigger.Config, actions map[s
 		return nil, fmt.Errorf("cannot create trigger '%s'", tConfig.Id)
 	}
 
-	err = tConfig.FixUp(trigger.NewMetadata())
+	err = tConfig.FixUp(trigger.NewMetadata(), resolve.GetBasicResolver())
 	if err != nil {
 		return nil, fmt.Errorf("cannot create trigger '%s': %v", tConfig.Id, err)
 	}
