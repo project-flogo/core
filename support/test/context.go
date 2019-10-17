@@ -223,3 +223,7 @@ func (c *TestActivityContext) GetSharedTempData() map[string]interface{} {
 func (c *TestActivityContext) Logger() log.Logger {
 	return logger
 }
+
+func (c *TestActivityContext) GetTracingContext() trace.TracingContext {
+	return nil
+}
