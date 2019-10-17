@@ -3,9 +3,10 @@ package engine
 import (
 	"fmt"
 
-	"github.com/project-flogo/core/data/property"
-
 	"strings"
+
+	"github.com/project-flogo/core/data/property"
+	"github.com/project-flogo/core/support/trace"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/app"
@@ -43,6 +44,8 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 	engine := &engineImpl{}
 	logger := log.ChildLogger(log.RootLogger(), "engine")
 	engine.logger = logger
+	// Register tracer as managed service
+	LifeCycle(trace.GetTracer())
 	//log.SetLogLevel(log.DebugLevel, logger)
 
 	if engine.config == nil {
@@ -168,6 +171,7 @@ func (e *engineImpl) Start() error {
 	}
 
 	logger.Info("Starting Application...")
+	e.flogoApp.PostAppEvent(app.STARTING)
 	err = e.flogoApp.Start()
 	if err != nil {
 		e.flogoApp.PostAppEvent(app.FAILED)
