@@ -7,6 +7,7 @@ import (
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/data/resolve"
 	"github.com/project-flogo/core/support/log"
+	"github.com/project-flogo/core/support/trace"
 )
 
 var logger = log.ChildLogger(log.RootLogger(), "test")
@@ -222,4 +223,8 @@ func (c *TestActivityContext) GetSharedTempData() map[string]interface{} {
 
 func (c *TestActivityContext) Logger() log.Logger {
 	return logger
+}
+
+func (c *TestActivityContext) GetTracingContext() trace.TracingContext {
+	return nil
 }
