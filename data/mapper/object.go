@@ -389,13 +389,9 @@ func handleObject(targetValue map[string]interface{}, targetName string, source 
 		if err != nil {
 			return fmt.Errorf("eval expression failed %s", err.Error())
 		}
-		if fromValue != nil {
-			targetValue[targetName] = fromValue
-		}
+		targetValue[targetName] = fromValue
 	} else {
-		if source != nil {
-			targetValue[targetName] = source
-		}
+		targetValue[targetName] = source
 	}
 	return nil
 }
