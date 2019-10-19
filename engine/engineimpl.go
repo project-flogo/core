@@ -45,7 +45,9 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 	logger := log.ChildLogger(log.RootLogger(), "engine")
 	engine.logger = logger
 	// Register tracer as managed service
-	LifeCycle(trace.GetTracer())
+	if trace.Enabled() {
+		LifeCycle(trace.GetTracer())
+	}
 	//log.SetLogLevel(log.DebugLevel, logger)
 
 	if engine.config == nil {

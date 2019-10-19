@@ -28,6 +28,9 @@ type Engine interface {
 }
 
 func LifeCycle(managedEntity managed.Managed) {
+	if managedEntity == nil {
+		return
+	}
 	defer lock.Unlock()
 	lock.Lock()
 	managedServices = append(managedServices, managedEntity)
