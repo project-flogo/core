@@ -72,7 +72,7 @@ func (m *ExprMapper) Apply(inputScope data.Scope) (map[string]interface{}, error
 		val, err := expr.Eval(inputScope)
 		if err != nil {
 			if IsMappingRelaxed() {
-				log.RootLogger().Warnf("expresson eval error; %s", err.Error())
+				log.RootLogger().Warnf("expression eval error; %s", err.Error())
 				//Skip value set.
 				continue
 			}
