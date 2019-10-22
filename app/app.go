@@ -69,6 +69,7 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 		".":        &resolve.ScopeResolver{},
 		"env":      &resolve.EnvResolver{},
 		"property": &property.Resolver{},
+		"loop":     &resolve.LoopResolver{},
 	})
 
 	app.resolver = resolver
