@@ -4,14 +4,16 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/project-flogo/core/data/mapper/config"
 	"reflect"
 	"strconv"
 	"strings"
 	"unicode"
 )
 
-//todo consolidate and optimize code
+var skipMissing = config.IsMappingSkipMissing()
 
+//todo consolidate and optimize code
 func GetValue(value interface{}, path string) (interface{}, error) {
 
 	if path == "" {
@@ -66,6 +68,10 @@ func GetValue(value interface{}, path string) (interface{}, error) {
 }
 
 func getFieldValueByName(object interface{}, name string) (interface{}, error) {
+	if object == nil && skipMissing {
+		return nil, nil
+	}
+
 	val := reflect.ValueOf(object)
 	if val.Kind() == reflect.Ptr {
 		val = val.Elem()
@@ -242,6 +248,9 @@ func getSetObjValue(objValue map[string]interface{}, path string, value interfac
 		if path == "."+key {
 			return nil, "", nil
 		}
+		if skipMissing {
+			return nil, "", nil
+		}
 		return nil, "", errors.New("Invalid path '" + path + "'. path not found.")
 	}
 
@@ -263,7 +272,6 @@ func getSetParamsValue(params map[string]string, path string, value interface{},
 	}
 
 	val, found := params[key]
-
 	if !found {
 		return "", "", nil
 	}
@@ -285,6 +293,9 @@ func getSetMapValue(objValue map[string]interface{}, path string, value interfac
 
 	if !found {
 		if path == "."+key {
+			return nil, "", nil
+		}
+		if skipMissing {
 			return nil, "", nil
 		}
 		return nil, "", errors.New("Invalid path '" + path + "'. path not found.")
@@ -330,7 +341,6 @@ func Deconstruct(fullPath string) (attrName string, path string, err error) {
 func isSep(r rune) bool {
 	return r == '.' || r == '['
 }
-
 
 func toString(val interface{}) (string, error) {
 

@@ -4,11 +4,19 @@ import (
 	"encoding/json"
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/expression"
+	"github.com/project-flogo/core/data/property"
 	"github.com/project-flogo/core/data/resolve"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
+
+var resolver = resolve.NewCompositeResolver(map[string]resolve.Resolver{
+	".":        &resolve.ScopeResolver{},
+	"env":      &resolve.EnvResolver{},
+	"property": &property.Resolver{},
+	"loop":     &resolve.LoopResolver{},
+})
 
 func TestObjectMappingWithFunction(t *testing.T) {
 	mappingValue := `{"mapping": {
@@ -28,7 +36,7 @@ func TestObjectMappingWithFunction(t *testing.T) {
 	assert.Nil(t, err)
 	assert.False(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"addresses": arrayMapping}
-	factory := NewFactory(resolve.GetBasicResolver())
+	factory := NewFactory(resolver)
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
 
@@ -60,7 +68,7 @@ func TestObjectMappingWithArray(t *testing.T) {
 	assert.Nil(t, err)
 	assert.False(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"addresses": arrayMapping}
-	factory := NewFactory(resolve.GetBasicResolver())
+	factory := NewFactory(resolver)
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
 
@@ -110,7 +118,7 @@ func TestRootObjectArray(t *testing.T) {
 	assert.Nil(t, err)
 	assert.False(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"target": arrayMapping}
-	factory := NewFactory(resolve.GetBasicResolver())
+	factory := NewFactory(resolver)
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
 
@@ -132,7 +140,7 @@ func TestRootLiteralArray(t *testing.T) {
 	assert.Nil(t, err)
 	assert.True(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"target": arrayMapping}
-	factory := NewFactory(resolve.GetBasicResolver())
+	factory := NewFactory(resolver)
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
 
@@ -167,7 +175,7 @@ func TestPrimitiveArray(t *testing.T) {
 	assert.Nil(t, err)
 	assert.False(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"target": arrayMapping}
-	factory := NewFactory(resolve.GetBasicResolver())
+	factory := NewFactory(resolver)
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
 
@@ -215,7 +223,7 @@ func TestRootLiteralArrayMapping(t *testing.T) {
 	assert.Nil(t, err)
 	assert.False(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"target": arrayMapping}
-	factory := NewFactory(resolve.GetBasicResolver())
+	factory := NewFactory(resolver)
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
 
@@ -253,7 +261,7 @@ func TestRootLiteralNumberArrayMapping(t *testing.T) {
 	assert.False(t, IsLiteral(arrayMapping))
 
 	mappings := map[string]interface{}{"target": arrayMapping}
-	factory := NewFactory(resolve.GetBasicResolver())
+	factory := NewFactory(resolver)
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
 
@@ -297,7 +305,7 @@ func TestRootArrayMapping(t *testing.T) {
 	assert.False(t, IsLiteral(arrayMapping))
 
 	mappings := map[string]interface{}{"target": arrayMapping}
-	factory := NewFactory(resolve.GetBasicResolver())
+	factory := NewFactory(resolver)
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
 
@@ -321,7 +329,7 @@ func TestStringStringMap(t *testing.T) {
 	assert.True(t, IsLiteral(arrayMapping))
 
 	mappings := map[string]interface{}{"target": arrayMapping}
-	factory := NewFactory(resolve.GetBasicResolver())
+	factory := NewFactory(resolver)
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
 
@@ -399,7 +407,7 @@ func TestArrayMappingWithNest(t *testing.T) {
 	assert.Nil(t, err)
 	assert.False(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"addresses": arrayMapping}
-	factory := NewFactory(resolve.GetBasicResolver())
+	factory := NewFactory(resolver)
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
 
@@ -463,7 +471,7 @@ func TestArrayMappingWithFunction(t *testing.T) {
 	assert.Nil(t, err)
 	assert.False(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"addresses": arrayMapping}
-	factory := NewFactory(resolve.GetBasicResolver())
+	factory := NewFactory(resolver)
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
 
@@ -534,7 +542,7 @@ func TestArrayMappingWithStruct(t *testing.T) {
 	assert.Nil(t, err)
 	assert.False(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"addresses": arrayMapping}
-	factory := NewFactory(resolve.GetBasicResolver())
+	factory := NewFactory(resolver)
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
 
@@ -621,7 +629,7 @@ func TestArrayMappingWithNestComplexObject(t *testing.T) {
 	assert.Nil(t, err)
 	assert.False(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"addresses": arrayMapping}
-	factory := NewFactory(resolve.GetBasicResolver())
+	factory := NewFactory(resolver)
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
 
@@ -706,7 +714,7 @@ func TestArrayMappingNoChildMapping(t *testing.T) {
 	assert.Nil(t, err)
 	assert.False(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"addresses": arrayMapping}
-	factory := NewFactory(resolve.GetBasicResolver())
+	factory := NewFactory(resolver)
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
 
@@ -765,7 +773,7 @@ func TestArrayMappingPrimitiveArray(t *testing.T) {
 	assert.Nil(t, err)
 	assert.False(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"addresses": arrayMapping}
-	factory := NewFactory(resolve.GetBasicResolver())
+	factory := NewFactory(resolver)
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
 
@@ -843,7 +851,7 @@ func TestArrayMappingWithFunction3Level(t *testing.T) {
 	assert.False(t, IsLiteral(arrayMapping))
 
 	mappings := map[string]interface{}{"addresses": arrayMapping}
-	factory := NewFactory(resolve.GetBasicResolver())
+	factory := NewFactory(resolver)
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
 
@@ -898,7 +906,7 @@ func TestLiteral(t *testing.T) {
 	assert.Nil(t, err)
 
 	mappings := map[string]interface{}{"addresses": arrayMapping}
-	factory := NewFactory(resolve.GetBasicResolver())
+	factory := NewFactory(resolver)
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
 
@@ -959,7 +967,7 @@ func TestArrayMappingWithFilter(t *testing.T) {
 	assert.Nil(t, err)
 	assert.False(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"store": arrayMapping}
-	factory := NewFactory(resolve.GetBasicResolver())
+	factory := NewFactory(resolver)
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
 
@@ -1090,7 +1098,7 @@ func TestArrayMappingWithFilterNested(t *testing.T) {
 	assert.Nil(t, err)
 	assert.False(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"store": arrayMapping}
-	factory := NewFactory(resolve.GetBasicResolver())
+	factory := NewFactory(resolver)
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
 
@@ -1156,7 +1164,7 @@ func TestArrayMappingWithFilterAndUpdate(t *testing.T) {
 	assert.Nil(t, err)
 	assert.False(t, IsLiteral(arrayMapping))
 	mappings := map[string]interface{}{"store": arrayMapping}
-	factory := NewFactory(resolve.GetBasicResolver())
+	factory := NewFactory(resolver)
 	mapper, err := factory.NewMapper(mappings)
 	assert.Nil(t, err)
 
@@ -1184,13 +1192,13 @@ func TestGetSource(t *testing.T) {
 	assert.Equal(t, "index", foreach.index)
 
 	s = "@foreach($activity[blah].out2, index, $.id == 1223)"
-	foreach, err := newForeach(s, expression.NewFactory(resolve.GetBasicResolver()))
+	foreach, err := newForeach(s, expression.NewFactory(resolver))
 	assert.Nil(t, err)
 	assert.Equal(t, "$activity[blah].out2", foreach.sourceFrom)
 	assert.Equal(t, "index", foreach.index)
 
 	s = "@foreach($activity[blah].out2,, $.id == 1223)"
-	foreach, err = newForeach(s, expression.NewFactory(resolve.GetBasicResolver()))
+	foreach, err = newForeach(s, expression.NewFactory(resolver))
 	assert.Nil(t, err)
 	assert.Equal(t, "$activity[blah].out2", foreach.sourceFrom)
 	assert.Equal(t, "", foreach.index)
