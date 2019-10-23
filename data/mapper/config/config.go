@@ -14,19 +14,19 @@ const (
 )
 
 func IsMappingIgnoreError() bool {
-	relaxed := os.Getenv(EnvMappingIgnoreError)
-	if len(relaxed) <= 0 {
+	ignoreEror := os.Getenv(EnvMappingIgnoreError)
+	if len(ignoreEror) <= 0 {
 		return EnvMappingIgnoreErrorDefault
 	}
-	b, _ := strconv.ParseBool(relaxed)
+	b, _ := strconv.ParseBool(ignoreEror)
 	return b
 }
 
 func IsMappingSkipMissing() bool {
-	relaxed := os.Getenv(EnvMappingSkipMissing)
-	if len(relaxed) <= 0 {
+	skip := os.Getenv(EnvMappingSkipMissing)
+	if len(skip) <= 0 {
 		return EnvMappingSkipMissingDefault
 	}
-	b, _ := strconv.ParseBool(relaxed)
+	b, _ := strconv.ParseBool(skip)
 	return b
 }
