@@ -11,7 +11,7 @@ import (
 	"unicode"
 )
 
-var skipMissing = config.IsMappingSkipMissing()
+var skipMissing = config.IsMappingSkipMissingOn()
 
 //todo consolidate and optimize code
 func GetValue(value interface{}, path string) (interface{}, error) {

@@ -13,7 +13,7 @@ const (
 	EnvMappingSkipMissingDefault = false
 )
 
-func IsMappingIgnoreError() bool {
+func IsMappingIgnoreErrorsOn() bool {
 	ignoreEror := os.Getenv(EnvMappingIgnoreError)
 	if len(ignoreEror) <= 0 {
 		return EnvMappingIgnoreErrorDefault
@@ -22,7 +22,7 @@ func IsMappingIgnoreError() bool {
 	return b
 }
 
-func IsMappingSkipMissing() bool {
+func IsMappingSkipMissingOn() bool {
 	skip := os.Getenv(EnvMappingSkipMissing)
 	if len(skip) <= 0 {
 		return EnvMappingSkipMissingDefault
