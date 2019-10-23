@@ -109,6 +109,108 @@ func TestGetValue(t *testing.T) {
 	assert.Nil(t, newVal)
 }
 
+func TestSkipMissing(t *testing.T) {
+
+	source := `
+{
+  "object": {
+    "myParam": {
+      "nestedMap": 1
+    }
+  },
+  "array": [
+    {
+      "nestedMap1": 1
+    },
+    {
+      "nestedMap2": {
+        "nestedArray": [
+          7,
+          8,
+          9
+        ]
+      }
+    }
+  ]
+}
+`
+
+	skipMissing = true
+	tests := []struct {
+		Path  string
+		Value interface{}
+	}{
+		{
+			Path:  ".object.myParam.nestedMap",
+			Value: float64(1),
+		},
+		{
+			Path:  ".object.myParam.nestedMap2",
+			Value: nil,
+		},
+		{
+			Path:  ".object.myparam2",
+			Value: nil,
+		},
+		{
+			Path:  ".object.myparam2.nestedMap2",
+			Value: nil,
+		},
+		{
+			Path:  ".object.myparam[0].nestedMap2",
+			Value: nil,
+		},
+		{
+			Path:  ".object.myparam2[0]",
+			Value: nil,
+		},
+		{
+			Path:  ".object.myparam2[0].nestedMap2[0]",
+			Value: nil,
+		},
+		//Arraty
+		{
+			Path:  ".array[0].nestedMap1",
+			Value: float64(1),
+		},
+		{
+			Path:  ".array[1].nestedMap2.nestedArray[0]",
+			Value: float64(7),
+		},
+		{
+			Path:  ".array[0].nestedMap2.nestedArray2[1]",
+			Value: nil,
+		},
+		{
+			Path:  ".array[0].nestedMap3[0]",
+			Value: nil,
+		},
+		{
+			Path:  ".array[0].nestedMap3",
+			Value: nil,
+		},
+		{
+			Path:  ".array[0].abc",
+			Value: nil,
+		},
+		{
+			Path:  ".array2[0].nestedMap2[0].nestedArray2[1]",
+			Value: nil,
+		},
+		{
+			Path:  ".array2",
+			Value: nil,
+		},
+	}
+
+	for _, test := range tests {
+		newVal, err := GetValue(source, test.Path)
+		assert.Nil(t, err)
+		assert.Equal(t, test.Value, newVal)
+	}
+
+}
+
 func TestSetValue(t *testing.T) {
 	// Resolution of Old Trigger expression
 
