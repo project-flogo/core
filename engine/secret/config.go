@@ -1,25 +1,8 @@
 package secret
 
 import (
-	"regexp"
 	"strings"
 )
-
-func PreProcessConfig(appJson []byte) ([]byte, error) {
-
-	// For now decode secret values
-	re := regexp.MustCompile("SECRET:[^\\\\\"]*")
-	for _, match := range re.FindAll(appJson, -1) {
-		decodedValue, err := resolveSecretValue(string(match))
-		if err != nil {
-			return nil, err
-		}
-		appstring := strings.Replace(string(appJson), string(match), decodedValue, -1)
-		appJson = []byte(appstring)
-	}
-
-	return appJson, nil
-}
 
 func resolveSecretValue(encrypted string) (string, error) {
 	encodedValue := string(encrypted[7:])

@@ -7,7 +7,6 @@ import (
 	"os"
 
 	"github.com/project-flogo/core/app"
-	"github.com/project-flogo/core/engine/secret"
 	"github.com/project-flogo/core/support"
 )
 
@@ -64,13 +63,8 @@ func LoadAppConfig(flogoJson string, compressed bool) (*app.Config, error) {
 		}
 	}
 
-	updated, err := secret.PreProcessConfig(jsonBytes)
-	if err != nil {
-		return nil, err
-	}
-
 	appConfig := &app.Config{}
-	err = json.Unmarshal(updated, &appConfig)
+	err := json.Unmarshal(jsonBytes, &appConfig)
 	if err != nil {
 		return nil, err
 	}
