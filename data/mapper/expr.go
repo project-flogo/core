@@ -72,7 +72,7 @@ func (m *ExprMapper) Apply(inputScope data.Scope) (map[string]interface{}, error
 	for key, expr := range m.mappings {
 		val, err := expr.Eval(inputScope)
 		if err != nil {
-			if config.IsMappingIgnoreError() {
+			if config.IsMappingIgnoreErrorsOn() {
 				log.RootLogger().Warnf("expresson eval error; %s", err.Error())
 				//Skip value set.
 				continue

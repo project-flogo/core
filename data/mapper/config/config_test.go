@@ -10,10 +10,10 @@ func TestIsMappingRelaxed(t *testing.T) {
 
 	os.Setenv(EnvMappingIgnoreError, "true")
 
-	assert.True(t, IsMappingIgnoreError())
+	assert.True(t, IsMappingIgnoreErrorsOn())
 
 	os.Unsetenv(EnvMappingIgnoreError)
-	assert.False(t, IsMappingIgnoreError())
+	assert.False(t, IsMappingIgnoreErrorsOn())
 	defer func() {
 		os.Unsetenv(EnvMappingIgnoreError)
 	}()
