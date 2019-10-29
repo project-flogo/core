@@ -6,6 +6,7 @@ import (
 	"regexp"
 	"runtime/debug"
 	"strings"
+	"time"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/activity"
@@ -299,6 +300,15 @@ func (a *App) Stop() error {
 	}
 
 	logger.Info("Triggers Stopped")
+
+
+	delayedStopInterval := GetDelayedStopInterval()
+	if delayedStopInterval > 0 {
+		// Delay stopping of connection manager so that in-flight actions can continue until specified interval
+		// No new events will be processed as triggers are stopped.
+		logger.Info("Delaying application stop by - %d milliseconds",delayedStopInterval )
+		time.Sleep(time.Millisecond *  time.Duration(delayedStopInterval))
+	}
 
 	managers := connection.Managers()
 
