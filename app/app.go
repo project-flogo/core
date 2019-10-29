@@ -306,7 +306,7 @@ func (a *App) Stop() error {
 	if delayedStopInterval > 0 {
 		// Delay stopping of connection manager so that in-flight actions can continue until specified interval
 		// No new events will be processed as triggers are stopped.
-		logger.Info("Delaying application stop by - %d milliseconds",delayedStopInterval )
+		logger.Infof("Delaying application stop by - %d milliseconds",delayedStopInterval )
 		time.Sleep(time.Millisecond *  time.Duration(delayedStopInterval))
 	}
 
