@@ -2,7 +2,6 @@ package app
 
 import (
 	"os"
-	"strconv"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/app/resource"
@@ -13,8 +12,7 @@ import (
 )
 
 const (
-	EnvKeyDelayedAppStopInterval  = "FLOGO_APP_DELAYED_STOP_INTERVAL"
-	DefaultDelayedAppStopInterval = 0
+	EnvKeyDelayedAppStopInterval = "FLOGO_APP_DELAYED_STOP_INTERVAL"
 )
 
 // Def is the configuration for the App
@@ -35,14 +33,10 @@ type Config struct {
 	Connections map[string]*connection.Config `json:"connections,omitempty"`
 }
 
-func GetDelayedStopInterval() int {
-	interval := DefaultDelayedAppStopInterval
+func GetDelayedStopInterval() string {
 	intervalEnv := os.Getenv(EnvKeyDelayedAppStopInterval)
 	if len(intervalEnv) > 0 {
-		i, err := strconv.Atoi(intervalEnv)
-		if err == nil {
-			interval = i
-		}
+		return intervalEnv
 	}
-	return interval
+	return ""
 }
