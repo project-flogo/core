@@ -6,6 +6,7 @@ import (
 	"regexp"
 	"runtime/debug"
 	"strings"
+	"time"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/activity"
@@ -299,6 +300,20 @@ func (a *App) Stop() error {
 	}
 
 	logger.Info("Triggers Stopped")
+
+	delayedStopInterval := GetDelayedStopInterval()
+	if delayedStopInterval != "" {
+		// Delay stopping of connection manager so that in-flight actions can continue until specified interval
+		// No new events will be processed as triggers are stopped.
+		duration, err := time.ParseDuration(delayedStopInterval)
+		if err != nil {
+			logger.Errorf("Invalid interval - %s  specified for delayed stop. It must suffix with time unit e.g. %sms, %ss", delayedStopInterval, delayedStopInterval, delayedStopInterval)
+		} else {
+			logger.Infof("Delaying application stop by - %s", delayedStopInterval)
+			time.Sleep(duration)
+		}
+
+	}
 
 	managers := connection.Managers()
 
