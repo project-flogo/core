@@ -1,39 +1,72 @@
 package engine
 
 import (
-	"os"
-	"strconv"
+	"encoding/json"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-//TestNewPooledConfigOk
-func TestNewPooledConfigDefault(t *testing.T) {
-	pooledConfig := NewPooledRunnerConfig()
+const testEngineConfig = `
+{
+  "type": "flogo:engine",
+  "imports": [
+    "github.com/project-flogo/services/flow-state/store/mem"
+  ],
+  "actionSettings": {
+    "github.com/project-flogo/flow": {
+      "enableTester": true,
+      "stepRecorder": "full",
+      "stateRecorder": "off",
+      "enableExternalFlows": true
+    }
+  },
+  "services": [
+    {
+      "name": "flowTester",
+      "ref": "github.com/project-flogo/flow/tester",
+      "enabled": true,
+      "settings": {
+        "port": "8181"
+      }
+    },
+    {
+      "name": "flowStateRecorder",
+      "ref": "github.com/project-flogo/services/flow-state/client/local",
+      "enabled": true,
+      "settings": {
+      }
+    },
+    {
+      "name": "flowStateProvider",
+      "ref": "github.com/project-flogo/services/flow-state/server/rest",
+      "enabled": true,
+      "settings": {
+        "host": "blah",
+        "port": "8080"
+      }
+    }
+  ]
+}
+`
 
-	// assert Success
-	assert.Equal(t, DefaultRunnerWorkers, pooledConfig.NumWorkers)
-	assert.Equal(t, DefaultRunnerQueueSize, pooledConfig.WorkQueueSize)
+func TestConfigUnmarshal(t *testing.T) {
+
+	config := &Config{}
+	err := json.Unmarshal([]byte(testEngineConfig), config)
+	assert.Nil(t, err)
+	assert.Equal(t, 1, len(config.Imports))
+	assert.Equal(t, 1, len(config.ActionSettings))
+	assert.Equal(t, 3, len(config.Services))
 }
 
-//TestNewPooledConfigOk
-func TestNewPooledConfigOverride(t *testing.T) {
-	previousWorkers := os.Getenv(EnvKeyRunnerWorkers)
-	defer os.Setenv(EnvKeyRunnerWorkers, previousWorkers)
-	previousQueue := os.Getenv(EnvKeyRunnerQueueSize)
-	defer os.Setenv(EnvKeyRunnerQueueSize, previousQueue)
+func TestLoadEngineConfig(t *testing.T) {
 
-	newWorkersValue := 6
-	newQueueValue := 60
-
-	// Change values
-	_ = os.Setenv(EnvKeyRunnerWorkers, strconv.Itoa(newWorkersValue))
-	_ = os.Setenv(EnvKeyRunnerQueueSize, strconv.Itoa(newQueueValue))
-
-	pooledConfig := NewPooledRunnerConfig()
-
-	// assert Success
-	assert.Equal(t, newWorkersValue, pooledConfig.NumWorkers)
-	assert.Equal(t, newQueueValue, pooledConfig.WorkQueueSize)
+	config, err := LoadEngineConfig(testEngineConfig, false)
+	assert.Nil(t, err)
+	assert.Equal(t, 1, len(config.Imports))
+	assert.Equal(t, 1, len(config.ActionSettings))
+	assert.Equal(t, 3, len(config.Services))
+	assert.Equal(t, "POOLED", config.RunnerType)
+	assert.True(t, config.StopEngineOnError)
 }
