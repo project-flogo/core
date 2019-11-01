@@ -2,11 +2,11 @@ package engine
 
 import (
 	"encoding/json"
-	"github.com/project-flogo/core/data/schema"
 	"io/ioutil"
 	"os"
 
 	"github.com/project-flogo/core/app"
+	"github.com/project-flogo/core/data/schema"
 	"github.com/project-flogo/core/engine/secret"
 	"github.com/project-flogo/core/support"
 )
@@ -40,7 +40,7 @@ func LoadAppConfig(flogoJson string, compressed bool) (*app.Config, error) {
 	if flogoJson == "" {
 
 		// a json string wasn't provided, so lets lookup the file in path
-		configPath := GetFlogoConfigPath()
+		configPath := GetFlogoAppConfigPath()
 
 		flogo, err := os.Open(configPath)
 		if err != nil {

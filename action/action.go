@@ -5,6 +5,7 @@ import (
 
 	"github.com/project-flogo/core/app/resource"
 	"github.com/project-flogo/core/data/metadata"
+	"github.com/project-flogo/core/support/service"
 )
 
 // Action is an action to perform as a result of a trigger
@@ -32,6 +33,12 @@ type InitContext interface {
 
 	// ResourceManager gets the resource manager for the app
 	ResourceManager() *resource.Manager
+
+	// ResourceManager gets the service manager for the engine
+	ServiceManager() *service.Manager
+
+	// RuntimeSettings are any runtime setting provided to the engine
+	RuntimeSettings() map[string]interface{}
 }
 
 // SyncAction is a synchronous action to perform as a result of a trigger

@@ -15,6 +15,7 @@ var (
 	cpuProfile    = flag.String("cpuprofile", "", "Writes CPU profile to the specified file")
 	memProfile    = flag.String("memprofile", "", "Writes memory profile to the specified file")
 	cfgJson       string
+	cfgEngine     string
 	cfgCompressed bool
 )
 
@@ -40,7 +41,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	e, err := engine.New(cfg)
+	e, err := engine.New(cfg, engine.ConfigOption(cfgEngine, cfgCompressed))
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to create engine: %v\n", err)
 		os.Exit(1)

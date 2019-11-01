@@ -16,11 +16,13 @@ import (
 	"github.com/project-flogo/core/data/property"
 	"github.com/project-flogo/core/data/resolve"
 	"github.com/project-flogo/core/data/schema"
+	"github.com/project-flogo/core/engine/channels"
 	"github.com/project-flogo/core/engine/event"
 	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/support/connection"
 	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/support/managed"
+	"github.com/project-flogo/core/support/service"
 	"github.com/project-flogo/core/trigger"
 )
 
@@ -66,6 +68,43 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 
 	app := &App{stopOnError: true, name: config.Name, version: config.Version}
 
+	properties := make(map[string]interface{}, len(config.Properties))
+	for _, attr := range config.Properties {
+		properties[attr.Name()] = attr.Value()
+	}
+
+	app.propManager = property.NewManager(properties)
+	property.SetDefaultManager(app.propManager)
+
+	for _, option := range options {
+		err := option(app)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	if app.srvManager == nil {
+		app.srvManager = service.NewServiceManager()
+	}
+
+	if app.actionSettings == nil {
+		app.actionSettings = make(map[string]map[string]interface{})
+	}
+
+	channelDescriptors := config.Channels
+	if len(channelDescriptors) > 0 {
+		for _, descriptor := range channelDescriptors {
+			name, buffSize := channels.Decode(descriptor)
+
+			log.RootLogger().Debugf("Creating Engine Channel '%s'", name)
+
+			_, err := channels.New(name, buffSize)
+			if err != nil {
+				return nil, err
+			}
+		}
+	}
+
 	resolver := resolve.NewCompositeResolver(map[string]resolve.Resolver{
 		".":        &resolve.ScopeResolver{},
 		"env":      &resolve.EnvResolver{},
@@ -96,23 +135,7 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 
 	schema.ResolveSchemas()
 
-	properties := make(map[string]interface{}, len(config.Properties))
-	for _, attr := range config.Properties {
-		properties[attr.Name()] = attr.Value()
-	}
-
-	app.propManager = property.NewManager(properties)
-	property.SetDefaultManager(app.propManager)
-
-	for _, option := range options {
-		err := option(app)
-		if err != nil {
-			return nil, err
-		}
-	}
-
 	for id, config := range config.Connections {
-
 		//resolve settings
 		err := connection.ResolveConfig(config)
 		if err != nil {
@@ -127,8 +150,20 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 	resources := make(map[string]*resource.Resource, len(config.Resources))
 	app.resManager = resource.NewManager(resources)
 
-	for _, actionFactory := range action.Factories() {
-		err := actionFactory.Initialize(app)
+	for ref, actionFactory := range action.Factories() {
+
+		var initCtx action.InitContext
+
+		if s, ok := app.actionSettings[ref]; ok {
+			initCtx = &actionInitCtx{
+				app:      app,
+				settings: s,
+			}
+		} else {
+			initCtx = app
+		}
+
+		err := actionFactory.Initialize(initCtx)
 		if err != nil {
 			return nil, err
 		}
@@ -164,6 +199,31 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 	return app, nil
 }
 
+type actionInitCtx struct {
+	app      *App
+	settings map[string]interface{}
+}
+
+func (a actionInitCtx) ResourceManager() *resource.Manager {
+	return a.app.resManager
+}
+
+func (a actionInitCtx) ServiceManager() *service.Manager {
+	return a.app.srvManager
+}
+
+func (a actionInitCtx) RuntimeSettings() map[string]interface{} {
+	return a.settings
+}
+
+func EngineSettings(svcManager *service.Manager, actionSettings map[string]map[string]interface{}) func(*App) error {
+	return func(a *App) error {
+		a.srvManager = svcManager
+		a.actionSettings = actionSettings
+		return nil
+	}
+}
+
 func ContinueOnError(a *App) error {
 	a.stopOnError = false
 	return nil
@@ -176,15 +236,17 @@ func FinalizeProperties(processors ...property.PostProcessor) func(*App) error {
 }
 
 type App struct {
-	name        string
-	version     string
-	propManager *property.Manager
-	resManager  *resource.Manager
-	actions     map[string]action.Action
-	triggers    map[string]*triggerWrapper
-	stopOnError bool
-	started     bool
-	resolver    resolve.CompositeResolver
+	name           string
+	version        string
+	propManager    *property.Manager
+	resManager     *resource.Manager
+	srvManager     *service.Manager
+	actions        map[string]action.Action
+	triggers       map[string]*triggerWrapper
+	stopOnError    bool
+	started        bool
+	resolver       resolve.CompositeResolver
+	actionSettings map[string]map[string]interface{}
 }
 
 type triggerWrapper struct {
@@ -203,6 +265,14 @@ func (a *App) GetResource(id string) *resource.Resource {
 
 func (a *App) ResourceManager() *resource.Manager {
 	return a.resManager
+}
+
+func (a *App) ServiceManager() *service.Manager {
+	return a.srvManager
+}
+
+func (a *App) RuntimeSettings() map[string]interface{} {
+	return nil
 }
 
 func (a *App) Name() interface{} {

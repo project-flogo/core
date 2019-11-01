@@ -2,20 +2,18 @@ package engine
 
 import (
 	"fmt"
-
 	"strings"
-
-	"github.com/project-flogo/core/data/property"
-	"github.com/project-flogo/core/support/trace"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/app"
+	"github.com/project-flogo/core/data/property"
 	"github.com/project-flogo/core/engine/channels"
 	"github.com/project-flogo/core/engine/runner"
 	"github.com/project-flogo/core/engine/secret"
-	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/support/managed"
+	"github.com/project-flogo/core/support/service"
+	"github.com/project-flogo/core/support/trace"
 )
 
 // engineImpl is the type for the Default Engine Implementation
@@ -23,11 +21,11 @@ type engineImpl struct {
 	config         *Config
 	flogoApp       *app.App
 	actionRunner   action.Runner
-	serviceManager *support.ServiceManager
+	serviceManager *service.Manager
 	logger         log.Logger
 }
 
-type Option func(*engineImpl)
+type Option func(*engineImpl) error
 
 // New creates a new Engine
 func New(appConfig *app.Config, options ...Option) (Engine, error) {
@@ -44,38 +42,25 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 	engine := &engineImpl{}
 	logger := log.ChildLogger(log.RootLogger(), "engine")
 	engine.logger = logger
+
 	// Register tracer as managed service
 	if trace.Enabled() {
 		LifeCycle(trace.GetTracer())
 	}
 	//log.SetLogLevel(log.DebugLevel, logger)
 
+	for _, option := range options {
+		err := option(engine)
+		if err != nil {
+			return nil, err
+		}
+	}
+
 	if engine.config == nil {
 		config := &Config{}
 		config.StopEngineOnError = true
 		config.RunnerType = GetRunnerType()
-		//config.LogLevel = DefaultLogLevel
-
 		engine.config = config
-	}
-
-	for _, option := range options {
-		option(engine)
-	}
-
-	//add engine channels - todo should these be moved to app
-	channelDescriptors := appConfig.Channels
-	if len(channelDescriptors) > 0 {
-		for _, descriptor := range channelDescriptors {
-			name, buffSize := channels.Decode(descriptor)
-
-			logger.Debugf("Creating Engine Channel '%s'", name)
-
-			_, err := channels.New(name, buffSize)
-			if err != nil {
-				return nil, err
-			}
-		}
 	}
 
 	if engine.actionRunner == nil {
@@ -91,7 +76,6 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 		}
 
 		logger.Debugf("Using '%s' Action Runner", runnerType)
-
 		engine.actionRunner = actionRunner
 	}
 
@@ -100,6 +84,7 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 		appOptions = append(appOptions, app.ContinueOnError)
 	}
 
+	// Setup Property Resolvers
 	propResolvers := GetAppPropertyValueResolvers(logger)
 	enablePropertiesResolution := false
 	if len(propResolvers) > 0 {
@@ -118,9 +103,33 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 	}
 	postProcessors = append(postProcessors, secret.PropertyProcessor)
 
-	option := app.FinalizeProperties(postProcessors...)
-	appOptions = append(appOptions, option)
+	appOptions = append(appOptions, app.FinalizeProperties(postProcessors...))
 
+	engine.serviceManager = service.NewServiceManager()
+	appOptions = append(appOptions, app.EngineSettings(engine.serviceManager, engine.config.ActionSettings))
+
+	//setup services
+	if len(engine.config.Services) > 0 {
+		for _, sConfig := range engine.config.Services {
+			if sConfig.Enabled {
+				f := service.GetFactory(sConfig.Ref)
+				if f != nil {
+					svc, err := f.NewService(&service.Config{
+						Settings: sConfig.Settings,
+					})
+					if err != nil {
+						return nil, err
+					}
+					err = engine.serviceManager.RegisterService(svc)
+					if err != nil {
+						return nil, err
+					}
+				}
+			}
+		}
+	}
+
+	// Create the application
 	flogoApp, err := app.New(appConfig, engine.actionRunner, appOptions...)
 	if err != nil {
 		return nil, err
@@ -128,9 +137,22 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 
 	logger.Debugf("Creating app [ %s ] with version [ %s ]", appConfig.Name, appConfig.Version)
 	engine.flogoApp = flogoApp
-	engine.serviceManager = support.GetDefaultServiceManager()
 
 	return engine, nil
+}
+
+func ConfigOption(engineJson string, compressed bool) func(*engineImpl) error {
+	return func(e *engineImpl) error {
+
+		cfg, err := LoadEngineConfig(engineJson, compressed)
+		if err != nil {
+			return err
+		}
+
+		e.config = cfg
+
+		return nil
+	}
 }
 
 func (e *engineImpl) App() *app.App {
