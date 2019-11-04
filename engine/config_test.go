@@ -15,9 +15,8 @@ const testEngineConfig = `
   ],
   "actionSettings": {
     "github.com/project-flogo/flow": {
-      "enableTester": true,
-      "stepRecorder": "full",
-      "stateRecorder": "off",
+      "stepRecordingMode": "full",
+      "snapshotRecordingMode": "off",
       "enableExternalFlows": true
     }
   },
