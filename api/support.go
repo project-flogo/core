@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"github.com/project-flogo/core/support/log"
+	"github.com/project-flogo/core/support/trace"
 	"reflect"
 	"strconv"
 	"strings"
@@ -291,6 +292,10 @@ func (aCtx *activityContext) GetInputObject(input data.StructValue) error {
 
 func (aCtx *activityContext) SetOutputObject(output data.StructValue) error {
 	aCtx.output = output.ToMap()
+	return nil
+}
+
+func (aCtx *activityContext) GetTracingContext() trace.TracingContext {
 	return nil
 }
 
