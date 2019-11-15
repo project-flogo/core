@@ -11,6 +11,7 @@ import (
 var (
 	cfgJson       string
 	cfgCompressed bool
+	cfgEngine     string
 )
 
 func init() {
@@ -22,7 +23,7 @@ func init() {
 		os.Exit(1)
 	}
 
-	_, err = engine.New(cfg, engine.DirectRunner)
+	_, err = engine.New(cfg, engine.ConfigOption(cfgEngine, cfgCompressed))
 	if err != nil {
 		log.RootLogger().Errorf("Failed to create engine: %s", err.Error())
 		os.Exit(1)
