@@ -1,6 +1,8 @@
 package trace
 
 import (
+	"errors"
+
 	"github.com/project-flogo/core/support/log"
 )
 
@@ -8,23 +10,21 @@ var tracer Tracer
 
 // RegisterTracer registers the configured tracer
 func RegisterTracer(t Tracer) error {
-	if !isTracerRegistered() {
-		log.RootLogger().Debugf("Registering tracer: %s", t.Name())
+	if tracer == nil {
+		log.RootLogger().Infof("Registering tracer: %s", t.Name())
 		tracer = t
+	} else {
+		log.RootLogger().Warnf("Tracer: %s already registered", tracer.Name())
 	}
-	return nil
+	return errors.New("Tracer is already registered")
 }
 
-func isTracerRegistered() bool {
+func Enabled() bool {
 	return tracer != nil
 }
 
 // GetTracer returns the instance of the registered tracer.
 // If no tracer is registered, a noop tracer is returned
 func GetTracer() Tracer {
-	if tracer == nil {
-		log.RootLogger().Warn("No tracing configuration found. registering noop-tracer")
-		tracer = &nooptracer{}
-	}
 	return tracer
 }

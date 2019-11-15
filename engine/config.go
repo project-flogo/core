@@ -1,225 +1,77 @@
 package engine
 
 import (
+	"encoding/json"
+	"io/ioutil"
 	"os"
-	"path/filepath"
-	"strconv"
-	"strings"
 
-	"github.com/project-flogo/core/data/property"
-	"github.com/project-flogo/core/engine/runner"
-	"github.com/project-flogo/core/support/log"
+	"github.com/project-flogo/core/support"
 )
 
-const (
-	EnvKeyAppConfigLocation  = "FLOGO_CONFIG_PATH"
-	DefaultAppConfigLocation = "flogo.json"
-	EnvKeyStopEngineOnError  = "FLOGO_ENGINE_STOP_ON_ERROR"
-	DefaultStopEngineOnError = true
-	EnvKeyRunnerType         = "FLOGO_RUNNER_TYPE"
-	DefaultRunnerType        = ValueRunnerTypePooled
-	EnvKeyRunnerWorkers      = "FLOGO_RUNNER_WORKERS"
-	DefaultRunnerWorkers     = 5
-	EnvKeyRunnerQueueSize    = "FLOGO_RUNNER_QUEUE"
-	DefaultRunnerQueueSize   = 50
+// Config is the configuration for the Engine, assumes all necessary imports have been add to go code
+type Config struct {
+	Name        string `json:"name"`
+	Type        string `json:"type"`
+	Description string `json:"description"`
 
-	EnvAppPropertyResolvers   = "FLOGO_APP_PROP_RESOLVERS"
-	EnvEnableSchemaSupport    = "FLOGO_SCHEMA_SUPPORT"
-	EnvEnableSchemaValidation = "FLOGO_SCHEMA_VALIDATION"
+	StopEngineOnError bool `json:"stopEngineOnError,omitempty"`
+	RunnerType        string `json:"runnerType,omitempty"`
 
-	ValueRunnerTypePooled = "POOLED"
-	ValueRunnerTypeDirect = "DIRECT"
-
-	PropertyResolverEnv  = "env"
-	PropertyResolverJson = "json"
-)
-
-func IsSchemaSupportEnabled() bool {
-	schemaValidationEnv := os.Getenv(EnvEnableSchemaSupport)
-	if strings.EqualFold(schemaValidationEnv, "true") {
-		return true
-	}
-
-	return false
+	Imports        []string                          `json:"imports,omitempty"`
+	ActionSettings map[string]map[string]interface{} `json:"actionSettings,omitempty"`
+	Services       []*ServiceConfig                  `json:"services,omitempty"`
 }
 
-func IsSchemaValidationEnabled() bool {
-	schemaValidationEnv := os.Getenv(EnvEnableSchemaValidation)
-	if !strings.EqualFold(schemaValidationEnv, "true") {
-		return false
-	}
-
-	return true
+// ServiceConfig is the configuration for Engine Services
+type ServiceConfig struct {
+	Ref      string
+	Enabled  bool
+	Settings map[string]interface{}
 }
 
-//GetFlogoConfigPath returns the flogo config path
-func GetFlogoConfigPath() string {
+func LoadEngineConfig(engineJson string, compressed bool) (*Config, error) {
 
-	flogoConfigPathEnv := os.Getenv(EnvKeyAppConfigLocation)
-	if len(flogoConfigPathEnv) > 0 {
-		return flogoConfigPathEnv
-	}
+	var jsonBytes []byte
 
-	if _, err := os.Stat(DefaultAppConfigLocation); err != nil {
-		upDirConfig := filepath.Join("..", DefaultAppConfigLocation)
-		if _, err := os.Stat(upDirConfig); err == nil {
-			return upDirConfig
-		}
-	}
+	if engineJson == "" {
 
-	return DefaultAppConfigLocation
-}
+		// a json string wasn't provided, so lets lookup the file in path
+		configPath := GetFlogoEngineConfigPath()
 
-//func SetDefaultLogLevel(logLevel string) {
-//	defaultLogLevel = logLevel
-//}
-//
-////GetLogLevel returns the log level
-//func GetLogLevel() string {
-//	logLevelEnv := os.Getenv(EnvKeyLogLevel)
-//	if len(logLevelEnv) > 0 {
-//		return logLevelEnv
-//	}
-//	return defaultLogLevel
-//}
-//
-//func GetLogDateTimeFormat() string {
-//	logLevelEnv := os.Getenv(EnvKeyLogDateFormat)
-//	if len(logLevelEnv) > 0 {
-//		return logLevelEnv
-//	}
-//	return DefaultLogDateFormat
-//}
+		if _, err := os.Stat(configPath); err == nil {
+			flogo, err := os.Open(configPath)
+			if err != nil {
+				return nil, err
+			}
 
-func StopEngineOnError() bool {
-	stopEngineOnError := os.Getenv(EnvKeyStopEngineOnError)
-	if len(stopEngineOnError) == 0 {
-		return DefaultStopEngineOnError
-	}
-	b, _ := strconv.ParseBool(stopEngineOnError)
-	return b
-}
-
-func displayAppPropertyValueResolversHelp(logger log.Logger, resolvers []string) {
-	logger.Warn("Multiple property resolvers where defined without setting a priority order!")
-	logger.Infof("Set environment variable '%s' with a comma-separated list of resolvers to use (definition order is decreasing order of priority)", EnvAppPropertyResolvers)
-	logger.Infof("List of available resolvers: %v", resolvers)
-	logger.Warn("No property resolver will be used")
-}
-
-func GetAppPropertyValueResolvers(logger log.Logger) string {
-	key := os.Getenv(EnvAppPropertyResolvers)
-	if len(key) > 0 {
-		if key == "disabled" {
-			return ""
-		}
-		return key
-	}
-
-	// EnvAppPropertyResolvers is not set, let's guess some convenient default behaviours
-	switch len(property.RegisteredResolvers) {
-	case 0: // no resolver, do nothing
-		return ""
-	case 1: // only one resolver has been registered, use it
-		for resolver := range property.RegisteredResolvers {
-			return resolver
-		}
-	case 2, 3:
-		var resolvers, builtinResolvers []string
-
-		for resolver := range property.RegisteredResolvers {
-			if resolver != PropertyResolverEnv && resolver != PropertyResolverJson {
-				resolvers = append(resolvers, resolver)
-			} else {
-				builtinResolvers = append(builtinResolvers, resolver)
+			jsonBytes, err = ioutil.ReadAll(flogo)
+			if err != nil {
+				return nil, err
 			}
 		}
+	} else {
 
-		if len(resolvers) > 1 { // multiple (excluding builtin) resolvers defined, do nothing and hint to enforce an order
-			resolvers = append(resolvers, builtinResolvers...)
-			displayAppPropertyValueResolversHelp(logger, resolvers)
-			return ""
-		}
-
-		if len(builtinResolvers) == 2 { // force priority between the two builtin resolvers
-			builtinResolvers = []string{PropertyResolverEnv, PropertyResolverJson}
-		}
-
-		resolvers = append(resolvers, builtinResolvers...)
-
-		return strings.Join(resolvers[:], ",")
-	default: // multiple (excluding builtin) resolvers defined, do nothing and hint to enforce an order
-		var resolvers []string
-
-		for resolver := range property.RegisteredResolvers {
-			resolvers = append(resolvers, resolver)
-		}
-
-		displayAppPropertyValueResolversHelp(logger, resolvers)
-
-		return ""
-	}
-
-	return ""
-}
-
-//GetRunnerType returns the runner type
-func GetRunnerType() string {
-	runnerTypeEnv := os.Getenv(EnvKeyRunnerType)
-	if len(runnerTypeEnv) > 0 {
-		return runnerTypeEnv
-	}
-	return DefaultRunnerType
-}
-
-//GetRunnerWorkers returns the number of workers to use
-func GetRunnerWorkers() int {
-	numWorkers := DefaultRunnerWorkers
-	workersEnv := os.Getenv(EnvKeyRunnerWorkers)
-	if len(workersEnv) > 0 {
-		i, err := strconv.Atoi(workersEnv)
-		if err == nil {
-			numWorkers = i
+		if compressed {
+			var err error
+			jsonBytes, err = support.DecodeAndUnzip(engineJson)
+			if err != nil {
+				return nil, err
+			}
+		} else {
+			jsonBytes = []byte(engineJson)
 		}
 	}
-	return numWorkers
-}
 
-//GetRunnerQueueSize returns the runner queue size
-func GetRunnerQueueSize() int {
-	queueSize := DefaultRunnerQueueSize
-	queueSizeEnv := os.Getenv(EnvKeyRunnerQueueSize)
-	if len(queueSizeEnv) > 0 {
-		i, err := strconv.Atoi(queueSizeEnv)
-		if err == nil {
-			queueSize = i
+	cfg := &Config{}
+	cfg.StopEngineOnError = true
+	cfg.RunnerType = GetRunnerType()
+
+	if jsonBytes != nil {
+		err := json.Unmarshal(jsonBytes, &cfg)
+		if err != nil {
+			return nil, err
 		}
 	}
-	return queueSize
-}
 
-//NewPooledRunnerConfig creates a new Pooled config, looks for environment variables to override default values
-func NewPooledRunnerConfig() *runner.PooledConfig {
-	return &runner.PooledConfig{NumWorkers: GetRunnerWorkers(), WorkQueueSize: GetRunnerQueueSize()}
-}
-
-type Config struct {
-	//LogLevel          string
-	StopEngineOnError bool
-	RunnerType        string
-}
-
-func ConfigViaEnv(e *engineImpl) {
-
-	config := &Config{}
-	//config.LogLevel = GetLogLevel()
-	config.RunnerType = GetRunnerType()
-	config.StopEngineOnError = StopEngineOnError()
-
-	e.config = config
-}
-
-func DirectRunner(e *engineImpl) {
-	e.logger.Debugf("Using 'DIRECT' Action Runner")
-	e.actionRunner = runner.NewDirect()
+	return cfg, nil
 }
