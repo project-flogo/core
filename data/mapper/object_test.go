@@ -351,6 +351,7 @@ func TestArrayMappingWithNest(t *testing.T) {
               "tostate"   : "=$loop[index].state",
                "tostreet": "=$loop.street",
                "tozipcode":"=$loop.zipcode",
+               "toma" : "=$loop[index][\"-marketArea\"]",
               "addresses2": {
                   "@foreach($loop.array)":{
                         "tofield1"  : "=$loop[index].street",
@@ -369,6 +370,7 @@ func TestArrayMappingWithNest(t *testing.T) {
            "street": "street",
            "zipcode": 77479,
            "state": "tx",
+           "-marketArea" : "area1",
 			"array":[
 				{
 					"field1":"field1value",
@@ -386,6 +388,7 @@ func TestArrayMappingWithNest(t *testing.T) {
            "street": "street2",
            "zipcode": 774792,
            "state": "tx2",
+           "-marketArea" : "area2",
 			"array":[
 				{
 					"field1":"field1value2",
@@ -420,6 +423,7 @@ func TestArrayMappingWithNest(t *testing.T) {
 	assert.Equal(t, "person", arr.(map[string]interface{})["person2"])
 	assert.Equal(t, float64(77479), arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["tozipcode"])
 	assert.Equal(t, "tx", arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["tostate"])
+	assert.Equal(t, "area1", arr.(map[string]interface{})["addresses"].([]interface{})[0].(map[string]interface{})["toma"])
 }
 
 func TestArrayMappingWithFunction(t *testing.T) {
