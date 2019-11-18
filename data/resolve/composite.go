@@ -122,7 +122,7 @@ func (r *basicResolver) GetResolution(directive string) (Resolution, error) {
 
 	details, err := GetResolveDirectiveDetails(directive[nextIdx:], resolver.GetResolverInfo().UsesItemFormat(), resolver.GetResolverInfo().IsImplicit())
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("cannot resolve '%s' : %v", directive, err)
 	}
 
 	if resolver.GetResolverInfo().IsStatic() {
