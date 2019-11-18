@@ -46,6 +46,26 @@ func NewImplicitResolverInfo(isStatic, isImplicit bool) *ResolverInfo {
 	return &ResolverInfo{isStatic: isStatic, isImplicit: isImplicit}
 }
 
+func NewResolverInfoWithOptions(options ...Option) *ResolverInfo {
+	rf := &ResolverInfo{}
+	for _, option := range options {
+		option(rf)
+	}
+	return rf
+}
+
+type Option func(*ResolverInfo)
+
+func OptUseItemFormat(r *ResolverInfo) {
+	r.usesItemFormat = true
+}
+func OptImplicit(r *ResolverInfo) {
+	r.isImplicit = true
+}
+func OptStatic(r *ResolverInfo) {
+	r.isStatic = true
+}
+
 // ResolverInfo structure that contains information about the resolver
 type ResolverInfo struct {
 	usesItemFormat bool
@@ -97,11 +117,20 @@ func GetResolveDirectiveDetails(directive string, hasItems, isImplicit bool) (*R
 	//todo optimize
 	details := &ResolveDirectiveDetails{}
 
+	if len(directive) == 0 {
+
+		if hasItems {
+			return nil, fmt.Errorf("invalid resolve directive: '%s' needs to start with [item]", directive)
+		}
+
+		return details, nil
+	}
+
 	start := 0
 	strLen := len(directive)
 	hasNamedValue := true
 
-	//isImplicit will try to support both ithem or without item
+	//isImplicit will try to support both item or without item
 	if isImplicit || hasItems {
 		//uses the "item format" (ex. foo[bar].valueName; where 'bar' is the item)
 		if directive[0] != '[' {
