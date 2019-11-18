@@ -46,7 +46,7 @@ func NewImplicitResolverInfo(isStatic, isImplicit bool) *ResolverInfo {
 	return &ResolverInfo{isStatic: isStatic, isImplicit: isImplicit}
 }
 
-func NewResolverInfoWithOptions(options ...Option) *ResolverInfo {
+func CreateResolverInfo(options ...Option) *ResolverInfo {
 	rf := &ResolverInfo{}
 	for _, option := range options {
 		option(rf)
