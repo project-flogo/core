@@ -58,7 +58,7 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 
 	if engine.config == nil {
 		config := &Config{}
-		config.StopEngineOnError = true
+		config.StopEngineOnError = StopEngineOnError()
 		config.RunnerType = GetRunnerType()
 		engine.config = config
 	}
