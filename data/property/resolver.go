@@ -7,7 +7,7 @@ import (
 	"github.com/project-flogo/core/data/resolve"
 )
 
-var propertyResolverInfo = resolve.NewResolverInfo(true, true)
+var propertyResolverInfo = resolve.NewResolverInfo(!IsPropertyDynamicUpdateEnabled(), true)
 
 type Resolver struct {
 }
@@ -18,6 +18,14 @@ func (*Resolver) GetResolverInfo() *resolve.ResolverInfo {
 
 //Resolver Property Resolver $property[item]
 func (*Resolver) Resolve(scope data.Scope, item string, field string) (interface{}, error) {
+
+	// Resolve property value from the local copy of instance
+	if !propertyResolverInfo.IsStatic() && scope != nil {
+		value, found := scope.GetValue("_P."+item)
+		if found {
+			return value, nil
+		}
+	}
 
 	manager := DefaultManager()
 	value, exists := manager.GetProperty(item) //should we add the path and reset it to ""

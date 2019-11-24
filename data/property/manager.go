@@ -1,7 +1,5 @@
 package property
 
-import "github.com/project-flogo/core/data/property/tmp"
-
 func init() {
 	SetDefaultManager(NewManager(make(map[string]interface{})))
 }
@@ -10,8 +8,6 @@ var defaultManager *Manager
 
 func SetDefaultManager(manager *Manager) {
 	defaultManager = manager
-
-	tmp.SetDefaultManager(manager)
 }
 
 func DefaultManager() *Manager {
@@ -31,6 +27,10 @@ type Manager struct {
 func (m *Manager) GetProperty(name string) (interface{}, bool) {
 	val, exists := m.properties[name]
 	return val, exists
+}
+
+func (m *Manager) GetProperties() (map[string]interface{}) {
+	return m.properties
 }
 
 func (m *Manager) Finalize(processors ...PostProcessor) error {

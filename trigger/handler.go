@@ -10,6 +10,7 @@ import (
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/mapper"
+	"github.com/project-flogo/core/data/property"
 	"github.com/project-flogo/core/support/log"
 )
 
@@ -170,6 +171,17 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 	}
 
 	newCtx := NewHandlerContext(ctx, h.config)
+
+	if property.IsPropertyDynamicUpdateEnabled() {
+		if inputMap == nil {
+			inputMap = make(map[string]interface{})
+		}
+		// Make copy of app properties and inject them in action instance so that they can be resolved from local copy
+		for name, value := range property.DefaultManager().GetProperties() {
+			inputMap["_P."+name] = value
+		}
+	}
+
 	results, err := h.runner.RunAction(newCtx, act.act, inputMap)
 	if err != nil {
 		return nil, err
