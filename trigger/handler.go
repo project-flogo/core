@@ -176,10 +176,7 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 		if inputMap == nil {
 			inputMap = make(map[string]interface{})
 		}
-		// Make copy of app properties and inject them in action instance so that they can be resolved from local copy
-		for name, value := range property.DefaultManager().GetProperties() {
-			inputMap["_P."+name] = value
-		}
+		inputMap["_PROPERTIES"] = property.DefaultManager().GetProperties()
 	}
 
 	results, err := h.runner.RunAction(newCtx, act.act, inputMap)

@@ -21,9 +21,15 @@ func (*Resolver) Resolve(scope data.Scope, item string, field string) (interface
 
 	// Resolve property value from the local copy of instance
 	if !propertyResolverInfo.IsStatic() && scope != nil {
-		value, found := scope.GetValue("_P."+item)
+		props, found := scope.GetValue("_PROPERTIES")
 		if found {
-			return value, nil
+			pMap, ok := props.(map[string]interface{})
+			if ok {
+				pValue, exists := pMap[item]
+				if exists {
+					return pValue, nil
+				}
+			}
 		}
 	}
 
