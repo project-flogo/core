@@ -8,10 +8,9 @@ import (
 var EnvAppPropertySnapshotEnabled = "FLOGO_APP_PROP_SNAPSHOTS"
 
 func IsPropertySnapshotEnabled() bool {
-	dynamicUpdateEnv := os.Getenv(EnvAppPropertySnapshotEnabled)
-	if strings.EqualFold(dynamicUpdateEnv, "true") {
+	appPropertySnapshotEnabled := os.Getenv(EnvAppPropertySnapshotEnabled)
+	if strings.EqualFold(appPropertySnapshotEnabled, "true") {
 		return true
 	}
-
 	return false
 }
