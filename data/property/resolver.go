@@ -7,7 +7,7 @@ import (
 	"github.com/project-flogo/core/data/resolve"
 )
 
-var propertyResolverInfo = resolve.NewResolverInfo(!IsPropertyDynamicUpdateEnabled(), true)
+var propertyResolverInfo = resolve.NewResolverInfo(!IsPropertySnapshotEnabled(), true)
 
 type Resolver struct {
 }

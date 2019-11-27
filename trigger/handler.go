@@ -172,11 +172,16 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 
 	newCtx := NewHandlerContext(ctx, h.config)
 
-	if property.IsPropertyDynamicUpdateEnabled() {
+	if property.IsPropertySnapshotEnabled() {
 		if inputMap == nil {
 			inputMap = make(map[string]interface{})
 		}
-		inputMap["_PROPERTIES"] = property.DefaultManager().GetProperties()
+		// Take snapshot of current app properties
+		propSnapShot := make(map[string]interface{}, len(property.DefaultManager().GetProperties()))
+		for k, v := range property.DefaultManager().GetProperties() {
+			propSnapShot[k] = v
+		}
+		inputMap["_PROPERTIES"] = propSnapShot
 	}
 
 	results, err := h.runner.RunAction(newCtx, act.act, inputMap)
