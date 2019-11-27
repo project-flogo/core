@@ -53,7 +53,12 @@ func GetValue(value interface{}, path string) (interface{}, error) {
 		} else if paramsVal, ok := value.(map[string]string); ok {
 			newVal, newPath, err = getSetMapParamsValue(paramsVal, path, nil, false)
 		} else {
-			return nil, fmt.Errorf("unable to evaluate path: %s", path)
+			fieldName, npIdx := getMapKey(path[2:])
+			newVal, err = getFieldValueByName(value, fieldName)
+			if err != nil {
+				return nil, err
+			}
+			newPath = path[npIdx:]
 		}
 	} else if strings.HasPrefix(path, "[") {
 		newVal, newPath, err = getSetArrayValue(value, path, nil, false)

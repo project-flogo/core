@@ -303,3 +303,63 @@ func TestSetValue(t *testing.T) {
 	//assert.Nil(t, err)
 	//////todo check if map
 }
+
+func TestGetValueFromStruct(t *testing.T) {
+
+	type object struct {
+		ID     string  `json:"id"`
+		Name   string  `json:"name"`
+		TT     string  `json:"T!T"`
+		Nested *object `json:"Nest.Object"`
+	}
+
+	source := struct {
+		Object *object `json:"object"`
+	}{
+		Object: &object{
+			ID:   "1001",
+			Name: "flogo",
+			TT:   "t!tTesing",
+			Nested: &object{
+				ID:     "1001-2",
+				Name:   "flogo-2",
+				TT:     "ddddd",
+				Nested: nil,
+			},
+		},
+	}
+
+	skipMissing = true
+	tests := []struct {
+		Path  string
+		Value interface{}
+	}{
+		{
+			Path:  ".object.id",
+			Value: "1001",
+		},
+		{
+			Path:  ".object.name",
+			Value: "flogo",
+		},
+		{
+			Path:  `.object["T!T"]`,
+			Value: "t!tTesing",
+		},
+		{
+			Path:  `.object["Nest.Object"].id`,
+			Value: "1001-2",
+		},
+		{
+			Path:  `.object["Nest.Object"]["T!T"]`,
+			Value: "ddddd",
+		},
+	}
+
+	for _, test := range tests {
+		newVal, err := GetValue(source, test.Path)
+		assert.Nil(t, err)
+		assert.Equal(t, test.Value, newVal)
+	}
+
+}
