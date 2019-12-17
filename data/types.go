@@ -11,7 +11,7 @@ import (
 // Type denotes a data type
 type Type int
 
-var instSize = strconv.IntSize
+//var intSize = strconv.IntSize
 
 const (
 	TypeUnknown Type = iota // interface{}
@@ -132,12 +132,12 @@ func GetType(val interface{}) (Type, error) {
 	case string:
 		return TypeString, nil
 	case int:
-		if instSize == 64 {
+		if strconv.IntSize == 64 {
 			return TypeInt64, nil
 		}
 		return TypeInt, nil
 	case int32:
-		return TypeInt, nil
+		return TypeInt32, nil
 	case int64:
 		return TypeInt64, nil
 	case float32:
@@ -158,6 +158,8 @@ func GetType(val interface{}) (Type, error) {
 		return TypeArray, nil
 	case map[string]string:
 		return TypeParams, nil
+	case []byte:
+		return TypeBytes, nil
 	default:
 		return TypeUnknown, fmt.Errorf("unable to determine type of %#v", t)
 	}

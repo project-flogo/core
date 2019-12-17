@@ -1,19 +1,21 @@
-# Flogo Application Model
-
-
+# Application Model
 
 Sections:
+
 * [Imports](#imports "Goto Imports") - Go package and contribution imports
 * [Properties](#properties "Goto Imports") - Shared Properties
 * [Channels](#channels "Goto Imports") - Internal Communication Channels
 * [Triggers](#imports "Goto Triggers") - Triggers
 * [Actions](#actions "Goto Actions") - Shared Actions
+* [Resources](#resources "Goto Resources") - Shared Resources
 * [Schemas](#schemas "Goto Schemas") - Shared Schemas
+* [Connections](#connections "Goto Connections") - Shared Connections
     
 [Full Example](#full-example "Full Example") 
 
 ## Imports
 The imports section allows one to define all the packages that should be imported by the engine.  This includes go code and references to contribution.
+
 ```json
   "imports": [
     "github.com/project-flogo/flow",
@@ -30,6 +32,7 @@ Indirect: `"ref" : "#flow"`
 
 ## Properties
 The properties section allows one to define properties that can be shared by the application.
+
 ```json
   "properties": [
     {"name":"myProp", "type":"string", "value":"myValue" }
@@ -40,6 +43,7 @@ The properties section allows one to define properties that can be shared by the
 A property can be resolved in an expression using the property resolver  `$property[propertyName]`
 
 Example:
+
 ```json
   "settings": {
     "mySetting": "=$property[myProp]"
@@ -48,6 +52,7 @@ Example:
 
 ## Channels
 The channels section allows one to define internal communications channels for the engine.
+
 ```json
   "channels": [
     "myChannel:5"
@@ -86,6 +91,7 @@ Handlers can define the actions they use in two ways.
 One can refer to a shared action via 'id' like above, where the handler refers to the shared action "sharedAction"
 
 One can also define the action inline:
+
 ```json
 "handlers": [ 
   { 
@@ -104,6 +110,7 @@ be invoked.  The first action whose 'if' expression evaluates to true will be ex
 have an 'if' property it will be considered the same as `"if":"true"`
 
 Example:
+
 ```json
 "actions": 
   [
@@ -121,6 +128,7 @@ is executed.
 
 ## Actions
 The actions section is used to define shared actions that can be referenced by id.
+
 ```json
   "actions": [
     {
@@ -135,6 +143,7 @@ The actions section is used to define shared actions that can be referenced by i
 
 ## Resources
 The resources section contains the resources used by actions.
+
 ```json
   "resources": [
     {
@@ -163,6 +172,7 @@ The schemas section contains schemas that are shared in the application.
 ```
 
 Schemas can be referenced in metadata or in schema sections in contributions.
+
 ```json
   "activity": {
    "ref": "#myActivity",
@@ -177,6 +187,7 @@ Schemas can be referenced in metadata or in schema sections in contributions.
 }
 ```
 Schemas can also be defined inline:
+
 ```json
   "activity": {
    "ref": "#myActivity",
@@ -191,9 +202,37 @@ Schemas can also be defined inline:
 }
 ```
 
+## Connections
+The connections section contains connections that can be shared by triggers, actions or
+activities.  It allows you to define a connection once and use it in multiple places.
+
+```json
+"connections": {
+  "myConn": {
+    "ref" : "github.com/project-flogo/contrib/connection/sql",
+    "settings" : {
+      "dbType": "mysql",
+      "driver": "mysql",
+      "dataSource": "username:password@tcp(host:port)/dbName",
+    }
+  }
+}
+```
+
+These connections can be reference by values of type `connection`, 
+
+```json
+"activity" : {
+  "ref": "#sql",
+  "settings": {
+    "connection": "conn://myConn"
+  }
+}
+```
 
 ## Full Example
-Sample flogo application coniguration file. 
+Sample flogo application configuration file. 
+
 ```json
 {
   "name": "simpleApp",

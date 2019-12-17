@@ -10,6 +10,7 @@ import (
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/mapper"
+	"github.com/project-flogo/core/data/property"
 	"github.com/project-flogo/core/support/log"
 )
 
@@ -170,6 +171,19 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 	}
 
 	newCtx := NewHandlerContext(ctx, h.config)
+
+	if property.IsPropertySnapshotEnabled() {
+		if inputMap == nil {
+			inputMap = make(map[string]interface{})
+		}
+		// Take snapshot of current app properties
+		propSnapShot := make(map[string]interface{}, len(property.DefaultManager().GetProperties()))
+		for k, v := range property.DefaultManager().GetProperties() {
+			propSnapShot[k] = v
+		}
+		inputMap["_PROPERTIES"] = propSnapShot
+	}
+
 	results, err := h.runner.RunAction(newCtx, act.act, inputMap)
 	if err != nil {
 		return nil, err
