@@ -21,6 +21,8 @@ var (
 
 func main() {
 
+	cpuProfiling := false
+
 	flag.Parse()
 	if *cpuProfile != "" {
 		f, err := os.Create(*cpuProfile)
@@ -32,7 +34,7 @@ func main() {
 			fmt.Fprintf(os.Stderr, "Failed to start CPU profiling: %v\n", err)
 			os.Exit(1)
 		}
-		defer pprof.StopCPUProfile()
+		cpuProfiling = true
 	}
 
 	cfg, err := engine.LoadAppConfig(cfgJson, cfgCompressed)
@@ -62,6 +64,10 @@ func main() {
 			os.Exit(1)
 		}
 		_ = f.Close()
+	}
+
+	if cpuProfiling {
+		pprof.StopCPUProfile()
 	}
 
 	os.Exit(code)

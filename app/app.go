@@ -176,6 +176,10 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 		}
 
 		loader := resource.GetLoader(resType)
+		if loader == nil {
+			return nil, fmt.Errorf("resource loader for '%s' not registered", resType)
+		}
+
 		res, err := loader.LoadResource(resConfig)
 		if err != nil {
 			return nil, err
