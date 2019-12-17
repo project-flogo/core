@@ -1,6 +1,4 @@
-# Data
-
-## Types
+# Data Types
 
 #### Standard Data Types:
 |Name|Go Type |Description|
