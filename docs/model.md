@@ -3,8 +3,8 @@
 Sections:
 
 * [Imports](#imports "Goto Imports") - Go package and contribution imports
-* [Properties](#properties "Goto Imports") - Shared Properties
-* [Channels](#channels "Goto Imports") - Internal Communication Channels
+* [Properties](#properties "Goto Properties") - Shared Properties
+* [Channels](#channels "Goto Channels") - Internal Communication Channels
 * [Triggers](#imports "Goto Triggers") - Triggers
 * [Actions](#actions "Goto Actions") - Shared Actions
 * [Resources](#resources "Goto Resources") - Shared Resources
@@ -14,7 +14,9 @@ Sections:
 [Full Example](#full-example "Full Example") 
 
 ## Imports
-The imports section allows one to define all the packages that should be imported by the engine.  This includes go code and references to contribution.
+The imports section allows one to define all the contributions that should be imported by the engine. In some instances
+ this may include go code references, for example a specific database driver if your application logic is dependent on 
+ it.
 
 ```json
   "imports": [
