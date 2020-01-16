@@ -274,8 +274,8 @@ func newAction(act action.Action, settings interface{}) (*Action, error) {
 
 	var settingsMap map[string]interface{}
 
-	if settings, ok := settings.(map[string]interface{}); ok {
-		settingsMap = settings
+	if settingsM, ok := settings.(map[string]interface{}); ok {
+		settingsMap = settingsM
 	} else {
 		settingsMap = metadata.StructToMap(settings)
 	}

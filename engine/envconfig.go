@@ -234,7 +234,8 @@ func ConfigViaEnv(e *engineImpl) {
 	e.config = config
 }
 
-func DirectRunner(e *engineImpl) {
+func DirectRunner(e *engineImpl) error {
 	e.logger.Debugf("Using 'DIRECT' Action Runner")
 	e.actionRunner = runner.NewDirect()
+	return nil
 }

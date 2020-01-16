@@ -63,7 +63,7 @@ func LoadEngineConfig(engineJson string, compressed bool) (*Config, error) {
 	}
 
 	cfg := &Config{}
-	cfg.StopEngineOnError = true
+	cfg.StopEngineOnError = StopEngineOnError()
 	cfg.RunnerType = GetRunnerType()
 
 	if jsonBytes != nil {

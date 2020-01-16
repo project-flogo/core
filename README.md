@@ -32,10 +32,10 @@ If you want to get started with [Project Flogo](flogo.io), you should install th
 Here is some documentation to help you get started understanding some of the fundamentals of the Flogo Core library. 
 
 * [Model](docs/model.md): The Flogo application model
-* [Mapping](docs/mapping.md): The Flogo application model
+* [Data Types](docs/datatypes.md): The Flogo data types
+* [Mapping](docs/mapping.md): Mapping data in Flogo applications
 
-In addition to low-level APIs used to support and run Flogo applications, the Core library contains some high-level APIs.  There is an API that can be used to programmatically create and run an 
-application.  There are also interfaces that can be implemented to create your own Flogo contributions, such as Triggers and Activities. 
+In addition to low-level APIs used to support and run Flogo applications, the Core library contains some high-level APIs.  There is an API that can be used to programmatically create and run an application.  There are also interfaces that can be implemented to create your own Flogo contributions, such as Triggers and Activities. 
 
 * [Application](docs/app-api.md): API to build and execute a Flogo application
 * [Contributions](docs/contribs.md): APIs and interfaces for Flogo contribution development
