@@ -15,7 +15,7 @@ func TestEnvValueResolver(t *testing.T) {
 		_ = os.Unsetenv("Test")
 		_ = os.Unsetenv("TEST_PROP")
 	}()
-	resolver := &EnvVariableValueResolver{}
+	resolver := &EnvVariableValueResolver{autoMapping: true}
 
 	resolvedVal, found := resolver.LookupValue("Test")
 	assert.True(t, true, found)
