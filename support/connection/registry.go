@@ -20,10 +20,6 @@ func RegisterManagerFactory(factory ManagerFactory) error {
 
 	ref := support.GetRef(factory)
 
-	if _, dup := managerFactories[ref]; dup {
-		return fmt.Errorf("manager factory already registered: %s", ref)
-	}
-
 	managerFactories[ref] = factory
 
 	log.RootLogger().Debugf("Registering '%s' manager factory: %s", factory.Type, ref )
@@ -33,6 +29,15 @@ func RegisterManagerFactory(factory ManagerFactory) error {
 
 func GetManagerFactory(ref string) ManagerFactory {
 	return managerFactories[ref]
+}
+
+func ManagerFactories() map[string]ManagerFactory {
+	ret := make(map[string]ManagerFactory,len(managerFactories) )
+	for id, managerFactory := range managerFactories {
+		ret[id] = managerFactory
+	}
+
+	return ret
 }
 
 func RegisterManager(connectionId string, manager Manager) error {
