@@ -114,7 +114,7 @@ func TestRunErrorInAction(t *testing.T) {
 	err := runner.Start()
 
 	a := new(MockFullAction)
-	a.On("Run", nil, mock.AnythingOfType("map[string]interface {}"), mock.AnythingOfType("*runner.AsyncResultHandler")).Return(errors.New("error in action"))
+	a.On("Run", nil, mock.AnythingOfType("map[string]interface {}"), mock.AnythingOfType("*runner.AsyncResultHandler")).Return(errors.New("Error in action"))
 	_, err = runner.RunAction(nil, a, nil)
 	assert.NotNil(t, err)
 	assert.Equal(t, "Error in action", err.Error())
