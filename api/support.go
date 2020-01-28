@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"github.com/project-flogo/core/support/log"
+	"github.com/project-flogo/core/support/trace"
 	"reflect"
 	"strconv"
 	"strings"
