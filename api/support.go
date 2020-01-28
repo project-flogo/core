@@ -294,6 +294,10 @@ func (aCtx *activityContext) SetOutputObject(output data.StructValue) error {
 	return nil
 }
 
+func (aCtx *activityContext) GetTracingContext() trace.TracingContext {
+	return nil
+}
+
 /////////////////////////////////////////
 // activity.Host Implementation
 
