@@ -340,11 +340,13 @@ func (a *App) Start() error {
 			statusInfo.Error = err
 			logger.Debugf("StackTrace: %s", debug.Stack())
 			failed = append(failed, id)
+			trigger.PostTriggerEvent(trigger.FAILED, id)
 		} else {
 			statusInfo.Status = managed.StatusStarted
 			//logger.Infof("Trigger [ %s ]: Started", id)
 			version := ""
 			logger.Debugf("Trigger [ %s ] has ref [ %s ] and version [ %s ]", id, trg.ref, version)
+			trigger.PostTriggerEvent(trigger.STARTED, id)
 		}
 	}
 
@@ -371,6 +373,7 @@ func (a *App) Stop() error {
 	for id, trg := range a.triggers {
 		_ = managed.Stop("Trigger [ "+id+" ]", trg.trg)
 		trg.status.Status = managed.StatusStopped
+		trigger.PostTriggerEvent(trigger.STOPPED, id)
 	}
 
 	logger.Info("Triggers Stopped")
