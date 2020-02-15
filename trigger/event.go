@@ -5,7 +5,9 @@ import "github.com/project-flogo/core/engine/event"
 type Status string
 
 const (
+	INITIALIZING     = "Initializing"
 	INITIALIZED      = "Initialized"
+	INIT_FAILED      = "InitFailed"
 	STARTED          = "Started"
 	STOPPED          = "Stopped"
 	FAILED           = "Failed"
@@ -67,6 +69,10 @@ func (he handlerEvent) Status() Status {
 
 func (he handlerEvent) Tags() map[string]string {
 	return he.tags
+}
+
+func (s Status) String() string {
+	return string(s)
 }
 
 func PostTriggerEvent(tStatus Status, name string) {

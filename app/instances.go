@@ -119,7 +119,6 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 		log.ChildLogger(logger, tConfig.Id)
 		initCtx := &initContext{logger: logger, handlers: make([]trigger.Handler, 0, len(tConfig.Handlers))}
 
-
 		//create handlers for that trigger and init
 		for _, hConfig := range tConfig.Handlers {
 
@@ -188,11 +187,13 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 
 			initCtx.handlers = append(initCtx.handlers, handler)
 		}
-
+		trigger.PostTriggerEvent(trigger.INITIALIZING, tConfig.Id)
 		err = trg.Initialize(initCtx)
 		if err != nil {
+			trigger.PostTriggerEvent(trigger.INIT_FAILED, tConfig.Id)
 			return nil, err
 		}
+		trigger.PostTriggerEvent(trigger.INITIALIZED, tConfig.Id)
 
 		triggers[tConfig.Id] = &triggerWrapper{ref: ref, trg: trg, status: &managed.StatusInfo{Name: tConfig.Id}}
 	}
