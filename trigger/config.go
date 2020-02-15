@@ -2,6 +2,8 @@ package trigger
 
 import (
 	"encoding/json"
+	"strconv"
+
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/metadata"
@@ -36,8 +38,13 @@ func (c *Config) FixUp(md *Metadata, resolver resolve.CompositeResolver) error {
 	}
 
 	// fix up handler settings
-	for _, hc := range c.Handlers {
+	for i, hc := range c.Handlers {
 		hc.parent = c
+
+		if hc.Name == "" {
+			// Set name: <triggername>_handler<index+1> e.g. mytrigger_handler1
+			hc.Name = c.Id + "_handler" + strconv.Itoa(i+1)
+		}
 
 		if len(hc.Settings) > 0 {
 			var err error
