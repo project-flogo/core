@@ -107,6 +107,8 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 
 	var triggerValues map[string]interface{}
 
+	PostHandlerEvent(STARTED, h.Name(), h.config.parent.Id, nil)
+
 	if triggerData == nil {
 		triggerValues = make(map[string]interface{})
 	} else if values, ok := triggerData.(map[string]interface{}); ok {
@@ -186,8 +188,11 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 
 	results, err := h.runner.RunAction(newCtx, act.act, inputMap)
 	if err != nil {
+		PostHandlerEvent(FAILED, h.Name(), h.config.parent.Id, nil)
 		return nil, err
 	}
+
+	PostHandlerEvent(COMPLETED, h.Name(), h.config.parent.Id, nil)
 
 	if act.actionOutputMapper != nil {
 		outScope := data.NewSimpleScope(results, nil)

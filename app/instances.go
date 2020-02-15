@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/data/expression"
@@ -119,8 +120,9 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 		log.ChildLogger(logger, tConfig.Id)
 		initCtx := &initContext{logger: logger, handlers: make([]trigger.Handler, 0, len(tConfig.Handlers))}
 
+
 		//create handlers for that trigger and init
-		for _, hConfig := range tConfig.Handlers {
+		for index, hConfig := range tConfig.Handlers {
 
 			var acts []action.Action
 			var err error
@@ -180,6 +182,10 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 				}
 			}
 
+			if hConfig.Name == "" {
+				// Set name: <triggername>_handler<index+1> e.g. mytrigger_handler1
+				hConfig.Name = tConfig.Id + "_handler" + strconv.Itoa(index+1)
+			}
 			handler, err := trigger.NewHandler(hConfig, acts, mapperFactory, expressionFactory, runner)
 			if err != nil {
 				return nil, err
