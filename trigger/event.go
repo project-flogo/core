@@ -13,7 +13,6 @@ const (
 	FAILED           = "Failed"
 	COMPLETED        = "Completed"
 	TriggerEventType = "triggerevent"
-	HandlerEventType = "handlerevent"
 )
 
 // Trigger Event
@@ -84,8 +83,8 @@ func PostTriggerEvent(tStatus Status, name string) {
 
 // Publish handler event
 func PostHandlerEvent(hStatus Status, hName, tName string, hTags map[string]string) {
-	if event.HasListener(HandlerEventType) {
+	if event.HasListener(TriggerEventType) {
 		te := &handlerEvent{name: hName, triggerName: tName, status: hStatus, tags: hTags}
-		event.Post(HandlerEventType, te)
+		event.Post(TriggerEventType, te)
 	}
 }
