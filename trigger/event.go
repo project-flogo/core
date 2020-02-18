@@ -19,7 +19,7 @@ const (
 type TriggerEvent interface {
 	// Name of trigger
 	Name() string
-	// Status of trigger. Valid values - STARTED, STOPPED, FAILED
+	// Status of trigger. Valid status - INITIALIZING, INITIALIZED, STARTED, STOPPED, FAILED
 	Status() Status
 }
 
@@ -41,9 +41,10 @@ type HandlerEvent interface {
 	TriggerName() string
 	// Name of the handler
 	HandlerName() string
-	// Status of handler. Valid values - INITIALIZED, STARTED, COMPLETED, FAILED
+	// Status of handler. Valid status - INITIALIZED, STARTED, COMPLETED, FAILED
 	Status() Status
-	// Handler specific tags set by the underlying implementation
+	// Handler specific tags set by the underlying implementation e.g. method and path by REST trigger handler or
+	// topic name by Kafka trigger handler. This is useful when peek view of trigger(and handlers) is desired.
 	Tags() map[string]string
 }
 
