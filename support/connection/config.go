@@ -10,6 +10,7 @@ import (
 type Config struct {
 	Ref      string                 `json:"ref,omitempty"`
 	Settings map[string]interface{} `json:"settings,omitempty"`
+	resolved bool
 }
 
 func ToConfig(config map[string]interface{}) (*Config, error) {
@@ -49,6 +50,10 @@ func ToConfig(config map[string]interface{}) (*Config, error) {
 
 func ResolveConfig(config *Config) error {
 
+	if config.resolved {
+		return nil
+	}
+
 	err := resolveRef(config)
 	if err != nil {
 		return err
@@ -66,6 +71,8 @@ func ResolveConfig(config *Config) error {
 			config.Settings[name] = value
 		}
 	}
+
+	config.resolved = true
 	return nil
 }
 

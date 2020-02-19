@@ -1,6 +1,8 @@
 package connection
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Manager interface {
 	Type() string
@@ -16,8 +18,14 @@ type ManagerFactory interface {
 	NewManager(settings map[string]interface{}) (Manager, error)
 }
 
-
 func NewManager(config *Config) (Manager, error)  {
+
+	//resolve settings
+	err := ResolveConfig(config)
+	if err != nil {
+		return nil, err
+	}
+
 	f := GetManagerFactory(config.Ref)
 
 	if f == nil {
