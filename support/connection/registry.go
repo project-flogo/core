@@ -2,8 +2,8 @@ package connection
 
 import (
 	"fmt"
-	"github.com/project-flogo/core/support"
 
+	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/support/log"
 )
 
@@ -15,17 +15,39 @@ var (
 func RegisterManagerFactory(factory ManagerFactory) error {
 
 	if factory == nil {
-		return fmt.Errorf("cannot register with 'nil' manager factory")
+		return fmt.Errorf("cannot register with 'nil' connection manager factory")
 	}
 
 	ref := support.GetRef(factory)
 
+	if _, dup := managers[ref]; dup {
+		return fmt.Errorf("connection manager factory '%s' already registered", ref)
+	}
+
 	managerFactories[ref] = factory
 
-	log.RootLogger().Debugf("Registering '%s' manager factory: %s", factory.Type, ref )
+	log.RootLogger().Debugf("Registering '%s' connection manager factory: %s", factory.Type, ref )
 
 	return nil
 }
+
+func ReplaceManagerFactory(ref string, factory ManagerFactory) error {
+
+	if ref == "" {
+		return fmt.Errorf("'ref' must be specified when registering")
+	}
+
+	if factory == nil {
+		return fmt.Errorf("cannot register with 'nil' connection manager factory")
+	}
+
+	managerFactories[ref] = factory
+
+	log.RootLogger().Debugf("Replacing '%s' connection manager factory: %s", factory.Type, ref )
+
+	return nil
+}
+
 
 func GetManagerFactory(ref string) ManagerFactory {
 	return managerFactories[ref]
@@ -51,10 +73,10 @@ func RegisterManager(connectionId string, manager Manager) error {
 	}
 
 	if _, dup := managers[connectionId]; dup {
-		return fmt.Errorf("manager already registered: %s", connectionId)
+		return fmt.Errorf("connection manager already registered: %s", connectionId)
 	}
 
-	log.RootLogger().Debugf("Registering manager: %s", connectionId)
+	log.RootLogger().Debugf("Registering connection manager: %s", connectionId)
 
 	managers[connectionId] = manager
 

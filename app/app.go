@@ -136,12 +136,7 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 	schema.ResolveSchemas()
 
 	for id, config := range config.Connections {
-		//resolve settings
-		err := connection.ResolveConfig(config)
-		if err != nil {
-			return nil, err
-		}
-		_, err = connection.NewSharedManager(id, config)
+		_, err := connection.NewSharedManager(id, config)
 		if err != nil {
 			return nil, err
 		}
