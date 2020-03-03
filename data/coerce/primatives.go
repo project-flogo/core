@@ -12,6 +12,8 @@ func ToString(val interface{}) (string, error) {
 	switch t := val.(type) {
 	case string:
 		return t, nil
+	case *string:
+		return *t, nil
 	case int:
 		return strconv.Itoa(t), nil
 	case int64:
@@ -258,7 +260,7 @@ func ToBool(val interface{}) (bool, error) {
 	switch t := val.(type) {
 	case bool:
 		return t, nil
-	case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64 :
+	case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64:
 		return t != 0, nil
 	case float64:
 		return t != 0.0, nil

@@ -27,6 +27,14 @@ func TestCoerceToString(t *testing.T) {
 	var valNil interface{} // = nil
 	cval, _ = ToString(valNil)
 	assert.Equal(t, "", cval, "not equal")
+
+	var pointerString interface{} = StringPointer("flogo")
+	cval, _ = ToString(pointerString)
+	assert.Equal(t, "flogo", cval, "not equal")
+}
+
+func StringPointer(s string) *string {
+	return &s
 }
 
 func TestCoerceToInt(t *testing.T) {
