@@ -26,7 +26,7 @@ func RegisterManagerFactory(factory ManagerFactory) error {
 
 	managerFactories[ref] = factory
 
-	log.RootLogger().Debugf("Registering '%s' connection manager factory: %s", factory.Type, ref )
+	log.RootLogger().Debugf("Registering '%s' connection manager factory: %s", factory.Type(), ref )
 
 	return nil
 }
