@@ -192,6 +192,8 @@ func ToTypeFromGoRep(strType string) Type {
 		dt = TypeBytes
 	case "map[string]string":
 		dt = TypeParams
+	case "connection.Manager":
+		dt = TypeConnection
 	}
 
 	return dt
