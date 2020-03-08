@@ -126,6 +126,8 @@ func (runner *PooledRunner) RunAction(ctx context.Context, act action.Action, in
 		if logger.DebugEnabled() {
 			logger.Debugf("Action '%s' returned", support.GetRef(act))
 		}
+		// Release memory
+		actionData = nil
 
 		return reply.results, reply.err
 	}
