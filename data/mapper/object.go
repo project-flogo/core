@@ -85,12 +85,12 @@ type ObjectMapper struct {
 	//Object
 	objectFields map[string]expression.Expr
 	//For Array mapping
-	forE *foreach
+	foreach *foreachExpr
 	//For literal array mapping
 	literalArray []expression.Expr
 }
 
-type foreach struct {
+type foreachExpr struct {
 	// source array
 	sourceFrom expression.Expr
 	// array scope name
@@ -118,12 +118,12 @@ func NewObjectMapper(mappings interface{}, exprF expression.Factory) (expr expre
 		for mk, mv := range t {
 			//Root Level foreach
 			if strings.HasPrefix(mk, FOREACH) {
-				forE, err := newForeach(mk, exprF)
+				foreach, err := newForeachExpr(mk, exprF)
 				if err != nil {
 					return nil, err
 				}
-				forE.addFields(mv.(map[string]interface{}), exprF)
-				return forE, nil
+				foreach.addFields(mv.(map[string]interface{}), exprF)
+				return foreach, nil
 			} else {
 				objFields[mk], err = NewObjectMapper(mv, exprF)
 			}
@@ -152,7 +152,7 @@ func NewObjectMapper(mappings interface{}, exprF expression.Factory) (expr expre
 	}
 }
 
-func (f *foreach) addFields(fields map[string]interface{}, exprF expression.Factory) (err error) {
+func (f *foreachExpr) addFields(fields map[string]interface{}, exprF expression.Factory) (err error) {
 	for key, value := range fields {
 		if key == "=" {
 			if value == "$loop" {
@@ -184,8 +184,8 @@ func newExpr(path interface{}, exprF expression.Factory) (expression.Expr, error
 	}
 }
 
-func newForeach(foreachpath string, exprF expression.Factory) (*foreach, error) {
-	foreach := &foreach{}
+func newForeachExpr(foreachpath string, exprF expression.Factory) (*foreachExpr, error) {
+	foreach := &foreachExpr{}
 	foreachpath = strings.TrimSpace(foreachpath)
 	if strings.HasPrefix(foreachpath, FOREACH) && strings.Contains(foreachpath, "(") && strings.Contains(foreachpath, ")") {
 		paramsStr := foreachpath[strings.Index(foreachpath, "(")+1 : strings.LastIndex(foreachpath, ")")]
@@ -239,8 +239,8 @@ func (obj *ObjectMapper) Eval(scope data.Scope) (value interface{}, err error) {
 			objectMapperLog.Debugf("StackTrace: %s", debug.Stack())
 		}
 	}()
-	if obj.forE != nil {
-		return obj.forE.Eval(scope)
+	if obj.foreach != nil {
+		return obj.foreach.Eval(scope)
 	} else if obj.literalArray != nil {
 		var array []interface{}
 		for _, v := range obj.literalArray {
@@ -263,7 +263,7 @@ func (obj *ObjectMapper) Eval(scope data.Scope) (value interface{}, err error) {
 	}
 }
 
-func (f *foreach) Eval(scope data.Scope) (interface{}, error) {
+func (f *foreachExpr) Eval(scope data.Scope) (interface{}, error) {
 	sourceAr, err := f.sourceFrom.Eval(scope)
 	if err != nil {
 		return nil, fmt.Errorf("foreach eval source array error, %s", err.Error())
@@ -344,7 +344,7 @@ func (f *foreach) Eval(scope data.Scope) (interface{}, error) {
 	return targetValues, nil
 }
 
-func (f *foreach) handleAssign(sourceArray []interface{}, inputScope data.Scope) ([]interface{}, error) {
+func (f *foreachExpr) handleAssign(sourceArray []interface{}, inputScope data.Scope) ([]interface{}, error) {
 	var targetValues []interface{}
 
 	switch f.assign.(type) {
@@ -388,7 +388,7 @@ func (f *foreach) handleAssign(sourceArray []interface{}, inputScope data.Scope)
 	return targetValues, nil
 }
 
-func (f *foreach) Filter(inputScope data.Scope) (bool, error) {
+func (f *foreachExpr) Filter(inputScope data.Scope) (bool, error) {
 	if f.filterExpr != nil {
 
 		v, err := f.filterExpr.Eval(inputScope)
@@ -400,7 +400,7 @@ func (f *foreach) Filter(inputScope data.Scope) (bool, error) {
 	return true, nil
 }
 
-func (f *foreach) HandleFields(inputScope data.Scope) (interface{}, error) {
+func (f *foreachExpr) HandleFields(inputScope data.Scope) (interface{}, error) {
 	vals := make(map[string]interface{})
 	var err error
 	for k, v := range f.fields {
