@@ -3,7 +3,6 @@ package mapper
 import (
 	"encoding/json"
 	"github.com/project-flogo/core/data"
-	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/property"
 	"github.com/project-flogo/core/data/resolve"
 	"testing"
@@ -512,7 +511,7 @@ func TestArrayMappingWithStruct(t *testing.T) {
 }`
 
 	array := []struct {
-		Feild1 string `json:"feild1, ,omitempty"`
+		Feild1 string `json:"feild1,omitempty"`
 	}{
 		{
 			Feild1: "field1value",
@@ -1184,28 +1183,63 @@ func TestArrayMappingWithFilterAndUpdate(t *testing.T) {
 	assert.Equal(t, "Testing", arr.(map[string]interface{})["books"].([]interface{})[0].(map[string]interface{})["status"])
 }
 
-func TestGetSource(t *testing.T) {
-	var s = "@foreach($activity[blah].out2)"
-	foreach, _ := newForeach(s, nil)
-	assert.Equal(t, "$activity[blah].out2", foreach.sourceFrom)
-	assert.Equal(t, "", foreach.index)
+func BenchmarkObj(b *testing.B) {
 
-	s = "@foreach($activity[blah].out2, index)"
-	foreach, _ = newForeach(s, nil)
-	assert.Equal(t, "$activity[blah].out2", foreach.sourceFrom)
-	assert.Equal(t, "index", foreach.index)
+	mappingValue := `{
+   "mapping":{
+      "books":{
+         "@foreach($.books, index, $loop.title == \"IOS\")":{
+            "title":"=tstring.concat(\"title is \", $loop.title)",
+            "isbn":"=$loop.isbn",
+            "status":"=$loop.status",
+            "categories":"=$loop.categories"
+         }
+      }
+   }
+}`
 
-	s = "@foreach($activity[blah].out2, index, $.id == 1223)"
-	foreach, err := newForeach(s, expression.NewFactory(resolver))
-	assert.Nil(t, err)
-	assert.Equal(t, "$activity[blah].out2", foreach.sourceFrom)
-	assert.Equal(t, "index", foreach.index)
+	arrayData := `[
+  {
+    "title": "Android",
+    "isbn": "1933988673",
+    "pageCount": 416,
+    "publishedDate": { "$date": "2009-04-01T00:00:00.000-0700" },
+    "status": "PUBLISH",
+    "authors": ["W. Frank Ableson", "Charlie Collins", "Robi Sen"],
+    "categories": ["Open Source", "Mobile"]
+  },
+  {
+    "title": "IOS",
+    "isbn": "1935182722",
+    "pageCount": 592,
+    "publishedDate": { "$date": "2011-01-14T00:00:00.000-0800" },
+    "status": "PUBLISH",
+    "authors": ["W. Frank Ableson", "Robi Sen"],
+    "categories": ["Java"]
+  },
+    {
+    "title": "IOS2",
+    "isbn": "1935182722",
+    "pageCount": 592,
+    "publishedDate": { "$date": "2011-01-14T00:00:00.000-0800" },
+    "status": "PUBLISH",
+    "authors": ["W. Frank Ableson22", "Robi Sen"],
+    "categories": ["Java"]
+  }
+  ]`
 
-	s = "@foreach($activity[blah].out2,, $.id == 1223)"
-	foreach, err = newForeach(s, expression.NewFactory(resolver))
-	assert.Nil(t, err)
-	assert.Equal(t, "$activity[blah].out2", foreach.sourceFrom)
-	assert.Equal(t, "", foreach.index)
-	assert.NotNil(t, foreach.filterExpr)
+	arrayMapping := make(map[string]interface{})
+	_ = json.Unmarshal([]byte(mappingValue), &arrayMapping)
+	mappings := map[string]interface{}{"store": arrayMapping}
+	factory := NewFactory(resolver)
+	mapper, _ := factory.NewMapper(mappings)
 
+	a := make([]interface{}, 0)
+	json.Unmarshal([]byte(arrayData), &a)
+	attrs := map[string]interface{}{"books": a}
+	scope := data.NewSimpleScope(attrs, nil)
+	b.ReportAllocs()
+	for n := 0; n < b.N; n++ {
+		mapper.Apply(scope)
+	}
 }
