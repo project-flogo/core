@@ -8,7 +8,6 @@ import (
 	"github.com/project-flogo/core/data/path"
 	"github.com/project-flogo/core/support/log"
 	"reflect"
-	"runtime/debug"
 	"strings"
 )
 
@@ -233,12 +232,6 @@ func newForeachExpr(foreachpath string, exprF expression.Factory) (*foreachExpr,
 }
 
 func (obj *ObjectMapper) Eval(scope data.Scope) (value interface{}, err error) {
-	defer func() {
-		if r := recover(); r != nil {
-			objectMapperLog.Error("%+v", r)
-			objectMapperLog.Debugf("StackTrace: %s", debug.Stack())
-		}
-	}()
 	if obj.foreach != nil {
 		return obj.foreach.Eval(scope)
 	} else if obj.literalArray != nil {
