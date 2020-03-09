@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"runtime/debug"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/data"
@@ -13,6 +14,8 @@ import (
 	"github.com/project-flogo/core/data/property"
 	"github.com/project-flogo/core/support/log"
 )
+
+var handlerLog = log.ChildLogger(log.RootLogger(), "handler")
 
 type Handler interface {
 	Name() string
@@ -101,9 +104,16 @@ func (h *handlerImpl) GetSetting(setting string) (interface{}, bool) {
 	return val, exists
 }
 
-func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[string]interface{}, error) {
-
-	var err error
+func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (results map[string]interface{}, err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			handlerLog.Warnf("Unhandled Error while handling handler [%s]: %v", h.Name(), r)
+			if handlerLog.DebugEnabled() {
+				handlerLog.Debugf("StackTrace: %s", debug.Stack())
+			}
+			err = fmt.Errorf("Unhandled Error while handling handler [%s]: %v", h.Name(), r)
+		}
+	}()
 
 	var triggerValues map[string]interface{}
 
@@ -186,7 +196,7 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (map[
 		inputMap["_PROPERTIES"] = propSnapShot
 	}
 
-	results, err := h.runner.RunAction(newCtx, act.act, inputMap)
+	results, err = h.runner.RunAction(newCtx, act.act, inputMap)
 	if err != nil {
 		PostHandlerEvent(FAILED, h.Name(), h.config.parent.Id, nil)
 		return nil, err
