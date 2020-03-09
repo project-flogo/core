@@ -99,11 +99,11 @@ type foreachExpr struct {
 	filterExpr expression.Expr
 	// fields
 	fields map[string]expression.Expr
-	//Use to assin
+	//Use to assign value
 	assign expression.Expr
 }
 
-// assignAllExpr uses to indicate it is assign all expression.
+// assignAllExpr uses to indicate it is assign all.
 type assignAllExpr struct {
 }
 
