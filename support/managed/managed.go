@@ -17,38 +17,32 @@ type Managed interface {
 }
 
 // start starts a "Managed" object
-func start(managed Managed) error {
+func start(managed Managed) (err error) {
 
-	defer func() error {
+	defer func() {
 		if r := recover(); r != nil {
-			err, ok := r.(error)
-			if !ok {
+			if _, ok := r.(error); !ok {
 				err = fmt.Errorf("%v", r)
+			} else {
+				err = r.(error)
 			}
-
-			return err
 		}
-
-		return nil
 	}()
 
 	return managed.Start()
 }
 
 // stop stops a "Managed" object
-func stop(managed Managed) error {
+func stop(managed Managed) (err error) {
 
-	defer func() error {
+	defer func() {
 		if r := recover(); r != nil {
-			err, ok := r.(error)
-			if !ok {
+			if _, ok := r.(error); !ok {
 				err = fmt.Errorf("%v", r)
+			} else {
+				err = r.(error)
 			}
-
-			return err
 		}
-
-		return nil
 	}()
 
 	return managed.Stop()
