@@ -228,6 +228,7 @@ func (e *engineImpl) Stop() error {
 	}
 
 	logger.Info("Stopping Application...")
+	e.flogoApp.PostAppEvent(app.STOPPING)
 	_ = e.flogoApp.Stop()
 	logger.Info("Application Stopped")
 	e.flogoApp.PostAppEvent(app.STOPPED)
