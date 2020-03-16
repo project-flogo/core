@@ -15,8 +15,10 @@ func RegisterTracer(t Tracer) error {
 		tracer = t
 	} else {
 		log.RootLogger().Warnf("Tracer: %s already registered", tracer.Name())
+		return errors.New("Tracer is already registered")
 	}
-	return errors.New("Tracer is already registered")
+
+	return nil
 }
 
 func Enabled() bool {
