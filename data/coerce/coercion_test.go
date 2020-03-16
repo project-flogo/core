@@ -101,5 +101,5 @@ func TestCoerceArray(t *testing.T) {
 
 	var valInt interface{} = 2
 	cval, _ := ToArray(valInt)
-	assert.Equal(t, reflect.Slice, reflect.TypeOf(cval))
+	assert.Equal(t, reflect.Slice, reflect.ValueOf(cval).Kind())
 }
