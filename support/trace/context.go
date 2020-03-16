@@ -6,14 +6,6 @@ type key struct{}
 
 var id = key{}
 
-func AppendTracingContext(goCtx context.Context, tracingContext TracingContext) context.Context {
-	return context.WithValue(goCtx, id, tracingContext)
-}
-
-func ExtractTracingContext(goCtx context.Context) TracingContext {
-	tc, _ := goCtx.Value(id).(TracingContext)
-	return tc
-}
 
 type TracingContext interface {
 	// TraceObject() returns underlying tracing implementation
@@ -26,9 +18,16 @@ type TracingContext interface {
 	LogKV(kvs map[string]interface{}) bool
 }
 
-
-
 type Config struct {
 	Operation string
 	Tags      map[string]interface{}
+}
+
+func AppendTracingContext(goCtx context.Context, tracingContext TracingContext) context.Context {
+	return context.WithValue(goCtx, id, tracingContext)
+}
+
+func ExtractTracingContext(goCtx context.Context) TracingContext {
+	tc, _ := goCtx.Value(id).(TracingContext)
+	return tc
 }
