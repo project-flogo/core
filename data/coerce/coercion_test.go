@@ -1,6 +1,7 @@
 package coerce
 
 import (
+	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -94,4 +95,11 @@ func TestCoerceToObject(t *testing.T) {
 	obj, err := ToObject(s)
 	assert.Nil(t, err)
 	assert.Equal(t, "flogo", obj["Name"])
+}
+
+func TestCoerceArray(t *testing.T) {
+
+	var valInt interface{} = 2
+	cval, _ := ToArray(valInt)
+	assert.Equal(t, reflect.Slice, reflect.TypeOf(cval))
 }
