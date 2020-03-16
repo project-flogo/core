@@ -38,5 +38,5 @@ func TestDeserialize(t *testing.T) {
 	err := json.Unmarshal([]byte(resJSON), defRep)
 	assert.Nil(t, err)
 
-	fmt.Printf("Resources: %v", defRep)
+	fmt.Printf("Resources: %v \n", defRep)
 }

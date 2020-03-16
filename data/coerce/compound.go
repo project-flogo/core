@@ -166,6 +166,7 @@ func ToArray(val interface{}) ([]interface{}, error) {
 			}
 			return a, nil
 		}
+
 		return nil, fmt.Errorf("unable to coerce %#v to []interface{}", val)
 	}
 }

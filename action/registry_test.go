@@ -2,11 +2,11 @@ package action
 
 import (
 	"context"
+	"errors"
 	"testing"
 
-	"github.com/project-flogo/core/data/metadata"
-
 	"github.com/project-flogo/core/data"
+	"github.com/project-flogo/core/data/metadata"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -114,4 +114,26 @@ func TestGetFactoriesOk(t *testing.T) {
 	// Get factory
 	fs := Factories()
 	assert.Equal(t, 1, len(fs))
+}
+
+func TestLegacyRegister(t *testing.T) {
+	inputs := []struct {
+		ref    string
+		f      Factory
+		result error
+	}{
+		{"", nil, errors.New("'action ref' must be specified when registering")},
+		{"sample", nil, errors.New("cannot register action with 'nil' action factory")},
+		{"sample", &MockFactory{}, nil},
+		{"sample", &MockFactory{}, errors.New("action already registered: sample")},
+	}
+
+	for _, in := range inputs {
+		assert.Equal(t, in.result, LegacyRegister(in.ref, in.f))
+	}
+}
+
+func TestGetFactory(t *testing.T) {
+	assert.NotNil(t, GetFactory("sample"))
+	assert.Nil(t, GetFactory("github.com/TIBCOSoftware/flogo-contrib/action/flow"))
 }

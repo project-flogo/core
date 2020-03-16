@@ -17,6 +17,7 @@ func init() {
 type Trigger struct {
 	settings *Settings
 	id       string
+	dEvents  []dummyOnEvent
 }
 
 type Factory struct {
@@ -61,7 +62,7 @@ func (t *Trigger) Initialize(ctx trigger.InitContext) error {
 		aSetting := s.ASetting
 		logger.Debug("Handler setting 'aSetting' = %s", aSetting)
 
-		registerDummyEventHandler(aSetting, newActionHandler(handler))
+		t.dEvents = append(t.dEvents, registerDummyEventHandler(aSetting, newActionHandler(handler)))
 	}
 
 	return nil
@@ -70,6 +71,9 @@ func (t *Trigger) Initialize(ctx trigger.InitContext) error {
 // Start implements util.Managed.Start
 func (t *Trigger) Start() error {
 	//start servers/services if necessary
+	for _, val := range t.dEvents {
+		go val("data")
+	}
 	return nil
 }
 
@@ -83,8 +87,9 @@ func (t *Trigger) Stop() error {
 // with the appropriate event handling mechanism for the trigger.  Some form of a discriminator
 // should be used for dispatching to different handlers.  For example a REST based trigger might
 // dispatch based on the method and path.
-func registerDummyEventHandler(discriminator string, onEvent dummyOnEvent) {
+func registerDummyEventHandler(discriminator string, onEvent dummyOnEvent) dummyOnEvent {
 	//ignore
+	return onEvent
 }
 
 // dummyOnEvent is a dummy event handler for our dummy event source
