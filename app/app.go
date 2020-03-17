@@ -34,6 +34,7 @@ const (
 	FAILED   = "Failed"
 	STARTED  = "Started"
 	STARTING = "Starting"
+	STOPPING = "Stopping"
 	STOPPED  = "Stopped"
 )
 

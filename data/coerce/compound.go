@@ -166,7 +166,12 @@ func ToArray(val interface{}) ([]interface{}, error) {
 			}
 			return a, nil
 		}
+		if s.IsValid() {
+			a := make([]interface{}, 1)
+			a[0] = val
 
+			return a, nil
+		}
 		return nil, fmt.Errorf("unable to coerce %#v to []interface{}", val)
 	}
 }
