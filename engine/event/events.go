@@ -5,7 +5,7 @@ type Listener interface {
 	HandleEvent(*Context) error
 }
 
-//  Context is a wrapper over specific event
+// Context is a wrapper over specific event
 type Context struct {
 	// Type of event
 	eventType string
