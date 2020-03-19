@@ -116,7 +116,6 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (resu
 	}()
 
 	var triggerValues map[string]interface{}
-
 	PostHandlerEvent(STARTED, h.Name(), h.config.parent.Id, nil)
 
 	if triggerData == nil {
