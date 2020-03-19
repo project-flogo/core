@@ -11,6 +11,7 @@ import (
 )
 
 // HandlePanic helper method to handle panics
+//todo should we remove this
 func HandlePanic(name string, err *error) {
 	if r := recover(); r != nil {
 

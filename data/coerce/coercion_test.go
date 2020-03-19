@@ -143,18 +143,6 @@ func TestCoerceToObject(t *testing.T) {
 	assert.Equal(t, "flogo", obj["Name"])
 }
 
-func TestArray(t *testing.T) {
-	arr := []string{"a", "b", "c"}
-	rArr, err := ToArray(arr)
-	assert.Nil(t, err)
-	assert.Equal(t, 3, len(rArr))
-
-	str := "a"
-	rArr, err = ToArray(str)
-	assert.Nil(t, err)
-	assert.Equal(t, 1, len(rArr))
-
-}
 
 func TestCoerceArray(t *testing.T) {
 
