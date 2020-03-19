@@ -2,10 +2,11 @@ package function
 
 import (
 	"fmt"
-	"github.com/project-flogo/core/support/log"
 	"path"
 	"reflect"
 	"strings"
+
+	"github.com/project-flogo/core/support/log"
 )
 
 var (
@@ -20,10 +21,6 @@ func Register(function Function) error {
 		return fmt.Errorf("cannot register 'nil' function")
 	}
 
-	if _, dup := functions[function.Name()]; dup {
-		return fmt.Errorf("function '%s' already registered", function.Name())
-	}
-
 	goPkg, err := getGoPackage(function)
 	if err != nil {
 		return err
@@ -31,13 +28,17 @@ func Register(function Function) error {
 
 	alias := path.Base(goPkg)
 
+	if _, dup := functions[alias+"."+function.Name()]; dup {
+		return fmt.Errorf("function '%s' already registered", function.Name())
+	}
+
 	if _, exists := packages[goPkg]; !exists {
 		log.RootLogger().Debugf("Registering function package: %s", goPkg)
 	}
 
 	packages[goPkg] = alias
 
-	log.RootLogger().Tracef("Registering function: %s:%s", goPkg, function.Name())
+	log.RootLogger().Debugf("Registering function: %s:%s", goPkg, function.Name())
 
 	functionsTmp[goPkg+":"+function.Name()] = function
 
@@ -83,7 +84,7 @@ func ResolveAliases() {
 		alias := packages[pkg]
 		id := alias + "." + name
 		functions[id] = f
-		log.RootLogger().Tracef("Resolved function '%s' to '%s", key, id)
+		log.RootLogger().Debugf("Resolved function '%s' to '%s", key, id)
 	}
 
 	//remove temp function holder

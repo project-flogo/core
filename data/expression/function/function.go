@@ -2,6 +2,7 @@ package function
 
 import (
 	"fmt"
+
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/coerce"
 )

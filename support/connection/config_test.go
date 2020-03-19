@@ -1,16 +1,20 @@
 package connection
 
 import (
-	appresolve "github.com/project-flogo/core/app/resolve"
-	"github.com/project-flogo/core/data/resolve"
 	"os"
 	"reflect"
 	"testing"
+
+	appresolve "github.com/project-flogo/core/app/resolve"
+	"github.com/project-flogo/core/data/resolve"
 )
 
 func TestResolveConfig(t *testing.T) {
 
 	os.Setenv("TCVAL", "foo")
+	defer func() {
+		os.Unsetenv("TCVAL")
+	}()
 	cfg1 := &Config{Ref: "testRef1", Settings: map[string]interface{}{"setting1": "=$env[TCVAL]"}}
 	cfg2 := &Config{Ref: "#connRef", Settings: map[string]interface{}{"setting1": "foo"}}
 
@@ -26,11 +30,11 @@ func TestResolveConfig(t *testing.T) {
 		name     string
 		args     args
 		wantErr  bool
-		wantRef string
+		wantRef  string
 		wantSVal string
 	}{
-		{"resolve-setting", args{cfg1}, false, "","foo" },
-		{"resolve-ref", args{cfg2}, false,"long/connRef", ""},
+		{"resolve-setting", args{cfg1}, false, "", "foo"},
+		{"resolve-ref", args{cfg2}, false, "long/connRef", ""},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
