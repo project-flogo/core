@@ -35,6 +35,7 @@ type handlerImpl struct {
 	runner action.Runner
 	config *HandlerConfig
 	acts   []actImpl
+	eventData map[string]string
 }
 
 func (h *handlerImpl) Name() string {
@@ -47,6 +48,10 @@ func (h *handlerImpl) Schemas() *SchemaConfig {
 
 func (h *handlerImpl) Settings() map[string]interface{} {
 	return h.config.Settings
+}
+
+func (h *handlerImpl) SetDefaultEventData(data map[string]string) {
+	h.eventData = data
 }
 
 func NewHandler(config *HandlerConfig, acts []action.Action, mf mapper.Factory, ef expression.Factory, runner action.Runner) (Handler, error) {
@@ -115,8 +120,21 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (resu
 		}
 	}()
 
+	eventData := h.eventData
+
+	// check if any event data was attached to the context
+	if ctxEventData, _ := ExtractEventDataFromContext(ctx); ctxEventData != nil {
+		//use this event data values and add missing default event values
+		for key, value := range eventData {
+			if _, exists := ctxEventData[key]; !exists {
+				ctxEventData[key] = value
+			}
+		}
+		eventData = ctxEventData
+	}
+
 	var triggerValues map[string]interface{}
-	PostHandlerEvent(STARTED, h.Name(), h.config.parent.Id, nil)
+	PostHandlerEvent(STARTED, h.Name(), h.config.parent.Id, eventData)
 
 	if triggerData == nil {
 		triggerValues = make(map[string]interface{})
@@ -197,11 +215,11 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (resu
 
 	results, err = h.runner.RunAction(newCtx, act.act, inputMap)
 	if err != nil {
-		PostHandlerEvent(FAILED, h.Name(), h.config.parent.Id, nil)
+		PostHandlerEvent(FAILED, h.Name(), h.config.parent.Id, eventData)
 		return nil, err
 	}
 
-	PostHandlerEvent(COMPLETED, h.Name(), h.config.parent.Id, nil)
+	PostHandlerEvent(COMPLETED, h.Name(), h.config.parent.Id, eventData)
 
 	if act.actionOutputMapper != nil {
 		outScope := data.NewSimpleScope(results, nil)

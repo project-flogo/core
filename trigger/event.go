@@ -1,6 +1,9 @@
 package trigger
 
-import "github.com/project-flogo/core/engine/event"
+import (
+	"context"
+	"github.com/project-flogo/core/engine/event"
+)
 
 type Status string
 
@@ -52,7 +55,7 @@ type handlerEvent struct {
 	triggerName string
 	name        string
 	status      Status
-	tags        map[string]string
+	data        map[string]string
 }
 
 func (he handlerEvent) TriggerName() string {
@@ -68,7 +71,7 @@ func (he handlerEvent) Status() Status {
 }
 
 func (he handlerEvent) Tags() map[string]string {
-	return he.tags
+	return he.data
 }
 
 func (s Status) String() string {
@@ -83,9 +86,35 @@ func PostTriggerEvent(tStatus Status, name string) {
 }
 
 // Publish handler event
-func PostHandlerEvent(hStatus Status, hName, tName string, hTags map[string]string) {
+func PostHandlerEvent(hStatus Status, hName, tName string, data map[string]string) {
 	if event.HasListener(TriggerEventType) {
-		te := &handlerEvent{name: hName, triggerName: tName, status: hStatus, tags: hTags}
+		te := &handlerEvent{name: hName, triggerName: tName, status: hStatus, data: data}
 		event.Post(TriggerEventType, te)
 	}
+}
+
+type HandlerEventConfig interface {
+	SetDefaultEventData(data map[string]string)
+}
+
+type ctxEDKeyType int
+var ctxEDKey ctxEDKeyType
+
+// NewContextWithEventData add the event data to a new child context
+func NewContextWithEventData(parentCtx context.Context, data map[string]string) context.Context {
+	if data != nil {
+		return context.WithValue(parentCtx, ctxEDKey, data)
+	}
+
+	if parentCtx == nil {
+		return context.Background()
+	}
+
+	return parentCtx
+}
+
+// ExtractEventDataFromContext returns the event data stored in the context, if any.
+func ExtractEventDataFromContext(ctx context.Context) (map[string]string, bool) {
+	u, ok := ctx.Value(ctxEDKey).(map[string]string)
+	return u, ok
 }
