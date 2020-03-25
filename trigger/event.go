@@ -93,14 +93,18 @@ func PostHandlerEvent(hStatus Status, hName, tName string, data map[string]strin
 	}
 }
 
+// HandlerEventConfig is an interface that can be used to set the default event data that is
+// used in handler events
 type HandlerEventConfig interface {
+	// SetDefaultEventData sets the default event data to use for a handler
 	SetDefaultEventData(data map[string]string)
 }
 
 type ctxEDKeyType int
 var ctxEDKey ctxEDKeyType
 
-// NewContextWithEventData add the event data to a new child context
+// NewContextWithEventData add event data to a new child context.  This event data will be
+// associated handler events.
 func NewContextWithEventData(parentCtx context.Context, data map[string]string) context.Context {
 	if data != nil {
 		return context.WithValue(parentCtx, ctxEDKey, data)
