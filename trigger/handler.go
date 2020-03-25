@@ -32,9 +32,9 @@ type actImpl struct {
 }
 
 type handlerImpl struct {
-	runner action.Runner
-	config *HandlerConfig
-	acts   []actImpl
+	runner    action.Runner
+	config    *HandlerConfig
+	acts      []actImpl
 	eventData map[string]string
 }
 

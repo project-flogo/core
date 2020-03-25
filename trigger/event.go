@@ -2,6 +2,7 @@ package trigger
 
 import (
 	"context"
+
 	"github.com/project-flogo/core/engine/event"
 )
 
@@ -101,6 +102,7 @@ type HandlerEventConfig interface {
 }
 
 type ctxEDKeyType int
+
 var ctxEDKey ctxEDKeyType
 
 // NewContextWithEventData add event data to a new child context.  This event data will be
