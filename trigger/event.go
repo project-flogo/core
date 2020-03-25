@@ -105,7 +105,7 @@ var ctxEDKey ctxEDKeyType
 
 // NewContextWithEventData add event data to a new child context.  This event data will be
 // associated handler events.
-func NewContextWithEventData(parentCtx context.Context, data map[string]string) context.Context {
+func AppendEventDataToContext(parentCtx context.Context, data map[string]string) context.Context {
 	if data != nil {
 		return context.WithValue(parentCtx, ctxEDKey, data)
 	}
