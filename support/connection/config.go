@@ -40,6 +40,25 @@ func ToConfig(config map[string]interface{}) (*Config, error) {
 						cfg.Settings[name] = value
 					}
 					return cfg, nil
+				} else if settings, ok := v.([]interface{}); ok {
+					//For backward compatible
+					for _, v := range settings {
+						val, ok := v.(map[string]interface{})
+						if ok {
+							name, _ := val["name"].(string)
+							value := val["value"]
+							strVal, ok := value.(string)
+							if ok && len(strVal) > 0 && strVal[0] == '=' {
+								var err error
+								value, err = resolve.Resolve(strVal[1:], nil)
+								if err != nil {
+									return nil, err
+								}
+							}
+							cfg.Settings[name] = value
+						}
+
+					}
 				}
 			}
 		}
