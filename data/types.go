@@ -198,7 +198,7 @@ func ToTypeFromGoRep(strType string) Type {
 		dt = TypeObject
 	case "[]byte":
 		dt = TypeBytes
-	case "time.timer":
+	case "time.Time":
 		dt = TypeDateTime
 	case "map[string]string":
 		dt = TypeParams
