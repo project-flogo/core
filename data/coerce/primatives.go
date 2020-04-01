@@ -3,7 +3,9 @@ package coerce
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/araddon/dateparse"
 	"strconv"
+	"time"
 )
 
 // ToString coerce a value to a string
@@ -297,5 +299,26 @@ func ToBytes(val interface{}) ([]byte, error) {
 			return nil, fmt.Errorf("unable to coerce %#v to bytes", t)
 		}
 		return []byte(s), nil
+	}
+}
+
+func ToDateTime(val interface{}) (time.Time, error) {
+	switch t := val.(type) {
+	case time.Time:
+		return t, nil
+	case int64:
+		return time.Unix(t, 0), nil
+	case float64:
+		return time.Unix(int64(t), 0), nil
+	default:
+		dateVal, err := ToString(val)
+		if err != nil {
+			return time.Time{}, nil
+		}
+		tm, err := dateparse.ParseAny(dateVal)
+		if err != nil {
+			return tm, fmt.Errorf("parse [%s] to time error: %s", dateVal, err.Error())
+		}
+		return tm, nil
 	}
 }

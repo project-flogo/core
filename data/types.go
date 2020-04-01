@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // Type denotes a data type
@@ -19,15 +20,16 @@ const (
 	TypeAny // interface{}
 
 	// simple types
-	TypeString  // string
-	TypeInt     // int
-	TypeInt32   // int32
-	TypeInt64   // int64
-	TypeFloat32 // float32
-	TypeFloat64 // float64
-	TypeBool    // bool
-	TypeObject  // map[string]interface{}
-	TypeBytes   // []byte
+	TypeString   // string
+	TypeInt      // int
+	TypeInt32    // int32
+	TypeInt64    // int64
+	TypeFloat32  // float32
+	TypeFloat64  // float64
+	TypeBool     // bool
+	TypeObject   // map[string]interface{}
+	TypeBytes    // []byte
+	TypeDateTime // time
 
 	// compound types
 	TypeParams // map[string]string
@@ -50,6 +52,7 @@ var types = [...]string{
 	"bool",
 	"object",
 	"bytes",
+	"datetime",
 	"params",
 	"array",
 	"map",
@@ -66,20 +69,21 @@ func (t Type) IsSimple() bool {
 }
 
 var names = map[Type]string{
-	TypeUnknown: "TypeUnknown",
-	TypeAny:     "TypeAny",
-	TypeString:  "TypeString",
-	TypeInt:     "TypeInt",
-	TypeInt32:   "TypeInt32",
-	TypeInt64:   "TypeInt64",
-	TypeFloat32: "TypeFloat32",
-	TypeFloat64: "TypeFloat64",
-	TypeBool:    "TypeBool",
-	TypeObject:  "TypeObject",
-	TypeBytes:   "TypeBytes",
-	TypeParams:  "TypeParams",
-	TypeArray:   "TypeArray",
-	TypeMap:     "TypeMap",
+	TypeUnknown:    "TypeUnknown",
+	TypeAny:        "TypeAny",
+	TypeString:     "TypeString",
+	TypeInt:        "TypeInt",
+	TypeInt32:      "TypeInt32",
+	TypeInt64:      "TypeInt64",
+	TypeFloat32:    "TypeFloat32",
+	TypeFloat64:    "TypeFloat64",
+	TypeBool:       "TypeBool",
+	TypeObject:     "TypeObject",
+	TypeBytes:      "TypeBytes",
+	TypeDateTime:   "TypeDateTime",
+	TypeParams:     "TypeParams",
+	TypeArray:      "TypeArray",
+	TypeMap:        "TypeMap",
 	TypeConnection: "TypeConnection",
 }
 
@@ -112,6 +116,8 @@ func ToTypeEnum(typeStr string) (Type, error) {
 		return TypeObject, nil
 	case "bytes":
 		return TypeBytes, nil
+	case "datetime":
+		return TypeDateTime, nil
 	case "params":
 		return TypeParams, nil
 	case "array":
@@ -160,6 +166,8 @@ func GetType(val interface{}) (Type, error) {
 		return TypeParams, nil
 	case []byte:
 		return TypeBytes, nil
+	case time.Time:
+		return TypeDateTime, nil
 	default:
 		return TypeUnknown, fmt.Errorf("unable to determine type of %#v", t)
 	}
@@ -190,6 +198,8 @@ func ToTypeFromGoRep(strType string) Type {
 		dt = TypeObject
 	case "[]byte":
 		dt = TypeBytes
+	case "time.timer":
+		dt = TypeDateTime
 	case "map[string]string":
 		dt = TypeParams
 	case "connection.Manager":
