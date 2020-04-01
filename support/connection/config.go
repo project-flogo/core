@@ -59,6 +59,7 @@ func ToConfig(config map[string]interface{}) (*Config, error) {
 						}
 
 					}
+					return cfg, nil
 				}
 			}
 		}
