@@ -60,6 +60,14 @@ connection is defined once in the flogo.json and can shared between multiple res
 
 ```json
 "activity" : {
+  "id": "a1",
+  "ref": "#sql",
+  "settings": {
+    "connection": "conn://myConn"
+  }
+},
+"activity" : {
+  "id": "a2",
   "ref": "#sql",
   "settings": {
     "connection": "conn://myConn"
