@@ -185,21 +185,34 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 			if hConfig.Schemas != nil {
 				if out := hConfig.Schemas.Output; out != nil {
 					for name, def := range out {
-						s, err := schema.FindOrCreate(def)
-						if err != nil {
-							return  nil, err
+						ref, ok := def.(string)
+						if ok {
+							s, err := schema.FindOrCreate(ref)
+							if err != nil {
+								return nil, err
+							}
+							schemaObj := make(map[string]interface{})
+							schemaObj["type"] = s.Type()
+							schemaObj["value"] = s.Value()
+							hConfig.Schemas.Output[name] = schemaObj
 						}
-						hConfig.Schemas.Output[name] = s
 					}
 				}
 
 				if reply := hConfig.Schemas.Reply; reply != nil {
 					for name, def := range reply {
-						s, err := schema.FindOrCreate(def)
-						if err != nil {
-							return  nil, err
+						ref, ok := def.(string)
+						if ok {
+							s, err := schema.FindOrCreate(ref)
+							if err != nil {
+								return nil, err
+							}
+
+							schemaObj := make(map[string]interface{})
+							schemaObj["type"] = s.Type()
+							schemaObj["value"] = s.Value()
+							hConfig.Schemas.Reply[name] = schemaObj
 						}
-						hConfig.Schemas.Reply[name] = s
 					}
 				}
 			}
