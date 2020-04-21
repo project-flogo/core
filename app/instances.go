@@ -191,10 +191,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 							if err != nil {
 								return nil, err
 							}
-							schemaObj := make(map[string]interface{})
-							schemaObj["type"] = s.Type()
-							schemaObj["value"] = s.Value()
-							hConfig.Schemas.Output[name] = schemaObj
+							hConfig.Schemas.Output[name] = s
 						}
 					}
 				}
@@ -207,11 +204,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 							if err != nil {
 								return nil, err
 							}
-
-							schemaObj := make(map[string]interface{})
-							schemaObj["type"] = s.Type()
-							schemaObj["value"] = s.Value()
-							hConfig.Schemas.Reply[name] = schemaObj
+							hConfig.Schemas.Reply[name] = s
 						}
 					}
 				}
