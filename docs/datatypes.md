@@ -35,9 +35,12 @@ connection is defined once in the flogo.json and can shared between multiple res
   "ref": "#sql",
   "settings": {
     "connection": {
-      "dbType": "mysql",
-      "driver": "mysql",
-      "dataSource": "username:password@tcp(host:port)/dbName",
+      "ref" : "github.com/project-flogo/contrib/connection/sql",
+      "settings" : {
+        "dbType": "mysql",
+        "driver": "mysql",
+        "dataSource": "username:password@tcp(host:port)/dbName",
+      }
     }
   }
 }
