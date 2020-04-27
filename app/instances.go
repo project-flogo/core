@@ -6,6 +6,7 @@ import (
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/mapper"
+	"github.com/project-flogo/core/data/schema"
 	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/support/managed"
@@ -176,6 +177,35 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 						//}
 
 						acts = append(acts, act)
+					}
+				}
+			}
+
+			// Resolve schema references
+			if hConfig.Schemas != nil {
+				if out := hConfig.Schemas.Output; out != nil {
+					for name, def := range out {
+						ref, ok := def.(string)
+						if ok {
+							s, err := schema.FindOrCreate(ref)
+							if err != nil {
+								return nil, err
+							}
+							hConfig.Schemas.Output[name] = s
+						}
+					}
+				}
+
+				if reply := hConfig.Schemas.Reply; reply != nil {
+					for name, def := range reply {
+						ref, ok := def.(string)
+						if ok {
+							s, err := schema.FindOrCreate(ref)
+							if err != nil {
+								return nil, err
+							}
+							hConfig.Schemas.Reply[name] = s
+						}
 					}
 				}
 			}
