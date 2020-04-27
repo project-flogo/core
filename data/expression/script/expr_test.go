@@ -637,6 +637,22 @@ func TestBoolExprOr(t *testing.T) {
 	v, err = expr.Eval(nil)
 	assert.Nil(t, err)
 	assert.Equal(t, false, v)
+
+
+	scope := newScope(map[string]interface{}{"foo": "foo", "key": 2})
+	expr, err = factory.NewExpr(` true || $.NOTEXIST > 200`)
+	assert.Nil(t, err)
+	v, err = expr.Eval(scope)
+	assert.Nil(t, err)
+	assert.Equal(t, true, v)
+
+	expr, err = factory.NewExpr(` false || $.foo == "foo"`)
+	assert.Nil(t, err)
+	v, err = expr.Eval(scope)
+	assert.Nil(t, err)
+	assert.Equal(t, true, v)
+
+
 }
 
 func TestBoolExprAnd(t *testing.T) {
@@ -663,6 +679,24 @@ func TestBoolExprAnd(t *testing.T) {
 	v, err = expr.Eval(nil)
 	assert.Nil(t, err)
 	assert.Equal(t, false, v)
+
+	scope := newScope(map[string]interface{}{"foo": "foo", "key": 2})
+	expr, err = factory.NewExpr(` false && $.NOTEXIST > 200`)
+	assert.Nil(t, err)
+	v, err = expr.Eval(scope)
+	assert.Nil(t, err)
+	assert.Equal(t, false, v)
+
+	expr, err = factory.NewExpr(` true && $.NOTEXIST > 200`)
+	assert.Nil(t, err)
+	v, err = expr.Eval(scope)
+	assert.NotNil(t, err)
+
+	expr, err = factory.NewExpr(` $.key == 2 && $.foo == "foo"`)
+	assert.Nil(t, err)
+	v, err = expr.Eval(scope)
+	assert.Nil(t, err)
+	assert.Equal(t, true, v)
 }
 
 func TestArithPrecedence(t *testing.T) {
