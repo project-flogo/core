@@ -32,6 +32,12 @@ func ToString(val interface{}) (string, error) {
 		return "", nil
 	case []byte:
 		return string(t), nil
+	case time.Time:
+		b, err := t.MarshalText()
+		if err != nil {
+			return "", err
+		}
+		return string(b), nil
 	default:
 		b, err := json.Marshal(t)
 		if err != nil {
