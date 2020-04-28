@@ -38,15 +38,25 @@ func (e *boolOrExpr) Init(resolver resolve.CompositeResolver, root bool) error {
 }
 
 func (e *boolOrExpr) Eval(scope data.Scope) (interface{}, error) {
-	lv, rv, err := evalLR(e.left, e.right, scope)
+	lv , err := e.left.Eval(scope)
 	if err != nil {
 		return nil, err
 	}
-
 	lb, err := coerce.ToBool(lv)
 	if err != nil {
 		return nil, err
 	}
+
+	// Return true if left side true
+	if lb {
+		return true, nil
+	}
+
+	rv, err := e.right.Eval(scope)
+	if err != nil {
+		return nil, err
+	}
+
 	rb, err := coerce.ToBool(rv)
 	if err != nil {
 		return nil, err
@@ -69,19 +79,28 @@ func (e *boolAndExpr) Init(resolver resolve.CompositeResolver, root bool) error 
 }
 
 func (e *boolAndExpr) Eval(scope data.Scope) (interface{}, error) {
-	lv, rv, err := evalLR(e.left, e.right, scope)
+	lv , err := e.left.Eval(scope)
 	if err != nil {
 		return nil, err
 	}
-
 	lb, err := coerce.ToBool(lv)
 	if err != nil {
 		return nil, err
 	}
-	rb, err := coerce.ToBool(rv)
+
+	// Return false if left side false
+	if !lb {
+		return false, nil
+	}
+
+	rv, err := e.right.Eval(scope)
 	if err != nil {
 		return nil, err
 	}
 
+	rb, err := coerce.ToBool(rv)
+	if err != nil {
+		return nil, err
+	}
 	return lb && rb, nil
 }
