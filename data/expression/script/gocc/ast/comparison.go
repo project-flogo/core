@@ -9,6 +9,7 @@ import (
 	"github.com/project-flogo/core/data/resolve"
 	"reflect"
 	"strings"
+	"time"
 )
 
 func NewCmpExpr(left, operand, right interface{}) (Expr, error) {
@@ -96,6 +97,17 @@ func (e *cmpEqExpr) Eval(scope data.Scope) (interface{}, error) {
 			rb, _ := coerce.ToBool(rv)
 			return le == rb, nil
 		}
+	case time.Time:
+		switch re := rv.(type) {
+		case time.Time:
+			return le.Equal(re), nil
+		default:
+			t, err := coerce.ToDateTime(rv)
+			if err != nil {
+				return false, nil
+			}
+			return le.Equal(t), nil
+		}
 	}
 
 	return false, nil
@@ -164,6 +176,17 @@ func (e *cmpNotEqExpr) Eval(scope data.Scope) (interface{}, error) {
 			rb, _ := coerce.ToBool(rv)
 			return le != rb, nil
 		}
+	case time.Time:
+		switch re := rv.(type) {
+		case time.Time:
+			return !le.Equal(re), nil
+		default:
+			t, err := coerce.ToDateTime(rv)
+			if err != nil {
+				return true, nil
+			}
+			return !le.Equal(t), nil
+		}
 	}
 
 	return true, nil
@@ -229,6 +252,16 @@ func (e *cmpGtExpr) Eval(scope data.Scope) (interface{}, error) {
 		}
 	case bool:
 		return false, nil
+	case time.Time:
+		switch re := rv.(type) {
+		case time.Time:
+			return le.After(re), nil
+		default:
+			t, err := coerce.ToDateTime(rv)
+			if err == nil {
+				return le.After(t), nil
+			}
+		}
 	}
 
 	return false, fmt.Errorf("cannot compare %s with %s", reflect.TypeOf(lv).String(), reflect.TypeOf(rv).String())
@@ -295,6 +328,16 @@ func (e *cmpGtEqExpr) Eval(scope data.Scope) (interface{}, error) {
 		if rt == reflect.Bool {
 			rb, _ := coerce.ToBool(rv)
 			return le == rb, nil
+		}
+	case time.Time:
+		switch re := rv.(type) {
+		case time.Time:
+			return le.After(re) || le.Equal(re), nil
+		default:
+			t, err := coerce.ToDateTime(rv)
+			if err == nil {
+				return le.After(t) || le.Equal(t), nil
+			}
 		}
 	}
 
@@ -363,6 +406,16 @@ func (e *cmpLtExpr) Eval(scope data.Scope) (interface{}, error) {
 		if rt == reflect.Bool {
 			return false, nil
 		}
+	case time.Time:
+		switch re := rv.(type) {
+		case time.Time:
+			return le.Before(re), nil
+		default:
+			t, err := coerce.ToDateTime(rv)
+			if err == nil {
+				return le.Before(t), nil
+			}
+		}
 	}
 
 	return false, fmt.Errorf("cannot compare %s with %s", reflect.TypeOf(lv).String(), reflect.TypeOf(rv).String())
@@ -429,6 +482,16 @@ func (e *cmpLtEqExpr) Eval(scope data.Scope) (interface{}, error) {
 		if rt == reflect.Bool {
 			rb, _ := coerce.ToBool(rv)
 			return le == rb, nil
+		}
+	case time.Time:
+		switch re := rv.(type) {
+		case time.Time:
+			return le.Before(re) || le.Equal(re), nil
+		default:
+			t, err := coerce.ToDateTime(rv)
+			if err == nil {
+				return le.Before(t) || le.Equal(t), nil
+			}
 		}
 	}
 

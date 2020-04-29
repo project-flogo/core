@@ -6,6 +6,7 @@ import (
 	"github.com/project-flogo/core/data/property"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/resolve"
@@ -973,6 +974,65 @@ func TestBuiltInFunction(t *testing.T) {
 		}
 	}
 }
+
+
+func TestDateTimeComparation(t *testing.T) {
+
+
+	now := time.Now()
+	scope := newScope(map[string]interface{}{"date1":now, "date2": now, "date3":"2020-03-19T15:02:03Z", "date4": "2050-03-19T15:02:03Z"})
+
+	tests := []struct {
+		Expr         string
+		ExpectResult interface{}
+	}{
+		{
+			Expr:         "$.date1 == $.date2",
+			ExpectResult: true,
+		},
+		{
+			Expr:         "$.date1 > $.date3",
+			ExpectResult: true,
+		},
+		{
+			Expr:         "$.date2 > $.date3",
+			ExpectResult: true,
+		},
+		{
+			Expr:         "$.date2 < $.date4",
+			ExpectResult: true,
+		},
+		{
+			Expr:         "$.date2 <= $.date4",
+			ExpectResult: true,
+		},
+		{
+			Expr:         "$.date4 >= $.date4",
+			ExpectResult: true,
+		},
+		{
+			Expr:         "$.date2 > $.date4",
+			ExpectResult: false,
+		},
+	}
+
+	for i, tt := range tests {
+
+		expr, err := factory.NewExpr(tt.Expr)
+		assert.Nil(t, err)
+		v, err := expr.Eval(scope)
+		assert.Nil(t, err)
+		if assert.NoError(t, err, "Unexpected error in case #%d.", i) {
+			assert.Equal(
+				t,
+				tt.ExpectResult,
+				v,
+				"Unexpected expression output: expected to %v.", tt.ExpectResult,
+			)
+		}
+	}
+}
+
 
 var result interface{}
 
