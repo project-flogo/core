@@ -22,38 +22,42 @@ func ToConnection(val interface{}) (connection.Manager, error) {
 
 			return cm, nil
 		} else {
-			cc := &connection.Config{}
-			if t != "" {
-				err := json.Unmarshal([]byte(t), cc)
-				if err != nil {
-					return nil, fmt.Errorf("'%s' is not a valid connection config", t)
+			if len(t) > 0 {
+				cc := &connection.Config{}
+				if t != "" {
+					err := json.Unmarshal([]byte(t), cc)
+					if err != nil {
+						return nil, fmt.Errorf("'%s' is not a valid connection config", t)
+					}
 				}
-			}
 
-			cm, err := connection.NewManager(cc)
-			if err != nil {
-				return nil, err
+				cm, err := connection.NewManager(cc)
+				if err != nil {
+					return nil, err
+				}
+				return cm, nil
 			}
-
-			return cm, nil
+			// just return nil back if empty connection value
+			return nil, nil
 		}
 	case connection.Manager:
 		return t, nil
 	case map[string]interface{}:
-		cfg, err := connection.ToConfig(t)
-		if err != nil {
-			return nil, err
+		if len(t) > 0 {
+			cfg, err := connection.ToConfig(t)
+			if err != nil {
+				return nil, err
+			}
+			cm, err := connection.NewManager(cfg)
+			if err != nil {
+				return nil, err
+			}
+			// just return nil back if empty connection value
+			return cm, nil
 		}
-
-		cm, err := connection.NewManager(cfg)
-		if err != nil {
-			return nil, err
-		}
-
-		return cm, nil
+		return nil, nil
 	default:
 		// try to create config from map[string]interface{}
 		return nil, fmt.Errorf("unable to create connection from '%#v'", val)
 	}
 }
-
