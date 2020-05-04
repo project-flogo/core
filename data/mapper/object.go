@@ -343,16 +343,20 @@ func (f *foreachExpr) handleAssign(sourceArray []interface{}, inputScope data.Sc
 	switch f.assign.(type) {
 	case *assignAllExpr:
 		for _, sourceValue := range sourceArray {
-			var err error
-			inputScope, err = newLoopScope(sourceValue, f.scopeName, inputScope)
-			if err != nil {
-				return nil, err
-			}
-			passFilter, err := f.Filter(inputScope)
-			if err != nil {
-				return nil, err
-			}
-			if passFilter {
+			if f.filterExpr != nil {
+				var err error
+				inputScope, err = newLoopScope(sourceValue, f.scopeName, inputScope)
+				if err != nil {
+					return nil, err
+				}
+				passFilter, err := f.Filter(inputScope)
+				if err != nil {
+					return nil, err
+				}
+				if passFilter {
+					targetValues = append(targetValues, sourceValue)
+				}
+			} else {
 				targetValues = append(targetValues, sourceValue)
 			}
 		}

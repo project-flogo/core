@@ -1183,6 +1183,49 @@ func TestArrayMappingWithFilterAndUpdate(t *testing.T) {
 	assert.Equal(t, "Testing", arr.(map[string]interface{})["books"].([]interface{})[0].(map[string]interface{})["status"])
 }
 
+func TestLiteralAssign(t *testing.T) {
+	mappingValue := `{
+   "mapping":{
+      "books":{
+		"authors":{
+			"@foreach($.books[0].authors, index)":{
+			"=":"$loop"
+  }	
+         }
+      }
+   }
+}`
+
+	arrayData := `[
+  {
+    "title": "Android",
+    "isbn": "1933988673",
+    "pageCount": 416,
+    "publishedDate": { "$date": "2009-04-01T00:00:00.000-0700" },
+    "status": "PUBLISH",
+    "authors": ["W. Frank Ableson", "Charlie Collins", "Robi Sen"],
+    "categories": ["Open Source", "Mobile"]
+  }
+  ]`
+
+	arrayMapping := make(map[string]interface{})
+	err := json.Unmarshal([]byte(mappingValue), &arrayMapping)
+	assert.Nil(t, err)
+	assert.False(t, IsLiteral(arrayMapping))
+	mappings := map[string]interface{}{"store": arrayMapping}
+	factory := NewFactory(resolver)
+	mapper, err := factory.NewMapper(mappings)
+	assert.Nil(t, err)
+
+	attrs := map[string]interface{}{"books": arrayData}
+	scope := data.NewSimpleScope(attrs, nil)
+	results, err := mapper.Apply(scope)
+	assert.Nil(t, err)
+
+	arr := results["store"]
+	assert.Equal(t, "W. Frank Ableson", arr.(map[string]interface{})["books"].(map[string]interface{})["authors"].([]interface{})[0])
+}
+
 func BenchmarkObj(b *testing.B) {
 
 	mappingValue := `{
