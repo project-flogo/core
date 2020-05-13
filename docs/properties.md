@@ -166,12 +166,12 @@ func init() {
 
 func (resolver *SamplePropertyResolver) Name() string {
    // Resolve property value
-  return some_value, true
+  return "some_value", true
 }
 
 func (resolver *SamplePropertyResolver) LookupValue(propertyName string) (interface{}, bool) {
    // Resolve property value
-  return some_value, true
+  return "some_value"", true
 }
 ```
 *Note: In order for your resolver to be loaded in the go code, you need to add an entry to your resolver in the imports section of the engine.json*
