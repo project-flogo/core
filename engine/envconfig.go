@@ -6,11 +6,10 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/project-flogo/core/app/propertyresolver"
 	"github.com/project-flogo/core/data/property"
 	"github.com/project-flogo/core/engine/runner"
 	"github.com/project-flogo/core/support/log"
-
-	_ "github.com/project-flogo/core/app/propertyresolver"
 )
 
 const (
@@ -34,9 +33,6 @@ const (
 
 	ValueRunnerTypePooled = "POOLED"
 	ValueRunnerTypeDirect = "DIRECT"
-
-	PropertyResolverEnv  = "env"
-	PropertyResolverJson = "json"
 )
 
 func IsSchemaSupportEnabled() bool {
@@ -151,7 +147,7 @@ func GetAppPropertyValueResolvers(logger log.Logger) string {
 		var resolvers, builtinResolvers []string
 
 		for resolver := range property.RegisteredResolvers {
-			if resolver != PropertyResolverEnv && resolver != PropertyResolverJson {
+			if resolver != propertyresolver.ResolverNameEnv && resolver != propertyresolver.ResolverNameJson {
 				resolvers = append(resolvers, resolver)
 			} else {
 				builtinResolvers = append(builtinResolvers, resolver)
@@ -165,7 +161,7 @@ func GetAppPropertyValueResolvers(logger log.Logger) string {
 		}
 
 		if len(builtinResolvers) == 2 { // force priority between the two builtin resolvers
-			builtinResolvers = []string{PropertyResolverEnv, PropertyResolverJson}
+			builtinResolvers = []string{propertyresolver.ResolverNameEnv, propertyresolver.ResolverNameJson}
 		}
 
 		resolvers = append(resolvers, builtinResolvers...)

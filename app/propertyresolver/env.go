@@ -6,11 +6,11 @@ import (
 	"strings"
 
 	"github.com/project-flogo/core/data/property"
-	"github.com/project-flogo/core/engine"
 	"github.com/project-flogo/core/support/log"
 )
 
 const EnvAppPropertyEnvConfigKey = "FLOGO_APP_PROPS_ENV"
+const ResolverNameEnv  = "env"
 
 type PropertyMappings struct {
 	Mappings map[string]string `json:"mappings"`
@@ -55,7 +55,7 @@ type EnvVariableValueResolver struct {
 }
 
 func (resolver *EnvVariableValueResolver) Name() string {
-	return engine.PropertyResolverEnv
+	return ResolverNameEnv
 }
 
 func (resolver *EnvVariableValueResolver) LookupValue(key string) (interface{}, bool) {
