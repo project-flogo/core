@@ -76,7 +76,7 @@ These properties can be accessed via `$property[PURCHASE.SERVICE.DB.URL]` or `$p
 
 In order to override properties at runtime, you have to enable external property resolvers.
 
-This can be done by setting the `FLOGO_APP_PROP_RESOLVERS` env variable.  Currently, there are two built-in external
+This can be done by setting the `FLOGO_APP_PROP_RESOLVERS` environment variable.  Currently, there are two built-in external
 property resolvers: json(JSON) and env(Environment Variable).
 
 
@@ -136,7 +136,7 @@ FLOGO_APP_PROP_RESOLVERS=env ./MyApp
 
 ### Custom External Resolver
 
-You can plug-in your property value resolver to resolve application property values from external configuration management services, such as, Consul, Spring Cloud Config etc. Just implement the following interface and register implementation with the runtime:
+You can plug-in your own property value resolver to resolve application property values from external configuration management services, such as, Consul, Spring Cloud Config etc. Just implement the following interface and register implementation with the runtime:
 
 ```go
 // Resolver used to resolve property value from external configuration like env, file etc
@@ -165,8 +165,7 @@ func init() {
 }
 
 func (resolver *SamplePropertyResolver) Name() string {
-   // Resolve property value
-  return "some_value", true
+   return "sampleresolver"
 }
 
 func (resolver *SamplePropertyResolver) LookupValue(propertyName string) (interface{}, bool) {
