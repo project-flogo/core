@@ -17,6 +17,7 @@ var (
 
 // Resolver used to resolve property value from external configuration like env, file etc
 type ExternalResolver interface {
+	// Name of the resolver (e.g., consul)
 	Name() string
 	// Should return value and true if the given key exists in the external configuration otherwise should return nil and false.
 	LookupValue(key string) (interface{}, bool)

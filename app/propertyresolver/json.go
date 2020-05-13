@@ -2,12 +2,11 @@ package propertyresolver
 
 import (
 	"encoding/json"
-	"github.com/project-flogo/core/data/property"
-	"github.com/project-flogo/core/engine"
 	"io/ioutil"
 	"os"
 	"strings"
 
+	"github.com/project-flogo/core/data/property"
 	"github.com/project-flogo/core/support/log"
 )
 
@@ -18,6 +17,7 @@ var preload = make(map[string]interface{})
 // Comma separated list of json files overriding default application property values
 // e.g. FLOGO_APP_PROPS_JSON=app1.json,common.json
 const EnvAppPropertyFileConfigKey = "FLOGO_APP_PROPS_JSON"
+const ResolverNameJson = "json"
 
 func init() {
 
@@ -26,7 +26,7 @@ func init() {
 	filePaths := getExternalFiles()
 	if filePaths != "" {
 		// Register value resolver
-		_ = property.RegisterPropertyResolver(&JSONFileValueResolver{})
+		_ = property.RegisterExternalResolver(&JSONFileValueResolver{})
 
 		// preload props from files
 		files := strings.Split(filePaths, ",")
@@ -66,7 +66,7 @@ type JSONFileValueResolver struct {
 }
 
 func (resolver *JSONFileValueResolver) Name() string {
-	return engine.PropertyResolverJson
+	return ResolverNameJson
 }
 
 func (resolver *JSONFileValueResolver) LookupValue(toResolve string) (interface{}, bool) {
