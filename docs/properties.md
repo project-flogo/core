@@ -176,7 +176,7 @@ func (resolver *SamplePropertyResolver) LookupValue(propertyName string) (interf
 *Note: In order for your resolver to be loaded in the go code, you need to add an entry to your resolver in the imports section of the engine.json*
 
 
-Set the `FLOGO_APP_PROP_RESOLVERS` env var to `sampleresolver` while running application. For example:
+Set the `FLOGO_APP_PROP_RESOLVERS` environment variable to `sampleresolver` while running application. For example:
 
 ```terminal
 FLOGO_APP_PROPS_RESOLVERS=sampleresolver ./<app_binary>
