@@ -72,15 +72,33 @@ Even though the engine itself doesn't support property grouping, this can be acc
 
 These properties can be accessed via `$property[PURCHASE.SERVICE.DB.URL]` or `$property[INVENTORY.SERVICE.DB.URL]`
 
-### Overriding poperties at runtime
+### Overriding properties at runtime
+
+In order to override properties at runtime, you have to enable external property resolvers.
+
+This can be done by setting the `FLOGO_APP_PROP_RESOLVERS` env variable.  Currently, there are two built-in external
+property resolvers: json(JSON) and env(Environment Variable).
+
+
+```terminal
+FLOGO_APP_PROP_RESOLVERS=env,json ./<app_binary>
+```
 
 You can override app properties at runtime in two ways:
 
-#### Using JSON
+#### Resolver: json
 
-Define your new value for a given app prop in a json file as shown below:
+When using the `json` property resolver, you can provide a comma separated list of json files that
+will override the application's existing property values.
+```env
+FLOGO_APP_PROPS_JSON=app1.json,common.json
+```
 
-props.json:
+**Example**
+
+Let's say you want to override some of your properties.  You will need to define your new value for a given property in your json file.
+
+_props.json_
 
 ```json
 {
@@ -89,37 +107,46 @@ props.json:
 }
 ```
 
-Run the application with the environment variable `FLOGO_APP_PROPS_OVERRIDE` set to `props.json`. For example:
+Now run your application:
 
 ```terminal
-FLOGO_APP_PROPS_OVERRIDE=props.json ./MyApp
+
+export FLOGO_APP_PROPS_JSON=props.json 
+FLOGO_APP_PROP_RESOLVERS=json ./MyApp
 ```
-or
+
+#### Resolver: env
+
+In order to override properties using environment variables, you just need enable the `env` property resolver
 
 ```terminal
-export FLOGO_APP_PROPS_OVERRIDE=props.json 
-./MyApp
+FLOGO_APP_PROP_RESOLVERS=env ./<app_binary>
 ```
 
+**Example**
 
-#### Using Key/Value pair
-
-Run the application with the environment variable `FLOGO_APP_PROPS_OVERRIDE` set to the key/value pairs. For example:
+Let's say you want to override `myprop` property in your app.  You would do the following:
 
 ```terminal
-FLOGO_APP_PROPS_OVERRIDE="MyProp1=This is newvalue,MyProp2=30" ./MyApp
+
+export myprop=bar
+FLOGO_APP_PROP_RESOLVERS=env ./MyApp
 ```
 
-### Working with external configuration management services
 
-You can plug-in your proeprty value resolver to resolve application property values from external configuration management services, such as, Consul, Spring Cloud Config etc. Just implement the following interface and register implementation with the runtime:
+### Custom External Resolver
+
+You can plug-in your property value resolver to resolve application property values from external configuration management services, such as, Consul, Spring Cloud Config etc. Just implement the following interface and register implementation with the runtime:
 
 ```go
-// PropertyValueResolver used to resolve value from external configuration like env, file etc
-type PropertyValueResolver interface {
-	// Should return value and true if the given application property exists in the external configuration otherwise should return nil and false.
-	LookupValue(propertyName string) (interface{}, bool)
+// Resolver used to resolve property value from external configuration like env, file etc
+type ExternalResolver interface {
+	// Name of the resolver (e.g., consul)
+	Name() string
+	// Should return value and true if the given key exists in the external configuration otherwise should return nil and false.
+	LookupValue(key string) (interface{}, bool)
 }
+
 ```
 
 #### Sample Resolver
@@ -127,11 +154,19 @@ type PropertyValueResolver interface {
 ```go
 package sampleresolver
 
+import "github.com/project-flogo/core/data/property"
+
+
 type SamplePropertyResolver struct {
 }
 
 func init() {
-  app.RegisterPropertyValueResolver("sampleresolver", &SamplePropertyResolver{})
+  _ = property.RegisterExternalResolver(&SamplePropertyResolver{})
+}
+
+func (resolver *SamplePropertyResolver) Name() string {
+   // Resolve property value
+  return some_value, true
 }
 
 func (resolver *SamplePropertyResolver) LookupValue(propertyName string) (interface{}, bool) {
@@ -139,10 +174,10 @@ func (resolver *SamplePropertyResolver) LookupValue(propertyName string) (interf
   return some_value, true
 }
 ```
-*Note: In order for your resolver to be loaded in the go code, you need to add an entry to your resolver in the imports section of the the engine.json*
+*Note: In order for your resolver to be loaded in the go code, you need to add an entry to your resolver in the imports section of the engine.json*
 
 
-Set the `FLOGO_APP_PROPS_RESOLVERS` env var to `sampleresolver` while running application. For example:
+Set the `FLOGO_APP_PROP_RESOLVERS` env var to `sampleresolver` while running application. For example:
 
 ```terminal
 FLOGO_APP_PROPS_RESOLVERS=sampleresolver ./<app_binary>

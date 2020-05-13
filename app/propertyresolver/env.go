@@ -36,7 +36,7 @@ func init() {
 				panic("")
 			}
 		}
-		_ = property.RegisterPropertyResolver(resolver)
+		_ = property.RegisterExternalResolver(resolver)
 	}
 }
 

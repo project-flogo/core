@@ -2,12 +2,12 @@ package propertyresolver
 
 import (
 	"encoding/json"
-	"github.com/project-flogo/core/data/property"
-	"github.com/project-flogo/core/engine"
 	"io/ioutil"
 	"os"
 	"strings"
 
+	"github.com/project-flogo/core/data/property"
+	"github.com/project-flogo/core/engine"
 	"github.com/project-flogo/core/support/log"
 )
 
@@ -26,7 +26,7 @@ func init() {
 	filePaths := getExternalFiles()
 	if filePaths != "" {
 		// Register value resolver
-		_ = property.RegisterPropertyResolver(&JSONFileValueResolver{})
+		_ = property.RegisterExternalResolver(&JSONFileValueResolver{})
 
 		// preload props from files
 		files := strings.Split(filePaths, ",")
