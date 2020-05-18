@@ -319,6 +319,30 @@ func (a *App) Start() error {
 		logger.Info("Connection Managers Started")
 	}
 
+	// Start managed actions
+	hasManagedActions := false
+	for id, act := range a.actions {
+		if m, ok := act.(managed.Managed); ok {
+			if !hasManagedActions {
+				logger.Info("Starting Actions...")
+				hasManagedActions = true
+			}
+
+			err := managed.Start(fmt.Sprintf("Action [%s]", id), m)
+			if err != nil {
+				if a.stopOnError {
+					return fmt.Errorf("error starting Action [%s] : %s", id, err)
+				}
+				logger.Infof("Action [%s] failed to start due to error [%s]", id, err.Error())
+				logger.Debugf("StackTrace: %s", debug.Stack())
+			}
+		}
+	}
+
+	if hasManagedActions {
+		logger.Info("Actions Started")
+	}
+
 	// Start the triggers
 	logger.Info("Starting Triggers...")
 
@@ -385,7 +409,26 @@ func (a *App) Stop() error {
 			logger.Infof("Delaying application stop by - %s", delayedStopInterval)
 			time.Sleep(duration)
 		}
+	}
 
+	// Start managed actions
+	hasManagedActions := false
+	for id, act := range a.actions {
+		if m, ok := act.(managed.Managed); ok {
+			if !hasManagedActions {
+				logger.Info("Stopping Actions...")
+				hasManagedActions = true
+			}
+			err := managed.Stop(fmt.Sprintf("Action [%s]", id), m)
+			if err != nil {
+				logger.Infof("Action [%s] failed to stop due to error [%s]", id, err.Error())
+				logger.Debugf("StackTrace: %s", debug.Stack())
+			}
+		}
+	}
+
+	if hasManagedActions {
+		logger.Info("Actions Stopped")
 	}
 
 	managers := connection.Managers()
