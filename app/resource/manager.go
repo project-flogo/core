@@ -52,6 +52,18 @@ func (m *Manager) GetResource(id string) *Resource {
 	return m.resources[resId]
 }
 
+func (m *Manager) SetResource(id string, res *Resource) {
+	resId := id
+	if strings.HasPrefix(id, UriScheme) {
+		//is uri
+		resId = id[6:]
+	}
+	if m.resources == nil {
+		m.resources = make(map[string]*Resource)
+	}
+	m.resources[resId] = res
+}
+
 func (m *Manager) CleanupResources() {
 
 	for id, res := range m.resources {
