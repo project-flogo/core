@@ -25,7 +25,7 @@ func (ec *Context) GetEventType() string {
 }
 
 // Buffered channel
-var eventQueue = make(chan *Context, 100)
+var eventQueue = make(chan *Context, GetEventQueues())
 
 // Puts event with given type and data on the channel
 func Post(eventType string, event interface{}) {
