@@ -193,7 +193,7 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 
 	app.triggers, err = app.createTriggers(config.Triggers, runner)
 	if err != nil {
-		return nil, fmt.Errorf("error creating trigger instances - %s", err.Error())
+		return nil, err
 	}
 
 	return app, nil
