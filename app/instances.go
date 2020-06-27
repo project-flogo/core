@@ -73,7 +73,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 		}
 
 		if tConfig.Ref == "" && tConfig.Type != "" {
-			log.RootLogger().Warnf("trigger [%s]'s configuration 'type' deprecated, use 'ref' in the future", tConfig.Id)
+			log.RootLogger().Warnf("trigger [%s]'s configuration uses deprecated property 'type', use 'ref' in the future", tConfig.Id)
 			tConfig.Ref = "#" + tConfig.Type
 		}
 
@@ -87,7 +87,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 			var ok bool
 			ref, ok = support.GetAliasRef("trigger", tConfig.Ref)
 			if !ok {
-				return nil, fmt.Errorf("trigger [%s] with ref [%s] not imported", tConfig.Id, tConfig.Ref)
+				return nil, fmt.Errorf("trigger [%s]'s 'ref' [%s] not imported", tConfig.Id, tConfig.Ref)
 			}
 		}
 
@@ -138,7 +138,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 					if id := act.Id; id != "" {
 						act, _ := a.actions[id]
 						if act == nil {
-							return nil, fmt.Errorf("shared action '%s' does not exists in trigger [%s]'s handler [%s]", id, tConfig.Id, hConfig.Name)
+							return nil, fmt.Errorf("trigger [%s]'s handler [%s] references nonexistent shared action '%s'", tConfig.Id, hConfig.Name, id)
 						}
 						acts = append(acts, act)
 					} else {
@@ -159,18 +159,18 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 							var ok bool
 							ref, ok = support.GetAliasRef("action", act.Ref)
 							if !ok {
-								return nil, fmt.Errorf("action '%s' not imported in trigger [%s]'s handler [%s]", act.Ref, tConfig.Id, hConfig.Name)
+								return nil, fmt.Errorf("action '%s' referenced in trigger [%s]'s handler [%s], has not been imported", act.Ref, tConfig.Id, hConfig.Name)
 							}
 						}
 
 						actionFactory := action.GetFactory(ref)
 						if actionFactory == nil {
-							return nil, fmt.Errorf("action factory '%s' not registered in trigger [%s]'s handler [%s]", ref, tConfig.Id, hConfig.Name)
+							return nil, fmt.Errorf("action factory '%s' referenced by trigger [%s]'s handler [%s], has not been registered\"", ref, tConfig.Id, hConfig.Name)
 						}
 
 						act, err := actionFactory.New(act.Config)
 						if err != nil {
-							return nil, fmt.Errorf("error creating action [%s] in in trigger [%s]'s handler [%s]", ref, tConfig.Id, hConfig.Name)
+							return nil, fmt.Errorf("error creating action [%s] for trigger [%s]'s handler [%s]\"", ref, tConfig.Id, hConfig.Name)
 						}
 						//if needsDisposal, ok := act.(support.NeedsCleanup); ok {
 						//	a.toDispose = append(a.toDispose, needsDisposal)
@@ -189,7 +189,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 						if ok {
 							s, err := schema.FindOrCreate(ref)
 							if err != nil {
-								return nil, fmt.Errorf("error finding or creating output schema [%s] in trigger [%s]'s handler [%s]: %s", ref, tConfig.Id, hConfig.Name, err.Error())
+								return nil, fmt.Errorf("unable to find or create output schema [%s] for trigger [%s]'s handler [%s]: %s", ref, tConfig.Id, hConfig.Name, err.Error())
 							}
 							hConfig.Schemas.Output[name] = s
 						}
@@ -202,7 +202,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 						if ok {
 							s, err := schema.FindOrCreate(ref)
 							if err != nil {
-								return nil, fmt.Errorf("error finding or creating reply schema [%s] in trigger [%s]'s handler [%s]: %s", ref, tConfig.Id, hConfig.Name, err.Error())
+								return nil, fmt.Errorf("unable to find or create reply schema [%s] in trigger [%s]'s handler [%s]: %s", ref, tConfig.Id, hConfig.Name, err.Error())
 							}
 							hConfig.Schemas.Reply[name] = s
 						}
