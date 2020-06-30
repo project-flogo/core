@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	EnvKeyEventQueues  = "FLOGO_EVENT_QUEUES"
-	DefaultEventQueues = 100
+	EnvKeyEventQueueSize  = "FLOGO_EVENT_QUEUE_SIZE"
+	DefaultEventQueueSize = 100
 
 	EnvKeyPublishAuditEvents  = "FLOGO_PUBLISH_AUDIT_EVENTS"
 	DefaultPublishAuditEvents = true
@@ -25,8 +25,8 @@ func PublishEventEnabled() bool {
 
 //GetEventQueues returns the number of queues to buffer events
 func GetEventQueues() int {
-	numQueues := DefaultEventQueues
-	queuesEnv := os.Getenv(EnvKeyEventQueues)
+	numQueues := DefaultEventQueueSize
+	queuesEnv := os.Getenv(EnvKeyEventQueueSize)
 	if len(queuesEnv) > 0 {
 		i, err := strconv.Atoi(queuesEnv)
 		if err == nil {
