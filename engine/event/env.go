@@ -24,7 +24,7 @@ func PublishEventEnabled() bool {
 }
 
 //GetEventQueues returns the number of queues to buffer events
-func GetEventQueues() int {
+func GetEventQueueSize() int {
 	numQueues := DefaultEventQueueSize
 	queuesEnv := os.Getenv(EnvKeyEventQueueSize)
 	if len(queuesEnv) > 0 {
