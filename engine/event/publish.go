@@ -1,17 +1,12 @@
 package event
 
 import (
-	"os"
-	"strconv"
-
 	"github.com/project-flogo/core/support/log"
 )
 
-const (
-	EnvPublishAuditEventsKey = "FLOGO_PUBLISH_AUDIT_EVENTS"
-)
+const ()
 
-var publishEventsEnabled = PublishEnabled()
+var publishEventsEnabled = PublishEventEnabled()
 var publisherRunning = false
 var shutdown = make(chan bool)
 
@@ -74,13 +69,4 @@ func publishEvent(evtCtx *Context) {
 	if ok {
 		emitter.Publish(evtCtx)
 	}
-}
-
-func PublishEnabled() bool {
-	key := os.Getenv(EnvPublishAuditEventsKey)
-	if len(key) > 0 {
-		publish, _ := strconv.ParseBool(key)
-		return publish
-	}
-	return true
 }

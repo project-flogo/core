@@ -24,8 +24,12 @@ const (
 	DefaultRunnerType        = ValueRunnerTypePooled
 	EnvKeyRunnerWorkers      = "FLOGO_RUNNER_WORKERS"
 	DefaultRunnerWorkers     = 5
-	EnvKeyRunnerQueueSize    = "FLOGO_RUNNER_QUEUE"
-	DefaultRunnerQueueSize   = 50
+
+	//Deprecated
+	EnvKeyRunnerQueueSizeLegacy = "FLOGO_RUNNER_QUEUE"
+
+	EnvKeyRunnerQueueSize  = "FLOGO_RUNNER_QUEUE_SIZE"
+	DefaultRunnerQueueSize = 50
 
 	EnvAppPropertyResolvers   = "FLOGO_APP_PROP_RESOLVERS"
 	EnvEnableSchemaSupport    = "FLOGO_SCHEMA_SUPPORT"
@@ -212,6 +216,15 @@ func GetRunnerQueueSize() int {
 		i, err := strconv.Atoi(queueSizeEnv)
 		if err == nil {
 			queueSize = i
+		}
+	} else {
+		//For backward compatible.
+		legacyQueueSize := os.Getenv(EnvKeyRunnerQueueSizeLegacy)
+		if len(legacyQueueSize) > 0 {
+			i, err := strconv.Atoi(queueSizeEnv)
+			if err == nil {
+				queueSize = i
+			}
 		}
 	}
 	return queueSize
