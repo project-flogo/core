@@ -1286,3 +1286,20 @@ func BenchmarkObj(b *testing.B) {
 		mapper.Apply(scope)
 	}
 }
+
+func TestGetArrayNullCase(t *testing.T) {
+	m := `{"mapping": {
+		"array": []
+	}}`
+
+	arrayMapping := make(map[string]interface{})
+	_ = json.Unmarshal([]byte(m), &arrayMapping)
+	mappings := map[string]interface{}{"store": arrayMapping}
+	factory := NewFactory(resolver)
+	mapper, _ := factory.NewMapper(mappings)
+	scope := data.NewSimpleScope(nil, nil)
+	v, err := mapper.Apply(scope)
+	assert.Nil(t, err)
+	assert.Equal(t, []interface{}{}, v["store"].(map[string]interface{})["array"])
+
+}
