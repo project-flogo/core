@@ -133,6 +133,9 @@ func NewObjectMapper(mappings interface{}, exprF expression.Factory) (expr expre
 		}, nil
 	case []interface{}:
 		//array with possible child object
+		if len(t) <= 0 {
+			return expression.NewLiteralExpr(t), nil
+		}
 		objArray := make([]expression.Expr, len(t))
 		for i, element := range t {
 			var err error
