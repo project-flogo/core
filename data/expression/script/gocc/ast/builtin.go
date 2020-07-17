@@ -6,6 +6,18 @@ import (
 	"strings"
 )
 
+// Those errors are indicate that resolver not able to found the attr or fields
+var errorStrs = []string{
+	"path not found",
+	"unable to evaluate path",
+	"failed to resolve variable",
+	"failed to resolve Environment Variable",
+	"failed to resolve Property",
+	"failed to resolve Loop",
+	"failed to resolve activity attr",
+	"failed to resolve activity value",
+	"not found in flow"}
+
 type IsDefinedExpr struct {
 	refExpr Expr
 }
@@ -48,10 +60,19 @@ func isDefined(expr Expr, scope data.Scope) (interface{}, bool, error) {
 	v, err := expr.Eval(scope)
 	if err != nil {
 		msg := err.Error()
-		if strings.Contains(msg, "path not found") || strings.Contains(msg, "unable to evaluate path") {
+		if isNotFoundError(msg) {
 			return nil, false, nil
 		}
 		return nil, false, err
 	}
 	return v, v != nil, nil
+}
+
+func isNotFoundError(errStr string) bool {
+	for _, errStr := range errorStrs {
+		if strings.Contains(errStr, errStr) {
+			return true
+		}
+	}
+	return false
 }
