@@ -69,8 +69,8 @@ func isDefined(expr Expr, scope data.Scope) (interface{}, bool, error) {
 }
 
 func isNotFoundError(errStr string) bool {
-	for _, errStr := range errorStrs {
-		if strings.Contains(errStr, errStr) {
+	for _, s := range errorStrs {
+		if strings.Contains(errStr, s) {
 			return true
 		}
 	}
