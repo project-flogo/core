@@ -87,7 +87,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 			var ok bool
 			ref, ok = support.GetAliasRef("trigger", tConfig.Ref)
 			if !ok {
-				return nil, fmt.Errorf("trigger [%s]'s 'ref' [%s] not imported", tConfig.Id, tConfig.Ref)
+				return nil, fmt.Errorf("incompatible app engine, the app using the trigger [%s] with ref [%s] is not installed", tConfig.Id, tConfig.Ref)
 			}
 		}
 
