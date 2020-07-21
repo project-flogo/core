@@ -45,6 +45,10 @@ func Register(activity Activity, f ...Factory) error {
 	return nil
 }
 
+func Activities() map[string]Activity {
+	return activities
+}
+
 func GetRef(activity Activity) string {
 	return support.GetRef(activity)
 }
