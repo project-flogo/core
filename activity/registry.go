@@ -46,11 +46,11 @@ func Register(activity Activity, f ...Factory) error {
 }
 
 func Activities() map[string]Activity {
-	newActivities := make(map[string]Activity)
+	registeredActivities := make(map[string]Activity)
 	for k, v := range activities {
-		newActivities[k] = v
+		registeredActivities[k] = v
 	}
-	return newActivities
+	return registeredActivities
 }
 
 func GetRef(activity Activity) string {
