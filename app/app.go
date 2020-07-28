@@ -374,7 +374,10 @@ func (a *App) Start() error {
 	for _, trgW := range lifecycleTriggers {
 		if trgW.status.Status == managed.StatusStarted  {
 			lca, _ := trgW.trg.(LifecycleAware)
-			lca.OnStartup()
+			err := lca.OnStartup()
+			if err != nil {
+				return err
+			}
 		}
 	}
 
@@ -455,7 +458,7 @@ func (a *App) Stop() error {
 	// Stop Lifecycle Triggers
 	for id, trgW := range lifecycleTriggers {
 		lca, _ := trgW.trg.(LifecycleAware)
-		lca.OnShutdown()
+		_ = lca.OnShutdown()
 		_ = managed.Stop("Trigger [ "+id+" ]", trgW.trg)
 		trgW.status.Status = managed.StatusStopped
 		trigger.PostTriggerEvent(trigger.STOPPED, id)
