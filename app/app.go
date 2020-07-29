@@ -458,7 +458,10 @@ func (a *App) Stop() error {
 	// Stop Lifecycle Triggers
 	for id, trgW := range lifecycleTriggers {
 		lca, _ := trgW.trg.(LifecycleAware)
-		_ = lca.OnShutdown()
+		err := lca.OnShutdown()
+		if err != nil {
+			logger.Errorf("trigger [%s] encountered error processing app OnShutdown event: %s", id, err.Error())
+		}
 		_ = managed.Stop("Trigger [ "+id+" ]", trgW.trg)
 		trgW.status.Status = managed.StatusStopped
 		trigger.PostTriggerEvent(trigger.STOPPED, id)
