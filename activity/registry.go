@@ -45,6 +45,14 @@ func Register(activity Activity, f ...Factory) error {
 	return nil
 }
 
+func Activities() map[string]Activity {
+	registeredActivities := make(map[string]Activity)
+	for k, v := range activities {
+		registeredActivities[k] = v
+	}
+	return registeredActivities
+}
+
 func GetRef(activity Activity) string {
 	return support.GetRef(activity)
 }
