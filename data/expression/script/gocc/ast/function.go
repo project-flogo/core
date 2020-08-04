@@ -20,7 +20,7 @@ func NewFuncExpr(name interface{}, args interface{}) (Expr, error) {
 
 	f := function.Get(funcName)
 	if f == nil {
-		return nil, fmt.Errorf("function '%s' not registered", funcName)
+		return nil, fmt.Errorf("unable to parse expression, function [%s] is not installed", funcName)
 	}
 	fe := &funcExpr{f: f}
 
