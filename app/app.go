@@ -343,35 +343,57 @@ func (a *App) Start() error {
 		logger.Info("Actions Started")
 	}
 
+	lifecycleTriggers := make(map[string]*triggerWrapper)
+	normalTriggers := make(map[string]*triggerWrapper)
+
+	for id, trgW := range a.triggers {
+		if _, ok := trgW.trg.(LifecycleAware); ok {
+			lifecycleTriggers[id] = trgW
+		} else {
+			normalTriggers[id] = trgW
+		}
+	}
+
 	// Start the triggers
 	logger.Info("Starting Triggers...")
 
 	var failed []string
 
-	for id, trg := range a.triggers {
-		statusInfo := trg.status
-		err := managed.Start(fmt.Sprintf("Trigger [ %s ]", id), trg.trg)
+	// Start Lifecycle triggers
+	for id, trgW := range lifecycleTriggers {
+		ok, err := a.startTrigger(id, trgW)
 		if err != nil {
-			if a.stopOnError {
-				return fmt.Errorf("error starting Trigger[%s] : %s", id, err)
-			}
-			logger.Infof("Trigger [%s] failed to start due to error [%s]", id, err.Error())
-			statusInfo.Status = managed.StatusFailed
-			statusInfo.Error = err
-			logger.Debugf("StackTrace: %s", debug.Stack())
+			return err
+		}
+		if !ok {
 			failed = append(failed, id)
-			trigger.PostTriggerEvent(trigger.FAILED, id)
-		} else {
-			statusInfo.Status = managed.StatusStarted
-			//logger.Infof("Trigger [ %s ]: Started", id)
-			version := ""
-			logger.Debugf("Trigger [ %s ] has ref [ %s ] and version [ %s ]", id, trg.ref, version)
-			trigger.PostTriggerEvent(trigger.STARTED, id)
+		}
+	}
+
+	// Invoke OnStartup for lifecycle aware triggers
+	for _, trgW := range lifecycleTriggers {
+		if trgW.status.Status == managed.StatusStarted  {
+			lca, _ := trgW.trg.(LifecycleAware)
+			err := lca.OnStartup()
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	// Start normal triggers
+	for id, trgW := range normalTriggers {
+		ok, err := a.startTrigger(id, trgW)
+		if err != nil {
+			return err
+		}
+		if !ok {
+			failed = append(failed, id)
 		}
 	}
 
 	if len(failed) > 0 {
-		//remove failed trigger, we have no use for them - todo will cause a problem if we can start again
+		//remove failed trigger, we have no use for them
 		for _, triggerId := range failed {
 			delete(a.triggers, triggerId)
 		}
@@ -383,16 +405,65 @@ func (a *App) Start() error {
 	return nil
 }
 
+func (a *App) startTrigger(id string, trg *triggerWrapper) (bool,error) {
+
+	statusInfo := trg.status
+	err := managed.Start(fmt.Sprintf("Trigger [ %s ]", id), trg.trg)
+	if err != nil {
+		if a.stopOnError {
+			return false, fmt.Errorf("error starting Trigger[%s] : %s", id, err)
+		}
+		log.RootLogger().Infof("Trigger [%s] failed to start due to error [%s]", id, err.Error())
+		statusInfo.Status = managed.StatusFailed
+		statusInfo.Error = err
+		log.RootLogger().Debugf("StackTrace: %s", debug.Stack())
+		trigger.PostTriggerEvent(trigger.FAILED, id)
+		return false, nil
+	} else {
+		statusInfo.Status = managed.StatusStarted
+		//logger.Infof("Trigger [ %s ]: Started", id)
+		version := ""
+		log.RootLogger().Debugf("Trigger [ %s ] has ref [ %s ] and version [ %s ]", id, trg.ref, version)
+		trigger.PostTriggerEvent(trigger.STARTED, id)
+	}
+
+	return true, nil
+}
+
+
 func (a *App) Stop() error {
 
 	logger := log.RootLogger()
 
 	logger.Info("Stopping Triggers...")
 
-	// Stop Triggers
-	for id, trg := range a.triggers {
+	lifecycleTriggers := make(map[string]*triggerWrapper)
+	normalTriggers := make(map[string]*triggerWrapper)
+
+	for id, trgW := range a.triggers {
+		if _, ok := trgW.trg.(LifecycleAware); ok {
+			lifecycleTriggers[id] = trgW
+		} else {
+			normalTriggers[id] = trgW
+		}
+	}
+
+	// Stop Normal Triggers
+	for id, trg := range normalTriggers {
 		_ = managed.Stop("Trigger [ "+id+" ]", trg.trg)
 		trg.status.Status = managed.StatusStopped
+		trigger.PostTriggerEvent(trigger.STOPPED, id)
+	}
+
+	// Stop Lifecycle Triggers
+	for id, trgW := range lifecycleTriggers {
+		lca, _ := trgW.trg.(LifecycleAware)
+		err := lca.OnShutdown()
+		if err != nil {
+			logger.Errorf("trigger [%s] encountered error processing app OnShutdown event: %s", id, err.Error())
+		}
+		_ = managed.Stop("Trigger [ "+id+" ]", trgW.trg)
+		trgW.status.Status = managed.StatusStopped
 		trigger.PostTriggerEvent(trigger.STOPPED, id)
 	}
 

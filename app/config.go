@@ -40,3 +40,8 @@ func GetDelayedStopInterval() string {
 	}
 	return ""
 }
+
+type LifecycleAware interface {
+	OnStartup() error
+	OnShutdown() error
+}
