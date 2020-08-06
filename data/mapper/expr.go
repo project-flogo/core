@@ -41,8 +41,8 @@ func (mf *ExprMapperFactory) NewMapper(mappings map[string]interface{}) (Mapper,
 					exprMappings[key] = expression.NewLiteralExpr(value)
 				}
 			default:
-				if hasIfElse(t) {
-					ifElseMapper, err := newIfElseMapper(t, mf.exprFactory)
+				if isIfElseMapping(t) {
+					ifElseMapper, err := createIfElseMapper(t, mf.exprFactory)
 					if err != nil {
 						return nil, err
 					}

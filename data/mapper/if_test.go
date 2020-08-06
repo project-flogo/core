@@ -16,7 +16,7 @@ func TestIfElsePrimitive(t *testing.T) {
 		{
 			Mapping: map[string]interface{}{
 				"@if($.person.name == \"abc\")":     "this is abc",
-				"@elseIf($.person.name == \"bcd\")": "this is bcd",
+				"@elseif($.person.name == \"bcd\")": "this is bcd",
 				"@else":                             "this is ddd",
 			},
 			Data: []map[string]interface{}{
@@ -50,7 +50,7 @@ func TestIfElsePrimitive(t *testing.T) {
 	}
 
 	for _, tt := range testcases {
-		assert.True(t, hasIfElse(tt.Mapping))
+		assert.True(t, isIfElseMapping(tt.Mapping))
 		mappings := map[string]interface{}{"output": tt.Mapping}
 		factory := NewFactory(resolver)
 		mapper, err := factory.NewMapper(mappings)
@@ -82,7 +82,7 @@ func TestIfElseObjectMapper(t *testing.T) {
 					"name":    "=$.person.id",
 					"address": "=$.person.address",
 				},
-				"@elseIf($.person.name == \"bcd\")": map[string]interface{}{
+				"@elseif($.person.name == \"bcd\")": map[string]interface{}{
 					"id":      "=$.person.id",
 					"name":    "=$.person.id",
 					"address": "=$.person.address",
@@ -124,7 +124,7 @@ func TestIfElseObjectMapper(t *testing.T) {
 	}
 
 	for _, tt := range testcases {
-		assert.True(t, hasIfElse(tt.Mapping))
+		assert.True(t, isIfElseMapping(tt.Mapping))
 		mappings := map[string]interface{}{"output": tt.Mapping}
 		factory := NewFactory(resolver)
 		mapper, err := factory.NewMapper(mappings)
@@ -157,7 +157,7 @@ func TestIfElseArrayMapper(t *testing.T) {
 						"state": "=$loop.state",
 					},
 				},
-				"@elseIf($.person.name == \"bcd\")": map[string]interface{}{
+				"@elseif($.person.name == \"bcd\")": map[string]interface{}{
 					"@foreach($.person.address, \"address\")": map[string]interface{}{
 						"city":  "=$loop.city",
 						"state": "=$loop.state",
@@ -215,7 +215,7 @@ func TestIfElseArrayMapper(t *testing.T) {
 	}
 
 	for _, tt := range testcases {
-		assert.True(t, hasIfElse(tt.Mapping))
+		assert.True(t, isIfElseMapping(tt.Mapping))
 		mappings := map[string]interface{}{"output": tt.Mapping}
 		factory := NewFactory(resolver)
 		mapper, err := factory.NewMapper(mappings)
@@ -246,12 +246,12 @@ func TestNestedIfElseObjectMapper(t *testing.T) {
 					"id": "=$.person.id",
 					"name": map[string]interface{}{
 						"@if($.person.address.city == \"abcsugarLand\")":      "abc",
-						"@elseIf($.person.address.city == \"abcsugarLand2\")": "abc2",
+						"@elseif($.person.address.city == \"abcsugarLand2\")": "abc2",
 						"@else": "abc3",
 					},
 					"address": "=$.person.address",
 				},
-				"@elseIf($.person.name == \"bcd\")": map[string]interface{}{
+				"@elseif($.person.name == \"bcd\")": map[string]interface{}{
 					"id":      "=$.person.id",
 					"name":    "=$.person.name",
 					"address": "=$.person.address",
@@ -293,7 +293,7 @@ func TestNestedIfElseObjectMapper(t *testing.T) {
 	}
 
 	for _, tt := range testcases {
-		assert.True(t, hasIfElse(tt.Mapping))
+		assert.True(t, isIfElseMapping(tt.Mapping))
 		mappings := map[string]interface{}{"output": tt.Mapping}
 		factory := NewFactory(resolver)
 		mapper, err := factory.NewMapper(mappings)
@@ -325,12 +325,12 @@ func TestNestedIfElseArrayMapper(t *testing.T) {
 						"city": "=$loop.city",
 						"state": map[string]interface{}{
 							"@if($loop.state == \"abctx1\")":     "tx1",
-							"@elseIf($loop.state == \"abctx2\")": "tx2",
+							"@elseif($loop.state == \"abctx2\")": "tx2",
 							"@else":                              "tx3",
 						},
 					},
 				},
-				"@elseIf($.person.name == \"bcd\")": map[string]interface{}{
+				"@elseif($.person.name == \"bcd\")": map[string]interface{}{
 					"@foreach($.person.address, \"address\")": map[string]interface{}{
 						"city":  "=$loop.city",
 						"state": "=$loop.state",
@@ -388,7 +388,7 @@ func TestNestedIfElseArrayMapper(t *testing.T) {
 	}
 
 	for _, tt := range testcases {
-		assert.True(t, hasIfElse(tt.Mapping))
+		assert.True(t, isIfElseMapping(tt.Mapping))
 		mappings := map[string]interface{}{"output": tt.Mapping}
 		factory := NewFactory(resolver)
 		mapper, err := factory.NewMapper(mappings)

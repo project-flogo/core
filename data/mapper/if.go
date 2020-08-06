@@ -11,19 +11,19 @@ import (
 const (
 	If     = "@if"
 	Else   = "@else"
-	ElseIf = "@elseIf"
+	ElseIf = "@elseif"
 )
 
 type IfElseMapper struct {
-	IfExpr     *IfElseExpr
-	ElseExpr   *IfElseExpr
-	ElseIfExpr []*IfElseExpr
+	IfExpr     *ifElseExpr
+	ElseExpr   *ifElseExpr
+	ElseIfExpr []*ifElseExpr
 }
 
 func (fs *IfElseMapper) Eval(scope data.Scope) (interface{}, error) {
 	ifExpr := fs.IfExpr
 	if ifExpr.Condition == nil {
-		return nil, fmt.Errorf("if or elseif must have condition expression")
+		return nil, fmt.Errorf("if must have condition expression")
 	}
 	ok, err := ifExpr.EvalCondition(scope)
 	if err != nil {
@@ -39,6 +39,9 @@ func (fs *IfElseMapper) Eval(scope data.Scope) (interface{}, error) {
 		//go to else if
 		if len(fs.ElseIfExpr) > 0 {
 			for _, elseIfExr := range fs.ElseIfExpr {
+				if elseIfExr.Condition == nil {
+					return nil, fmt.Errorf("elseif must have condition expression")
+				}
 				ok, err := elseIfExr.EvalCondition(scope)
 				if err != nil {
 					return nil, err
@@ -60,17 +63,18 @@ func (fs *IfElseMapper) Eval(scope data.Scope) (interface{}, error) {
 	return nil, nil
 }
 
-type IfElseExpr struct {
+type ifElseExpr struct {
 	Condition expression.Expr
 	// Object mapper
 	object expression.Expr
 }
 
-func (f *IfElseExpr) EvalCondition(scope data.Scope) (bool, error) {
+// EvalCondition Execute the condition expression of if/elseif
+func (f *ifElseExpr) EvalCondition(scope data.Scope) (bool, error) {
 	if f.Condition != nil {
 		ifCondition, err := f.Condition.Eval(scope)
 		if err != nil {
-			return false, err
+			return false, fmt.Errorf("eval if/else condition [%s] error: %s", f.Condition, err.Error())
 		}
 		ok, _ := coerce.ToBool(ifCondition)
 		return ok, nil
@@ -78,7 +82,8 @@ func (f *IfElseExpr) EvalCondition(scope data.Scope) (bool, error) {
 	return false, nil
 }
 
-func hasIfElse(value interface{}) bool {
+// isIfElseMapping check to see if the mapping is an if/else mapping
+func isIfElseMapping(value interface{}) bool {
 	switch t := value.(type) {
 	case map[string]interface{}:
 		for k, _ := range t {
@@ -100,7 +105,8 @@ func hasIfElse(value interface{}) bool {
 	}
 }
 
-func newIfElseMapper(value interface{}, ef expression.Factory) (expression.Expr, error) {
+// createIfElseMapper  create if/else mapper
+func createIfElseMapper(value interface{}, ef expression.Factory) (expression.Expr, error) {
 	switch t := value.(type) {
 	case map[string]interface{}:
 		ifMapper := &IfElseMapper{}
@@ -111,13 +117,11 @@ func newIfElseMapper(value interface{}, ef expression.Factory) (expression.Expr,
 				if err != nil {
 					return nil, err
 				}
-
 				mapper, err := NewObjectMapper(v, ef)
 				if err != nil {
 					return nil, err
 				}
-
-				expr := &IfElseExpr{
+				expr := &ifElseExpr{
 					Condition: ifCondition,
 					object:    mapper,
 				}
@@ -135,7 +139,7 @@ func newIfElseMapper(value interface{}, ef expression.Factory) (expression.Expr,
 		if ifMapper.IfExpr != nil {
 			return ifMapper, nil
 		} else {
-			//Not an if else mapper
+			//Not if/else mapper
 			return NewObjectMapper(value, ef)
 		}
 	default:
