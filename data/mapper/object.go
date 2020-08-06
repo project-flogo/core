@@ -111,46 +111,50 @@ func (a *assignAllExpr) Eval(scope data.Scope) (interface{}, error) {
 }
 
 func NewObjectMapper(mappings interface{}, exprF expression.Factory) (expr expression.Expr, err error) {
-	switch t := mappings.(type) {
-	case map[string]interface{}:
-		objFields := make(map[string]expression.Expr)
-		for mk, mv := range t {
-			//Root Level foreach
-			if strings.HasPrefix(mk, FOREACH) {
-				foreach, err := newForeachExpr(mk, exprF)
+	if hasIfElse(mappings) {
+		return newIfElseMapper(mappings, exprF)
+	} else {
+		switch t := mappings.(type) {
+		case map[string]interface{}:
+			objFields := make(map[string]expression.Expr)
+			for mk, mv := range t {
+				//Root Level foreach
+				if strings.HasPrefix(mk, FOREACH) {
+					foreach, err := newForeachExpr(mk, exprF)
+					if err != nil {
+						return nil, err
+					}
+					foreach.addFields(mv.(map[string]interface{}), exprF)
+					return foreach, nil
+				} else {
+					objFields[mk], err = NewObjectMapper(mv, exprF)
+				}
+
+			}
+			return &ObjectMapper{
+				objectFields: objFields,
+			}, nil
+		case []interface{}:
+			//array with possible child object
+			if len(t) <= 0 {
+				return expression.NewLiteralExpr(t), nil
+			}
+			objArray := make([]expression.Expr, len(t))
+			for i, element := range t {
+				var err error
+				objArray[i], err = NewObjectMapper(element, exprF)
 				if err != nil {
 					return nil, err
 				}
-				foreach.addFields(mv.(map[string]interface{}), exprF)
-				return foreach, nil
-			} else {
-				objFields[mk], err = NewObjectMapper(mv, exprF)
 			}
-
+			return &ObjectMapper{
+				literalArray: objArray,
+			}, nil
+		case interface{}:
+			return newExpr(t, exprF)
+		default:
+			return nil, fmt.Errorf("unsupport type [%s] for object mapper", reflect.TypeOf(t))
 		}
-		return &ObjectMapper{
-			objectFields: objFields,
-		}, nil
-	case []interface{}:
-		//array with possible child object
-		if len(t) <= 0 {
-			return expression.NewLiteralExpr(t), nil
-		}
-		objArray := make([]expression.Expr, len(t))
-		for i, element := range t {
-			var err error
-			objArray[i], err = NewObjectMapper(element, exprF)
-			if err != nil {
-				return nil, err
-			}
-		}
-		return &ObjectMapper{
-			literalArray: objArray,
-		}, nil
-	case interface{}:
-		return newExpr(t, exprF)
-	default:
-		return nil, fmt.Errorf("unsupport type [%s] for object mapper", reflect.TypeOf(t))
 	}
 }
 

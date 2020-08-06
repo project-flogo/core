@@ -6,7 +6,6 @@ import (
 	"github.com/project-flogo/core/data/mapper/config"
 	"github.com/project-flogo/core/data/resolve"
 	"github.com/project-flogo/core/support/log"
-	"strings"
 )
 
 type ExprMapperFactory struct {
@@ -42,7 +41,13 @@ func (mf *ExprMapperFactory) NewMapper(mappings map[string]interface{}) (Mapper,
 					exprMappings[key] = expression.NewLiteralExpr(value)
 				}
 			default:
-				if mapping, ok := GetObjectMapping(t); ok {
+				if hasIfElse(t) {
+					ifElseMapper, err := newIfElseMapper(t, mf.exprFactory)
+					if err != nil {
+						return nil, err
+					}
+					exprMappings[key] = ifElseMapper
+				} else if mapping, ok := GetObjectMapping(t); ok {
 					//Object mapping
 					objectExpr, err := NewObjectMapperFactory(mf.exprFactory).(*ObjectMapperFactory).NewObjectMapper(mapping)
 					if err != nil {
@@ -84,31 +89,6 @@ func (m *ExprMapper) Apply(inputScope data.Scope) (map[string]interface{}, error
 	}
 
 	return output, nil
-}
-
-func IsLiteral(value interface{}) bool {
-	if value != nil {
-		switch t := value.(type) {
-		case map[string]interface{}:
-			for k, v := range t {
-				if strings.HasPrefix(k, FOREACH) {
-					return false
-				}
-				if !IsLiteral(v) {
-					return false
-				}
-			}
-		case []interface{}:
-			for _, element := range t {
-				if !IsLiteral(element) {
-					return false
-				}
-			}
-		default:
-			return !isExpr(t)
-		}
-	}
-	return true
 }
 
 func isExpr(value interface{}) bool {
