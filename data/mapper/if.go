@@ -22,8 +22,8 @@ type IfElseMapper struct {
 
 func (fs *IfElseMapper) Eval(scope data.Scope) (interface{}, error) {
 	ifExpr := fs.IfExpr
-	if ifExpr.Condition == nil {
-		return nil, fmt.Errorf("if must have condition expression")
+	if ifExpr.condition == nil {
+		return nil, fmt.Errorf("if mapping must have condition expression")
 	}
 	ok, err := ifExpr.EvalCondition(scope)
 	if err != nil {
@@ -31,24 +31,24 @@ func (fs *IfElseMapper) Eval(scope data.Scope) (interface{}, error) {
 	}
 	if ok {
 		// if is true
-		if ifExpr.object != nil {
-			return ifExpr.object.Eval(scope)
+		if ifExpr.body != nil {
+			return ifExpr.body.Eval(scope)
 		}
 		return nil, nil
 	} else {
 		//go to else if
 		if len(fs.ElseIfExpr) > 0 {
 			for _, elseIfExr := range fs.ElseIfExpr {
-				if elseIfExr.Condition == nil {
-					return nil, fmt.Errorf("elseif must have condition expression")
+				if elseIfExr.condition == nil {
+					return nil, fmt.Errorf("elseif mapping must have condition expression")
 				}
 				ok, err := elseIfExr.EvalCondition(scope)
 				if err != nil {
 					return nil, err
 				}
 				if ok {
-					if elseIfExr.object != nil {
-						return elseIfExr.object.Eval(scope)
+					if elseIfExr.body != nil {
+						return elseIfExr.body.Eval(scope)
 					}
 					return nil, nil
 
@@ -57,24 +57,23 @@ func (fs *IfElseMapper) Eval(scope data.Scope) (interface{}, error) {
 		}
 	}
 	//go to else
-	if fs.ElseExpr != nil && fs.ElseExpr.object != nil {
-		return fs.ElseExpr.object.Eval(scope)
+	if fs.ElseExpr != nil && fs.ElseExpr.body != nil {
+		return fs.ElseExpr.body.Eval(scope)
 	}
 	return nil, nil
 }
 
 type ifElseExpr struct {
-	Condition expression.Expr
-	// Object mapper
-	object expression.Expr
+	condition expression.Expr
+	body      expression.Expr
 }
 
 // EvalCondition Execute the condition expression of if/elseif
 func (f *ifElseExpr) EvalCondition(scope data.Scope) (bool, error) {
-	if f.Condition != nil {
-		ifCondition, err := f.Condition.Eval(scope)
+	if f.condition != nil {
+		ifCondition, err := f.condition.Eval(scope)
 		if err != nil {
-			return false, fmt.Errorf("eval if/else condition [%s] error: %s", f.Condition, err.Error())
+			return false, fmt.Errorf("eval if/else condition [%s] error: %s", f.condition, err.Error())
 		}
 		ok, _ := coerce.ToBool(ifCondition)
 		return ok, nil
@@ -122,10 +121,9 @@ func createIfElseMapper(value interface{}, ef expression.Factory) (expression.Ex
 					return nil, err
 				}
 				expr := &ifElseExpr{
-					Condition: ifCondition,
-					object:    mapper,
+					condition: ifCondition,
+					body:      mapper,
 				}
-
 				if strings.HasPrefix(k, If) {
 					ifMapper.IfExpr = expr
 				} else if strings.HasPrefix(k, ElseIf) {
