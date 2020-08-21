@@ -85,7 +85,7 @@ For some cases that we would like to do mapping base on conditions. On certain c
     "@if($.pathParams.myParam == \"abc\")": "This is param for abc",
     "@elseif($.pathParams.myParam == \"foo\")": "This is param for foo",
     "@elseif($.pathParams.myParam == \"xxxx\")": "This is param for xxx",
-    "@else($.pathParams.myParam == \"else\")": "This is param for else"        
+    "@else": "This is param for else"        
   }
 }
 ```
