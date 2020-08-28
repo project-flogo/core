@@ -93,10 +93,6 @@ func (e *arithAddExpr) Eval(scope data.Scope) (interface{}, error) {
 			if err != nil {
 				fmt.Errorf("cannot subtract %s from %s", reflect.TypeOf(rv).String(), reflect.TypeOf(lv).String())
 			}
-			fmt.Println(lf)
-			fmt.Println(rf)
-
-			fmt.Println(lf + rf)
 			return lf + rf, nil
 		} else {
 			lf, _ := le.Int64()
@@ -186,17 +182,6 @@ func (e *arithSubExpr) Eval(scope data.Scope) (interface{}, error) {
 	}
 
 	return false, fmt.Errorf("cannot subtract %s from %s", reflect.TypeOf(rightValue).String(), reflect.TypeOf(leftValue).String())
-}
-
-func isJsonNumber(v interface{}) bool {
-	if v == nil {
-		return false
-	}
-	switch v.(type) {
-	case json.Number:
-		return true
-	}
-	return false
 }
 
 type arithMulExpr struct {
@@ -397,4 +382,15 @@ func (e *arithModExpr) Eval(scope data.Scope) (interface{}, error) {
 	}
 
 	return false, fmt.Errorf("cannot mod %s with %s", reflect.TypeOf(lv).String(), reflect.TypeOf(rv).String())
+}
+
+func isJsonNumber(v interface{}) bool {
+	if v == nil {
+		return false
+	}
+	switch v.(type) {
+	case json.Number:
+		return true
+	}
+	return false
 }
