@@ -1,6 +1,7 @@
 package script
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/project-flogo/core/data/property"
@@ -639,7 +640,6 @@ func TestBoolExprOr(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, false, v)
 
-
 	scope := newScope(map[string]interface{}{"foo": "foo", "key": 2})
 	expr, err = factory.NewExpr(` true || $.NOTEXIST > 200`)
 	assert.Nil(t, err)
@@ -652,7 +652,6 @@ func TestBoolExprOr(t *testing.T) {
 	v, err = expr.Eval(scope)
 	assert.Nil(t, err)
 	assert.Equal(t, true, v)
-
 
 }
 
@@ -975,12 +974,10 @@ func TestBuiltInFunction(t *testing.T) {
 	}
 }
 
-
 func TestDateTimeComparation(t *testing.T) {
 
-
 	now := time.Now()
-	scope := newScope(map[string]interface{}{"date1":now, "date2": now, "date3":"2020-03-19T15:02:03Z", "date4": "2050-03-19T15:02:03Z"})
+	scope := newScope(map[string]interface{}{"date1": now, "date2": now, "date3": "2020-03-19T15:02:03Z", "date4": "2050-03-19T15:02:03Z"})
 
 	tests := []struct {
 		Expr         string
@@ -1033,6 +1030,84 @@ func TestDateTimeComparation(t *testing.T) {
 	}
 }
 
+func TestJsonNumberWithOperator(t *testing.T) {
+
+	var jsonData = `
+	{
+"data": {
+	"int":100,
+	"float":45.33
+}
+    }
+`
+	var data map[string]interface{}
+
+	d := json.NewDecoder(bytes.NewReader([]byte(jsonData)))
+	d.UseNumber()
+	err := d.Decode(&data)
+	if err != nil {
+		t.Fatal(err)
+		return
+	}
+
+	scope := newScope(data)
+
+	tests := []struct {
+		Expr         string
+		ExpectResult interface{}
+	}{
+		{
+			Expr:         "$.data.int == 100",
+			ExpectResult: true,
+		},
+		{
+			Expr:         "$.data.float == 45.33",
+			ExpectResult: true,
+		},
+		{
+			Expr:         "$.data.float >= 46.33",
+			ExpectResult: false,
+		},
+		{
+			Expr:         "$.data.float <= 45.33",
+			ExpectResult: true,
+		},
+		{
+			Expr:         "$.data.float > 45.33",
+			ExpectResult: false,
+		},
+		{
+			Expr:         "$.data.float < 45.33",
+			ExpectResult: false,
+		},
+		{
+			Expr:         "$.data.float - $.data.int",
+			ExpectResult: -54.67,
+		},
+		{
+			Expr:         "$.data.float * $.data.int",
+			ExpectResult: float64(4533),
+		}, {
+			Expr:         "$.data.int / 2",
+			ExpectResult: int64(50),
+		},
+	}
+
+	for i, tt := range tests {
+		expr, err := factory.NewExpr(tt.Expr)
+		assert.Nil(t, err)
+		v, err := expr.Eval(scope)
+		assert.Nil(t, err)
+		if assert.NoError(t, err, "Unexpected error in case #%d.", i) {
+			assert.Equal(
+				t,
+				tt.ExpectResult,
+				v,
+				"Unexpected expression output: expected to %v.", tt.ExpectResult,
+			)
+		}
+	}
+}
 
 var result interface{}
 

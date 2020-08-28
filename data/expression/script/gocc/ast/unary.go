@@ -1,10 +1,12 @@
 package ast
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/resolve"
 	"reflect"
+	"strings"
 
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/expression/script/gocc/token"
@@ -79,6 +81,14 @@ func (e *unaryNegExpr) Eval(scope data.Scope) (interface{}, error) {
 	case float32, float64:
 		vf, _ := coerce.ToFloat64(ve)
 		return -vf, nil
+	case json.Number:
+		if strings.Contains(ve.String(), ".") {
+			vf, _ := ve.Float64()
+			return -vf, nil
+		} else {
+			vf, _ := ve.Int64()
+			return -vf, nil
+		}
 	}
 
 	return false, fmt.Errorf("cannot not '%s'", reflect.TypeOf(v).String())
