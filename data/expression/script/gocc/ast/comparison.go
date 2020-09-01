@@ -71,8 +71,15 @@ func (e *cmpEqExpr) Eval(scope data.Scope) (interface{}, error) {
 			ri, _ := coerce.ToFloat64(rv)
 			return li == ri, nil
 		}
+
+		if isJsonNumber(rv) {
+			li, _ := coerce.ToInt64(lv)
+			ri, _ := coerce.ToInt64(rv)
+			return li == ri, nil
+		}
+
 	case float32, float64:
-		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 {
+		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 || isJsonNumber(rv) {
 			lf, _ := coerce.ToFloat64(lv)
 			rf, _ := coerce.ToFloat64(rv)
 			return lf == rf, nil
@@ -150,8 +157,14 @@ func (e *cmpNotEqExpr) Eval(scope data.Scope) (interface{}, error) {
 			ri, _ := coerce.ToFloat64(rv)
 			return li != ri, nil
 		}
+
+		if isJsonNumber(rv) {
+			li, _ := coerce.ToInt64(lv)
+			ri, _ := coerce.ToInt64(rv)
+			return li != ri, nil
+		}
 	case float32, float64:
-		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 {
+		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 || isJsonNumber(rv) {
 			lf, _ := coerce.ToFloat64(lv)
 			rf, _ := coerce.ToFloat64(rv)
 			return lf != rf, nil
@@ -229,8 +242,13 @@ func (e *cmpGtExpr) Eval(scope data.Scope) (interface{}, error) {
 			ri, _ := coerce.ToFloat64(rv)
 			return li > ri, nil
 		}
+		if isJsonNumber(rv) {
+			li, _ := coerce.ToInt64(lv)
+			ri, _ := coerce.ToInt64(rv)
+			return li > ri, nil
+		}
 	case float32, float64:
-		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 {
+		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 || isJsonNumber(rv) {
 			lf, _ := coerce.ToFloat64(lv)
 			rf, _ := coerce.ToFloat64(rv)
 			return lf > rf, nil
@@ -303,8 +321,14 @@ func (e *cmpGtEqExpr) Eval(scope data.Scope) (interface{}, error) {
 			ri, _ := coerce.ToFloat64(rv)
 			return li >= ri, nil
 		}
+
+		if isJsonNumber(rv) {
+			li, _ := coerce.ToInt64(lv)
+			ri, _ := coerce.ToInt64(rv)
+			return li >= ri, nil
+		}
 	case float32, float64:
-		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 {
+		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 || isJsonNumber(rv) {
 			lf, _ := coerce.ToFloat64(lv)
 			rf, _ := coerce.ToFloat64(rv)
 			return lf >= rf, nil
@@ -381,8 +405,13 @@ func (e *cmpLtExpr) Eval(scope data.Scope) (interface{}, error) {
 			ri, _ := coerce.ToFloat64(rv)
 			return li < ri, nil
 		}
+		if isJsonNumber(rv) {
+			li, _ := coerce.ToInt64(lv)
+			ri, _ := coerce.ToInt64(rv)
+			return li < ri, nil
+		}
 	case float32, float64:
-		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 {
+		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 || isJsonNumber(rv) {
 			lf, _ := coerce.ToFloat64(lv)
 			rf, _ := coerce.ToFloat64(rv)
 			return lf < rf, nil
@@ -457,8 +486,13 @@ func (e *cmpLtEqExpr) Eval(scope data.Scope) (interface{}, error) {
 			ri, _ := coerce.ToFloat64(rv)
 			return li <= ri, nil
 		}
+		if isJsonNumber(rv) {
+			li, _ := coerce.ToInt64(lv)
+			ri, _ := coerce.ToInt64(rv)
+			return li <= ri, nil
+		}
 	case float32, float64:
-		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 {
+		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 || isJsonNumber(rv) {
 			lf, _ := coerce.ToFloat64(lv)
 			rf, _ := coerce.ToFloat64(rv)
 			return lf <= rf, nil

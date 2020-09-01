@@ -1,8 +1,10 @@
 package ast
 
 import (
+	"encoding/json"
 	"fmt"
 	"reflect"
+	"strings"
 
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/coerce"
@@ -68,8 +70,15 @@ func (e *arithAddExpr) Eval(scope data.Scope) (interface{}, error) {
 			ri, _ := coerce.ToFloat64(rv)
 			return li + ri, nil
 		}
+
+		if isJsonNumber(rv) {
+			li, _ := coerce.ToInt64(lv)
+			ri, _ := coerce.ToInt64(rv)
+			return li + ri, nil
+		}
+
 	case float32, float64:
-		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 {
+		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 || isJsonNumber(rv) {
 			lf, _ := coerce.ToFloat64(lv)
 			rf, _ := coerce.ToFloat64(rv)
 			return lf + rf, nil
@@ -77,6 +86,22 @@ func (e *arithAddExpr) Eval(scope data.Scope) (interface{}, error) {
 	case string:
 		rs, _ := coerce.ToString(rv)
 		return le + rs, nil
+	case json.Number:
+		if strings.Contains(le.String(), ".") {
+			lf, _ := le.Float64()
+			rf, err := coerce.ToFloat64(rv)
+			if err != nil {
+				fmt.Errorf("cannot subtract %s from %s", reflect.TypeOf(rv).String(), reflect.TypeOf(lv).String())
+			}
+			return lf + rf, nil
+		} else {
+			lf, _ := le.Int64()
+			rf, err := coerce.ToInt64(rv)
+			if err != nil {
+				fmt.Errorf("cannot subtract %s from %s", reflect.TypeOf(rv).String(), reflect.TypeOf(lv).String())
+			}
+			return lf + rf, nil
+		}
 	}
 
 	if rt == reflect.String {
@@ -102,38 +127,61 @@ func (e *arithSubExpr) Init(resolver resolve.CompositeResolver, root bool) error
 }
 
 func (e *arithSubExpr) Eval(scope data.Scope) (interface{}, error) {
-	lv, rv, err := evalLR(e.left, e.right, scope)
+	leftValue, rightValue, err := evalLR(e.left, e.right, scope)
 	if err != nil {
 		return nil, err
 	}
 
-	if lv == nil || rv == nil {
+	if leftValue == nil || rightValue == nil {
 		//todo validate
-		return nil, fmt.Errorf("cannot subtract %v from %v", rv, lv)
+		return nil, fmt.Errorf("cannot subtract %v from %v", rightValue, leftValue)
 	}
 
-	rt := reflect.TypeOf(rv).Kind()
-	switch lv.(type) {
+	rt := reflect.TypeOf(rightValue).Kind()
+	switch le := leftValue.(type) {
 	case int, int32, int64:
 		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 {
-			li, _ := coerce.ToInt(lv) //todo should this be Int64
-			ri, _ := coerce.ToInt(rv) //todo should this be Int64
+			li, _ := coerce.ToInt(leftValue)  //todo should this be Int64
+			ri, _ := coerce.ToInt(rightValue) //todo should this be Int64
 			return li - ri, nil
 		}
 		if rt == reflect.Float32 || rt == reflect.Float64 {
-			li, _ := coerce.ToFloat64(lv)
-			ri, _ := coerce.ToFloat64(rv)
+			li, _ := coerce.ToFloat64(leftValue)
+			ri, _ := coerce.ToFloat64(rightValue)
+			return li - ri, nil
+		}
+
+		if isJsonNumber(rightValue) {
+			li, _ := coerce.ToInt64(leftValue)
+			ri, _ := coerce.ToInt64(rightValue)
 			return li - ri, nil
 		}
 	case float32, float64:
-		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 {
-			lf, _ := coerce.ToFloat64(lv)
-			rf, _ := coerce.ToFloat64(rv)
+		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 || isJsonNumber(rightValue) {
+			lf, _ := coerce.ToFloat64(leftValue)
+			rf, _ := coerce.ToFloat64(rightValue)
+			return lf - rf, nil
+		}
+
+	case json.Number:
+		if strings.Contains(le.String(), ".") {
+			lf, _ := le.Float64()
+			rf, err := coerce.ToFloat64(rightValue)
+			if err != nil {
+				fmt.Errorf("cannot subtract %s from %s", reflect.TypeOf(rightValue).String(), reflect.TypeOf(leftValue).String())
+			}
+			return lf - rf, nil
+		} else {
+			lf, _ := le.Int64()
+			rf, err := coerce.ToInt64(rightValue)
+			if err != nil {
+				fmt.Errorf("cannot subtract %s from %s", reflect.TypeOf(rightValue).String(), reflect.TypeOf(leftValue).String())
+			}
 			return lf - rf, nil
 		}
 	}
 
-	return false, fmt.Errorf("cannot subtract %s from %s", reflect.TypeOf(rv).String(), reflect.TypeOf(lv).String())
+	return false, fmt.Errorf("cannot subtract %s from %s", reflect.TypeOf(rightValue).String(), reflect.TypeOf(leftValue).String())
 }
 
 type arithMulExpr struct {
@@ -161,7 +209,7 @@ func (e *arithMulExpr) Eval(scope data.Scope) (interface{}, error) {
 	}
 
 	rt := reflect.TypeOf(rv).Kind()
-	switch lv.(type) {
+	switch le := lv.(type) {
 	case int, int32, int64:
 		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 {
 			li, _ := coerce.ToInt(lv) //todo should this be Int64
@@ -173,10 +221,31 @@ func (e *arithMulExpr) Eval(scope data.Scope) (interface{}, error) {
 			ri, _ := coerce.ToFloat64(rv)
 			return li * ri, nil
 		}
+		if isJsonNumber(rv) {
+			li, _ := coerce.ToInt64(lv)
+			ri, _ := coerce.ToInt64(rv)
+			return li * ri, nil
+		}
 	case float32, float64:
-		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 {
+		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 || isJsonNumber(rv) {
 			lf, _ := coerce.ToFloat64(lv)
 			rf, _ := coerce.ToFloat64(rv)
+			return lf * rf, nil
+		}
+	case json.Number:
+		if strings.Contains(le.String(), ".") {
+			lf, _ := le.Float64()
+			rf, err := coerce.ToFloat64(rv)
+			if err != nil {
+				fmt.Errorf("cannot subtract %s from %s", reflect.TypeOf(rv).String(), reflect.TypeOf(le).String())
+			}
+			return lf * rf, nil
+		} else {
+			lf, _ := le.Int64()
+			rf, err := coerce.ToInt64(rv)
+			if err != nil {
+				fmt.Errorf("cannot subtract %s from %s", reflect.TypeOf(rv).String(), reflect.TypeOf(le).String())
+			}
 			return lf * rf, nil
 		}
 	}
@@ -209,7 +278,7 @@ func (e *arithDivExpr) Eval(scope data.Scope) (interface{}, error) {
 	}
 
 	rt := reflect.TypeOf(rv).Kind()
-	switch lv.(type) {
+	switch le := lv.(type) {
 	case int, int32, int64:
 		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 {
 			li, _ := coerce.ToInt(lv) //todo should this be Int64
@@ -221,10 +290,33 @@ func (e *arithDivExpr) Eval(scope data.Scope) (interface{}, error) {
 			ri, _ := coerce.ToFloat64(rv)
 			return li / ri, nil
 		}
+
+		if isJsonNumber(rv) {
+			li, _ := coerce.ToInt64(lv)
+			ri, _ := coerce.ToInt64(rv)
+			return li / ri, nil
+		}
+
 	case float32, float64:
-		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 {
+		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 || isJsonNumber(rv) {
 			lf, _ := coerce.ToFloat64(lv)
 			rf, _ := coerce.ToFloat64(rv)
+			return lf / rf, nil
+		}
+	case json.Number:
+		if strings.Contains(le.String(), ".") {
+			lf, _ := le.Float64()
+			rf, err := coerce.ToFloat64(rv)
+			if err != nil {
+				fmt.Errorf("cannot subtract %s from %s", reflect.TypeOf(rv).String(), reflect.TypeOf(le).String())
+			}
+			return lf / rf, nil
+		} else {
+			lf, _ := le.Int64()
+			rf, err := coerce.ToInt64(rv)
+			if err != nil {
+				fmt.Errorf("cannot subtract %s from %s", reflect.TypeOf(rv).String(), reflect.TypeOf(le).String())
+			}
 			return lf / rf, nil
 		}
 	}
@@ -257,7 +349,7 @@ func (e *arithModExpr) Eval(scope data.Scope) (interface{}, error) {
 	}
 
 	rt := reflect.TypeOf(rv).Kind()
-	switch lv.(type) {
+	switch le := lv.(type) {
 	case int, int32, int64:
 		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 {
 			li, _ := coerce.ToInt(lv) //todo should this be Int64
@@ -269,13 +361,36 @@ func (e *arithModExpr) Eval(scope data.Scope) (interface{}, error) {
 			ri, _ := coerce.ToInt(rv) //todo should this be Int64
 			return li % ri, nil
 		}
+		if isJsonNumber(rv) {
+			li, _ := coerce.ToInt64(lv)
+			ri, _ := coerce.ToInt64(rv)
+			return li % ri, nil
+		}
 	case float32, float64:
-		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 {
+		if rt == reflect.Int || rt == reflect.Int32 || rt == reflect.Int64 || rt == reflect.Float32 || rt == reflect.Float64 || isJsonNumber(rv) {
 			li, _ := coerce.ToInt(lv) //todo should this be Int64
 			ri, _ := coerce.ToInt(rv) //todo should this be Int64
 			return li % ri, nil
 		}
+	case json.Number:
+		lf, _ := le.Int64()
+		rf, err := coerce.ToInt64(rv)
+		if err != nil {
+			fmt.Errorf("cannot subtract %s from %s", reflect.TypeOf(rv).String(), reflect.TypeOf(le).String())
+		}
+		return lf % rf, nil
 	}
 
 	return false, fmt.Errorf("cannot mod %s with %s", reflect.TypeOf(lv).String(), reflect.TypeOf(rv).String())
+}
+
+func isJsonNumber(v interface{}) bool {
+	if v == nil {
+		return false
+	}
+	switch v.(type) {
+	case json.Number:
+		return true
+	}
+	return false
 }
