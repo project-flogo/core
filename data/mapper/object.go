@@ -111,8 +111,8 @@ func (a *assignAllExpr) Eval(scope data.Scope) (interface{}, error) {
 }
 
 func NewObjectMapper(mappings interface{}, exprF expression.Factory) (expr expression.Expr, err error) {
-	if isIfElseMapping(mappings) {
-		return createIfElseMapper(mappings, exprF)
+	if isConditionalMapping(mappings) {
+		return createConditionalMapper(mappings, exprF)
 	} else {
 		switch t := mappings.(type) {
 		case map[string]interface{}:
@@ -128,6 +128,9 @@ func NewObjectMapper(mappings interface{}, exprF expression.Factory) (expr expre
 					return foreach, nil
 				} else {
 					objFields[mk], err = NewObjectMapper(mv, exprF)
+					if err != nil {
+						return nil, err
+					}
 				}
 
 			}

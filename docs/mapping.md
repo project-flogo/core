@@ -75,27 +75,34 @@ The above example shows how `foreach` works. It will iterate over `$flow.store.b
 }
 ```
 
-#### if/else conditional mapping
-For some cases that we would like to do mapping base on conditions. On certain criteria to have different mapping. if/else mapping can be used together with object mapping.
+#### Conditional mapping
+For some cases that we would like to do mapping base on conditions. On certain criteria to have different mapping. conditional mapping can be used together with object mapping.
 
 ##### Assign different value to myInput base on different condition
 ```json
 {
   "myInput": {
-    "@if($.pathParams.myParam == \"abc\")": "This is param for abc",
-    "@elseif($.pathParams.myParam == \"foo\")": "This is param for foo",
-    "@elseif($.pathParams.myParam == \"xxxx\")": "This is param for xxx",
-    "@else": "This is param for else"        
+      "@conditional": [
+        {
+          "$.pathParams.myParam == \"abc\"": "this is abc"
+        },
+        {
+          "$.pathParams.myParam == \"bcd\"": "this is bcd"
+        },
+        {
+          "@otherwise": "this is ddd"
+        }
+      ]       
   }
 }
 ```
-Above is an example show how to use if/else with single primitive field 'myInput'.
+Above is an example show how to use conditional with single primitive field 'myInput'.
 
 **Note**
-* The if/else condition mapping must present in a json object with only one `@if`, one `@else` and multiple `@elseif`.
-* `@elseif` and `@else` are optional.
-* `@if`. `@elseif` must with condition and no condition requires for `@else`.
-* if/else can work with object mapping and array mapping. 
+* The conditional condition mapping must present in a json object with key of `@conditional` and value of array of conditions
+* The value of condition can have any conditions.
+* There is only one optional `@otherwise` array elemenet which use to when there is no condition match
+* conditional mapping can work with object mapping and array mapping. 
 
 
 ## Mapping Resolvers
@@ -298,32 +305,40 @@ Case 5: Using fixed array
     }
 ```
 
-### Working with if/else conditional mapping
-Those are exmaples that showing how to use if/else with object and array mapping
+### Working with conditional mapping
+Those are exmaples that showing how to use conditional with object and array mapping
 
-Case 1: if/else work with object
+Case 1: conditional work with object
 ```json
 {
   "bookDetail": {
     "mapping": {
-      "@if($.book.price >= 100)": {
-        "id": "=$.book.id",
-        "name": "=$.book.id",
-        "address": "=$.book.address",
-        "category": "High"
-      },
-      "@elseif($.book.price >= 50 && $.book.price < 100)": {
-        "id": "=$.person.id",
-        "name": "=$.person.id",
-        "address": "=$.person.address",
-        "category": "Medium"
-      },
-      "@else": {
-        "id": "=$.person.id",
-        "name": "=$.person.id",
-        "address": "=$.person.address",
-        "category": "Low"
-      }
+      "@conditional": [
+        {
+          "$.book.price >= 100": {
+            "id": "=$.book.id",
+            "name": "=$.book.id",
+            "address": "=$.book.address",
+            "category": "High"
+          }
+        },
+        {
+          "$.book.price >= 50 && $.book.price < 100": {
+            "id": "=$.person.id",
+            "name": "=$.person.id",
+            "address": "=$.person.address",
+            "category": "Medium"
+          }
+        },
+        {
+          "@otherwise": {
+            "id": "=$.person.id",
+            "name": "=$.person.id",
+            "address": "=$.person.address",
+            "category": "Low"
+          }
+        }
+      ]
     }
   }
 }
@@ -342,57 +357,89 @@ User can have custom value for other `bookDetail` fields as well base on the con
       "name": "=$.book.id",
       "address": "=$.book.address",
       "category": {
-        "@if($.book.price >= 100)": "High",
-        "@elseif($.book.price >= 50 && $.book.price < 100)": "Medium",
-        "@else": "Low"
+        "@conditional": [
+          {
+            "$.book.price >= 100": "High"
+          },
+          {
+            "$.book.price >= 50 && $.book.price < 100": "Medium"
+          },
+          {
+            "@otherwise": "Low"
+          }
+        ]
       }
     }
   }
 }
 ```
 
-Case 2: if/else work with array
+Case 2: conditional work with array
 ```json
 {
   "store": {
     "mapping": {
-      "@if($.store.name == \"Walmart\")": {
-        "@foreach($.store.books, \"book\")": {
-          "id": "=$loop.city",
-          "name": "=$loop.state",
-          "address": "=$.store.address",
-          "category": {
-            "@if($.book.price >= 100)": "High",
-            "@elseif($.book.price >= 50 && $.book.price < 100)": "Medium",
-            "@else": "Low"
+      "@conditional": [
+        {
+          "$.store.name == \"Walmart\")": {
+            "@foreach($.store.books, \"book\")": {
+              "id": "=$loop.city",
+              "name": "=$loop.state",
+              "address": "=$.store.address",
+              "category": {
+                "@conditional": [
+                  {
+                    "$.book.price >= 100": "High"
+                  },
+                  {
+                    "$.book.price >= 50 && $.book.price < 100": "Medium"
+                  },
+                  {
+                    "@otherwise": "Low"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "$.store.name == \"Target\")": {
+            "@foreach($.store.books, \"book\")": {
+              "id": "=$loop.city",
+              "name": "=$loop.state",
+              "address": "=$.store.address",
+              "category": {
+                "@conditional": [
+                  {
+                    "$.book.price >= 100": "Good"
+                  },
+                  {
+                    "$.book.price >= 50 && $.book.price < 100": "Average"
+                  },
+                  {
+                    "@otherwise": "Poor"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "@otherwise": {
+            "@foreach($.store.books, \"book\")": {
+              "id": "=$loop.city",
+              "name": "=$loop.state",
+              "address": "=$.store.address"
+            }
           }
         }
-      },
-      "@elseif($.store.name == \"Target\")": {
-        "@foreach($.store.books, \"book\")": {
-          "id": "=$loop.city",
-          "name": "=$loop.state",
-          "address": "=$.store.address",
-          "category": {
-            "@if($.book.price >= 100)": "Good",
-            "@elseif($.book.price >= 50 && $.book.price < 100)": "Average",
-            "@else": "Poor"
-          }
-        }
-      },
-      "@else": {
-        "@foreach($.store.books, \"book\")": {
-          "id": "=$loop.city",
-          "name": "=$loop.state",
-          "address": "=$.store.address"
-        }
-      }
+      ]
     }
   }
 }
 ```
 
-Above example shows that iterator all books from different store base on store name and assign to different category name on price.
+Above example shows that iterator all books from different store base on store name and assign to different category name base on price.
 
 
 
