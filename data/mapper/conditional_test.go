@@ -1,8 +1,6 @@
 package mapper
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/project-flogo/core/data"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -60,8 +58,6 @@ func TestConditionalPrimitive(t *testing.T) {
 	}
 
 	for _, tt := range testcases {
-		vv, _ := json.Marshal(tt.Mapping)
-		fmt.Println("=====", string(vv))
 		assert.True(t, isConditionalMapping(tt.Mapping))
 		mappings := map[string]interface{}{"output": tt.Mapping}
 		factory := NewFactory(resolver)
@@ -132,8 +128,6 @@ func TestConditionalSwitchPrimitive(t *testing.T) {
 	}
 
 	for _, tt := range testcases {
-		vv, _ := json.Marshal(tt.Mapping)
-		fmt.Println("=====", string(vv))
 		assert.True(t, isConditionalMapping(tt.Mapping))
 		mappings := map[string]interface{}{"output": tt.Mapping}
 		factory := NewFactory(resolver)

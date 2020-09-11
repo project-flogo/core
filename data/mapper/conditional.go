@@ -30,7 +30,6 @@ func (fs *ConditionalMapper) Eval(scope data.Scope) (interface{}, error) {
 				return condition.mapper.Eval(scope)
 			}
 		}
-
 		if fs.otherwise != nil {
 			return fs.otherwise.Eval(scope)
 		}
@@ -73,20 +72,18 @@ func createConditionalMapper(value interface{}, ef expression.Factory) (expressi
 		ifMapper := &ConditionalMapper{}
 		for k, v := range t {
 			if strings.HasPrefix(k, Conditional) {
-				//if expr
 				var exprPrefix string
 				conditionArg, exit := getConditionArgument(k)
 				if exit {
 					exprPrefix = conditionArg
 				}
-
 				conditionalArray, err := coerce.ToArray(v)
 				if err != nil {
 					return nil, err
 				}
 
-				for _, cElem := range conditionalArray {
-					element, err := coerce.ToObject(cElem)
+				for _, conditionElems := range conditionalArray {
+					element, err := coerce.ToObject(conditionElems)
 					if err != nil {
 						return nil, fmt.Errorf("connditonal mapper element must be key-value pair: %s", err.Error())
 					}
@@ -97,12 +94,10 @@ func createConditionalMapper(value interface{}, ef expression.Factory) (expressi
 
 					var keyExpr, valueExpr expression.Expr
 					for exprK, exprV := range element {
-
 						valueExpr, err = NewObjectMapper(exprV, ef)
 						if err != nil {
 							return nil, err
 						}
-
 						if Otherwise == exprK {
 							ifMapper.otherwise = valueExpr
 							continue
@@ -120,19 +115,15 @@ func createConditionalMapper(value interface{}, ef expression.Factory) (expressi
 							}
 
 						}
-
 						conditionExpr := &conditionalExpr{
 							key:    keyExpr,
 							mapper: valueExpr,
 						}
-
 						ifMapper.conditions = append(ifMapper.conditions, conditionExpr)
 					}
-
 				}
 			}
 		}
-
 		if ifMapper.conditions != nil {
 			return ifMapper, nil
 		} else {
