@@ -96,7 +96,29 @@ For some cases that we would like to do mapping base on conditions. On certain c
   }
 }
 ```
-Above is an example show how to use conditional with single primitive field 'myInput'.
+Above is an example showing how to use conditional with single primitive field 'myInput'.
+#### Shorthand of conditional mapping
+```json
+{
+  "myInput": {
+      "@conditional($.pathParams.age)": [
+        {
+           "<1": "infant"
+        },
+        {
+          "<=10": "child"
+        },
+        {
+          "<=19": "adolescents"
+        },
+        {
+          ">19": "adult"
+        }
+      ]       
+  }
+}
+```
+Above is an example showing how to use conditional with shorthand
 
 **Note**
 * The conditional condition mapping must present in a json object with key of `@conditional` and value of array of conditions
