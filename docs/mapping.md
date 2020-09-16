@@ -75,6 +75,58 @@ The above example shows how `foreach` works. It will iterate over `$flow.store.b
 }
 ```
 
+#### Conditional mapping
+For some cases that we would like to do mapping base on conditions. On certain criteria to have different mapping. conditional mapping can be used together with object mapping.
+
+##### Assign different value to myInput base on different condition
+```json
+{
+  "myInput": {
+      "@conditional": [
+        {
+          "$.pathParams.myParam == \"abc\"": "this is abc"
+        },
+        {
+          "$.pathParams.myParam == \"bcd\"": "this is bcd"
+        },
+        {
+          "@otherwise": "this is ddd"
+        }
+      ]       
+  }
+}
+```
+Above is an example showing how to use conditional with single primitive field 'myInput'.
+#### Shorthand of conditional mapping
+```json
+{
+  "myInput": {
+      "@conditional($.pathParams.age)": [
+        {
+           "<1": "infant"
+        },
+        {
+          "<=10": "child"
+        },
+        {
+          "<=19": "adolescents"
+        },
+        {
+          ">19": "adult"
+        }
+      ]       
+  }
+}
+```
+Above is an example showing how to use conditional with shorthand
+
+**Note**
+* The conditional condition mapping must present in a json object with key of `@conditional` and value of array of conditions
+* The value of condition can have any conditions.
+* There is only one optional `@otherwise` array elemenet which use to when there is no condition match
+* conditional mapping can work with object mapping and array mapping. 
+
+
 ## Mapping Resolvers
 
 Mapping resolvers are used in mapping expression to lookup a value.
@@ -172,7 +224,7 @@ we’re at a simple string property named title.
 There are lots of use cases for array mapping, map entire array to another or iterator partial array to another with functions The array mapping value comes from a JSON format
 
 Case 1: iterate on array `$flow.store.books` and assign value to `books`
-
+```json
     {
       "books": {
         "mapping": {
@@ -184,9 +236,10 @@ Case 1: iterate on array `$flow.store.books` and assign value to `books`
         }
       }
     }
+```
 
 Case 2: Copy original array `$fow.store.books` to target array `books`
-
+```json
     {
       "books": {
         "mapping": {
@@ -196,9 +249,10 @@ Case 2: Copy original array `$fow.store.books` to target array `books`
         }
       }
     }
+```
 
 Case 3: Iterate on array `$fow.store.books` and assign to primitive array `titles`
-
+```json
     {
       "titles": {
         "mapping": {
@@ -208,9 +262,9 @@ Case 3: Iterate on array `$fow.store.books` and assign to primitive array `title
         }
       }
     }
-
+```
 Case 4: Accessing parent loop data.
-
+```json
     {
       "books": {
         "mapping": {
@@ -228,9 +282,10 @@ Case 4: Accessing parent loop data.
         }
       }
     }
+```
 
 Case 5: Using fixed array
-
+```json
     {
       "store": {
         "mapping": {
@@ -251,12 +306,13 @@ Case 5: Using fixed array
         }
       }
     }
-
+```
 1.  Adding `@foreach(source, <optional loopName>)` to indicate iterating on a value
 2.  Using `$loop.xxx` to access the current loop data `xxx` is the object field name
 3.  Using `$loop[loopName].xxx` to access specific loop data
 
 **Note** You can use any literal, functions, expression in object mappings.
+```json
 
     {
       "books": {
@@ -269,4 +325,145 @@ Case 5: Using fixed array
         }
       }
     }
+```
+
+### Working with conditional mapping
+Those are exmaples that showing how to use conditional with object and array mapping
+
+Case 1: conditional work with object
+```json
+{
+  "bookDetail": {
+    "mapping": {
+      "@conditional": [
+        {
+          "$.book.price >= 100": {
+            "id": "=$.book.id",
+            "name": "=$.book.id",
+            "address": "=$.book.address",
+            "category": "High"
+          }
+        },
+        {
+          "$.book.price >= 50 && $.book.price < 100": {
+            "id": "=$.person.id",
+            "name": "=$.person.id",
+            "address": "=$.person.address",
+            "category": "Medium"
+          }
+        },
+        {
+          "@otherwise": {
+            "id": "=$.person.id",
+            "name": "=$.person.id",
+            "address": "=$.person.address",
+            "category": "Low"
+          }
+        }
+      ]
+    }
+  }
+}
+```
+Above example maps books to bookDetail base on price.
+* Map price >= 100 to category High
+* Map price between 50 -> 100 to category Medium
+* Other price map to category low
+
+User can have custom value for other `bookDetail` fields as well base on the condition.   we can have optimized mapping if it has the category only mapping need customized.
+```json
+{
+  "bookDetail": {
+    "mapping": {
+      "id": "=$.book.id",
+      "name": "=$.book.id",
+      "address": "=$.book.address",
+      "category": {
+        "@conditional": [
+          {
+            "$.book.price >= 100": "High"
+          },
+          {
+            "$.book.price >= 50 && $.book.price < 100": "Medium"
+          },
+          {
+            "@otherwise": "Low"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+Case 2: conditional work with array
+```json
+{
+  "store": {
+    "mapping": {
+      "@conditional": [
+        {
+          "$.store.name == \"Walmart\")": {
+            "@foreach($.store.books, \"book\")": {
+              "id": "=$loop.city",
+              "name": "=$loop.state",
+              "address": "=$.store.address",
+              "category": {
+                "@conditional": [
+                  {
+                    "$.book.price >= 100": "High"
+                  },
+                  {
+                    "$.book.price >= 50 && $.book.price < 100": "Medium"
+                  },
+                  {
+                    "@otherwise": "Low"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "$.store.name == \"Target\")": {
+            "@foreach($.store.books, \"book\")": {
+              "id": "=$loop.city",
+              "name": "=$loop.state",
+              "address": "=$.store.address",
+              "category": {
+                "@conditional": [
+                  {
+                    "$.book.price >= 100": "Good"
+                  },
+                  {
+                    "$.book.price >= 50 && $.book.price < 100": "Average"
+                  },
+                  {
+                    "@otherwise": "Poor"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "@otherwise": {
+            "@foreach($.store.books, \"book\")": {
+              "id": "=$loop.city",
+              "name": "=$loop.state",
+              "address": "=$.store.address"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+Above example shows that iterator all books from different store base on store name and assign to different category name base on price.
+
+
+
+
 
