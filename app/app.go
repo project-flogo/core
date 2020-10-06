@@ -76,6 +76,7 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 
 	app.propManager = property.NewManager(properties)
 	property.SetDefaultManager(app.propManager)
+	setController(app)
 
 	for _, option := range options {
 		err := option(app)
