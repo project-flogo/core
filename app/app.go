@@ -435,39 +435,40 @@ func (a *App) Stop() error {
 
 	logger := log.RootLogger()
 
-	logger.Info("Stopping Triggers...")
+	if len(a.triggers) > 0 {
+		logger.Info("Stopping Triggers...")
 
-	lifecycleTriggers := make(map[string]*triggerWrapper)
-	normalTriggers := make(map[string]*triggerWrapper)
+		lifecycleTriggers := make(map[string]*triggerWrapper)
+		normalTriggers := make(map[string]*triggerWrapper)
 
-	for id, trgW := range a.triggers {
-		if _, ok := trgW.trg.(LifecycleAware); ok {
-			lifecycleTriggers[id] = trgW
-		} else {
-			normalTriggers[id] = trgW
+		for id, trgW := range a.triggers {
+			if _, ok := trgW.trg.(LifecycleAware); ok {
+				lifecycleTriggers[id] = trgW
+			} else {
+				normalTriggers[id] = trgW
+			}
 		}
-	}
 
-	// Stop Normal Triggers
-	for id, trg := range normalTriggers {
-		_ = managed.Stop("Trigger [ "+id+" ]", trg.trg)
-		trg.status.Status = managed.StatusStopped
-		trigger.PostTriggerEvent(trigger.STOPPED, id)
-	}
-
-	// Stop Lifecycle Triggers
-	for id, trgW := range lifecycleTriggers {
-		lca, _ := trgW.trg.(LifecycleAware)
-		err := lca.OnShutdown()
-		if err != nil {
-			logger.Errorf("trigger [%s] encountered error processing app OnShutdown event: %s", id, err.Error())
+		// Stop Normal Triggers
+		for id, trg := range normalTriggers {
+			_ = managed.Stop("Trigger [ "+id+" ]", trg.trg)
+			trg.status.Status = managed.StatusStopped
+			trigger.PostTriggerEvent(trigger.STOPPED, id)
 		}
-		_ = managed.Stop("Trigger [ "+id+" ]", trgW.trg)
-		trgW.status.Status = managed.StatusStopped
-		trigger.PostTriggerEvent(trigger.STOPPED, id)
-	}
 
-	logger.Info("Triggers Stopped")
+		// Stop Lifecycle Triggers
+		for id, trgW := range lifecycleTriggers {
+			lca, _ := trgW.trg.(LifecycleAware)
+			err := lca.OnShutdown()
+			if err != nil {
+				logger.Errorf("trigger [%s] encountered error processing app OnShutdown event: %s", id, err.Error())
+			}
+			_ = managed.Stop("Trigger [ "+id+" ]", trgW.trg)
+			trgW.status.Status = managed.StatusStopped
+			trigger.PostTriggerEvent(trigger.STOPPED, id)
+		}
+		logger.Info("Triggers Stopped")
+	}
 
 	delayedStopInterval := GetDelayedStopInterval()
 	if delayedStopInterval != "" {
