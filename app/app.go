@@ -343,69 +343,70 @@ func (a *App) Start() error {
 		logger.Info("Actions Started")
 	}
 
-	lifecycleTriggers := make(map[string]*triggerWrapper)
-	normalTriggers := make(map[string]*triggerWrapper)
+	if len(a.triggers) > 0 {
+		lifecycleTriggers := make(map[string]*triggerWrapper)
+		normalTriggers := make(map[string]*triggerWrapper)
 
-	for id, trgW := range a.triggers {
-		if _, ok := trgW.trg.(LifecycleAware); ok {
-			lifecycleTriggers[id] = trgW
-		} else {
-			normalTriggers[id] = trgW
+		for id, trgW := range a.triggers {
+			if _, ok := trgW.trg.(LifecycleAware); ok {
+				lifecycleTriggers[id] = trgW
+			} else {
+				normalTriggers[id] = trgW
+			}
 		}
-	}
 
-	// Start the triggers
-	logger.Info("Starting Triggers...")
+		// Start the triggers
+		logger.Info("Starting Triggers...")
 
-	var failed []string
+		var failed []string
 
-	// Start Lifecycle triggers
-	for id, trgW := range lifecycleTriggers {
-		ok, err := a.startTrigger(id, trgW)
-		if err != nil {
-			return err
-		}
-		if !ok {
-			failed = append(failed, id)
-		}
-	}
-
-	// Invoke OnStartup for lifecycle aware triggers
-	for _, trgW := range lifecycleTriggers {
-		if trgW.status.Status == managed.StatusStarted  {
-			lca, _ := trgW.trg.(LifecycleAware)
-			err := lca.OnStartup()
+		// Start Lifecycle triggers
+		for id, trgW := range lifecycleTriggers {
+			ok, err := a.startTrigger(id, trgW)
 			if err != nil {
 				return err
 			}
+			if !ok {
+				failed = append(failed, id)
+			}
 		}
+
+		// Invoke OnStartup for lifecycle aware triggers
+		for _, trgW := range lifecycleTriggers {
+			if trgW.status.Status == managed.StatusStarted {
+				lca, _ := trgW.trg.(LifecycleAware)
+				err := lca.OnStartup()
+				if err != nil {
+					return err
+				}
+			}
+		}
+
+		// Start normal triggers
+		for id, trgW := range normalTriggers {
+			ok, err := a.startTrigger(id, trgW)
+			if err != nil {
+				return err
+			}
+			if !ok {
+				failed = append(failed, id)
+			}
+		}
+
+		if len(failed) > 0 {
+			//remove failed trigger, we have no use for them
+			for _, triggerId := range failed {
+				delete(a.triggers, triggerId)
+			}
+		}
+
+		logger.Info("Triggers Started")
 	}
-
-	// Start normal triggers
-	for id, trgW := range normalTriggers {
-		ok, err := a.startTrigger(id, trgW)
-		if err != nil {
-			return err
-		}
-		if !ok {
-			failed = append(failed, id)
-		}
-	}
-
-	if len(failed) > 0 {
-		//remove failed trigger, we have no use for them
-		for _, triggerId := range failed {
-			delete(a.triggers, triggerId)
-		}
-	}
-
-	logger.Info("Triggers Started")
-
 	a.started = true
 	return nil
 }
 
-func (a *App) startTrigger(id string, trg *triggerWrapper) (bool,error) {
+func (a *App) startTrigger(id string, trg *triggerWrapper) (bool, error) {
 
 	statusInfo := trg.status
 	err := managed.Start(fmt.Sprintf("Trigger [ %s ]", id), trg.trg)
@@ -429,7 +430,6 @@ func (a *App) startTrigger(id string, trg *triggerWrapper) (bool,error) {
 
 	return true, nil
 }
-
 
 func (a *App) Stop() error {
 
