@@ -33,3 +33,12 @@ type Factory interface {
 	// New create a new Trigger
 	New(config *Config) (Trigger, error)
 }
+
+// FlowControlAware trigger can be paused or resumed by the engine
+type FlowControlAware interface {
+	// Resume suspended trigger
+	Resume() error
+
+	// Pause trigger
+	Pause() error
+}
