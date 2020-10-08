@@ -192,6 +192,13 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (resu
 		inputMap = triggerValues
 	}
 
+	// extract request parameters from trigger context, and make them available in actions
+	if reqParams, ok := ValuesFromContext(ctx); ok {
+		for k, v := range reqParams {
+			inputMap[k] = v
+		}
+	}
+
 	if ioMd := act.act.IOMetadata(); ioMd != nil {
 		for name, tv := range ioMd.Input {
 			if val, ok := inputMap[name]; ok {
