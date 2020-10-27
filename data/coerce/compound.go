@@ -13,6 +13,15 @@ func ToParams(val interface{}) (map[string]string, error) {
 	switch t := val.(type) {
 	case map[string]string:
 		return t, nil
+	case []byte:
+		var m map[string]string
+		if len(t) > 0 {
+			err := json.Unmarshal(t, &m)
+			if err != nil {
+				return nil, fmt.Errorf("unable to coerce %#v to params", val)
+			}
+		}
+		return m, nil
 	case string:
 		m := make(map[string]string)
 		if t != "" {
@@ -109,6 +118,15 @@ func ToObject(val interface{}) (map[string]interface{}, error) {
 			ret[key] = value
 		}
 		return ret, nil
+	case []byte:
+		var m map[string]interface{}
+		if len(t) > 0 {
+			err := json.Unmarshal(t, &m)
+			if err != nil {
+				return nil, fmt.Errorf("unable to coerce %#v to map[string]interface{}", val)
+			}
+		}
+		return m, nil
 	case string:
 		m := make(map[string]interface{})
 		if t != "" {
@@ -143,6 +161,15 @@ func ToArray(val interface{}) ([]interface{}, error) {
 		var a []interface{}
 		for _, v := range t {
 			a = append(a, v)
+		}
+		return a, nil
+	case []byte:
+		a := make([]interface{}, 0)
+		if len(a) > 0 {
+			err := json.Unmarshal(t, &a)
+			if err != nil {
+				a = append(a, t)
+			}
 		}
 		return a, nil
 	case string:

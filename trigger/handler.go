@@ -178,9 +178,7 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (resu
 	var inputMap map[string]interface{}
 
 	if act.actionInputMapper != nil {
-		inScope := data.NewSimpleScope(triggerValues, nil)
-
-		inputMap, err = act.actionInputMapper.Apply(inScope)
+		inputMap, err = act.actionInputMapper.Apply(scope)
 		if err != nil {
 			return nil, err
 		}
