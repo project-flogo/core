@@ -2,6 +2,7 @@ package app
 
 import (
 	"os"
+	"strconv"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/app/resource"
@@ -13,6 +14,7 @@ import (
 
 const (
 	EnvKeyDelayedAppStopInterval = "FLOGO_APP_DELAYED_STOP_INTERVAL"
+	EnvKeyEnableFlowControl      = "FLOGO_APP_ENABLE_FLOW_CONTROL"
 )
 
 // Def is the configuration for the App
@@ -39,6 +41,15 @@ func GetDelayedStopInterval() string {
 		return intervalEnv
 	}
 	return ""
+}
+
+func EnableFlowControl() bool {
+	enable := os.Getenv(EnvKeyEnableFlowControl)
+	if len(enable) > 0 {
+		b, _ := strconv.ParseBool(enable)
+		return b
+	}
+	return false
 }
 
 type LifecycleAware interface {
