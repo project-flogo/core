@@ -32,7 +32,7 @@ func GetFlowController() <-chan bool {
 	return controller.notify
 }
 
-func setController(app *App) {
+func (app *App) enableFlowController() {
 	controller = controllerData{}
 	controller.notify = make(chan bool)
 	controller.triggers = make(map[string]trigger.FlowControlAware)
@@ -41,18 +41,24 @@ func setController(app *App) {
 			controller.triggers[id] = t
 		}
 	}
-	go controller.startController()
+	if len(controller.triggers) > 0 {
+		go controller.startController()
+	}
 }
 
 // Resume triggers
 func (c controllerData) resumeTriggers() error {
 	// Resume  triggers
 	log.RootLogger().Info("Resuming Triggers...")
-	for _, trg := range c.triggers {
+	for id, trg := range c.triggers {
 		err := trg.Resume()
 		if err != nil {
-			return err
+			//return err
+			//TODO Letting other triggers resume. Should we stop the app here?
+			log.RootLogger().Errorf("Trigger [%s] failed to resume due to error - %s.", id, err.Error())
+			continue
 		}
+		log.RootLogger().Infof("Trigger [%s] is resumed.", id)
 	}
 	log.RootLogger().Info("Triggers Resumed")
 	c.flowControlled = false
@@ -63,11 +69,15 @@ func (c controllerData) resumeTriggers() error {
 func (c controllerData) pauseTriggers() error {
 	log.RootLogger().Info("Pausing Triggers...")
 	// Pause Triggers
-	for _, trg := range c.triggers {
+	for id, trg := range c.triggers {
 		err := trg.Pause()
 		if err != nil {
-			return err
+			//return err
+			//TODO Letting other triggers pause. Should we stop the app here?
+			log.RootLogger().Errorf("Trigger [%s] failed to pause due to error - %s.", id, err.Error())
+			continue
 		}
+		log.RootLogger().Infof("Trigger [%s] is paused.", id)
 	}
 	log.RootLogger().Info("Triggers Paused")
 	c.flowControlled = true
