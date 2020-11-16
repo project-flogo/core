@@ -2,13 +2,14 @@ package mapper
 
 import (
 	"fmt"
+	"reflect"
+	"strings"
+
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/path"
 	"github.com/project-flogo/core/support/log"
-	"reflect"
-	"strings"
 )
 
 var objectMapperLog = log.ChildLogger(log.RootLogger(), "object-mapper")
@@ -39,7 +40,9 @@ const (
 			}
 
 	*/
-	FOREACH = "@foreach"
+	forEach            = "@foreach"
+	foreach_Index      = "index"
+	primitiveArrayData = "data"
 )
 
 type ObjectMapping struct {
@@ -119,7 +122,7 @@ func NewObjectMapper(mappings interface{}, exprF expression.Factory) (expr expre
 			objFields := make(map[string]expression.Expr)
 			for mk, mv := range t {
 				//Root Level foreach
-				if strings.HasPrefix(mk, FOREACH) {
+				if strings.HasPrefix(mk, forEach) {
 					foreach, err := newForeachExpr(mk, exprF)
 					if err != nil {
 						return nil, err
@@ -196,7 +199,7 @@ func newExpr(path interface{}, exprF expression.Factory) (expression.Expr, error
 func newForeachExpr(foreachpath string, exprF expression.Factory) (*foreachExpr, error) {
 	foreach := &foreachExpr{}
 	foreachpath = strings.TrimSpace(foreachpath)
-	if strings.HasPrefix(foreachpath, FOREACH) && strings.Contains(foreachpath, "(") && strings.Contains(foreachpath, ")") {
+	if strings.HasPrefix(foreachpath, forEach) && strings.Contains(foreachpath, "(") && strings.Contains(foreachpath, ")") {
 		paramsStr := foreachpath[strings.Index(foreachpath, "(")+1 : strings.LastIndex(foreachpath, ")")]
 		sourceIdx := strings.Index(paramsStr, ",")
 		if sourceIdx <= 0 {
@@ -289,7 +292,7 @@ func (f *foreachExpr) Eval(scope data.Scope) (interface{}, error) {
 		requireUpdate := len(targetValues) > 0
 		var skippedCount = 0
 		for i, sourceValue := range newSourceArray {
-			scope, err = newLoopScope(sourceValue, f.scopeName, scope)
+			scope, err = newLoopScope(sourceValue, f.scopeName, i, scope)
 			if err != nil {
 				return nil, err
 			}
@@ -352,10 +355,10 @@ func (f *foreachExpr) handleAssign(sourceArray []interface{}, inputScope data.Sc
 
 	switch f.assign.(type) {
 	case *assignAllExpr:
-		for _, sourceValue := range sourceArray {
+		for i, sourceValue := range sourceArray {
 			if f.filterExpr != nil {
 				var err error
-				inputScope, err = newLoopScope(sourceValue, f.scopeName, inputScope)
+				inputScope, err = newLoopScope(sourceValue, f.scopeName, i, inputScope)
 				if err != nil {
 					return nil, err
 				}
@@ -371,9 +374,9 @@ func (f *foreachExpr) handleAssign(sourceArray []interface{}, inputScope data.Sc
 			}
 		}
 	default:
-		for _, sourceValue := range sourceArray {
+		for i, sourceValue := range sourceArray {
 			var err error
-			inputScope, err = newLoopScope(sourceValue, f.scopeName, inputScope)
+			inputScope, err = newLoopScope(sourceValue, f.scopeName, i, inputScope)
 			if err != nil {
 				return nil, err
 			}
@@ -419,16 +422,20 @@ func (f *foreachExpr) HandleFields(inputScope data.Scope) (interface{}, error) {
 	return vals, nil
 }
 
-func newLoopScope(arrayItem interface{}, indexName string, scope data.Scope) (data.Scope, error) {
+func newLoopScope(arrayItem interface{}, scopeName string, index int, scope data.Scope) (data.Scope, error) {
+	//TODO consider about primitive array
 	mapData, err := ToObjectMap(arrayItem)
 	if err != nil {
-		return nil, fmt.Errorf("convert array item data [%+v] to map failed, due to [%s]", arrayItem, err.Error())
+		//Not an object array
+		mapData = make(map[string]interface{})
+		mapData[primitiveArrayData] = arrayItem
 	}
 
+	mapData[foreach_Index] = index
 	loopData := make(map[string]interface{})
 	loopData["_loop"] = mapData
-	if len(indexName) > 0 {
-		loopData[indexName] = mapData
+	if len(scopeName) > 0 {
+		loopData[scopeName] = mapData
 	}
 
 	return data.NewSimpleScope(loopData, scope), nil
