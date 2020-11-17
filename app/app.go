@@ -76,10 +76,6 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 
 	app.propManager = property.NewManager(properties)
 	property.SetDefaultManager(app.propManager)
-	// Enable flow control feature
-	if EnableFlowControl() {
-		app.enableFlowController()
-	}
 
 	for _, option := range options {
 		err := option(app)
@@ -198,6 +194,11 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 	app.triggers, err = app.createTriggers(config.Triggers, runner)
 	if err != nil {
 		return nil, err
+	}
+
+	// Enable flow control feature
+	if EnableFlowControl() {
+		app.enableFlowController()
 	}
 
 	return app, nil
