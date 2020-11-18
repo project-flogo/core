@@ -199,49 +199,133 @@ func newExpr(path interface{}, exprF expression.Factory) (expression.Expr, error
 func newForeachExpr(foreachpath string, exprF expression.Factory) (*foreachExpr, error) {
 	foreach := &foreachExpr{}
 	foreachpath = strings.TrimSpace(foreachpath)
+	source, scopeName, filter := getForeachFunc(foreachpath)
+	if len(source) > 0 {
+		finalExpr, err := exprF.NewExpr(source)
+		if err != nil {
+			return nil, err
+		}
+		foreach.sourceFrom = finalExpr
+	}
+	foreach.scopeName = scopeName
+	if len(filter) > 0 {
+		//create new filter expression
+		filterExpr, err := exprF.NewExpr(filter)
+		if err != nil {
+			return nil, fmt.Errorf("create foreach filtering expression error: %s", err.Error())
+		}
+		foreach.filterExpr = filterExpr
+	}
+	return foreach, nil
+}
+
+func getForeachFunc(foreachpath string) (string, string, string) {
+	var sourceStr, scopeName, filterExprStr string
+	foreachpath = strings.TrimSpace(foreachpath)
 	if strings.HasPrefix(foreachpath, forEach) && strings.Contains(foreachpath, "(") && strings.Contains(foreachpath, ")") {
-		paramsStr := foreachpath[strings.Index(foreachpath, "(")+1 : strings.LastIndex(foreachpath, ")")]
-		sourceIdx := strings.Index(paramsStr, ",")
-		if sourceIdx <= 0 {
-			finalExpr, err := exprF.NewExpr(strings.TrimSpace(paramsStr))
-			if err != nil {
-				return nil, err
-			}
-			foreach.sourceFrom = finalExpr
-		} else {
-
-			finalExpr, err := exprF.NewExpr(strings.TrimSpace(paramsStr[:sourceIdx]))
-			if err != nil {
-				return nil, err
-			}
-			foreach.sourceFrom = finalExpr
-
-			if len(paramsStr) > sourceIdx+1 {
-
-				afterLoopNameParamStr := strings.TrimSpace(paramsStr[sourceIdx+1:])
-				loopNameIdx := strings.Index(afterLoopNameParamStr, ",")
-				if loopNameIdx >= 0 {
-					foreach.scopeName = strings.TrimSpace(afterLoopNameParamStr[:loopNameIdx])
-				} else {
-					foreach.scopeName = afterLoopNameParamStr
-					return foreach, nil
-				}
-
-				if len(afterLoopNameParamStr) > loopNameIdx+1 {
-					filter := strings.TrimSpace(afterLoopNameParamStr[loopNameIdx+1:])
-					if len(filter) > 0 {
-						//create new filter expression
-						filterExpr, err := exprF.NewExpr(filter)
-						if err != nil {
-							return nil, fmt.Errorf("create foreach filtering expression error: %s", err.Error())
+		arrayFunctionArguments := foreachpath[9 : len(foreachpath)-1]
+		var braStartIndex, braEndIndex = strings.Index(arrayFunctionArguments, "("), strings.Index(arrayFunctionArguments, ")")
+		if braStartIndex > 0 && braEndIndex > 0 {
+			sourceIdx, scopeNameIdx := getForeachIndex(arrayFunctionArguments)
+			if sourceIdx == 0 {
+				sourceStr = strings.TrimSpace(arrayFunctionArguments)
+			} else {
+				sourceStr = strings.TrimSpace(arrayFunctionArguments[:sourceIdx])
+				if len(arrayFunctionArguments) > sourceIdx+1 {
+					if scopeNameIdx > 0 {
+						scopeName = strings.TrimSpace(arrayFunctionArguments[sourceIdx+1 : scopeNameIdx])
+						//filter
+						if len(arrayFunctionArguments) > scopeNameIdx+1 {
+							filter := strings.TrimSpace(arrayFunctionArguments[scopeNameIdx+1:])
+							if len(filter) > 0 {
+								filterExprStr = filter
+							}
 						}
-						foreach.filterExpr = filterExpr
+
+					} else {
+						scopeName = strings.TrimSpace(arrayFunctionArguments[sourceIdx+1:])
+					}
+				}
+			}
+
+		} else {
+			sourceIdx := strings.Index(arrayFunctionArguments, ",")
+			if sourceIdx <= 0 {
+				sourceStr = strings.TrimSpace(arrayFunctionArguments)
+			} else {
+				sourceStr = strings.TrimSpace(arrayFunctionArguments[:sourceIdx])
+				if len(arrayFunctionArguments) > sourceIdx+1 {
+					afterLoopNameParamStr := strings.TrimSpace(arrayFunctionArguments[sourceIdx+1:])
+					loopNameIdx := strings.Index(afterLoopNameParamStr, ",")
+					if loopNameIdx >= 0 {
+						scopeName = strings.TrimSpace(afterLoopNameParamStr[:loopNameIdx])
+						if len(afterLoopNameParamStr) > loopNameIdx+1 {
+							filter := strings.TrimSpace(afterLoopNameParamStr[loopNameIdx+1:])
+							if len(filter) > 0 {
+								//create new filter expression
+								filterExprStr = filter
+							}
+						}
+					} else {
+						scopeName = afterLoopNameParamStr
 					}
 				}
 			}
 		}
+
 	}
-	return foreach, nil
+	return sourceStr, scopeName, filterExprStr
+}
+
+func getForeachIndex(str string) (int, int) {
+	var firstIndex, secondIndex int
+	var queue []rune
+	var hasDoubleQuotes bool
+	var hasSingleQoutes bool
+	for index, c := range str {
+		switch c {
+		case '"':
+			// Skip escaped double quotes and double quotes in side single quotes
+			if (index > 1 && str[index-1] == '\\') || hasSingleQoutes {
+				continue
+			} else {
+				if hasDoubleQuotes {
+					hasDoubleQuotes = false
+				} else {
+					hasDoubleQuotes = true
+				}
+			}
+		case '\'':
+			// Skip escaped single quotes and single quotes inside double quotes
+			if (index > 1 && str[index-1] == '\\') || hasDoubleQuotes {
+				continue
+			} else {
+				if hasSingleQoutes {
+					hasSingleQoutes = false
+				} else {
+					hasSingleQoutes = true
+				}
+			}
+		case '(':
+			if !hasSingleQoutes && !hasDoubleQuotes {
+				queue = append(queue, c)
+			}
+		case ')':
+			if !hasSingleQoutes && !hasDoubleQuotes {
+				queue = queue[1:]
+			}
+		case ',':
+			if len(queue) <= 0 {
+				if firstIndex > 0 {
+					secondIndex = index
+					break
+				} else {
+					firstIndex = index
+				}
+			}
+		}
+	}
+	return firstIndex, secondIndex
 }
 
 func (obj *ObjectMapper) Eval(scope data.Scope) (value interface{}, err error) {
