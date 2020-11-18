@@ -98,11 +98,19 @@ func ResolveConfig(config *Config) error {
 
 func resolveRef(config *Config) error {
 	if config.Ref[0] == '#' {
-		var ok bool
-		config.Ref, ok = support.GetAliasRef("connection", config.Ref)
+		ref, ok := support.GetAliasRef("connection", config.Ref)
 		if !ok {
-			return fmt.Errorf("connection '%s' not imported", config.Ref)
+			ref = support.GetNonContributionAlias(config.Ref)
+			if ref == "" {
+				ref = config.Ref
+			}
+			if name, exit := config.Settings["name"]; exit {
+				return fmt.Errorf("connection '%s' with ref '%s' not imported", name, ref)
+			} else {
+				return fmt.Errorf("connection '%s' not imported", ref)
+			}
 		}
+		config.Ref = ref
 	}
 	return nil
 }

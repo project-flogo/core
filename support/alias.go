@@ -3,6 +3,7 @@ package support
 import "fmt"
 
 var aliases = make(map[string]map[string]string)
+var noContributionAlias = make(map[string]string)
 
 func RegisterAlias(contribType, alias, ref string) error {
 
@@ -41,4 +42,19 @@ func GetAliasRef(contribType, alias string) (string, bool) {
 	}
 
 	return ref, true
+}
+
+func SaveNonContributionAlias(alias, ref string) {
+	noContributionAlias[alias] = ref
+}
+
+func GetNonContributionAlias(alias string) string {
+	if alias == "" {
+		return ""
+	}
+
+	if alias[0] == '#' {
+		alias = alias[1:]
+	}
+	return noContributionAlias[alias]
 }

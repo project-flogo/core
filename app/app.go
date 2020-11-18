@@ -76,6 +76,10 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 
 	app.propManager = property.NewManager(properties)
 	property.SetDefaultManager(app.propManager)
+	// Enable flow control feature
+	if EnableFlowControl() {
+		app.enableFlowController()
+	}
 
 	for _, option := range options {
 		err := option(app)
@@ -553,6 +557,7 @@ func registerImport(anImport string) error {
 
 	ct := getContribType(ref)
 	if ct == "other" {
+		support.SaveNonContributionAlias(alias, ref)
 		log.RootLogger().Debugf("Added Non-Contribution Import: %s", ref)
 		return nil
 		//return fmt.Errorf("invalid import, contribution '%s' not registered", anImport)
