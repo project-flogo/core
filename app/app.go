@@ -557,6 +557,7 @@ func registerImport(anImport string) error {
 
 	ct := getContribType(ref)
 	if ct == "other" {
+		support.SaveNonContributionAlias(alias, ref)
 		log.RootLogger().Debugf("Added Non-Contribution Import: %s", ref)
 		return nil
 		//return fmt.Errorf("invalid import, contribution '%s' not registered", anImport)
