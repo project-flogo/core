@@ -20,11 +20,14 @@ const (
 	// and special characters are disallowed in keys, values should be
 	// URL-escaped, etc).
 	HTTPHeaders
+	// Lambda represents trace context as a special header which can be only used
+	// with flogo xray tracing
+	Lambda
 )
 
 // Tracer interface to configure individual tracers
 type Tracer interface {
-    // Implement Start() and Stop() methods to manage tracer lifecycle. These methods will be called during engine startup and engine shutdown.
+	// Implement Start() and Stop() methods to manage tracer lifecycle. These methods will be called during engine startup and engine shutdown.
 	managed.Managed
 
 	// Name() returns the name of the registered tracer
@@ -50,7 +53,6 @@ type Tracer interface {
 	//	results, err := handler.Handle(ctx, outputData)
 	Extract(format CarrierFormat, carrier interface{}) (TracingContext, error)
 
-
 	// Inject() takes the tracing context `tctx` and injects the current trace context for
 	// propagation within `carrier`. The actual type of `carrier` depends on the value of `format`.
 	//
@@ -61,7 +63,6 @@ type Tracer interface {
 	// tracer := trace.GetTracer()
 	// err = tracer.Inject(ctx.TracingContext(), trace.HTTPHeaders, req)
 	Inject(tCtx TracingContext, format CarrierFormat, carrier interface{}) error
-
 
 	// StartTrace() returns a wrapped implementation specific trace created by the underlying tracing implementation.
 	// Non nil parent can be used to establish parent-child relationship between trace object.
