@@ -198,7 +198,7 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 
 	// Enable flow control feature
 	if EnableFlowControl() {
-		app.enableFlowController()
+		app.initFlowController()
 	}
 
 	return app, nil
