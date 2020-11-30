@@ -44,3 +44,13 @@ func SetValue(name string, value interface{}) error {
 	}
 	return appData.SetValue(name, value)
 }
+
+// DeleteValue remove an app attribute
+func DeleteValue(name string) {
+	if log.RootLogger().TraceEnabled() {
+		log.RootLogger().Tracef("Deleting App Value '%s'", name)
+	}
+	if d, ok := appData.(data.NeedsDelete); ok {
+		d.Delete(name)
+	}
+}

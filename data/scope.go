@@ -11,6 +11,12 @@ type Scope interface {
 	SetValue(name string, value interface{}) error
 }
 
+// NeedDelete uses to delete attributes from Scope
+type NeedsDelete interface {
+	// Delete data from scope
+	Delete(name string)
+}
+
 // SimpleScope is a basic implementation of a scope
 type SimpleScope struct {
 	parentScope Scope
@@ -53,6 +59,13 @@ func (s *SimpleScope) SetValue(name string, value interface{}) error {
 	return nil
 }
 
+// Delete implements ScopeDel.Delete
+func (s *SimpleScope) Delete(name string) {
+	if s.values != nil {
+		delete(s.values, name)
+	}
+}
+
 // SimpleSyncScope is a basic implementation of a synchronized scope
 type SimpleSyncScope struct {
 	scope Scope
@@ -72,10 +85,19 @@ func NewSimpleSyncScope(values map[string]interface{}, parentScope Scope) Scope 
 func (s *SimpleSyncScope) GetValue(name string) (value interface{}, exists bool) {
 
 	s.mutex.RLock()
-	v,e := s.scope.GetValue(name)
+	v, e := s.scope.GetValue(name)
 	s.mutex.RUnlock()
 
-	return v,e
+	return v, e
+}
+
+// Delete implements Scope.GetValue
+func (s *SimpleSyncScope) Delete(name string) {
+	s.mutex.RLock()
+	if delScope, ok := s.scope.(NeedsDelete); ok {
+		delScope.Delete(name)
+	}
+	s.mutex.RUnlock()
 }
 
 // SetValue implements Scope.SetValue
