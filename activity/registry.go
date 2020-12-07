@@ -2,8 +2,6 @@ package activity
 
 import (
 	"fmt"
-	"path"
-
 	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/support/log"
 )
@@ -14,7 +12,7 @@ var (
 	activityLoggers   = make(map[string]log.Logger)
 )
 
-var activityLogger = log.ChildLogger(log.RootLogger(), "activity")
+var rootLogger = log.RootLogger()
 
 func Register(activity Activity, f ...Factory) error {
 
@@ -29,10 +27,9 @@ func Register(activity Activity, f ...Factory) error {
 	}
 
 	log.RootLogger().Debugf("Registering activity: %s", ref)
-
 	activities[ref] = activity
-	name := path.Base(ref) //todo should we use this or the alias?
-	activityLoggers[ref] = log.ChildLogger(activityLogger, name)
+
+	activityLoggers[ref] = log.CreateLoggerFromRef(rootLogger, "activity", ref)
 
 	if len(f) > 1 {
 		log.RootLogger().Warnf("Only one factory can be associated with activity: %s", ref)

@@ -2,8 +2,6 @@ package activity
 
 import (
 	"fmt"
-	"path"
-
 	"github.com/project-flogo/core/support/log"
 )
 
@@ -46,9 +44,7 @@ func LegacyRegister(ref string, activity Activity) error {
 	hasLegacy = true
 	activities[ref] = activity
 	legacyTracker[ref] = empty
-	name := path.Base(ref) //todo should probably get this from the descriptor? or on registration provide a short name
-	activityLoggers[ref] = log.ChildLogger(activityLogger, name)
-
+	activityLoggers[ref] = log.CreateLoggerFromRef(rootLogger, "activity", ref)
 	return nil
 }
 

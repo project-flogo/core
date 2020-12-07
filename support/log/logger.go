@@ -2,6 +2,7 @@ package log
 
 import (
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -95,6 +96,26 @@ func ChildLoggerWithFields(logger Logger, fields ...Field) Logger {
 	}
 
 	return childLogger
+}
+
+func CreateLoggerFromRef(logger Logger, contributionType, ref string) Logger {
+	ref = strings.TrimSpace(ref)
+	if strings.HasSuffix(ref, "/") {
+		ref = ref[:len(ref)-1]
+	}
+	dirs := strings.Split(ref, "/")
+	if len(dirs) >= 3 {
+		name := dirs[len(dirs)-1]
+		acType := dirs[len(dirs)-2]
+		if acType == "activity" || acType == "trigger" || acType == "connector" {
+			categoryName := dirs[len(dirs)-3]
+			return ChildLogger(rootLogger, categoryName+"."+acType+"."+name)
+		} else {
+			return ChildLogger(rootLogger, acType+"."+contributionType+"."+name)
+		}
+	} else {
+		return ChildLogger(rootLogger, contributionType+"."+filepath.Base(ref))
+	}
 }
 
 func Sync() {
