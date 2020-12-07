@@ -109,12 +109,12 @@ func CreateLoggerFromRef(logger Logger, contributionType, ref string) Logger {
 		acType := dirs[len(dirs)-2]
 		if acType == "activity" || acType == "trigger" || acType == "connector" {
 			categoryName := dirs[len(dirs)-3]
-			return ChildLogger(rootLogger, categoryName+"."+acType+"."+name)
+			return ChildLogger(rootLogger, strings.ToLower(categoryName+"."+acType+"."+name))
 		} else {
-			return ChildLogger(rootLogger, acType+"."+contributionType+"."+name)
+			return ChildLogger(rootLogger, strings.ToLower(acType+"."+contributionType+"."+name))
 		}
 	} else {
-		return ChildLogger(rootLogger, contributionType+"."+filepath.Base(ref))
+		return ChildLogger(rootLogger, strings.ToLower(contributionType+"."+filepath.Base(ref)))
 	}
 }
 
