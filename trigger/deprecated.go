@@ -24,6 +24,7 @@ func LegacyRegister(ref string, f Factory) error {
 	}
 
 	log.RootLogger().Debugf("Registering legacy trigger [ %s ]", ref)
+	triggerLoggers[ref] = log.CreateLoggerFromRef(rootLogger, "trigger", ref)
 
 	triggerFactories[ref] = f
 

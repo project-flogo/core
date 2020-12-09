@@ -49,7 +49,7 @@ func InitTrigger(factory trigger.Factory, tConfig *trigger.Config, actions map[s
 
 		acts = append(acts, act)
 
-		handler, _ := trigger.NewHandler(hConfig, acts, mf, ef, r)
+		handler, _ := trigger.NewHandler(hConfig, acts, mf, ef, r, logger)
 
 		initCtx.handlers = append(initCtx.handlers, handler)
 

@@ -210,7 +210,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 				}
 			}
 
-			handler, err := trigger.NewHandler(hConfig, acts, mapperFactory, expressionFactory, runner)
+			handler, err := trigger.NewHandler(hConfig, acts, mapperFactory, expressionFactory, runner, logger)
 			if err != nil {
 				return nil, fmt.Errorf("error creating handler [%s] in trigger [%s]:%s", hConfig.Name, tConfig.Id, err.Error())
 			}
