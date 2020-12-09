@@ -18,6 +18,9 @@ const (
 	EnvKeyLogFormat      = "FLOGO_LOG_FORMAT"
 	DefaultLogFormat     = FormatConsole
 
+	EnvKeyLogSeparator  = "FLOGO_LOG_SEPARATOR"
+	DefaultLogSeparator = "\t"
+
 	TraceLevel Level = iota
 	DebugLevel
 	InfoLevel
@@ -179,4 +182,12 @@ func ToLogLevel(lvlStr string) Level {
 	}
 
 	return lvl
+}
+
+func getLogSeparator() string {
+	v, ok := os.LookupEnv(EnvKeyLogSeparator)
+	if ok && len(v) > 0 {
+		return v
+	}
+	return DefaultLogSeparator
 }

@@ -169,6 +169,7 @@ func newZapLogger(logFormat Format) (*zap.Logger, *zap.AtomicLevel, error) {
 		eCfg.EncodeName = nameEncoder
 	}
 
+	eCfg.ConsoleSeparator = getLogSeparator()
 	cfg.EncoderConfig = eCfg
 
 	lvl := cfg.Level
@@ -190,6 +191,7 @@ func newZapTraceLogger(logFormat Format) (*zap.Logger, *zap.AtomicLevel, error) 
 		eCfg.EncodeLevel = traceLevelEncoder
 	}
 
+	eCfg.ConsoleSeparator = getLogSeparator()
 	cfg.EncoderConfig = eCfg
 
 	lvl := cfg.Level
