@@ -1,6 +1,9 @@
 package support
 
-import "reflect"
+import (
+	"reflect"
+	"strings"
+)
 
 func GetRef(contrib interface{}) string {
 	v := reflect.ValueOf(contrib)
@@ -11,9 +14,18 @@ func GetRef(contrib interface{}) string {
 
 	ref := v.Type().PkgPath()
 
-	return ref
+	return fixPkgPathVendoring(ref)
 }
 
 type HasRef interface {
 	Ref() string
+}
+
+// fixes vendored paths
+func fixPkgPathVendoring(pkgPath string) string {
+	const vendor = "/vendor/"
+	if i := strings.LastIndex(pkgPath, vendor); i != -1 {
+		return pkgPath[i+len(vendor):]
+	}
+	return pkgPath
 }
