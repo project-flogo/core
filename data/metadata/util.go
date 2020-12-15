@@ -178,8 +178,26 @@ func ResolveSettingValue(setting string, value interface{}, settingsMd map[strin
 			return nil, err
 		}
 	}
+	return HandleToType(setting, value, toType)
+}
 
-	return coerce.ToType(value, toType)
+func HandleToType(name string, value interface{}, dataType data.Type) (interface{}, error) {
+	newVal, err := coerce.ToType(value, dataType)
+	if err != nil {
+		if dataType == data.TypeConnection {
+			connObj, ok := value.(map[string]interface{})
+			if ok {
+				_, idExist := connObj["id"]
+				_, typeExist := connObj["type"]
+				if idExist && typeExist {
+					//Backward compatible
+					return value, nil
+				}
+			}
+		}
+		return nil, fmt.Errorf("unable to convert name [%s]'s value [%s] to type [%s]:%s", name, value, dataType, err.Error())
+	}
+	return newVal, nil
 }
 
 func IsZeroOfUnderlyingType(x interface{}) bool {
