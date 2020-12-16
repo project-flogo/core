@@ -195,7 +195,7 @@ func HandleToType(name string, value interface{}, dataType data.Type) (interface
 				}
 			}
 		}
-		return nil, fmt.Errorf("unable to convert name [%s]'s value [%s] to type [%s]:%s", name, value, dataType, err.Error())
+		return nil, fmt.Errorf("unable to coerce value [%s] to type [%s] for name [%s]: %s", value, dataType, name, err.Error())
 	}
 	return newVal, nil
 }
