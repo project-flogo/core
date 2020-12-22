@@ -117,7 +117,6 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 			logger = log.ChildLoggerWithFields(logger, log.FieldString("triggerId", tConfig.Id))
 		}
 
-		log.ChildLogger(logger, tConfig.Id)
 		initCtx := &initContext{logger: logger, handlers: make([]trigger.Handler, 0, len(tConfig.Handlers))}
 
 		//create handlers for that trigger and init
