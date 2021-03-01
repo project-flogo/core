@@ -210,8 +210,17 @@ func ToArrayIfNecessary(val interface{}) (interface{}, error) {
 		return nil, nil
 	}
 
-	rt := reflect.TypeOf(val).Kind()
+	//Try to handle []byte
+	switch t := val.(type) {
+	case []byte:
+		a := make([]interface{}, 0)
+		err := json.Unmarshal(t, &a)
+		if err == nil {
+			return a, nil
+		}
+	}
 
+	rt := reflect.TypeOf(val).Kind()
 	if rt == reflect.Array || rt == reflect.Slice {
 		return val, nil
 	}
