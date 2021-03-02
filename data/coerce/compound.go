@@ -165,7 +165,7 @@ func ToArray(val interface{}) ([]interface{}, error) {
 		return a, nil
 	case []byte:
 		a := make([]interface{}, 0)
-		if len(a) > 0 {
+		if len(t) > 0 {
 			err := json.Unmarshal(t, &a)
 			if err != nil {
 				a = append(a, t)
