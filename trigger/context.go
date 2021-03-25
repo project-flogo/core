@@ -8,7 +8,15 @@ import (
 
 var handlerKey = "_ctx_handler_info"
 
-var idGenerator, _ = support.NewGenerator()
+var idGenerator *support.Generator
+
+func init() {
+	var err error
+	idGenerator, err = support.NewGenerator()
+	if err != nil {
+		panic("initialization uuid generator error:" + err.Error())
+	}
+}
 
 type HandlerInfo struct {
 	Name      string
