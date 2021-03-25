@@ -135,9 +135,9 @@ func toZapLogLevel(level Level) zapcore.Level {
 	return zapcore.InfoLevel
 }
 
-func newZapRootLogger(name string, format Format) Logger {
+func newZapRootLogger(name string, format Format, level Level) Logger {
 
-	zl, lvl, _ := newZapLogger(format)
+	zl, lvl, _ := newZapLogger(format, level)
 
 	var rootLogger Logger
 	if name == "" {
@@ -154,14 +154,13 @@ func newZapRootLogger(name string, format Format) Logger {
 	return rootLogger
 }
 
-func newZapLogger(logFormat Format) (*zap.Logger, *zap.AtomicLevel, error) {
+func newZapLogger(logFormat Format, level Level) (*zap.Logger, *zap.AtomicLevel, error) {
 	cfg := zap.NewProductionConfig()
 	cfg.DisableCaller = true
 
 	eCfg := cfg.EncoderConfig
 	eCfg.TimeKey = "timestamp"
 	eCfg.EncodeTime = zapcore.ISO8601TimeEncoder
-	//eCfg.EncodeTime = zapcore.EpochNanosTimeEncoder
 
 	if logFormat == FormatConsole {
 		eCfg.EncodeLevel = zapcore.CapitalLevelEncoder
@@ -170,6 +169,11 @@ func newZapLogger(logFormat Format) (*zap.Logger, *zap.AtomicLevel, error) {
 	}
 
 	eCfg.ConsoleSeparator = getLogSeparator()
+	//Don't print stacktrace for log level lower than debug
+	if level > DebugLevel {
+		eCfg.StacktraceKey = ""
+	}
+
 	cfg.EncoderConfig = eCfg
 
 	lvl := cfg.Level

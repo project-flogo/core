@@ -158,7 +158,7 @@ func configureLogging() {
 		logFormat = FormatJson
 	}
 
-	rootLogger = newZapRootLogger("flogo", logFormat)
+	rootLogger = newZapRootLogger("flogo", logFormat, rootLogLevel)
 	SetLogLevel(rootLogger, rootLogLevel)
 }
 
