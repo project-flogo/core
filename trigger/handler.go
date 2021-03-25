@@ -4,8 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"runtime/debug"
-
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/coerce"
@@ -13,6 +11,8 @@ import (
 	"github.com/project-flogo/core/data/mapper"
 	"github.com/project-flogo/core/data/property"
 	"github.com/project-flogo/core/support/log"
+	"runtime/debug"
+	"time"
 )
 
 var handlerLog = log.ChildLogger(log.RootLogger(), "handler")
@@ -116,20 +116,28 @@ func (h *handlerImpl) GetSetting(setting string) (interface{}, bool) {
 }
 
 func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (results map[string]interface{}, err error) {
+	handlerName := "Handler"
+	if h.config != nil && h.config.Name != "" {
+		handlerName = h.config.Name
+	}
+	newCtx := NewHandlerContext(ctx, h.config)
+
 	defer func() {
+		h.Logger().Infof("Handler [%s] with event id [%s] done, took: %s", handlerName, GetHandlerEventIdFromContext(newCtx), time.Since(GetHandleStartTimeFromContext(newCtx)).String())
 		if r := recover(); r != nil {
-			handlerLog.Warnf("Unhandled Error while handling handler [%s]: %v", h.Name(), r)
-			if handlerLog.DebugEnabled() {
-				handlerLog.Debugf("StackTrace: %s", debug.Stack())
+			h.Logger().Warnf("Unhandled Error while handling handler [%s]: %v", h.Name(), r)
+			if h.Logger().DebugEnabled() {
+				h.Logger().Debugf("StackTrace: %s", debug.Stack())
 			}
 			err = fmt.Errorf("Unhandled Error while handling handler [%s]: %v", h.Name(), r)
 		}
 	}()
 
+	h.Logger().Infof("Executing handler [%s] with event id [%s]", handlerName, GetHandlerEventIdFromContext(newCtx))
 	eventData := h.eventData
 
 	// check if any event data was attached to the context
-	if ctxEventData, _ := ExtractEventDataFromContext(ctx); ctxEventData != nil {
+	if ctxEventData, _ := ExtractEventDataFromContext(newCtx); ctxEventData != nil {
 		//use this event data values and add missing default event values
 		for key, value := range eventData {
 			if _, exists := ctxEventData[key]; !exists {
@@ -203,8 +211,6 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (resu
 		}
 	}
 
-	newCtx := NewHandlerContext(ctx, h.config)
-
 	if property.IsPropertySnapshotEnabled() {
 		if inputMap == nil {
 			inputMap = make(map[string]interface{})
@@ -227,12 +233,10 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (resu
 
 	if act.actionOutputMapper != nil {
 		outScope := data.NewSimpleScope(results, nil)
-		retValue, err := act.actionOutputMapper.Apply(outScope)
-
-		return retValue, err
-	} else {
-		return results, nil
+		results, err = act.actionOutputMapper.Apply(outScope)
 	}
+
+	return results, err
 }
 
 func (h *handlerImpl) String() string {
