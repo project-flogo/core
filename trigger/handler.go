@@ -66,8 +66,18 @@ func NewHandler(config *HandlerConfig, acts []action.Action, mf mapper.Factory, 
 		return nil, errors.New("no action specified for handler")
 	}
 
-	handler := &handlerImpl{config: config, acts: make([]actImpl, len(acts)), runner: runner, logger: log.ChildLogger(logger, config.Name)}
+	var handlerLogger log.Logger
+	if log.CtxLoggingEnabled() {
+		if config.parent != nil {
+			handlerLogger = log.ChildLoggerWithFields(logger, log.FieldString("handlerName", config.Name), log.FieldString("triggerId", config.parent.Id))
+		} else {
+			handlerLogger = log.ChildLoggerWithFields(logger, log.FieldString("handlerName", config.Name))
+		}
+	} else {
+		handlerLogger = log.ChildLogger(logger, "handler")
+	}
 
+	handler := &handlerImpl{config: config, acts: make([]actImpl, len(acts)), runner: runner, logger: handlerLogger}
 	var err error
 
 	//todo we could filter inputs/outputs based on the metadata, maybe make this an option

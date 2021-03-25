@@ -34,6 +34,16 @@ func GetValue(value interface{}, path string) (interface{}, error) {
 		value = in
 	}
 
+	//To interface if it is []byte
+	if val, ok := value.([]byte); ok {
+		var in interface{}
+		err = json.Unmarshal(val, &in)
+		if err != nil {
+			return nil, err
+		}
+		value = in
+	}
+
 	if strings.HasPrefix(path, ".") {
 		if objVal, ok := value.(map[string]interface{}); ok {
 			newVal, newPath, err = getSetObjValue(objVal, path, nil, false)
