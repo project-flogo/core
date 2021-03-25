@@ -26,24 +26,44 @@ type HandlerInfo struct {
 
 // NewHandlerContext add the handler info to a new child context
 func NewHandlerContext(parentCtx context.Context, config *HandlerConfig) context.Context {
-	return NewHandlerContextWithEventId(parentCtx, config, idGenerator.NextAsString())
+	return newContext(parentCtx, config)
 }
 
-// NewHandlerContextWithEventId add the handler info to a new child context with event id and starting time
-func NewHandlerContextWithEventId(parentCtx context.Context, config *HandlerConfig, eventId string) context.Context {
+// NewContextWithEventId new context by adding event id to the context
+func NewContextWithEventId(parentCtx context.Context, eventId string) context.Context {
+	return context.WithValue(parentCtx, handlerKey, &HandlerInfo{EventId: eventId, StartTime: time.Now()})
+}
+
+func newContext(parentCtx context.Context, config *HandlerConfig) context.Context {
+	var handlerInfo *HandlerInfo
+	//Take default name as handler in case no handler name.
+	name := "handler"
+	if config != nil && config.Name != "" {
+		name = config.Name
+	} else if config != nil && config.parent != nil && config.parent.Id != "" {
+		// Take trigger name if no handler name.
+		name = config.parent.Id
+	}
+
 	value := parentCtx.Value(handlerKey)
 	if value != nil {
 		info, ok := value.(*HandlerInfo)
 		if ok {
+			handlerInfo = info
+			//Update trigger info
 			if len(info.EventId) > 0 {
-				return parentCtx
+				handlerInfo.Name = name
 			} else {
-				info.EventId = eventId
-				info.StartTime = time.Now()
+				handlerInfo.EventId = idGenerator.NextAsString()
+				handlerInfo.Name = name
 			}
+			if handlerInfo.StartTime.IsZero() {
+				handlerInfo.StartTime = time.Now()
+			}
+			return context.WithValue(parentCtx, handlerKey, handlerInfo)
 		}
 	}
-	return context.WithValue(parentCtx, handlerKey, &HandlerInfo{Name: config.Name, EventId: eventId, StartTime: time.Now()})
+	return context.WithValue(parentCtx, handlerKey, &HandlerInfo{Name: name, EventId: idGenerator.NextAsString(), StartTime: time.Now()})
 }
 
 // HandlerFromContext returns the handler info stored in the context, if any.
