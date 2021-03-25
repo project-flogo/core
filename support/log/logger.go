@@ -3,7 +3,6 @@ package log
 import (
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
 )
 
@@ -21,9 +20,6 @@ const (
 
 	EnvKeyLogSeparator  = "FLOGO_LOG_SEPARATOR"
 	DefaultLogSeparator = "\t"
-
-	EnvPrintStackTraceOnError     = "FLOGO_LOG_STACKTRACE_ON_ERROR"
-	DefaultPrintStackTraceOnError = true
 
 	TraceLevel Level = iota
 	DebugLevel
@@ -162,7 +158,7 @@ func configureLogging() {
 		logFormat = FormatJson
 	}
 
-	rootLogger = newZapRootLogger("flogo", logFormat)
+	rootLogger = newZapRootLogger("flogo", logFormat, rootLogLevel)
 	SetLogLevel(rootLogger, rootLogLevel)
 }
 
@@ -194,13 +190,4 @@ func getLogSeparator() string {
 		return v
 	}
 	return DefaultLogSeparator
-}
-
-func printStackTraceOnError() bool {
-	v, ok := os.LookupEnv(EnvPrintStackTraceOnError)
-	if ok && len(v) > 0 {
-		y, _ := strconv.ParseBool(v)
-		return y
-	}
-	return false
 }

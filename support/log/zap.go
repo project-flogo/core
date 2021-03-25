@@ -135,9 +135,9 @@ func toZapLogLevel(level Level) zapcore.Level {
 	return zapcore.InfoLevel
 }
 
-func newZapRootLogger(name string, format Format) Logger {
+func newZapRootLogger(name string, format Format, level Level) Logger {
 
-	zl, lvl, _ := newZapLogger(format)
+	zl, lvl, _ := newZapLogger(format, level)
 
 	var rootLogger Logger
 	if name == "" {
@@ -154,7 +154,7 @@ func newZapRootLogger(name string, format Format) Logger {
 	return rootLogger
 }
 
-func newZapLogger(logFormat Format) (*zap.Logger, *zap.AtomicLevel, error) {
+func newZapLogger(logFormat Format, level Level) (*zap.Logger, *zap.AtomicLevel, error) {
 	cfg := zap.NewProductionConfig()
 	cfg.DisableCaller = true
 
@@ -169,8 +169,8 @@ func newZapLogger(logFormat Format) (*zap.Logger, *zap.AtomicLevel, error) {
 	}
 
 	eCfg.ConsoleSeparator = getLogSeparator()
-	//Don't print stacktrace for error logs
-	if !printStackTraceOnError() {
+	//Don't print stacktrace for log level lower than debug
+	if level > DebugLevel {
 		eCfg.StacktraceKey = ""
 	}
 
