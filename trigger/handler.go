@@ -133,7 +133,7 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (resu
 	newCtx := NewHandlerContext(ctx, h.config)
 
 	defer func() {
-		h.Logger().Infof("Handler [%s] with event id [%s] done, took: %s", handlerName, GetHandlerEventIdFromContext(newCtx), time.Since(GetHandleStartTimeFromContext(newCtx)).String())
+		h.Logger().Infof("Handler [%s] for event id [%s] completed in %s", handlerName, GetHandlerEventIdFromContext(newCtx), time.Since(GetHandleStartTimeFromContext(newCtx)).String())
 		if r := recover(); r != nil {
 			h.Logger().Warnf("Unhandled Error while handling handler [%s]: %v", h.Name(), r)
 			if h.Logger().DebugEnabled() {
@@ -143,7 +143,7 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (resu
 		}
 	}()
 
-	h.Logger().Infof("Executing handler [%s] with event id [%s]", handlerName, GetHandlerEventIdFromContext(newCtx))
+	h.Logger().Infof("Executing handler [%s] for event Id [%s]", handlerName, GetHandlerEventIdFromContext(newCtx))
 	eventData := h.eventData
 
 	// check if any event data was attached to the context
