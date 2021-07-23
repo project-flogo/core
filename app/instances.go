@@ -58,18 +58,19 @@ func (a *App) createSharedActions(actionConfigs []*action.Config) (map[string]ac
 	return actions, nil
 }
 
-func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (map[string]*triggerWrapper, error) {
+func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) ([]*triggerWrapper, error) {
 
-	triggers := make(map[string]*triggerWrapper)
+	triggers := make([]*triggerWrapper, len(tConfigs))
 
 	mapperFactory := mapper.NewFactory(a.resolver)
 	expressionFactory := expression.NewFactory(a.resolver)
 
-	for _, tConfig := range tConfigs {
+	for i, tConfig := range tConfigs {
 
-		_, exists := triggers[tConfig.Id]
-		if exists {
-			return nil, fmt.Errorf("trigger with id '%s' already registered, trigger ids have to be unique", tConfig.Id)
+		for _, t := range triggers {
+			if t != nil && t.id == tConfig.Id {
+				return nil, fmt.Errorf("trigger with id '%s' already registered, trigger ids have to be unique", tConfig.Id)
+			}
 		}
 
 		if tConfig.Ref == "" && tConfig.Type != "" {
@@ -224,7 +225,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 		}
 		trigger.PostTriggerEvent(trigger.INITIALIZED, tConfig.Id)
 
-		triggers[tConfig.Id] = &triggerWrapper{ref: ref, trg: trg, status: &managed.StatusInfo{Name: tConfig.Id}}
+		triggers[i] = &triggerWrapper{id: tConfig.Id, ref: ref, trg: trg, status: &managed.StatusInfo{Name: tConfig.Id}}
 	}
 
 	return triggers, nil
