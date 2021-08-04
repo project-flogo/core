@@ -515,13 +515,18 @@ func newLoopScope(arrayItem interface{}, scopeName string, index int, scope data
 		mapData[primitiveArrayData] = arrayItem
 	}
 
-	mapData[foreach_Index] = index
-	loopData := make(map[string]interface{})
-	loopData["_loop"] = mapData
-	if len(scopeName) > 0 {
-		loopData[scopeName] = mapData
+	//Avoid impact source data, copy one here for mapping
+	arrayElementMap := make(map[string]interface{}, len(mapData))
+	for k, v := range mapData {
+		arrayElementMap[k] = v
 	}
 
+	arrayElementMap[foreach_Index] = index
+	loopData := make(map[string]interface{})
+	loopData["_loop"] = arrayElementMap
+	if len(scopeName) > 0 {
+		loopData[scopeName] = arrayElementMap
+	}
 	return data.NewSimpleScope(loopData, scope), nil
 }
 

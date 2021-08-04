@@ -247,7 +247,7 @@ type App struct {
 	resManager     *resource.Manager
 	srvManager     *service.Manager
 	actions        map[string]action.Action
-	triggers       map[string]*triggerWrapper
+	triggers       []*triggerWrapper
 	stopOnError    bool
 	started        bool
 	resolver       resolve.CompositeResolver
@@ -255,6 +255,7 @@ type App struct {
 }
 
 type triggerWrapper struct {
+	id     string
 	ref    string
 	trg    trigger.Trigger
 	status *managed.StatusInfo
@@ -349,14 +350,13 @@ func (a *App) Start() error {
 	}
 
 	if len(a.triggers) > 0 {
-		lifecycleTriggers := make(map[string]*triggerWrapper)
-		normalTriggers := make(map[string]*triggerWrapper)
-
-		for id, trgW := range a.triggers {
+		var lifecycleTriggers []*triggerWrapper
+		var normalTriggers []*triggerWrapper
+		for _, trgW := range a.triggers {
 			if _, ok := trgW.trg.(LifecycleAware); ok {
-				lifecycleTriggers[id] = trgW
+				lifecycleTriggers = append(lifecycleTriggers, trgW)
 			} else {
-				normalTriggers[id] = trgW
+				normalTriggers = append(normalTriggers, trgW)
 			}
 		}
 
@@ -366,20 +366,20 @@ func (a *App) Start() error {
 		var failed []string
 
 		// Start Lifecycle triggers
-		for id, trgW := range lifecycleTriggers {
-			ok, err := a.startTrigger(id, trgW)
+		for _, trg := range lifecycleTriggers {
+			ok, err := a.startTrigger(trg)
 			if err != nil {
 				return err
 			}
 			if !ok {
-				failed = append(failed, id)
+				failed = append(failed, trg.id)
 			}
 		}
 
 		// Invoke OnStartup for lifecycle aware triggers
-		for _, trgW := range lifecycleTriggers {
-			if trgW.status.Status == managed.StatusStarted {
-				lca, _ := trgW.trg.(LifecycleAware)
+		for _, trg := range lifecycleTriggers {
+			if trg.status.Status == managed.StatusStarted {
+				lca, _ := trg.trg.(LifecycleAware)
 				err := lca.OnStartup()
 				if err != nil {
 					return err
@@ -388,20 +388,25 @@ func (a *App) Start() error {
 		}
 
 		// Start normal triggers
-		for id, trgW := range normalTriggers {
-			ok, err := a.startTrigger(id, trgW)
+		for _, trg := range normalTriggers {
+			ok, err := a.startTrigger(trg)
 			if err != nil {
 				return err
 			}
 			if !ok {
-				failed = append(failed, id)
+				failed = append(failed, trg.id)
 			}
 		}
 
 		if len(failed) > 0 {
 			//remove failed trigger, we have no use for them
 			for _, triggerId := range failed {
-				delete(a.triggers, triggerId)
+				for index, tr := range a.triggers {
+					if triggerId == tr.id {
+						//Delete it
+						a.triggers = append(a.triggers[:index], a.triggers[index+1:]...)
+					}
+				}
 			}
 		}
 
@@ -411,26 +416,26 @@ func (a *App) Start() error {
 	return nil
 }
 
-func (a *App) startTrigger(id string, trg *triggerWrapper) (bool, error) {
+func (a *App) startTrigger(trg *triggerWrapper) (bool, error) {
 
 	statusInfo := trg.status
-	err := managed.Start(fmt.Sprintf("Trigger [ %s ]", id), trg.trg)
+	err := managed.Start(fmt.Sprintf("Trigger [ %s ]", trg.id), trg.trg)
 	if err != nil {
 		if a.stopOnError {
-			return false, fmt.Errorf("error starting Trigger[%s] : %s", id, err)
+			return false, fmt.Errorf("error starting Trigger[%s] : %s", trg.id, err)
 		}
-		log.RootLogger().Infof("Trigger [%s] failed to start due to error [%s]", id, err.Error())
+		log.RootLogger().Infof("Trigger [%s] failed to start due to error [%s]", trg.id, err.Error())
 		statusInfo.Status = managed.StatusFailed
 		statusInfo.Error = err
 		log.RootLogger().Debugf("StackTrace: %s", debug.Stack())
-		trigger.PostTriggerEvent(trigger.FAILED, id)
+		trigger.PostTriggerEvent(trigger.FAILED, trg.id)
 		return false, nil
 	} else {
 		statusInfo.Status = managed.StatusStarted
 		//logger.Infof("Trigger [ %s ]: Started", id)
 		version := ""
-		log.RootLogger().Debugf("Trigger [ %s ] has ref [ %s ] and version [ %s ]", id, trg.ref, version)
-		trigger.PostTriggerEvent(trigger.STARTED, id)
+		log.RootLogger().Debugf("Trigger [ %s ] has ref [ %s ] and version [ %s ]", trg.id, trg.ref, version)
+		trigger.PostTriggerEvent(trigger.STARTED, trg.id)
 	}
 
 	return true, nil
@@ -443,34 +448,34 @@ func (a *App) Stop() error {
 	if len(a.triggers) > 0 {
 		logger.Info("Stopping Triggers...")
 
-		lifecycleTriggers := make(map[string]*triggerWrapper)
-		normalTriggers := make(map[string]*triggerWrapper)
+		var lifecycleTriggers []*triggerWrapper
+		var normalTriggers []*triggerWrapper
 
-		for id, trgW := range a.triggers {
+		for _, trgW := range a.triggers {
 			if _, ok := trgW.trg.(LifecycleAware); ok {
-				lifecycleTriggers[id] = trgW
+				lifecycleTriggers = append(lifecycleTriggers, trgW)
 			} else {
-				normalTriggers[id] = trgW
+				normalTriggers = append(normalTriggers, trgW)
 			}
 		}
 
 		// Stop Normal Triggers
-		for id, trg := range normalTriggers {
-			_ = managed.Stop("Trigger [ "+id+" ]", trg.trg)
+		for _, trg := range normalTriggers {
+			_ = managed.Stop("Trigger [ "+trg.id+" ]", trg.trg)
 			trg.status.Status = managed.StatusStopped
-			trigger.PostTriggerEvent(trigger.STOPPED, id)
+			trigger.PostTriggerEvent(trigger.STOPPED, trg.id)
 		}
 
 		// Stop Lifecycle Triggers
-		for id, trgW := range lifecycleTriggers {
+		for _, trgW := range lifecycleTriggers {
 			lca, _ := trgW.trg.(LifecycleAware)
 			err := lca.OnShutdown()
 			if err != nil {
-				logger.Errorf("trigger [%s] encountered error processing app OnShutdown event: %s", id, err.Error())
+				logger.Errorf("trigger [%s] encountered error processing app OnShutdown event: %s", trgW.id, err.Error())
 			}
-			_ = managed.Stop("Trigger [ "+id+" ]", trgW.trg)
+			_ = managed.Stop("Trigger [ "+trgW.id+" ]", trgW.trg)
 			trgW.status.Status = managed.StatusStopped
-			trigger.PostTriggerEvent(trigger.STOPPED, id)
+			trigger.PostTriggerEvent(trigger.STOPPED, trgW.id)
 		}
 		logger.Info("Triggers Stopped")
 	}

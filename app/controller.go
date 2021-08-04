@@ -68,9 +68,9 @@ func (c *controllerData) ReleaseControl() error {
 func (app *App) initFlowController() {
 	controllerData := &controllerData{lock: sync.Mutex{}}
 	controllerData.triggers = make(map[string]trigger.FlowControlAware)
-	for id, trgW := range app.triggers {
+	for _, trgW := range app.triggers {
 		if t, ok := trgW.trg.(trigger.FlowControlAware); ok {
-			controllerData.triggers[id] = t
+			controllerData.triggers[trgW.id] = t
 		}
 	}
 	controller = controllerData
