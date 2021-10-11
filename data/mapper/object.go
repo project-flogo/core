@@ -114,7 +114,7 @@ func (a *assignAllExpr) Eval(scope data.Scope) (interface{}, error) {
 }
 
 func NewObjectMapper(mappings interface{}, exprF expression.Factory) (expr expression.Expr, err error) {
-	if isConditionalMapping(mappings) {
+	if IsConditionalMapping(mappings) {
 		return createConditionalMapper(mappings, exprF)
 	} else {
 		switch t := mappings.(type) {
@@ -135,7 +135,6 @@ func NewObjectMapper(mappings interface{}, exprF expression.Factory) (expr expre
 						return nil, err
 					}
 				}
-
 			}
 			return &ObjectMapper{
 				objectFields: objFields,

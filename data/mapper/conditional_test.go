@@ -1,6 +1,8 @@
 package mapper
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/project-flogo/core/data"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -58,8 +60,11 @@ func TestConditionalPrimitive(t *testing.T) {
 	}
 
 	for _, tt := range testcases {
-		assert.True(t, isConditionalMapping(tt.Mapping))
+		assert.True(t, IsConditionalMapping(tt.Mapping))
 		mappings := map[string]interface{}{"output": tt.Mapping}
+
+		v, _ := json.Marshal(mappings)
+		fmt.Println("====", string(v))
 		factory := NewFactory(resolver)
 		mapper, err := factory.NewMapper(mappings)
 		assert.Nil(t, err)
@@ -128,7 +133,6 @@ func TestConditionalSwitchPrimitive(t *testing.T) {
 	}
 
 	for _, tt := range testcases {
-		assert.True(t, isConditionalMapping(tt.Mapping))
 		mappings := map[string]interface{}{"output": tt.Mapping}
 		factory := NewFactory(resolver)
 		mapper, err := factory.NewMapper(mappings)
@@ -210,7 +214,7 @@ func TestConditionalObjectMapper(t *testing.T) {
 	}
 
 	for _, tt := range testcases {
-		assert.True(t, isConditionalMapping(tt.Mapping))
+		assert.True(t, IsConditionalMapping(tt.Mapping))
 		mappings := map[string]interface{}{"output": tt.Mapping}
 		factory := NewFactory(resolver)
 		mapper, err := factory.NewMapper(mappings)
@@ -291,7 +295,7 @@ func TestConditionalShorterObjectMapper(t *testing.T) {
 	}
 
 	for _, tt := range testcases {
-		assert.True(t, isConditionalMapping(tt.Mapping))
+		assert.True(t, IsConditionalMapping(tt.Mapping))
 		mappings := map[string]interface{}{"output": tt.Mapping}
 		factory := NewFactory(resolver)
 		mapper, err := factory.NewMapper(mappings)
@@ -390,7 +394,9 @@ func TestConditionalArrayMapper(t *testing.T) {
 	}
 
 	for _, tt := range testcases {
-		assert.True(t, isConditionalMapping(tt.Mapping))
+		v, _ := json.Marshal(tt.Mapping)
+		fmt.Println("====", string(v))
+		assert.True(t, IsConditionalMapping(tt.Mapping))
 		mappings := map[string]interface{}{"output": tt.Mapping}
 		factory := NewFactory(resolver)
 		mapper, err := factory.NewMapper(mappings)
@@ -484,7 +490,7 @@ func TestNestedConditionalObjectMapper(t *testing.T) {
 	}
 
 	for _, tt := range testcases {
-		assert.True(t, isConditionalMapping(tt.Mapping))
+		assert.True(t, IsConditionalMapping(tt.Mapping))
 		mappings := map[string]interface{}{"output": tt.Mapping}
 		factory := NewFactory(resolver)
 		mapper, err := factory.NewMapper(mappings)
@@ -617,7 +623,7 @@ func TestNestedConditionalArrayMapper(t *testing.T) {
 	}
 
 	for _, tt := range testcases {
-		assert.True(t, isConditionalMapping(tt.Mapping))
+		assert.True(t, IsConditionalMapping(tt.Mapping))
 		mappings := map[string]interface{}{"output": tt.Mapping}
 		factory := NewFactory(resolver)
 		mapper, err := factory.NewMapper(mappings)

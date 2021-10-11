@@ -42,8 +42,8 @@ type conditionalExpr struct {
 	mapper expression.Expr
 }
 
-// isConditionalMapping check to see if the mapping is an conditional mapping
-func isConditionalMapping(value interface{}) bool {
+// IsConditionalMapping check to see if the mapping is an conditional mapping
+func IsConditionalMapping(value interface{}) bool {
 	switch t := value.(type) {
 	case map[string]interface{}:
 		for k, _ := range t {
