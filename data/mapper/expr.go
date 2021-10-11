@@ -1,6 +1,7 @@
 package mapper
 
 import (
+	"fmt"
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/mapper/config"
@@ -34,7 +35,7 @@ func (mf *ExprMapperFactory) NewMapper(mappings map[string]interface{}) (Mapper,
 					//it's an expression
 					expr, err := mf.exprFactory.NewExpr(t[1:])
 					if err != nil {
-						return nil, err
+						return nil, fmt.Errorf("create expression for field [%s] error: %s", key, err.Error())
 					}
 					exprMappings[key] = expr
 				} else {
@@ -44,14 +45,14 @@ func (mf *ExprMapperFactory) NewMapper(mappings map[string]interface{}) (Mapper,
 				if isConditionalMapping(t) {
 					ifElseMapper, err := createConditionalMapper(t, mf.exprFactory)
 					if err != nil {
-						return nil, err
+						return nil, fmt.Errorf("create condiitonal mapper for field [%s] error: %s", key, err.Error())
 					}
 					exprMappings[key] = ifElseMapper
 				} else if mapping, ok := GetObjectMapping(t); ok {
 					//Object mapping
 					objectExpr, err := NewObjectMapperFactory(mf.exprFactory).(*ObjectMapperFactory).NewObjectMapper(mapping)
 					if err != nil {
-						return nil, err
+						return nil, fmt.Errorf("create object mapper for field [%s] error: %s", key, err.Error())
 					}
 					exprMappings[key] = objectExpr
 				} else {
