@@ -1182,6 +1182,8 @@ func TestArrayMappingWithFilterAndUpdate(t *testing.T) {
 	assert.Equal(t, float64(592), arr.(map[string]interface{})["books"].([]interface{})[0].(map[string]interface{})["pageCount"])
 	assert.Equal(t, "1003", arr.(map[string]interface{})["books"].([]interface{})[0].(map[string]interface{})["isbn"])
 	assert.Equal(t, "Testing", arr.(map[string]interface{})["books"].([]interface{})[0].(map[string]interface{})["status"])
+	assert.Nil(t, arr.(map[string]interface{})["books"].([]interface{})[0].(map[string]interface{})["index"])
+
 }
 
 func TestLiteralAssign(t *testing.T) {
