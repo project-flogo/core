@@ -82,7 +82,7 @@ func (c *controllerData) startTriggers() error {
 	logger.Info("Starting Triggers...")
 	for id, trg := range c.triggers {
 		var err error
-		if flowControlAware, ok := trg.(trigger.FlowControlAware); ok {
+		if flowControlAware, ok := trg.(trigger.EventFlowControlAware); ok {
 			err = flowControlAware.Resume()
 		} else {
 			err = trg.Start()
@@ -106,7 +106,7 @@ func (c *controllerData) stopTriggers() error {
 	// Pause Triggers
 	for id, trg := range c.triggers {
 		var err error
-		if flowControlAware, ok := trg.(trigger.FlowControlAware); ok {
+		if flowControlAware, ok := trg.(trigger.EventFlowControlAware); ok {
 			err = flowControlAware.Pause()
 		} else {
 			err = trg.Stop()
