@@ -2,16 +2,18 @@ package app
 
 import (
 	"fmt"
+	"sync"
+
 	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/trigger"
-	"sync"
 )
 
 const (
-	AlreadyControlled = "app is already controlled"
+	AlreadyControlled = "app is already event flow controlled"
 )
 
 var controller Controller
+var logger = log.ChildLogger(log.RootLogger(), "events.controller")
 
 type Controller interface {
 	StartControl() error
@@ -20,11 +22,11 @@ type Controller interface {
 
 type controllerData struct {
 	flowControlled bool
-	triggers       map[string]trigger.FlowControlAware
+	triggers       map[string]trigger.Trigger
 	lock           sync.Mutex
 }
 
-func GetFlowController() Controller {
+func GetEventFlowController() Controller {
 	return controller
 }
 
@@ -37,10 +39,10 @@ func (c *controllerData) StartControl() error {
 	} else {
 		// Pause trigger
 		c.flowControlled = true
-		err := c.pauseTriggers()
+		err := c.stopTriggers()
 		if err != nil {
 			errMsg := fmt.Errorf("error pausing triggers: %s", err.Error())
-			log.RootLogger().Error(errMsg)
+			logger.Error(errMsg)
 			return errMsg
 		}
 		return nil
@@ -52,12 +54,12 @@ func (c *controllerData) ReleaseControl() error {
 	c.lock.Lock()
 	defer c.lock.Unlock()
 	if c.flowControlled {
-		err := c.resumeTriggers()
+		err := c.startTriggers()
 		if err != nil {
 			// Release control if error occurred here
 			c.flowControlled = false
 			errMsg := fmt.Errorf("error resume triggers: %s", err.Error())
-			log.RootLogger().Error(errMsg)
+			logger.Error(errMsg)
 			return errMsg
 		}
 		c.flowControlled = false
@@ -65,49 +67,58 @@ func (c *controllerData) ReleaseControl() error {
 	return nil
 }
 
-func (app *App) initFlowController() {
+func (app *App) initEventFlowController() {
 	controllerData := &controllerData{lock: sync.Mutex{}}
-	controllerData.triggers = make(map[string]trigger.FlowControlAware)
+	controllerData.triggers = make(map[string]trigger.Trigger)
 	for id, trgW := range app.triggers {
-		if t, ok := trgW.trg.(trigger.FlowControlAware); ok {
-			controllerData.triggers[id] = t
-		}
+		controllerData.triggers[id] = trgW.trg
 	}
 	controller = controllerData
 }
 
-// Resume triggers
-func (c *controllerData) resumeTriggers() error {
+// Start triggers
+func (c *controllerData) startTriggers() error {
 	// Resume  triggers
-	log.RootLogger().Info("Resuming Triggers...")
+	logger.Info("Starting Triggers...")
 	for id, trg := range c.triggers {
-		err := trg.Resume()
+		var err error
+		if flowControlAware, ok := trg.(trigger.FlowControlAware); ok {
+			err = flowControlAware.Resume()
+		} else {
+			err = trg.Start()
+		}
+
 		if err != nil {
 			//return err
-			//TODO Letting other triggers resume. Should we stop the app here?
-			log.RootLogger().Errorf("Trigger [%s] failed to resume due to error - %s.", id, err.Error())
+			//TODO Starting other triggers. Should we stop the app here?
+			logger.Errorf("Trigger [%s] failed to start due to error - %s.", id, err.Error())
 			continue
 		}
-		log.RootLogger().Infof("Trigger [%s] is resumed.", id)
+		logger.Infof("Trigger [%s] is started.", id)
 	}
-	log.RootLogger().Info("Triggers Resumed")
+	logger.Info("Triggers are started")
 	return nil
 }
 
-// Pause triggers
-func (c *controllerData) pauseTriggers() error {
-	log.RootLogger().Info("Pausing Triggers...")
+// Stop triggers
+func (c *controllerData) stopTriggers() error {
+	logger.Info("Stopping Triggers...")
 	// Pause Triggers
 	for id, trg := range c.triggers {
-		err := trg.Pause()
+		var err error
+		if flowControlAware, ok := trg.(trigger.FlowControlAware); ok {
+			err = flowControlAware.Pause()
+		} else {
+			err = trg.Stop()
+		}
 		if err != nil {
 			//return err
-			//TODO Letting other triggers pause. Should we stop the app here?
-			log.RootLogger().Errorf("Trigger [%s] failed to pause due to error - %s.", id, err.Error())
+			//TODO Stopping other triggers. Should we stop the app here?
+			logger.Errorf("Trigger [%s] failed to stop due to error - %s.", id, err.Error())
 			continue
 		}
-		log.RootLogger().Infof("Trigger [%s] is paused.", id)
+		logger.Infof("Trigger [%s] is stopped.", id)
 	}
-	log.RootLogger().Info("Triggers Paused")
+	logger.Info("Triggers are stopped")
 	return nil
 }
