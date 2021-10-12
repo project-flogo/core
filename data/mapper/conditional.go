@@ -102,7 +102,10 @@ func createConditionalMapper(value interface{}, ef expression.Factory) (expressi
 							ifMapper.otherwise = valueExpr
 							continue
 						} else {
-							if len(exprPrefix) > 0 {
+							if len(exprPrefix) == 0 {
+								exprStr, _ := coerce.ToString(exprV)
+								return nil, fmt.Errorf("no condition expression set for [%s]", exprStr)
+							} else if len(exprPrefix) > 0 {
 								keyExpr, err = ef.NewExpr(exprPrefix + " " + exprK)
 								if err != nil {
 									return nil, fmt.Errorf("creating conndtion expr error: %s", err.Error())
