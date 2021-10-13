@@ -7,8 +7,8 @@ import (
 
 func TestController(t *testing.T) {
 	testApp := &App{stopOnError: true, name: "test app", version: "v1.0.0"}
-	testApp.initFlowController()
-	c := GetFlowController()
+	testApp.initEventFlowController()
+	c := GetEventFlowController()
 	err := c.StartControl()
 	assert.Nil(t, err)
 	// Start another control
