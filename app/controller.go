@@ -71,7 +71,7 @@ func (app *App) initEventFlowController() {
 	controllerData := &controllerData{lock: sync.Mutex{}}
 	controllerData.triggers = make(map[string]trigger.Trigger)
 	for id, trgW := range app.triggers {
-		controllerData.triggers[id] = trgW.trg
+		controllerData.triggers[trgW.id] = trgW.trg
 	}
 	controller = controllerData
 }
