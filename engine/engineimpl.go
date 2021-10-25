@@ -120,6 +120,9 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 					if err != nil {
 						return nil, err
 					}
+					if s, ok := svc.(action.RunnerSettable); ok {
+						s.SetRunner(engine.actionRunner)
+					}
 					err = engine.serviceManager.RegisterService(svc)
 					if err != nil {
 						return nil, err

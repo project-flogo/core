@@ -74,3 +74,7 @@ type ResultHandler interface {
 	// Done indicates that the action has completed
 	Done()
 }
+
+type RunnerSettable interface {
+	SetRunner(runner Runner)
+}
