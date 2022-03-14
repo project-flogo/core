@@ -2,12 +2,20 @@ package trace
 
 import (
 	"context"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 type TestTracingContext struct {
+}
 
+func (t TestTracingContext) TraceID() string {
+	return ""
+}
+
+func (t TestTracingContext) SpanID() string {
+	return ""
 }
 
 func (t TestTracingContext) TraceObject() interface{} {
@@ -31,16 +39,16 @@ func TestAppendTracingContext(t *testing.T) {
 	tCtx := &TestTracingContext{}
 
 	goCtx := AppendTracingContext(context.Background(), tCtx)
- 	tc, ok := goCtx.Value(id).(TracingContext)
+	tc, ok := goCtx.Value(id).(TracingContext)
 
- 	assert.True(t, ok)
- 	assert.Equal(t, tCtx, tc)
+	assert.True(t, ok)
+	assert.Equal(t, tCtx, tc)
 }
 
 func TestExtractTracingContext(t *testing.T) {
 
 	tCtx := &TestTracingContext{}
-	goCtx := context.WithValue(nil, id, tCtx)
+	goCtx := context.WithValue(context.Background(), id, tCtx)
 
 	ttCtx := ExtractTracingContext(goCtx)
 	assert.Equal(t, tCtx, ttCtx)
