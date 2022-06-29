@@ -3,6 +3,10 @@ package runner
 import (
 	"context"
 	"errors"
+	"github.com/project-flogo/core/app"
+
+	"sync"
+	"time"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/support"
@@ -43,6 +47,8 @@ func NewPooled(config *PooledConfig) *PooledRunner {
 	return &pooledRunner
 }
 
+var trackActions sync.WaitGroup
+
 // Start will start the engine, by starting all of its workers
 func (runner *PooledRunner) Start() error {
 
@@ -59,6 +65,7 @@ func (runner *PooledRunner) Start() error {
 			logger.Debugf("Starting worker with id '%d'", id)
 			worker := NewWorker(id, runner.directRunner, runner.workerQueue)
 			runner.workers[i] = &worker
+			trackActions.Add(1)
 			worker.Start()
 		}
 
@@ -96,9 +103,44 @@ func (runner *PooledRunner) Stop() error {
 			runner.logger.Debug("Stopping worker", worker.ID)
 			worker.Stop()
 		}
+		// check if all actions done till shutdown waiting time
+		gracefulStop()
 	}
 
 	return nil
+}
+
+func gracefulStop() {
+	logger := log.RootLogger()
+	delayedStopInterval := app.GetDelayedStopInterval()
+	if delayedStopInterval != "" {
+		duration, err := time.ParseDuration(delayedStopInterval)
+		if err != nil {
+			logger.Errorf("Invalid interval - %s  specified for delayed stop. It must suffix with time unit e.g. %sms, %ss", delayedStopInterval, delayedStopInterval, delayedStopInterval)
+		} else {
+			logger.Infof("Delaying application stop by max - %s", delayedStopInterval)
+			if isTimeout := waitForActionsCompletion(duration); isTimeout {
+				logger.Info("All actions not completed before engine shutdown")
+			} else {
+				logger.Info("All actions completed before engine shutdown")
+			}
+		}
+
+	}
+}
+
+func waitForActionsCompletion(timeout time.Duration) bool {
+	c := make(chan struct{})
+	go func() {
+		defer close(c)
+		trackActions.Wait()
+	}()
+	select {
+	case <-c:
+		return false // actions completed
+	case <-time.After(timeout):
+		return true // timed out
+	}
 }
 
 // Execute implements action.Runner.Execute

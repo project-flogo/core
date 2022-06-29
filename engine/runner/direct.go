@@ -25,7 +25,8 @@ func (runner *DirectRunner) Start() error {
 
 // Stop will stop the engine, by stopping all of its workers
 func (runner *DirectRunner) Stop() error {
-	//no-op
+	// check if all actions done till waiting time
+	gracefulStop()
 	return nil
 }
 
@@ -35,7 +36,8 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 	if act == nil {
 		return nil, errors.New("action not specified")
 	}
-
+	trackActions.Add(1)
+	defer trackActions.Done()
 	if syncAct, ok := act.(action.SyncAction); ok {
 		return syncAct.Run(ctx, inputs)
 	} else if asyncAct, ok := act.(action.AsyncAction); ok {
