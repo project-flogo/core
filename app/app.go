@@ -2,12 +2,6 @@ package app
 
 import (
 	"fmt"
-	"path"
-	"regexp"
-	"runtime/debug"
-	"strings"
-	"time"
-
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/activity"
 	appresolve "github.com/project-flogo/core/app/resolve"
@@ -24,6 +18,10 @@ import (
 	"github.com/project-flogo/core/support/managed"
 	"github.com/project-flogo/core/support/service"
 	"github.com/project-flogo/core/trigger"
+	"path"
+	"regexp"
+	"runtime/debug"
+	"strings"
 )
 
 type Option func(*App) error
@@ -480,7 +478,7 @@ func (a *App) Stop() error {
 		logger.Info("Triggers Stopped")
 	}
 
-	delayedStopInterval := GetDelayedStopInterval()
+	/* delayedStopInterval := GetDelayedStopInterval()
 	if delayedStopInterval != "" {
 		// Delay stopping of connection manager so that in-flight actions can continue until specified interval
 		// No new events will be processed as triggers are stopped.
@@ -491,7 +489,7 @@ func (a *App) Stop() error {
 			logger.Infof("Delaying application stop by - %s", delayedStopInterval)
 			time.Sleep(duration)
 		}
-	}
+	}  */
 
 	// Start managed actions
 	hasManagedActions := false
