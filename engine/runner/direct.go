@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-
 	"github.com/project-flogo/core/action"
 )
 
@@ -25,9 +24,12 @@ func (runner *DirectRunner) Start() error {
 
 // Stop will stop the engine, by stopping all of its workers
 func (runner *DirectRunner) Stop() error {
-	//no-op
+	// check if all actions done till waiting time
+	trackDirectRunnerActions.gracefulStop()
 	return nil
 }
+
+var trackDirectRunnerActions = NewRunnerTracker()
 
 // Execute implements action.Runner.Execute
 func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, inputs map[string]interface{}) (results map[string]interface{}, err error) {
@@ -35,7 +37,8 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 	if act == nil {
 		return nil, errors.New("action not specified")
 	}
-
+	trackDirectRunnerActions.AddTracker()
+	defer trackDirectRunnerActions.DoneTracker()
 	if syncAct, ok := act.(action.SyncAction); ok {
 		return syncAct.Run(ctx, inputs)
 	} else if asyncAct, ok := act.(action.AsyncAction); ok {
