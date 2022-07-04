@@ -74,7 +74,7 @@ func (w ActionWorker) Start() {
 	logger := log.RootLogger()
 
 	go func() {
-		defer trackPooledRunnerActions.DoneTracker()
+		defer trackPooledRunnerActions.RemoveRunner()
 		for {
 			// Add ourselves into the worker queue.
 			w.WorkerQueue <- w.Work

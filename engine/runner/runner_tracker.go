@@ -15,23 +15,23 @@ type RunnerTracker struct {
 	runnertrackerwg *sync.WaitGroup
 }
 
-func (rt RunnerTracker) AddTracker() {
+func (rt RunnerTracker) AddRunner() {
 	rt.runnertrackerwg.Add(1)
 }
 
-func (rt RunnerTracker) DoneTracker() {
+func (rt RunnerTracker) RemoveRunner() {
 	rt.runnertrackerwg.Done()
 }
 
-func (rt RunnerTracker) WaitForTrackerAllDone() {
+func (rt RunnerTracker) WaitForAllRunners() {
 	rt.runnertrackerwg.Wait()
 }
 
-func (rt RunnerTracker) WaitForActionsCompletion(timeout time.Duration) bool {
+func (rt RunnerTracker) WaitForRunnersCompletion(timeout time.Duration) bool {
 	c := make(chan struct{})
 	go func() {
 		defer close(c)
-		rt.WaitForTrackerAllDone()
+		rt.WaitForAllRunners()
 	}()
 	select {
 	case <-c:
@@ -50,7 +50,7 @@ func (rt RunnerTracker) gracefulStop() {
 			logger.Errorf("Invalid interval - %s  specified for delayed stop. It must suffix with time unit e.g. %sms, %ss", delayedStopInterval, delayedStopInterval, delayedStopInterval)
 		} else {
 			logger.Infof("Delaying application stop by max - %s", delayedStopInterval)
-			if isTimeout := rt.WaitForActionsCompletion(duration); isTimeout {
+			if isTimeout := rt.WaitForRunnersCompletion(duration); isTimeout {
 				logger.Info("All actions not completed before engine shutdown")
 			} else {
 				logger.Info("All actions completed before engine shutdown")

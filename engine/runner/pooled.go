@@ -60,7 +60,7 @@ func (runner *PooledRunner) Start() error {
 			logger.Debugf("Starting worker with id '%d'", id)
 			worker := NewWorker(id, runner.directRunner, runner.workerQueue)
 			runner.workers[i] = &worker
-			trackPooledRunnerActions.AddTracker()
+			trackPooledRunnerActions.AddRunner()
 			worker.Start()
 		}
 

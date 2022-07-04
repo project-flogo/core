@@ -37,8 +37,8 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 	if act == nil {
 		return nil, errors.New("action not specified")
 	}
-	trackDirectRunnerActions.AddTracker()
-	defer trackDirectRunnerActions.DoneTracker()
+	trackDirectRunnerActions.AddRunner()
+	defer trackDirectRunnerActions.RemoveRunner()
 	if syncAct, ok := act.(action.SyncAction); ok {
 		return syncAct.Run(ctx, inputs)
 	} else if asyncAct, ok := act.(action.AsyncAction); ok {
