@@ -3,7 +3,6 @@ package runner
 import (
 	"context"
 	"errors"
-
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/support/log"
@@ -43,6 +42,8 @@ func NewPooled(config *PooledConfig) *PooledRunner {
 	return &pooledRunner
 }
 
+var trackPooledRunnerActions = NewRunnerTracker() //RunnerTracker{runnertrackerwg: &sync.WaitGroup{}}
+
 // Start will start the engine, by starting all of its workers
 func (runner *PooledRunner) Start() error {
 
@@ -59,6 +60,7 @@ func (runner *PooledRunner) Start() error {
 			logger.Debugf("Starting worker with id '%d'", id)
 			worker := NewWorker(id, runner.directRunner, runner.workerQueue)
 			runner.workers[i] = &worker
+			trackPooledRunnerActions.AddRunner()
 			worker.Start()
 		}
 
@@ -96,6 +98,8 @@ func (runner *PooledRunner) Stop() error {
 			runner.logger.Debug("Stopping worker", worker.ID)
 			worker.Stop()
 		}
+		// check if all actions done till shutdown waiting time
+		trackPooledRunnerActions.gracefulStop()
 	}
 
 	return nil
