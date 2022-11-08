@@ -1,7 +1,15 @@
 package app
 
 import (
+	"encoding/json"
 	"fmt"
+	"os"
+	"path"
+	"regexp"
+	"runtime/debug"
+	"strings"
+	"time"
+
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/activity"
 	appresolve "github.com/project-flogo/core/app/resolve"
@@ -18,10 +26,6 @@ import (
 	"github.com/project-flogo/core/support/managed"
 	"github.com/project-flogo/core/support/service"
 	"github.com/project-flogo/core/trigger"
-	"path"
-	"regexp"
-	"runtime/debug"
-	"strings"
 )
 
 type Option func(*App) error
@@ -66,6 +70,12 @@ var flogoImportPattern = regexp.MustCompile(`^(([^ ]*)[ ]+)?([^@:]*)@?([^:]*)?:?
 func New(config *Config, runner action.Runner, options ...Option) (*App, error) {
 
 	app := &App{stopOnError: true, name: config.Name, version: config.Version}
+	if AppOnDemandRestartEnabled() {
+		// Preserve original configuration and options
+		app.config, _ = json.Marshal(config)
+		app.options = options
+		app.actionRunner = runner
+	}
 
 	properties := make(map[string]interface{}, len(config.Properties))
 	for _, attr := range config.Properties {
@@ -250,6 +260,9 @@ type App struct {
 	started        bool
 	resolver       resolve.CompositeResolver
 	actionSettings map[string]map[string]interface{}
+	config         []byte
+	options        []Option
+	actionRunner   action.Runner
 }
 
 type triggerWrapper struct {
@@ -536,6 +549,203 @@ func (a *App) Stop() error {
 	a.resManager.CleanupResources()
 
 	return nil
+}
+
+// Restart function restarts the app
+func (a *App) Restart() error {
+	if !a.started {
+		return fmt.Errorf("app is not started")
+	}
+
+	if !AppOnDemandRestartEnabled() {
+		return fmt.Errorf("Engine is not configured for restart. Set %s=true to enable this feature", EnvKeyOnDemandRestart)
+	}
+	var appConfig Config
+	var err error
+	err = json.Unmarshal(a.config, &appConfig)
+	if err != nil {
+		return err
+	}
+
+	// Stop current normal triggers
+	// OnShutdown triggers are excluded from restart
+	if len(a.triggers) > 0 {
+		var triggers []*triggerWrapper
+		for _, trgW := range a.triggers {
+			if _, ok := trgW.trg.(LifecycleAware); !ok && !skippedTrigger(trgW.id) {
+				triggers = append(triggers, trgW)
+			}
+		}
+
+		if len(triggers) > 0 {
+			logger.Info("Stopping Triggers...")
+			for _, trg := range triggers {
+				_ = managed.Stop("Trigger [ "+trg.id+" ]", trg.trg)
+				trg.status.Status = managed.StatusStopped
+				trigger.PostTriggerEvent(trigger.STOPPED, trg.id)
+			}
+			logger.Info("Triggers Stopped")
+		}
+	}
+
+	delayedStopInterval := GetDelayedStopInterval()
+	if delayedStopInterval != "" {
+		// Delay stopping of app so that in-flight actions can continue until specified interval
+		// No new events will be processed as triggers are stopped.
+		duration, err := time.ParseDuration(delayedStopInterval)
+		if err != nil {
+			logger.Errorf("Invalid interval - %s  specified for delayed stop. It must suffix with time unit e.g. %sms, %ss", delayedStopInterval, delayedStopInterval, delayedStopInterval)
+		} else {
+			logger.Infof("Delaying application stop by - %s", delayedStopInterval)
+			time.Sleep(duration)
+		}
+	}
+
+	// Stop connection managers
+	managers := connection.Managers()
+	if len(managers) > 0 {
+		// Stop the connection managers
+		logger.Info("Stopping Connection Managers...")
+		for id, manager := range managers {
+			_, reconfigurable := manager.(connection.ReconfigurableManager)
+			if !reconfigurable {
+				// Stop the connection
+				if m, ok := manager.(managed.Managed); ok {
+					err = m.Stop()
+					if err != nil {
+						logger.Warnf("Unable to stop connection manager for '%s': %v", id, err)
+					}
+					// Remove manager from registry
+					err = connection.UnregisterManager(id)
+					if err != nil {
+						logger.Warnf("Unable to unregister connection manager for '%s': %v", id, err)
+					}
+				}
+			}
+		}
+		logger.Info("Connection Managers Stopped")
+	}
+	a.started = false
+	// Reload app configuration
+	for _, option := range a.options {
+		err = option(a)
+		if err != nil {
+			return err
+		}
+	}
+
+	// Recreate connections
+	for id, config := range appConfig.Connections {
+		manager := connection.GetManager(id)
+		if manager == nil {
+			// Create new manager
+			_, err = connection.NewSharedManager(id, config)
+			if err != nil {
+				return err
+			}
+		} else {
+			// Update existing manager configuration
+			reconfigManager, ok := manager.(connection.ReconfigurableManager)
+			if ok {
+				// Resolve connection configuration
+				err = connection.ResolveConfig(config)
+				if err != nil {
+					return err
+				}
+				err = reconfigManager.Reconfigure(config.Settings)
+				if err != nil {
+					return err
+				}
+			}
+		}
+	}
+
+	// Load flows
+	for _, resConfig := range appConfig.Resources {
+		resType, err := resource.GetTypeFromID(resConfig.ID)
+		if err != nil {
+			return err
+		}
+
+		loader := resource.GetLoader(resType)
+		if loader == nil {
+			return fmt.Errorf("resource loader for '%s' not registered", resType)
+		}
+		res, err := loader.LoadResource(resConfig)
+		if err != nil {
+			return err
+		}
+		// Update resource
+		a.resManager.SetResource(resConfig.ID, res)
+	}
+
+	// Load trigger configuration
+	a.triggers, err = a.createTriggers(appConfig.Triggers, a.actionRunner)
+	if err != nil {
+		return err
+	}
+
+	managers = connection.Managers()
+	if len(managers) > 0 {
+		// Start the connection managers
+		logger.Info("Starting Connection Managers...")
+		for id, manager := range managers {
+			_, reconfigurable := manager.(connection.ReconfigurableManager)
+			if !reconfigurable {
+				if m, ok := manager.(managed.Managed); ok {
+					err = m.Start()
+					if err != nil {
+						return fmt.Errorf("unable to start connection manager for '%s': %v", id, err)
+					}
+				}
+			}
+		}
+		logger.Info("Connection Managers Started")
+	}
+
+	// Start normal triggers
+	// OnStartup triggers are excluded from restart
+	if len(a.triggers) > 0 {
+		var normalTriggers []*triggerWrapper
+		for _, trgW := range a.triggers {
+			if _, ok := trgW.trg.(LifecycleAware); !ok && !skippedTrigger(trgW.id) {
+				normalTriggers = append(normalTriggers, trgW)
+			}
+		}
+
+		if len(normalTriggers) > 0 {
+			logger.Info("Starting Triggers...")
+			var failed []string
+			for _, trg := range normalTriggers {
+				ok, err := a.startTrigger(trg)
+				if err != nil {
+					return err
+				}
+				if !ok {
+					failed = append(failed, trg.id)
+				}
+			}
+
+			if len(failed) > 0 {
+				//remove failed trigger, we have no use for them
+				for _, triggerId := range failed {
+					for index, tr := range a.triggers {
+						if triggerId == tr.id {
+							//Delete it
+							a.triggers = append(a.triggers[:index], a.triggers[index+1:]...)
+						}
+					}
+				}
+			}
+			logger.Info("Triggers Started")
+		}
+	}
+	a.started = true
+	return nil
+}
+
+func skippedTrigger(id string) bool {
+	return strings.Contains(os.Getenv(EnvKeyOnDemandRestartSkipTriggers), id)
 }
 
 func registerImport(anImport string) error {

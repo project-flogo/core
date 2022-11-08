@@ -9,7 +9,7 @@ import (
 
 var (
 	managerFactories = make(map[string]ManagerFactory)
-	managers = make(map[string]Manager)
+	managers         = make(map[string]Manager)
 )
 
 func RegisterManagerFactory(factory ManagerFactory) error {
@@ -26,7 +26,7 @@ func RegisterManagerFactory(factory ManagerFactory) error {
 
 	managerFactories[ref] = factory
 
-	log.RootLogger().Debugf("Registering '%s' connection manager factory: %s", factory.Type(), ref )
+	log.RootLogger().Debugf("Registering '%s' connection manager factory: %s", factory.Type(), ref)
 
 	return nil
 }
@@ -43,18 +43,17 @@ func ReplaceManagerFactory(ref string, factory ManagerFactory) error {
 
 	managerFactories[ref] = factory
 
-	log.RootLogger().Debugf("Replacing '%s' connection manager factory: %s", factory.Type, ref )
+	log.RootLogger().Debugf("Replacing '%s' connection manager factory: %s", factory.Type, ref)
 
 	return nil
 }
-
 
 func GetManagerFactory(ref string) ManagerFactory {
 	return managerFactories[ref]
 }
 
 func ManagerFactories() map[string]ManagerFactory {
-	ret := make(map[string]ManagerFactory,len(managerFactories) )
+	ret := make(map[string]ManagerFactory, len(managerFactories))
 	for id, managerFactory := range managerFactories {
 		ret[id] = managerFactory
 	}
@@ -83,12 +82,24 @@ func RegisterManager(connectionId string, manager Manager) error {
 	return nil
 }
 
+func UnregisterManager(connectionId string) error {
+	if connectionId == "" {
+		return fmt.Errorf("'id' must be specified when unregistering")
+	}
+	if _, found := managers[connectionId]; !found {
+		return fmt.Errorf("connection manager not registered: %s", connectionId)
+	}
+	log.RootLogger().Debugf("Unregistering connection manager: %s", connectionId)
+	delete(managers, connectionId)
+	return nil
+}
+
 func GetManager(id string) Manager {
 	return managers[id]
 }
 
 func Managers() map[string]Manager {
-	ret := make(map[string]Manager,len(managers) )
+	ret := make(map[string]Manager, len(managers))
 	for id, manager := range managers {
 		ret[id] = manager
 	}

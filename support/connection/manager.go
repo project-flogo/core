@@ -12,13 +12,18 @@ type Manager interface {
 	ReleaseConnection(connection interface{})
 }
 
+// Connections that support dynamic updates
+type ReconfigurableManager interface {
+	Reconfigure(settings map[string]interface{}) error
+}
+
 type ManagerFactory interface {
 	Type() string
 
 	NewManager(settings map[string]interface{}) (Manager, error)
 }
 
-func NewManager(config *Config) (Manager, error)  {
+func NewManager(config *Config) (Manager, error) {
 
 	//resolve settings
 	err := ResolveConfig(config)
@@ -40,7 +45,7 @@ func NewManager(config *Config) (Manager, error)  {
 	return cm, err
 }
 
-func NewSharedManager(id string, config *Config) (Manager, error)  {
+func NewSharedManager(id string, config *Config) (Manager, error) {
 
 	cm, err := NewManager(config)
 	if err != nil {
@@ -55,7 +60,7 @@ func NewSharedManager(id string, config *Config) (Manager, error)  {
 	return cm, err
 }
 
-func IsShared(manager Manager) bool{
+func IsShared(manager Manager) bool {
 	for _, mgr := range managers {
 		if manager == mgr {
 			return true
@@ -63,4 +68,3 @@ func IsShared(manager Manager) bool{
 	}
 	return false
 }
-
