@@ -70,7 +70,7 @@ var flogoImportPattern = regexp.MustCompile(`^(([^ ]*)[ ]+)?([^@:]*)@?([^:]*)?:?
 func New(config *Config, runner action.Runner, options ...Option) (*App, error) {
 
 	app := &App{stopOnError: true, name: config.Name, version: config.Version}
-	if AppOnDemandRestartEnabled() {
+	if AutoReconfigurationEnabled() {
 		// Preserve original configuration and options
 		app.config, _ = json.Marshal(config)
 		app.options = options
@@ -551,14 +551,14 @@ func (a *App) Stop() error {
 	return nil
 }
 
-// Restart function restarts the app
-func (a *App) Restart() error {
+// Reconfigure function restarts the app
+func (a *App) Reconfigure() error {
 	if !a.started {
 		return fmt.Errorf("app is not started")
 	}
 
-	if !AppOnDemandRestartEnabled() {
-		return fmt.Errorf("Engine is not configured for restart. Set %s=true to enable this feature", EnvKeyOnDemandRestart)
+	if !AutoReconfigurationEnabled() {
+		return fmt.Errorf("App is not configured for auto reconfiguration. Set %s=true to enable this feature", EnvKeyAutoReconfigure)
 	}
 	var appConfig Config
 	var err error
@@ -625,6 +625,10 @@ func (a *App) Restart() error {
 		}
 		logger.Info("Connection Managers Stopped")
 	}
+
+	logger.Debugf("Cleaning up singleton activities")
+	activity.CleanupSingletons()
+
 	a.started = false
 	// Reload app configuration
 	for _, option := range a.options {
@@ -741,11 +745,12 @@ func (a *App) Restart() error {
 		}
 	}
 	a.started = true
+	logger.Info("App successfully reconfigured")
 	return nil
 }
 
 func skippedTrigger(id string) bool {
-	return strings.Contains(os.Getenv(EnvKeyOnDemandRestartSkipTriggers), id)
+	return strings.Contains(os.Getenv(EnvKeyAutoReconfigureSkipTriggers), id)
 }
 
 func registerImport(anImport string) error {

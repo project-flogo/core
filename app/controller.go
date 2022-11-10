@@ -67,10 +67,10 @@ func (c *controllerData) ReleaseControl() error {
 	return nil
 }
 
-func (app *App) initEventFlowController() {
+func (a *App) initEventFlowController() {
 	controllerData := &controllerData{lock: sync.Mutex{}}
 	controllerData.triggers = make(map[string]trigger.Trigger)
-	for _, trgW := range app.triggers {
+	for _, trgW := range a.triggers {
 		controllerData.triggers[trgW.id] = trgW.trg
 	}
 	controller = controllerData
