@@ -656,7 +656,7 @@ func (a *App) Reconfigure() error {
 				if err != nil {
 					return err
 				}
-				err = reconfigManager.Reconfigure(config.Settings)
+				err = reconfigManager.ReconfigureConnection(config.Settings)
 				if err != nil {
 					return err
 				}

@@ -14,7 +14,7 @@ type Manager interface {
 
 // Connections that support dynamic updates
 type ReconfigurableManager interface {
-	Reconfigure(settings map[string]interface{}) error
+	ReconfigureConnection(settings map[string]interface{}) error
 }
 
 type ManagerFactory interface {
