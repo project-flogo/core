@@ -629,6 +629,9 @@ func (a *App) Reconfigure() error {
 	logger.Debugf("Cleaning up singleton activities")
 	activity.CleanupSingletons()
 
+	logger.Debugf("Cleaning up resources")
+	a.resManager.CleanupResources()
+
 	a.started = false
 	// Reload app configuration
 	for _, option := range a.options {
