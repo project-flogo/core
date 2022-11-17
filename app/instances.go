@@ -279,10 +279,10 @@ func (a *App) reconfigureTriggers(tConfigs []*trigger.Config, runner action.Runn
 		tLogger := trigger.GetLogger(ref)
 
 		if log.CtxLoggingEnabled() {
-			logger = log.ChildLoggerWithFields(tLogger, log.FieldString("triggerId", tConfig.Id))
+			tLogger = log.ChildLoggerWithFields(tLogger, log.FieldString("triggerId", tConfig.Id))
 		}
 
-		initCtx := &initContext{logger: logger, handlers: make([]trigger.Handler, 0, len(tConfig.Handlers))}
+		initCtx := &initContext{logger: tLogger, handlers: make([]trigger.Handler, 0, len(tConfig.Handlers))}
 
 		//create handlers for that trigger and init
 		for _, hConfig := range tConfig.Handlers {
