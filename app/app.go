@@ -601,31 +601,6 @@ func (a *App) Reconfigure() error {
 		}
 	}
 
-	// Stop connection managers
-	managers := connection.Managers()
-	if len(managers) > 0 {
-		// Stop the connection managers
-		logger.Info("Stopping Connection Managers...")
-		for id, manager := range managers {
-			_, reconfigurable := manager.(connection.ReconfigurableManager)
-			if !reconfigurable {
-				// Stop the connection
-				if m, ok := manager.(managed.Managed); ok {
-					err = m.Stop()
-					if err != nil {
-						logger.Warnf("Unable to stop connection manager for '%s': %v", id, err)
-					}
-					// Remove manager from registry
-					err = connection.UnregisterManager(id)
-					if err != nil {
-						logger.Warnf("Unable to unregister connection manager for '%s': %v", id, err)
-					}
-				}
-			}
-		}
-		logger.Info("Connection Managers Stopped")
-	}
-
 	logger.Debugf("Cleaning up singleton activities")
 	activity.CleanupSingletons()
 
@@ -641,29 +616,11 @@ func (a *App) Reconfigure() error {
 		}
 	}
 
-	// Recreate connections
+	// Reconfigure connections
 	for id, config := range appConfig.Connections {
-		manager := connection.GetManager(id)
-		if manager == nil {
-			// Create new manager
-			_, err = connection.NewSharedManager(id, config)
-			if err != nil {
-				return err
-			}
-		} else {
-			// Update existing manager configuration
-			reconfigManager, ok := manager.(connection.ReconfigurableManager)
-			if ok {
-				// Resolve connection configuration
-				err = connection.ResolveConfig(config)
-				if err != nil {
-					return err
-				}
-				err = reconfigManager.ReconfigureConnection(config.Settings)
-				if err != nil {
-					return err
-				}
-			}
+		err = connection.ReconfigureManager(id, config)
+		if err != nil {
+			return err
 		}
 	}
 
@@ -698,24 +655,6 @@ func (a *App) Reconfigure() error {
 		if err != nil {
 			return err
 		}
-	}
-
-	managers = connection.Managers()
-	if len(managers) > 0 {
-		// Start the connection managers
-		logger.Info("Starting Connection Managers...")
-		for id, manager := range managers {
-			_, reconfigurable := manager.(connection.ReconfigurableManager)
-			if !reconfigurable {
-				if m, ok := manager.(managed.Managed); ok {
-					err = m.Start()
-					if err != nil {
-						return fmt.Errorf("unable to start connection manager for '%s': %v", id, err)
-					}
-				}
-			}
-		}
-		logger.Info("Connection Managers Started")
 	}
 
 	// Start normal triggers
