@@ -683,10 +683,18 @@ func (a *App) Reconfigure() error {
 		a.resManager.SetResource(resConfig.ID, res)
 	}
 
-	// Load trigger configuration
-	a.triggers, err = a.createTriggers(appConfig.Triggers, a.actionRunner)
-	if err != nil {
-		return err
+	// Reconfigure triggers
+	var triggerConfig []*trigger.Config
+	for _, tc := range appConfig.Triggers {
+		if !skippedTrigger(tc.Id) {
+			triggerConfig = append(triggerConfig, tc)
+		}
+	}
+	if len(triggerConfig) > 0 {
+		err = a.reconfigureTriggers(triggerConfig, a.actionRunner)
+		if err != nil {
+			return err
+		}
 	}
 
 	managers = connection.Managers()
