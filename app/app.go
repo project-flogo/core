@@ -553,6 +553,7 @@ func (a *App) Stop() error {
 
 // Reconfigure function restarts the app
 func (a *App) Reconfigure() error {
+	logger := log.RootLogger()
 	if !a.started {
 		return fmt.Errorf("app is not started")
 	}
