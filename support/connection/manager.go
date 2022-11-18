@@ -63,11 +63,13 @@ func NewSharedManager(id string, config *Config) (Manager, error) {
 }
 
 func ReconfigureManager(id string, config *Config) error {
-	manager := managers[id]
+	var err error
+	var newConnection, manager Manager
+	manager = managers[id]
 	if manager == nil {
 		return fmt.Errorf("connection not found for id '%s'", id)
 	}
-	var err error
+
 	// Resolve connection configuration
 	err = ResolveConfig(config)
 	if err != nil {
@@ -82,24 +84,29 @@ func ReconfigureManager(id string, config *Config) error {
 			return err
 		}
 	} else {
-		// Stop connection instance
-		err = managed.Stop(fmt.Sprintf("Connection [%s]", id), manager.(managed.Managed))
-		if err != nil {
-			return err
+		// Stop old connection instance
+		if oc, mc := manager.(managed.Managed); mc {
+			err = oc.Stop()
+			if err != nil {
+				return err
+			}
 		}
 
 		// Create new connection instance
-		manager, err = NewManager(config)
+		newConnection, err = NewManager(config)
 		if err != nil {
 			return err
 		}
 		// Start new connection instance
-		err = managed.Start(fmt.Sprintf("Connection [%s]", id), manager.(managed.Managed))
-		if err != nil {
-			return err
+		if nc, mc := newConnection.(managed.Managed); mc {
+			err = nc.Start()
+			if err != nil {
+				return err
+			}
 		}
 		// Replace existing instance with new instance
-		managers[id] = manager
+		managers[id] = newConnection
+
 	}
 	return nil
 }
