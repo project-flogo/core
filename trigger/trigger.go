@@ -14,6 +14,12 @@ type Trigger interface {
 	Initialize(ctx InitContext) error
 }
 
+// ReconfigurableTrigger is object that supports dynamic reconfiguration of trigger
+type ReconfigurableTrigger interface {
+	// Reconfigure is called to reconfigure trigger implementation
+	Reconfigure(config *Config, handlers []Handler) error
+}
+
 // InitContext is the initialization context for the trigger instance
 type InitContext interface {
 

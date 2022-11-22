@@ -76,6 +76,28 @@ func (m *Manager) CleanupResources() {
 	}
 }
 
+func (m *Manager) Reconfigure(resConfig *Config) error {
+	oldResource := m.GetResource(resConfig.ID)
+	if oldResource != nil {
+		loader := loaders[oldResource.Type()]
+		if needsCleanup, ok := oldResource.Object().(support.NeedsCleanup); ok {
+			// clean up activity instances
+			err := needsCleanup.Cleanup()
+			if err != nil {
+				log.RootLogger().Errorf("Error cleaning up resource '%s' : ", resConfig.ID, err)
+			}
+		}
+		newResource, err := loader.LoadResource(resConfig)
+		if err != nil {
+			return err
+		}
+		// Replace old resource instance with new one
+		m.SetResource(resConfig.ID, newResource)
+		log.RootLogger().Infof("Resource: %s successfully reconfigured", resConfig.ID)
+	}
+	return nil
+}
+
 func GetTypeFromID(id string) (string, error) {
 
 	idx := strings.Index(id, ":")

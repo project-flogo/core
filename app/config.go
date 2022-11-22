@@ -13,10 +13,9 @@ import (
 )
 
 const (
-	EnvKeyDelayedAppStopInterval      = "FLOGO_APP_DELAYED_STOP_INTERVAL"
-	EnvKeyEnableFlowControl           = "FLOGO_APP_ENABLE_FLOW_CONTROL"
-	EnvKeyAutoReconfigure             = "FLOGO_APP_AUTO_RECONFIGURE"
-	EnvKeyAutoReconfigureSkipTriggers = "FLOGO_APP_RECONFIGURE_SKIP_TRIGGERS"
+	EnvKeyDelayedAppStopInterval = "FLOGO_APP_DELAYED_STOP_INTERVAL"
+	EnvKeyEnableFlowControl      = "FLOGO_APP_ENABLE_FLOW_CONTROL"
+	EnvKeyAutoReconfigure        = "FLOGO_APP_AUTO_RECONFIGURE"
 )
 
 // Config is the configuration for the App

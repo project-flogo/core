@@ -3,7 +3,7 @@ package connection
 import (
 	"fmt"
 
-	"github.com/project-flogo/core/support/managed"
+	"github.com/project-flogo/core/support/log"
 )
 
 type Manager interface {
@@ -14,9 +14,9 @@ type Manager interface {
 	ReleaseConnection(connection interface{})
 }
 
-// Connections that support dynamic updates
-type ReconfigurableManager interface {
-	ReconfigureConnection(settings map[string]interface{}) error
+// ReconfigurableConnection allows dynamic update for existing connection instance
+type ReconfigurableConnection interface {
+	Reconfigure(settings map[string]interface{}) error
 }
 
 type ManagerFactory interface {
@@ -62,51 +62,25 @@ func NewSharedManager(id string, config *Config) (Manager, error) {
 	return cm, err
 }
 
-func ReconfigureManager(id string, config *Config) error {
+func Reconfigure(id string, config *Config) error {
 	var err error
-	var newConnection, manager Manager
-	manager = managers[id]
+	manager := managers[id]
 	if manager == nil {
 		return fmt.Errorf("connection not found for id '%s'", id)
 	}
-
 	// Resolve connection configuration
 	err = ResolveConfig(config)
 	if err != nil {
 		return err
 	}
-
-	reconfigurableConn, ok := manager.(ReconfigurableManager)
+	reconfigurableConn, ok := manager.(ReconfigurableConnection)
 	if ok {
 		// Update existing connection instance
-		err = reconfigurableConn.ReconfigureConnection(config.Settings)
+		err = reconfigurableConn.Reconfigure(config.Settings)
 		if err != nil {
 			return err
 		}
-	} else {
-		// Stop old connection instance
-		if oc, mc := manager.(managed.Managed); mc {
-			err = oc.Stop()
-			if err != nil {
-				return err
-			}
-		}
-
-		// Create new connection instance
-		newConnection, err = NewManager(config)
-		if err != nil {
-			return err
-		}
-		// Start new connection instance
-		if nc, mc := newConnection.(managed.Managed); mc {
-			err = nc.Start()
-			if err != nil {
-				return err
-			}
-		}
-		// Replace existing instance with new instance
-		managers[id] = newConnection
-
+		log.RootLogger().Infof("Connection: %s successfully reconfigured", id)
 	}
 	return nil
 }
