@@ -600,7 +600,6 @@ func (a *App) Reconfigure() error {
 	if err != nil {
 		return err
 	}
-	logger.Info("App triggers are successfully reconfigured")
 
 	logger.Info("App successfully reconfigured")
 	return nil
