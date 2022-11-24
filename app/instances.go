@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"runtime/debug"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/data/expression"
@@ -225,14 +226,23 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 		}
 		trigger.PostTriggerEvent(trigger.INITIALIZED, tConfig.Id)
 
-		triggers[i] = &triggerWrapper{id: tConfig.Id, ref: ref, trg: trg, status: &managed.StatusInfo{Name: tConfig.Id}}
+		triggers[i] = &triggerWrapper{id: tConfig.Id, ref: ref, trg: trg, status: &managed.StatusInfo{Name: tConfig.Id}, handlers: initCtx.handlers}
 	}
 
 	return triggers, nil
 }
 
-func (a *App) reconfigureTriggers(tConfigs []*trigger.Config, runner action.Runner) error {
-
+func (a *App) reconfigureTriggers(tConfigs []*trigger.Config, runner action.Runner) (err error) {
+	defer func() {
+		// Handle panic in implementation code
+		if r := recover(); r != nil {
+			log.RootLogger().Errorf("Unhandled error while reconfiguring trigger: %v", r)
+			if log.RootLogger().DebugEnabled() {
+				log.RootLogger().Debugf("StackTrace: %s", debug.Stack())
+			}
+			err = fmt.Errorf("Unhandled error while reconfiguring trigger: %v", r)
+		}
+	}()
 	mapperFactory := mapper.NewFactory(a.resolver)
 	expressionFactory := expression.NewFactory(a.resolver)
 
@@ -252,24 +262,23 @@ func (a *App) reconfigureTriggers(tConfigs []*trigger.Config, runner action.Runn
 				}
 
 				triggerFactory := trigger.GetFactory(ref)
-				err := tConfig.FixUp(triggerFactory.Metadata(), a.resolver)
-				if err != nil {
-					return fmt.Errorf("error fixing up trigger [%s]'s metadata:%s", tConfig.Id, err.Error())
+				configErr := tConfig.FixUp(triggerFactory.Metadata(), a.resolver)
+				if configErr != nil {
+					err = fmt.Errorf("error fixing up trigger [%s]'s metadata:%s", tConfig.Id, configErr.Error())
+					return
 				}
 
 				handlers := make([]trigger.Handler, 0, len(tConfig.Handlers))
 				//create new handlers for the trigger as old handlers still might be in use
 				for _, hConfig := range tConfig.Handlers {
 					var acts []action.Action
-					var err error
-
 					for _, act := range hConfig.Actions {
 						if id := act.Id; id != "" {
-							act, _ := a.actions[id]
+							eAct, _ := a.actions[id]
 							if act == nil {
 								return fmt.Errorf("trigger [%s]'s handler [%s] references nonexistent shared action '%s'", tConfig.Id, hConfig.Name, id)
 							}
-							acts = append(acts, act)
+							acts = append(acts, eAct)
 						} else {
 							//create the action
 							if act.Ref == "" && act.Type != "" {
@@ -282,9 +291,10 @@ func (a *App) reconfigureTriggers(tConfigs []*trigger.Config, runner action.Runn
 								ref, _ = support.GetAliasRef("action", act.Ref)
 							}
 							actionFactory := action.GetFactory(ref)
-							nAction, err := actionFactory.New(act.Config)
-							if err != nil {
-								return fmt.Errorf("error creating action [%s] for trigger [%s]'s handler [%s]\"", ref, tConfig.Id, hConfig.Name)
+							nAction, actionErr := actionFactory.New(act.Config)
+							if actionErr != nil {
+								err = fmt.Errorf("error creating action [%s] for trigger [%s]'s handler [%s]: %s", ref, tConfig.Id, hConfig.Name, actionErr.Error())
+								return
 							}
 							acts = append(acts, nAction)
 						}
@@ -296,9 +306,10 @@ func (a *App) reconfigureTriggers(tConfigs []*trigger.Config, runner action.Runn
 							for name, def := range out {
 								ref, ok := def.(string)
 								if ok {
-									s, err := schema.FindOrCreate(ref)
-									if err != nil {
-										return fmt.Errorf("unable to find or create output schema [%s] for trigger [%s]'s handler [%s]: %s", ref, tConfig.Id, hConfig.Name, err.Error())
+									s, schemaErr := schema.FindOrCreate(ref)
+									if schemaErr != nil {
+										err = fmt.Errorf("unable to find or create output schema [%s] for trigger [%s]'s handler [%s]: %s", ref, tConfig.Id, hConfig.Name, schemaErr.Error())
+										return
 									}
 									hConfig.Schemas.Output[name] = s
 								}
@@ -309,18 +320,20 @@ func (a *App) reconfigureTriggers(tConfigs []*trigger.Config, runner action.Runn
 							for name, def := range reply {
 								ref, ok := def.(string)
 								if ok {
-									s, err := schema.FindOrCreate(ref)
-									if err != nil {
-										return fmt.Errorf("unable to find or create reply schema [%s] in trigger [%s]'s handler [%s]: %s", ref, tConfig.Id, hConfig.Name, err.Error())
+									s, schemaErr := schema.FindOrCreate(ref)
+									if schemaErr != nil {
+										err = fmt.Errorf("unable to find or create reply schema [%s] in trigger [%s]'s handler [%s]: %s", ref, tConfig.Id, hConfig.Name, schemaErr.Error())
+										return
 									}
 									hConfig.Schemas.Reply[name] = s
 								}
 							}
 						}
 					}
-					handler, err := trigger.NewHandler(hConfig, acts, mapperFactory, expressionFactory, runner, logger)
-					if err != nil {
-						return fmt.Errorf("error creating handler [%s] in trigger [%s]:%s", hConfig.Name, tConfig.Id, err.Error())
+					handler, handlerErr := trigger.NewHandler(hConfig, acts, mapperFactory, expressionFactory, runner, logger)
+					if handlerErr != nil {
+						err = fmt.Errorf("error creating handler [%s] in trigger [%s]:%s", hConfig.Name, tConfig.Id, handlerErr.Error())
+						return
 					}
 					handlers = append(handlers, handler)
 				}
@@ -328,13 +341,13 @@ func (a *App) reconfigureTriggers(tConfigs []*trigger.Config, runner action.Runn
 				err = reconfigurableTrigger.Reconfigure(tConfig, handlers)
 				if err != nil {
 					log.RootLogger().Errorf("Failed to reconfigure trigger: %s due to error: %v", tConfig.Id, err)
-					return nil
+					return
 				}
 				log.RootLogger().Infof("Trigger: %s successfully reconfigured", tConfig.Id)
 			}
 		}
 	}
-	return nil
+	return
 }
 
 func (a *App) getTrigger(id string) *triggerWrapper {

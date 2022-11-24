@@ -3,7 +3,6 @@ package app
 import (
 	"encoding/json"
 	"fmt"
-	"os"
 	"path"
 	"regexp"
 	"runtime/debug"
@@ -74,8 +73,6 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 		app.config, _ = json.Marshal(config)
 		app.options = options
 		app.actionRunner = runner
-		// Enable property snapshot feature to ensure inflight instance use same app properties value during execution
-		_ = os.Setenv(property.EnvAppPropertySnapshotEnabled, "true")
 	}
 
 	properties := make(map[string]interface{}, len(config.Properties))
@@ -267,10 +264,11 @@ type App struct {
 }
 
 type triggerWrapper struct {
-	id     string
-	ref    string
-	trg    trigger.Trigger
-	status *managed.StatusInfo
+	id       string
+	ref      string
+	trg      trigger.Trigger
+	status   *managed.StatusInfo
+	handlers []trigger.Handler
 }
 
 func (a *App) GetProperty(name string) (interface{}, bool) {

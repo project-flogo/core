@@ -2,6 +2,7 @@ package connection
 
 import (
 	"fmt"
+	"runtime/debug"
 
 	"github.com/project-flogo/core/support/log"
 )
@@ -62,9 +63,18 @@ func NewSharedManager(id string, config *Config) (Manager, error) {
 	return cm, err
 }
 
-func ReconfigureConnections(connections map[string]*Config) error {
+func ReconfigureConnections(connections map[string]*Config) (err error) {
+	defer func() {
+		// Handle panic in implementation code
+		if r := recover(); r != nil {
+			log.RootLogger().Errorf("Unhandled error while reconfiguring connection: %v", r)
+			if log.RootLogger().DebugEnabled() {
+				log.RootLogger().Debugf("StackTrace: %s", debug.Stack())
+			}
+			err = fmt.Errorf("Unhandled error while reconfiguring connection: %v", r)
+		}
+	}()
 	for id, config := range connections {
-		var err error
 		manager := managers[id]
 		if manager == nil {
 			return fmt.Errorf("connection not found for id '%s'", id)
@@ -85,7 +95,7 @@ func ReconfigureConnections(connections map[string]*Config) error {
 			log.RootLogger().Infof("Connection: %s successfully reconfigured", id)
 		}
 	}
-	return nil
+	return err
 }
 
 func IsShared(manager Manager) bool {
