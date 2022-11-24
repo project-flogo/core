@@ -2,6 +2,7 @@ package resource
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 
 	"github.com/project-flogo/core/support"
@@ -76,24 +77,17 @@ func (m *Manager) CleanupResources() {
 	}
 }
 
-func (m *Manager) Reconfigure(resConfig *Config) error {
-	oldResource := m.GetResource(resConfig.ID)
-	if oldResource != nil {
-		loader := loaders[oldResource.Type()]
-		if needsCleanup, ok := oldResource.Object().(support.NeedsCleanup); ok {
-			// clean up activity instances
-			err := needsCleanup.Cleanup()
-			if err != nil {
-				log.RootLogger().Errorf("Error cleaning up resource '%s' : ", resConfig.ID, err)
+func (m *Manager) ReconfigureResources(resConfigs []*Config) error {
+	for _, resConfig := range resConfigs {
+		resource := m.GetResource(resConfig.ID)
+		if resource != nil {
+			if reconfigurableRes, ok := resource.Object().(ReconfigurableResource); ok {
+				err := reconfigurableRes.Reconfigure(resConfig)
+				if err != nil {
+					return fmt.Errorf("Failed to reconfigure resource: [%s] due to error: %v : ", resConfig.ID, err)
+				}
 			}
 		}
-		newResource, err := loader.LoadResource(resConfig)
-		if err != nil {
-			return err
-		}
-		// Replace old resource instance with new one
-		m.SetResource(resConfig.ID, newResource)
-		log.RootLogger().Infof("Resource: %s successfully reconfigured", resConfig.ID)
 	}
 	return nil
 }

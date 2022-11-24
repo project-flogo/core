@@ -577,30 +577,22 @@ func (a *App) Reconfigure() error {
 	logger.Info("App properties are successfully reconfigured")
 
 	// Reconfigure connections
-	for id, config := range appConfig.Connections {
-		err = connection.Reconfigure(id, config)
-		if err != nil {
-			log.RootLogger().Errorf("Failed to reconfigure connection: %s due to error: %v", id, err)
-			return err
-		}
+	err = connection.ReconfigureConnections(appConfig.Connections)
+	if err != nil {
+		return err
 	}
 
-	// Load flows
-	for _, resConfig := range appConfig.Resources {
-		err = a.resManager.Reconfigure(resConfig)
-		if err != nil {
-			log.RootLogger().Errorf("Failed to reconfigure resource: %s due to error: %v", resConfig.ID, err)
-			return err
-		}
+	// Reconfigure resources e.g. flows
+	err = a.resManager.ReconfigureResources(appConfig.Resources)
+	if err != nil {
+		return err
 	}
-	logger.Info("App resources are successfully reconfigured")
 
 	// Reconfigure triggers
 	err = a.reconfigureTriggers(appConfig.Triggers, a.actionRunner)
 	if err != nil {
 		return err
 	}
-
 	logger.Info("App successfully reconfigured")
 	return nil
 }

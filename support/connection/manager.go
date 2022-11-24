@@ -62,25 +62,28 @@ func NewSharedManager(id string, config *Config) (Manager, error) {
 	return cm, err
 }
 
-func Reconfigure(id string, config *Config) error {
-	var err error
-	manager := managers[id]
-	if manager == nil {
-		return fmt.Errorf("connection not found for id '%s'", id)
-	}
-	// Resolve connection configuration
-	err = ResolveConfig(config)
-	if err != nil {
-		return err
-	}
-	reconfigurableConn, ok := manager.(ReconfigurableConnection)
-	if ok {
-		// Update existing connection instance
-		err = reconfigurableConn.Reconfigure(config.Settings)
-		if err != nil {
-			return err
+func ReconfigureConnections(connections map[string]*Config) error {
+	for id, config := range connections {
+		var err error
+		manager := managers[id]
+		if manager == nil {
+			return fmt.Errorf("connection not found for id '%s'", id)
 		}
-		log.RootLogger().Infof("Connection: %s successfully reconfigured", id)
+		reconfigurableConn, ok := manager.(ReconfigurableConnection)
+		if ok {
+			// Resolve connection configuration
+			err = ResolveConfig(config)
+			if err != nil {
+				return err
+			}
+
+			// Update existing connection instance
+			err = reconfigurableConn.Reconfigure(config.Settings)
+			if err != nil {
+				return fmt.Errorf("Failed to reconfigure connection: [%s] due to error: %v : ", id, err)
+			}
+			log.RootLogger().Infof("Connection: %s successfully reconfigured", id)
+		}
 	}
 	return nil
 }

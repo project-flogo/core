@@ -39,3 +39,7 @@ type Details struct {
 type HasDetails interface {
 	Details() *Details
 }
+
+type ReconfigurableActivity interface {
+	Reconfigure(settings map[string]interface{}) error
+}

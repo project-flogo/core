@@ -5,6 +5,10 @@ type Resource struct {
 	resObj  interface{}
 }
 
+type ReconfigurableResource interface {
+	Reconfigure(config *Config) error
+}
+
 func New(resType string, resObj interface{}) *Resource {
 	return &Resource{resType: resType, resObj: resObj}
 }
