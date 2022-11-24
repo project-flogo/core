@@ -351,23 +351,10 @@ type initContext struct {
 	logger   log.Logger
 }
 
-type reconfigurableContext struct {
-	handlers      []trigger.Handler
-	triggerConfig *trigger.Config
-}
-
 func (ctx *initContext) GetHandlers() []trigger.Handler {
 	return ctx.handlers
 }
 
 func (ctx *initContext) Logger() log.Logger {
 	return ctx.logger
-}
-
-func (ctx *reconfigurableContext) Handlers() []trigger.Handler {
-	return ctx.handlers
-}
-
-func (ctx *reconfigurableContext) Config() *trigger.Config {
-	return ctx.triggerConfig
 }
