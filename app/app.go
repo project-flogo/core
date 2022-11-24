@@ -559,9 +559,14 @@ func (a *App) Reconfigure() error {
 	if !AutoReconfigurationEnabled() {
 		return fmt.Errorf("App is not configured for auto reconfiguration. Set %s=true to enable this feature", EnvKeyAutoReconfigure)
 	}
-	var appConfig Config
+
 	var err error
-	err = json.Unmarshal(a.config, &appConfig)
+	appConfig := &struct {
+		Triggers    []*trigger.Config             `json:"triggers"`
+		Resources   []*resource.Config            `json:"resources,omitempty"`
+		Connections map[string]*connection.Config `json:"connections,omitempty"`
+	}{}
+	err = json.Unmarshal(a.config, appConfig)
 	if err != nil {
 		return err
 	}
