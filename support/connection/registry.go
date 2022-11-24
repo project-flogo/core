@@ -82,18 +82,6 @@ func RegisterManager(connectionId string, manager Manager) error {
 	return nil
 }
 
-func UnregisterManager(connectionId string) error {
-	if connectionId == "" {
-		return fmt.Errorf("'id' must be specified when unregistering")
-	}
-	if _, found := managers[connectionId]; !found {
-		return fmt.Errorf("connection manager not registered: %s", connectionId)
-	}
-	log.RootLogger().Debugf("Unregistering connection manager: %s", connectionId)
-	delete(managers, connectionId)
-	return nil
-}
-
 func GetManager(id string) Manager {
 	return managers[id]
 }
