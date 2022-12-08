@@ -93,11 +93,11 @@ func (s *SimpleSyncScope) GetValue(name string) (value interface{}, exists bool)
 
 // Delete implements Scope.GetValue
 func (s *SimpleSyncScope) Delete(name string) {
-	s.mutex.RLock()
+	s.mutex.Lock()
 	if delScope, ok := s.scope.(NeedsDelete); ok {
 		delScope.Delete(name)
 	}
-	s.mutex.RUnlock()
+	s.mutex.Unlock()
 }
 
 // SetValue implements Scope.SetValue
