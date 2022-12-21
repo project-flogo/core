@@ -2,6 +2,8 @@ package resource
 
 import (
 	"errors"
+	"fmt"
+	"runtime/debug"
 	"strings"
 
 	"github.com/project-flogo/core/support"
@@ -74,6 +76,31 @@ func (m *Manager) CleanupResources() {
 			}
 		}
 	}
+}
+
+func (m *Manager) ReconfigureResources(resConfigs []*Config) (err error) {
+	defer func() {
+		// Handle panic in implementation code
+		if r := recover(); r != nil {
+			log.RootLogger().Errorf("Unhandled error while reconfiguring resource: %v", r)
+			if log.RootLogger().DebugEnabled() {
+				log.RootLogger().Debugf("StackTrace: %s", debug.Stack())
+			}
+			err = fmt.Errorf("Unhandled error while reconfiguring resource: %v", r)
+		}
+	}()
+	for _, resConfig := range resConfigs {
+		resource := m.GetResource(resConfig.ID)
+		if resource != nil {
+			if reconfigurableRes, ok := resource.Object().(ReconfigurableResource); ok {
+				err = reconfigurableRes.Reconfigure(resConfig)
+				if err != nil {
+					return fmt.Errorf("Failed to reconfigure resource: [%s] due to error: %v : ", resConfig.ID, err)
+				}
+			}
+		}
+	}
+	return err
 }
 
 func GetTypeFromID(id string) (string, error) {

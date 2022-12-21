@@ -1,7 +1,13 @@
 package app
 
 import (
+	"encoding/json"
 	"fmt"
+	"path"
+	"regexp"
+	"runtime/debug"
+	"strings"
+
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/activity"
 	appresolve "github.com/project-flogo/core/app/resolve"
@@ -18,10 +24,6 @@ import (
 	"github.com/project-flogo/core/support/managed"
 	"github.com/project-flogo/core/support/service"
 	"github.com/project-flogo/core/trigger"
-	"path"
-	"regexp"
-	"runtime/debug"
-	"strings"
 )
 
 type Option func(*App) error
@@ -66,6 +68,12 @@ var flogoImportPattern = regexp.MustCompile(`^(([^ ]*)[ ]+)?([^@:]*)@?([^:]*)?:?
 func New(config *Config, runner action.Runner, options ...Option) (*App, error) {
 
 	app := &App{stopOnError: true, name: config.Name, version: config.Version}
+	if AutoReconfigurationEnabled() {
+		// Preserve original configuration and options
+		app.config, _ = json.Marshal(config)
+		app.options = options
+		app.actionRunner = runner
+	}
 
 	properties := make(map[string]interface{}, len(config.Properties))
 	for _, attr := range config.Properties {
@@ -250,13 +258,17 @@ type App struct {
 	started        bool
 	resolver       resolve.CompositeResolver
 	actionSettings map[string]map[string]interface{}
+	config         []byte
+	options        []Option
+	actionRunner   action.Runner
 }
 
 type triggerWrapper struct {
-	id     string
-	ref    string
-	trg    trigger.Trigger
-	status *managed.StatusInfo
+	id       string
+	ref      string
+	trg      trigger.Trigger
+	status   *managed.StatusInfo
+	handlers []trigger.Handler
 }
 
 func (a *App) GetProperty(name string) (interface{}, bool) {
@@ -534,7 +546,57 @@ func (a *App) Stop() error {
 
 	logger.Debugf("Cleaning up resources")
 	a.resManager.CleanupResources()
+	return nil
+}
 
+// Reconfigure function restarts the app
+func (a *App) Reconfigure() error {
+	logger := log.RootLogger()
+	if !a.started {
+		return fmt.Errorf("app is not started")
+	}
+
+	if !AutoReconfigurationEnabled() {
+		return fmt.Errorf("App is not configured for auto reconfiguration. Set %s=true to enable this feature", EnvKeyAutoReconfigure)
+	}
+
+	var err error
+	appConfig := &struct {
+		Triggers    []*trigger.Config             `json:"triggers"`
+		Resources   []*resource.Config            `json:"resources,omitempty"`
+		Connections map[string]*connection.Config `json:"connections,omitempty"`
+	}{}
+	err = json.Unmarshal(a.config, appConfig)
+	if err != nil {
+		return err
+	}
+	// Reload app configuration
+	for _, option := range a.options {
+		err = option(a)
+		if err != nil {
+			return err
+		}
+	}
+	logger.Info("App properties are successfully reconfigured")
+
+	// Reconfigure connections
+	err = connection.ReconfigureConnections(appConfig.Connections)
+	if err != nil {
+		return err
+	}
+
+	// Reconfigure resources e.g. flows
+	err = a.resManager.ReconfigureResources(appConfig.Resources)
+	if err != nil {
+		return err
+	}
+
+	// Reconfigure triggers
+	err = a.reconfigureTriggers(appConfig.Triggers, a.actionRunner)
+	if err != nil {
+		return err
+	}
+	logger.Info("App successfully reconfigured")
 	return nil
 }
 
