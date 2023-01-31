@@ -2,11 +2,12 @@ package api
 
 import (
 	"context"
-	"github.com/project-flogo/core/support/log"
-	"github.com/project-flogo/core/support/trace"
 	"reflect"
 	"strconv"
 	"strings"
+
+	"github.com/project-flogo/core/support/log"
+	"github.com/project-flogo/core/support/trace"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/activity"
@@ -188,6 +189,10 @@ func (ctx *initCtx) MapperFactory() mapper.Factory {
 
 func (ctx *initCtx) Logger() log.Logger {
 	return log.RootLogger()
+}
+
+func (ctx *initCtx) Name() string {
+	return ""
 }
 
 var activityLogger = log.ChildLogger(log.RootLogger(), "activity")
