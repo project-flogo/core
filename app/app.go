@@ -3,6 +3,7 @@ package app
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 	"path"
 	"regexp"
 	"runtime/debug"
@@ -145,7 +146,12 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 	for id, config := range config.Connections {
 		_, err := connection.NewSharedManager(id, config)
 		if err != nil {
-			return nil, err
+			if os.Getenv("TEST_MODE") != "true" {
+				return nil, err
+			} else {
+				fmt.Printf("Failed to create connection with error %s. Engine execution will continue in test mode. If the connection is used in executing Test Case, the case will fail to execute. \n", err.Error())
+				err = nil
+			}
 		}
 	}
 

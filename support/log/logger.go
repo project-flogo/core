@@ -6,8 +6,20 @@ import (
 	"strings"
 )
 
-type Level int
-type Format int
+// Constants for log level
+const (
+	TraceLevel Level = iota
+	DebugLevel
+	InfoLevel
+	WarnLevel
+	ErrorLevel
+)
+
+// Constants for log format
+const (
+	FormatConsole Format = iota
+	FormatJson
+)
 
 const (
 	EnvKeyLogCtx         = "FLOGO_LOG_CTX"
@@ -20,16 +32,10 @@ const (
 
 	EnvKeyLogSeparator  = "FLOGO_LOG_SEPARATOR"
 	DefaultLogSeparator = "\t"
-
-	TraceLevel Level = iota
-	DebugLevel
-	InfoLevel
-	WarnLevel
-	ErrorLevel
-
-	FormatConsole Format = iota
-	FormatJson
 )
+
+type Level int
+type Format int
 
 type Logger interface {
 	DebugEnabled() bool
@@ -121,6 +127,20 @@ func CreateLoggerFromRef(logger Logger, contributionType, ref string) Logger {
 	}
 }
 
+// NewLogger will create a new zap logger with same log format as engine logger
+func NewLogger(name string) Logger {
+	logFormat := DefaultLogFormat
+	envLogFormat := strings.ToUpper(os.Getenv(EnvKeyLogFormat))
+	if envLogFormat == "JSON" {
+		logFormat = FormatJson
+	}
+	zl, lvl, _ := newZapLogger(logFormat, DefaultLogLevel)
+	if name == "" {
+		name = "flogo.custom"
+	}
+	return &zapLoggerImpl{loggerLevel: lvl, mainLogger: zl.Named(name).Sugar()}
+}
+
 func Sync() {
 	zapSync(rootLogger)
 }
@@ -163,10 +183,8 @@ func configureLogging() {
 }
 
 func ToLogLevel(lvlStr string) Level {
-
 	lvl := DefaultLogLevel
-
-	switch lvlStr {
+	switch strings.ToUpper(lvlStr) {
 	case "TRACE":
 		lvl = DebugLevel
 	case "DEBUG":
@@ -180,7 +198,6 @@ func ToLogLevel(lvlStr string) Level {
 	default:
 		lvl = DefaultLogLevel
 	}
-
 	return lvl
 }
 
