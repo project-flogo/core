@@ -67,9 +67,27 @@ func NewActivityInitContext(settings interface{}, f mapper.Factory) activity.Ini
 	return &TestActivityInitContext{settings: settingVals, factory: f}
 }
 
+func NewActivityInitContextWithName(settings interface{}, f mapper.Factory, name string) activity.InitContext {
+
+	var settingVals map[string]interface{}
+
+	if sm, ok := settings.(map[string]interface{}); ok {
+		settingVals = sm
+	} else {
+		settingVals = metadata.StructToMap(settings)
+	}
+
+	if f == nil {
+		f = mapper.NewFactory(resolve.GetBasicResolver())
+	}
+
+	return &TestActivityInitContext{settings: settingVals, factory: f, name: name}
+}
+
 type TestActivityInitContext struct {
 	settings map[string]interface{}
 	factory  mapper.Factory
+	name     string
 }
 
 func (ic *TestActivityInitContext) Settings() map[string]interface{} {
@@ -82,6 +100,9 @@ func (ic *TestActivityInitContext) MapperFactory() mapper.Factory {
 
 func (ic *TestActivityInitContext) Logger() log.Logger {
 	return logger
+}
+func (ic *TestActivityInitContext) Name() string {
+	return ic.name
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
