@@ -88,6 +88,7 @@ type TestActivityInitContext struct {
 	settings map[string]interface{}
 	factory  mapper.Factory
 	name     string
+	hostName string
 }
 
 func (ic *TestActivityInitContext) Settings() map[string]interface{} {
@@ -101,8 +102,13 @@ func (ic *TestActivityInitContext) MapperFactory() mapper.Factory {
 func (ic *TestActivityInitContext) Logger() log.Logger {
 	return logger
 }
+
 func (ic *TestActivityInitContext) Name() string {
 	return ic.name
+}
+
+func (ic *TestActivityInitContext) HostName() string {
+	return ic.hostName
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -195,6 +195,10 @@ func (ctx *initCtx) Name() string {
 	return ""
 }
 
+func (ctx *initCtx) HostName() string {
+	return ""
+}
+
 var activityLogger = log.ChildLogger(log.RootLogger(), "activity")
 
 // EvalActivity evaluates the specified activity using the provided inputs
