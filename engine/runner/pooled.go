@@ -6,6 +6,7 @@ import (
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/support/log"
+	"time"
 )
 
 // PooledRunner is a action runner that queues and runs a action in a worker pool
@@ -99,7 +100,15 @@ func (runner *PooledRunner) Stop() error {
 			worker.Stop()
 		}
 		// check if all actions done till shutdown waiting time
-		trackPooledRunnerActions.gracefulStop()
+		if runnercompleted := trackPooledRunnerActions.gracefulStop(); !runnercompleted { // don't call cancel if all runners already completed
+			for _, worker := range runner.workers {
+				runner.logger.Debug("Cancelling context for running  workers")
+				worker.Cancel()
+			}
+			time.Sleep(time.Second * 2)
+			//  wait for 1-2 secs to make sure running flow will make cancel entry into DB (if can)
+		}
+
 	}
 
 	return nil

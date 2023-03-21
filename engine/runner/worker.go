@@ -49,6 +49,7 @@ type ActionWorker struct {
 	Work        chan ActionWorkRequest
 	WorkerQueue chan chan ActionWorkRequest
 	QuitChan    chan bool
+	CancelChan  chan bool
 }
 
 // NewWorker creates, and returns a new Worker object. Its only argument
@@ -61,7 +62,8 @@ func NewWorker(id int, runner *DirectRunner, workerQueue chan chan ActionWorkReq
 		runner:      runner,
 		Work:        make(chan ActionWorkRequest),
 		WorkerQueue: workerQueue,
-		QuitChan:    make(chan bool)}
+		QuitChan:    make(chan bool),
+		CancelChan:  make(chan bool)}
 
 	return worker
 }
@@ -104,7 +106,8 @@ func (w ActionWorker) Start() {
 						actionData.arc <- &ActionResult{results: results, err: err}
 
 					} else if asyncAct, ok := actionData.action.(action.AsyncAction); ok {
-						err := asyncAct.Run(actionData.context, actionData.inputs, handler)
+						ctx, cancelFunc := context.WithCancel(actionData.context)
+						err := asyncAct.Run(ctx, actionData.inputs, handler)
 
 						if err != nil {
 							logger.Debugf("Action-Worker-%d: Action Run error: %s", w.ID, err.Error())
@@ -130,6 +133,10 @@ func (w ActionWorker) Start() {
 										actionData.arc <- &ActionResult{}
 									}
 									done = true
+								case <-w.CancelChan:
+									if !replied {
+										cancelFunc() // cancel the running job
+									}
 								}
 							}
 						}
@@ -155,6 +162,12 @@ func (w ActionWorker) Start() {
 func (w ActionWorker) Stop() {
 	go func() {
 		w.QuitChan <- true
+	}()
+}
+
+func (w ActionWorker) Cancel() {
+	go func() {
+		w.CancelChan <- true
 	}()
 }
 
