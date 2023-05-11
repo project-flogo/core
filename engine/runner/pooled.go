@@ -3,11 +3,16 @@ package runner
 import (
 	"context"
 	"errors"
+	"os"
 	"time"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/support/log"
+)
+
+const (
+	EnvDelayedCancelContextInterval = "FLOGO_APP_DELAYED_CANCEL_CONTEXT_INTERVAL"
 )
 
 // PooledRunner is a action runner that queues and runs a action in a worker pool
@@ -106,8 +111,16 @@ func (runner *PooledRunner) Stop() error {
 				runner.logger.Debug("Cancelling context for running  workers")
 				worker.Cancel()
 			}
-			time.Sleep(time.Minute * 1)
-			//  wait for 1-2 secs to make sure running flow will make cancel entry into DB (if can)
+
+			//  wait to make sure running flow will make cancel entry into DB (if can)
+			timeout := GetEnvVar(EnvDelayedCancelContextInterval)
+			timeDuration, ok := timeout.(int)
+			if ok && timeDuration > 0 {
+				time.Sleep(time.Second * time.Duration(timeDuration))
+			} else {
+				time.Sleep(time.Second * 2)
+			}
+
 		}
 
 	}
@@ -146,4 +159,12 @@ func (runner *PooledRunner) RunAction(ctx context.Context, act action.Action, in
 
 	//Run rejected
 	return nil, errors.New("runner not active")
+}
+
+func GetEnvVar(varName string) interface{} {
+	intervalEnv := os.Getenv(varName)
+	if len(intervalEnv) > 0 {
+		return intervalEnv
+	}
+	return ""
 }
