@@ -3,10 +3,11 @@ package runner
 import (
 	"context"
 	"errors"
+	"time"
+
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/support/log"
-	"time"
 )
 
 // PooledRunner is a action runner that queues and runs a action in a worker pool
@@ -105,7 +106,7 @@ func (runner *PooledRunner) Stop() error {
 				runner.logger.Debug("Cancelling context for running  workers")
 				worker.Cancel()
 			}
-			time.Sleep(time.Second * 2)
+			time.Sleep(time.Minute * 1)
 			//  wait for 1-2 secs to make sure running flow will make cancel entry into DB (if can)
 		}
 
