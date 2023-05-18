@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/project-flogo/core/action"
@@ -114,8 +115,8 @@ func (runner *PooledRunner) Stop() error {
 
 			//  wait to make sure running flow will make cancel entry into DB (if can)
 			timeout := GetEnvVar(EnvDelayedCancelContextInterval)
-			timeDuration, ok := timeout.(int)
-			if ok && timeDuration > 0 {
+			timeDuration, err := strconv.Atoi(timeout)
+			if err == nil && timeDuration > 0 {
 				time.Sleep(time.Second * time.Duration(timeDuration))
 			} else {
 				time.Sleep(time.Second * 2)
@@ -161,7 +162,7 @@ func (runner *PooledRunner) RunAction(ctx context.Context, act action.Action, in
 	return nil, errors.New("runner not active")
 }
 
-func GetEnvVar(varName string) interface{} {
+func GetEnvVar(varName string) string {
 	intervalEnv := os.Getenv(varName)
 	if len(intervalEnv) > 0 {
 		return intervalEnv
