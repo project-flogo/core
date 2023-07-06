@@ -10,10 +10,6 @@ import (
 	"github.com/project-flogo/core/support/log"
 )
 
-const (
-	EnvDelayedCancelContextInterval = "FLOGO_APP_DELAYED_CANCEL_CONTEXT_INTERVAL"
-)
-
 // PooledRunner is a action runner that queues and runs a action in a worker pool
 type PooledRunner struct {
 	workerQueue chan chan ActionWorkRequest
