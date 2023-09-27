@@ -11,6 +11,7 @@ const (
 
 	EnvMappingSkipMissing        = "FLOGO_MAPPING_SKIP_MISSING"
 	EnvMappingSkipMissingDefault = false
+	EnvMapperOmitNulls           = "FLOGO_MAPPING_OMIT_NULLS"
 )
 
 func IsMappingIgnoreErrorsOn() bool {
