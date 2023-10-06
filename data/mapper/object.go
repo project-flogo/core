@@ -2,12 +2,14 @@ package mapper
 
 import (
 	"fmt"
+	"os"
 	"reflect"
 	"strings"
 
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/expression"
+	"github.com/project-flogo/core/data/mapper/config"
 	"github.com/project-flogo/core/data/path"
 	"github.com/project-flogo/core/support/log"
 )
@@ -341,11 +343,19 @@ func (obj *ObjectMapper) Eval(scope data.Scope) (value interface{}, err error) {
 		}
 		return array, nil
 	} else {
+		filterNulls := strings.EqualFold(os.Getenv(config.EnvMapperOmitNulls), "true")
 		arrValue := make(map[string]interface{})
 		for k, v := range obj.objectFields {
-			arrValue[k], err = v.Eval(scope)
+			val, err := v.Eval(scope)
 			if err != nil {
 				return nil, err
+			}
+			if filterNulls {
+				if val != nil {
+					arrValue[k] = val
+				}
+			} else {
+				arrValue[k] = val
 			}
 		}
 		return arrValue, nil
