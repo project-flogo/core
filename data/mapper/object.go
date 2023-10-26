@@ -505,11 +505,18 @@ func (f *foreachExpr) Filter(inputScope data.Scope) (bool, error) {
 
 func (f *foreachExpr) HandleFields(inputScope data.Scope) (interface{}, error) {
 	vals := make(map[string]interface{})
-	var err error
+	filterNulls := strings.EqualFold(os.Getenv(config.EnvMapperOmitNulls), "true")
 	for k, v := range f.fields {
-		vals[k], err = v.Eval(inputScope)
+		val, err := v.Eval(inputScope)
 		if err != nil {
 			return nil, err
+		}
+		if filterNulls {
+			if val != nil {
+				vals[k] = val
+			}
+		} else {
+			vals[k] = val
 		}
 	}
 	return vals, nil
