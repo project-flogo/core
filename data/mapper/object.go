@@ -352,7 +352,11 @@ func (obj *ObjectMapper) Eval(scope data.Scope) (value interface{}, err error) {
 			}
 			if filterNulls {
 				if val != nil {
-					arrValue[k] = val
+					// filter the nulls when dataype is []interface{}
+					if arr, ok := val.([]interface{}); ok && len(arr) == 0 {
+					} else {
+						arrValue[k] = val
+					}
 				}
 			} else {
 				arrValue[k] = val
@@ -513,7 +517,11 @@ func (f *foreachExpr) HandleFields(inputScope data.Scope) (interface{}, error) {
 		}
 		if filterNulls {
 			if val != nil {
-				vals[k] = val
+				// filter the nulls when dataype is []interface{}
+				if arr, ok := val.([]interface{}); ok && len(arr) == 0 {
+				} else {
+					vals[k] = val
+				}
 			}
 		} else {
 			vals[k] = val
