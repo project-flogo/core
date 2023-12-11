@@ -221,7 +221,7 @@ func GetRunnerQueueSize() int {
 		//For backward compatible.
 		legacyQueueSize := os.Getenv(EnvKeyRunnerQueueSizeLegacy)
 		if len(legacyQueueSize) > 0 {
-			i, err := strconv.Atoi(queueSizeEnv)
+			i, err := strconv.Atoi(legacyQueueSize)
 			if err == nil {
 				queueSize = i
 			}
