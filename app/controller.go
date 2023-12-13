@@ -39,7 +39,7 @@ func (c *controllerData) StartControl() error {
 	} else {
 		// Pause trigger
 		c.flowControlled = true
-		err := c.stopTriggers()
+		err := c.pauseTriggers()
 		if err != nil {
 			errMsg := fmt.Errorf("error pausing triggers: %s", err.Error())
 			logger.Error(errMsg)
@@ -54,7 +54,7 @@ func (c *controllerData) ReleaseControl() error {
 	c.lock.Lock()
 	defer c.lock.Unlock()
 	if c.flowControlled {
-		err := c.startTriggers()
+		err := c.resumeTriggers()
 		if err != nil {
 			// Release control if error occurred here
 			c.flowControlled = false
@@ -77,48 +77,44 @@ func (a *App) initEventFlowController() {
 }
 
 // Start triggers
-func (c *controllerData) startTriggers() error {
+func (c *controllerData) resumeTriggers() error {
 	// Resume  triggers
-	logger.Info("Starting Triggers...")
+	logger.Info("Resuming Triggers...")
 	for id, trg := range c.triggers {
 		var err error
 		if flowControlAware, ok := trg.(trigger.EventFlowControlAware); ok {
 			err = flowControlAware.Resume()
-		} else {
-			err = trg.Start()
 		}
 
 		if err != nil {
 			//return err
 			//TODO Starting other triggers. Should we stop the app here?
-			logger.Errorf("Trigger [%s] failed to start due to error - %s.", id, err.Error())
+			logger.Errorf("Trigger [%s] failed to resume due to error - %s.", id, err.Error())
 			continue
 		}
-		logger.Infof("Trigger [%s] is started.", id)
+		logger.Infof("Trigger [%s] is resumed.", id)
 	}
-	logger.Info("Triggers are started")
+	logger.Info("Triggers are resumed")
 	return nil
 }
 
 // Stop triggers
-func (c *controllerData) stopTriggers() error {
-	logger.Info("Stopping Triggers...")
+func (c *controllerData) pauseTriggers() error {
+	logger.Info("Pausing Triggers...")
 	// Pause Triggers
 	for id, trg := range c.triggers {
 		var err error
 		if flowControlAware, ok := trg.(trigger.EventFlowControlAware); ok {
 			err = flowControlAware.Pause()
-		} else {
-			err = trg.Stop()
 		}
 		if err != nil {
 			//return err
 			//TODO Stopping other triggers. Should we stop the app here?
-			logger.Errorf("Trigger [%s] failed to stop due to error - %s.", id, err.Error())
+			logger.Errorf("Trigger [%s] failed to pause due to error - %s.", id, err.Error())
 			continue
 		}
-		logger.Infof("Trigger [%s] is stopped.", id)
+		logger.Infof("Trigger [%s] is paused.", id)
 	}
-	logger.Info("Triggers are stopped")
+	logger.Info("Triggers are paused")
 	return nil
 }
