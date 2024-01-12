@@ -79,42 +79,37 @@ func (a *App) initEventFlowController() {
 // Start triggers
 func (c *controllerData) resumeTriggers() error {
 	// Resume  triggers
-	logger.Info("Resuming Triggers...")
 	for id, trg := range c.triggers {
-		var err error
 		if flowControlAware, ok := trg.(trigger.EventFlowControlAware); ok {
-			err = flowControlAware.Resume()
+			logger.Info("Resuming Triggers...")
+			err := flowControlAware.Resume()
+			if err != nil {
+				//return err
+				//TODO Starting other triggers. Should we stop the app here?
+				logger.Errorf("Trigger [%s] failed to resume due to error - %s.", id, err.Error())
+				continue
+			}
+			logger.Infof("Trigger [%s] is resumed.", id)
 		}
-
-		if err != nil {
-			//return err
-			//TODO Starting other triggers. Should we stop the app here?
-			logger.Errorf("Trigger [%s] failed to resume due to error - %s.", id, err.Error())
-			continue
-		}
-		logger.Infof("Trigger [%s] is resumed.", id)
 	}
-	logger.Info("Triggers are resumed")
 	return nil
 }
 
 // Stop triggers
 func (c *controllerData) pauseTriggers() error {
-	logger.Info("Pausing Triggers...")
 	// Pause Triggers
 	for id, trg := range c.triggers {
-		var err error
 		if flowControlAware, ok := trg.(trigger.EventFlowControlAware); ok {
-			err = flowControlAware.Pause()
+			logger.Info("Pausing Triggers...")
+			err := flowControlAware.Pause()
+			if err != nil {
+				//return err
+				//TODO Stopping other triggers. Should we stop the app here?
+				logger.Errorf("Trigger [%s] failed to pause due to error - %s.", id, err.Error())
+				continue
+			}
+			logger.Infof("Trigger [%s] is paused.", id)
 		}
-		if err != nil {
-			//return err
-			//TODO Stopping other triggers. Should we stop the app here?
-			logger.Errorf("Trigger [%s] failed to pause due to error - %s.", id, err.Error())
-			continue
-		}
-		logger.Infof("Trigger [%s] is paused.", id)
 	}
-	logger.Info("Triggers are paused")
 	return nil
 }
