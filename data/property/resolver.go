@@ -7,7 +7,8 @@ import (
 	"github.com/project-flogo/core/data/resolve"
 )
 
-var propertyResolverInfo = resolve.NewResolverInfo(!IsPropertySnapshotEnabled(), true)
+// check if either of Property Snaphot or Property Reconfigure is enabled and set the static resolve to false
+var propertyResolverInfo = resolve.NewResolverInfo(!(IsPropertySnapshotEnabled() || IsPropertyReconfigureEnabled()), true)
 
 type Resolver struct {
 }
@@ -16,7 +17,7 @@ func (*Resolver) GetResolverInfo() *resolve.ResolverInfo {
 	return propertyResolverInfo
 }
 
-//Resolver Property Resolver $property[item]
+// Resolver Property Resolver $property[item]
 func (*Resolver) Resolve(scope data.Scope, item string, field string) (interface{}, error) {
 
 	// Resolve property value from the local copy of instance

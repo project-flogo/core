@@ -69,7 +69,7 @@ var flogoImportPattern = regexp.MustCompile(`^(([^ ]*)[ ]+)?([^@:]*)@?([^:]*)?:?
 func New(config *Config, runner action.Runner, options ...Option) (*App, error) {
 
 	app := &App{stopOnError: true, name: config.Name, version: config.Version}
-	if AutoReconfigurationEnabled() {
+	if property.IsPropertyReconfigureEnabled() {
 		// Preserve original configuration and options
 		app.config, _ = json.Marshal(config)
 		app.options = options
@@ -562,7 +562,7 @@ func (a *App) Reconfigure() error {
 		return fmt.Errorf("app is not started")
 	}
 
-	if !AutoReconfigurationEnabled() {
+	if !property.IsPropertyReconfigureEnabled() {
 		return fmt.Errorf("App is not configured for auto reconfiguration. Set %s=true to enable this feature", EnvKeyAutoReconfigure)
 	}
 

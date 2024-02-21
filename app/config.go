@@ -15,7 +15,6 @@ import (
 const (
 	EnvKeyDelayedAppStopInterval = "FLOGO_APP_DELAYED_STOP_INTERVAL"
 	EnvKeyEnableFlowControl      = "FLOGO_APP_ENABLE_FLOW_CONTROL"
-	EnvKeyAutoReconfigure        = "FLOGO_APP_AUTO_RECONFIGURE"
 )
 
 // Config is the configuration for the App
@@ -42,15 +41,6 @@ func GetDelayedStopInterval() string {
 		return intervalEnv
 	}
 	return ""
-}
-
-func AutoReconfigurationEnabled() bool {
-	reconfigureApp := os.Getenv(EnvKeyAutoReconfigure)
-	if len(reconfigureApp) <= 0 {
-		return false
-	}
-	b, _ := strconv.ParseBool(reconfigureApp)
-	return b
 }
 
 func EnableFlowControl() bool {
