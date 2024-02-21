@@ -563,7 +563,7 @@ func (a *App) Reconfigure() error {
 	}
 
 	if !property.IsPropertyReconfigureEnabled() {
-		return fmt.Errorf("App is not configured for auto reconfiguration. Set %s=true to enable this feature", EnvKeyAutoReconfigure)
+		return fmt.Errorf("App is not configured for auto reconfiguration. Set %s=true to enable this feature", property.EnvAppPropertyReconfigure)
 	}
 
 	var err error
