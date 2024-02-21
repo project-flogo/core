@@ -6,6 +6,7 @@ import (
 )
 
 var EnvAppPropertySnapshotEnabled = "FLOGO_APP_PROP_SNAPSHOTS"
+var EnvAppPropertyReconfigure = "FLOGO_APP_PROP_RECONFIGURE"
 
 func IsPropertySnapshotEnabled() bool {
 	appPropertySnapshotEnabled := os.Getenv(EnvAppPropertySnapshotEnabled)
@@ -13,4 +14,9 @@ func IsPropertySnapshotEnabled() bool {
 		return true
 	}
 	return false
+}
+
+func IsPropertyReconfigureEnabled() bool {
+	appPropertyAutoReconfigureEnabled := os.Getenv(EnvAppPropertyReconfigure)
+	return strings.EqualFold(appPropertyAutoReconfigureEnabled, "true")
 }
