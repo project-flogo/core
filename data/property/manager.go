@@ -1,5 +1,10 @@
 package property
 
+import (
+	"github.com/project-flogo/core/data"
+	"github.com/project-flogo/core/data/coerce"
+)
+
 func init() {
 	SetDefaultManager(NewManager(make(map[string]interface{})))
 }
@@ -29,7 +34,7 @@ func (m *Manager) GetProperty(name string) (interface{}, bool) {
 	return val, exists
 }
 
-func (m *Manager) GetProperties() (map[string]interface{}) {
+func (m *Manager) GetProperties() map[string]interface{} {
 	return m.properties
 }
 
@@ -37,6 +42,27 @@ func (m *Manager) Finalize(processors ...PostProcessor) error {
 
 	for _, processor := range processors {
 		_ = processor(m.properties)
+	}
+
+	return nil
+}
+
+func (m *Manager) UpdateFromRequest(propFromReq map[string]interface{}) error {
+
+	for name := range m.properties {
+		newVal, found := propFromReq[name]
+		if found {
+			// Get datatype of old value
+			dType, _ := data.GetType(m.properties[name])
+			if dType != data.TypeUnknown {
+				coercedVal, err := coerce.ToType(newVal, dType)
+				if err == nil {
+					m.properties[name] = coercedVal
+					continue
+				}
+			}
+			m.properties[name] = newVal
+		}
 	}
 
 	return nil

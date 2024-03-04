@@ -556,7 +556,7 @@ func (a *App) Stop() error {
 }
 
 // Reconfigure function restarts the app
-func (a *App) Reconfigure() error {
+func (a *App) Reconfigure(properties map[string]interface{}) error {
 	logger := log.RootLogger()
 	if !a.started {
 		return fmt.Errorf("app is not started")
@@ -576,6 +576,12 @@ func (a *App) Reconfigure() error {
 	if err != nil {
 		return err
 	}
+
+	// Update app properties from request
+	if len(properties) > 0 {
+		a.propManager.UpdateFromRequest(properties)
+	}
+
 	// Reload app configuration
 	for _, option := range a.options {
 		err = option(a)
