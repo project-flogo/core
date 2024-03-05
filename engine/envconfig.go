@@ -57,7 +57,7 @@ func IsSchemaValidationEnabled() bool {
 	return true
 }
 
-//GetFlogoAppConfigPath returns the flogo config path
+// GetFlogoAppConfigPath returns the flogo config path
 func GetFlogoAppConfigPath() string {
 
 	flogoConfigPathEnv := os.Getenv(EnvKeyAppConfigLocation)
@@ -75,7 +75,7 @@ func GetFlogoAppConfigPath() string {
 	return DefaultAppConfigLocation
 }
 
-//GetFlogoEngineConfigPath returns the flogo engine config path
+// GetFlogoEngineConfigPath returns the flogo engine config path
 func GetFlogoEngineConfigPath() string {
 
 	flogoConfigPathEnv := os.Getenv(EnvKeyEngineConfigLocation)
@@ -186,7 +186,7 @@ func GetAppPropertyValueResolvers(logger log.Logger) string {
 	return ""
 }
 
-//GetRunnerType returns the runner type
+// GetRunnerType returns the runner type
 func GetRunnerType() string {
 	runnerTypeEnv := os.Getenv(EnvKeyRunnerType)
 	if len(runnerTypeEnv) > 0 {
@@ -195,7 +195,7 @@ func GetRunnerType() string {
 	return DefaultRunnerType
 }
 
-//GetRunnerWorkers returns the number of workers to use
+// GetRunnerWorkers returns the number of workers to use
 func GetRunnerWorkers() int {
 	numWorkers := DefaultRunnerWorkers
 	workersEnv := os.Getenv(EnvKeyRunnerWorkers)
@@ -208,7 +208,7 @@ func GetRunnerWorkers() int {
 	return numWorkers
 }
 
-//GetRunnerQueueSize returns the runner queue size
+// GetRunnerQueueSize returns the runner queue size
 func GetRunnerQueueSize() int {
 	queueSize := DefaultRunnerQueueSize
 	queueSizeEnv := os.Getenv(EnvKeyRunnerQueueSize)
@@ -230,7 +230,7 @@ func GetRunnerQueueSize() int {
 	return queueSize
 }
 
-//NewPooledRunnerConfig creates a new Pooled config, looks for environment variables to override default values
+// NewPooledRunnerConfig creates a new Pooled config, looks for environment variables to override default values
 func NewPooledRunnerConfig() *runner.PooledConfig {
 	return &runner.PooledConfig{NumWorkers: GetRunnerWorkers(), WorkQueueSize: GetRunnerQueueSize()}
 }

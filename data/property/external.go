@@ -103,7 +103,7 @@ func ExternalResolverProcessor(properties map[string]interface{}) error {
 		newVal, found := ResolvePropertyExternally(name)
 
 		if !found {
-			logger.Warnf("Property '%s' could not be resolved using property resolver(s).", name)
+			logger.Warnf("Property '%s' could not be resolved using property resolver(s). Using default value from flogo.json.", name)
 		} else {
 			// Get datatype of old value
 			dType, _ := data.GetType(properties[name])
