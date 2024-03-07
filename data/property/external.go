@@ -23,7 +23,7 @@ type ExternalResolver interface {
 	LookupValue(key string) (interface{}, bool)
 }
 
-//DEPRECATED
+// DEPRECATED
 func RegisterPropertyResolver(resolver ExternalResolver) error {
 	return RegisterExternalResolver(resolver)
 }
