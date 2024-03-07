@@ -29,7 +29,7 @@ func (m *Manager) GetProperty(name string) (interface{}, bool) {
 	return val, exists
 }
 
-func (m *Manager) GetProperties() (map[string]interface{}) {
+func (m *Manager) GetProperties() map[string]interface{} {
 	return m.properties
 }
 

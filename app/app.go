@@ -576,6 +576,7 @@ func (a *App) Reconfigure() error {
 	if err != nil {
 		return err
 	}
+
 	// Reload app configuration
 	for _, option := range a.options {
 		err = option(a)
