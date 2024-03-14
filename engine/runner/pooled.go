@@ -3,6 +3,8 @@ package runner
 import (
 	"context"
 	"errors"
+	"time"
+
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/support/log"
@@ -99,7 +101,16 @@ func (runner *PooledRunner) Stop() error {
 			worker.Stop()
 		}
 		// check if all actions done till shutdown waiting time
-		trackPooledRunnerActions.gracefulStop()
+		if runnercompleted := trackPooledRunnerActions.gracefulStop(); !runnercompleted { // don't call cancel if all runners already completed
+			for _, worker := range runner.workers {
+				runner.logger.Debug("Cancelling context for running  workers")
+				worker.Cancel()
+			}
+
+			//  wait to make sure running flow will make cancel entry into DB (if can)
+			time.Sleep(time.Second * 5)
+		}
+
 	}
 
 	return nil

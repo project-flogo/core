@@ -1,6 +1,7 @@
 package activity
 
 import (
+	"context"
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/support/log"
@@ -37,6 +38,9 @@ type Context interface {
 
 	// GetTracingContext returns tracing context associated with the activity
 	GetTracingContext() trace.TracingContext
+
+	// GetCancelContext returns cancel context
+	GetCancelContext() context.Context
 }
 
 type Host interface {
