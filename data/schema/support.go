@@ -15,7 +15,7 @@ type HasSchemaIO interface {
 	GetOutputSchema(name string) Schema
 }
 
-//DEPRECATED
+// DEPRECATED
 type ValidationBypass interface {
 	BypassValidation() bool
 }
@@ -55,6 +55,8 @@ func FindOrCreate(schemaRep interface{}) (Schema, error) {
 		return New(&t)
 	case *Def:
 		return New(t)
+	case *schemaSansValidation:
+		return New(t.def)
 	case string:
 		if strings.HasPrefix(t, "schema://") {
 			id := t[9:]
