@@ -203,3 +203,13 @@ func (e *keyIndexExpr) Eval(scope data.Scope) (interface{}, error) {
 	}
 	return "[" + index + "]", nil
 }
+
+type ExprEvalResult interface {
+	Detail() ExprEvalData
+}
+
+type ExprEvalData struct {
+	ExpressionType       string `json:"expressionType"`
+	ExpressionName       string `json:"expressionName"`
+	ExpressionEvaluation string `json:"expressionEvaluation"`
+}

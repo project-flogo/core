@@ -37,6 +37,7 @@ func NewCmpExpr(left, operand, right interface{}) (Expr, error) {
 
 type cmpEqExpr struct {
 	left, right Expr
+	evalResult  ExprEvalData
 }
 
 func (e *cmpEqExpr) Init(resolver resolve.CompositeResolver, root bool) error {
@@ -49,6 +50,7 @@ func (e *cmpEqExpr) Init(resolver resolve.CompositeResolver, root bool) error {
 }
 
 func (e *cmpEqExpr) Eval(scope data.Scope) (interface{}, error) {
+
 	lv, rv, err := evalLR(e.left, e.right, scope)
 	if err != nil {
 		return nil, err
@@ -56,6 +58,14 @@ func (e *cmpEqExpr) Eval(scope data.Scope) (interface{}, error) {
 
 	if lv == nil || rv == nil {
 		return rv == nil && lv == nil, nil
+	}
+
+	leftValue, _ := coerce.ToString(lv)
+	rightValue, _ := coerce.ToString(rv)
+	e.evalResult = ExprEvalData{
+		ExpressionType:       "operator",
+		ExpressionName:       "equal to",
+		ExpressionEvaluation: leftValue + " == " + rightValue,
 	}
 
 	rt := reflect.TypeOf(rv).Kind()
@@ -120,8 +130,13 @@ func (e *cmpEqExpr) Eval(scope data.Scope) (interface{}, error) {
 	return false, nil
 }
 
+func (e *cmpEqExpr) Detail() ExprEvalData {
+	return e.evalResult
+}
+
 type cmpNotEqExpr struct {
 	left, right Expr
+	evalResult  ExprEvalData
 }
 
 func (e *cmpNotEqExpr) Init(resolver resolve.CompositeResolver, root bool) error {
@@ -142,6 +157,14 @@ func (e *cmpNotEqExpr) Eval(scope data.Scope) (interface{}, error) {
 
 	if lv == nil || rv == nil {
 		return !(rv == nil && lv == nil), nil
+	}
+
+	leftValue, _ := coerce.ToString(lv)
+	rightValue, _ := coerce.ToString(rv)
+	e.evalResult = ExprEvalData{
+		ExpressionType:       "operator",
+		ExpressionName:       "not equal to",
+		ExpressionEvaluation: leftValue + " != " + rightValue,
 	}
 
 	rt := reflect.TypeOf(rv).Kind()
@@ -205,8 +228,13 @@ func (e *cmpNotEqExpr) Eval(scope data.Scope) (interface{}, error) {
 	return true, nil
 }
 
+func (e *cmpNotEqExpr) Detail() ExprEvalData {
+	return e.evalResult
+}
+
 type cmpGtExpr struct {
 	left, right Expr
+	evalResult  ExprEvalData
 }
 
 func (e *cmpGtExpr) Init(resolver resolve.CompositeResolver, root bool) error {
@@ -227,6 +255,14 @@ func (e *cmpGtExpr) Eval(scope data.Scope) (interface{}, error) {
 	if lv == nil || rv == nil {
 		//todo validate this behavior
 		return false, nil
+	}
+
+	leftValue, _ := coerce.ToString(lv)
+	rightValue, _ := coerce.ToString(rv)
+	e.evalResult = ExprEvalData{
+		ExpressionType:       "operator",
+		ExpressionName:       "greater than",
+		ExpressionEvaluation: leftValue + " > " + rightValue,
 	}
 
 	rt := reflect.TypeOf(rv).Kind()
@@ -285,8 +321,13 @@ func (e *cmpGtExpr) Eval(scope data.Scope) (interface{}, error) {
 	return false, fmt.Errorf("cannot compare %s with %s", reflect.TypeOf(lv).String(), reflect.TypeOf(rv).String())
 }
 
+func (e *cmpGtExpr) Detail() ExprEvalData {
+	return e.evalResult
+}
+
 type cmpGtEqExpr struct {
 	left, right Expr
+	evalResult  ExprEvalData
 }
 
 func (e *cmpGtEqExpr) Init(resolver resolve.CompositeResolver, root bool) error {
@@ -306,6 +347,14 @@ func (e *cmpGtEqExpr) Eval(scope data.Scope) (interface{}, error) {
 
 	if lv == nil || rv == nil {
 		return lv == nil && rv == nil, nil
+	}
+
+	leftValue, _ := coerce.ToString(lv)
+	rightValue, _ := coerce.ToString(rv)
+	e.evalResult = ExprEvalData{
+		ExpressionType:       "operator",
+		ExpressionName:       "greater than equal to",
+		ExpressionEvaluation: leftValue + " >= " + rightValue,
 	}
 
 	rt := reflect.TypeOf(rv).Kind()
@@ -368,8 +417,13 @@ func (e *cmpGtEqExpr) Eval(scope data.Scope) (interface{}, error) {
 	return false, fmt.Errorf("cannot compare %s with %s", reflect.TypeOf(lv).String(), reflect.TypeOf(rv).String())
 }
 
+func (e *cmpGtEqExpr) Detail() ExprEvalData {
+	return e.evalResult
+}
+
 type cmpLtExpr struct {
 	left, right Expr
+	evalResult  ExprEvalData
 }
 
 func (e *cmpLtExpr) Init(resolver resolve.CompositeResolver, root bool) error {
@@ -390,6 +444,14 @@ func (e *cmpLtExpr) Eval(scope data.Scope) (interface{}, error) {
 	if lv == nil || rv == nil {
 		//todo validate this behavior
 		return false, nil
+	}
+
+	leftValue, _ := coerce.ToString(lv)
+	rightValue, _ := coerce.ToString(rv)
+	e.evalResult = ExprEvalData{
+		ExpressionType:       "operator",
+		ExpressionName:       "less than",
+		ExpressionEvaluation: leftValue + " < " + rightValue,
 	}
 
 	rt := reflect.TypeOf(rv).Kind()
@@ -450,8 +512,13 @@ func (e *cmpLtExpr) Eval(scope data.Scope) (interface{}, error) {
 	return false, fmt.Errorf("cannot compare %s with %s", reflect.TypeOf(lv).String(), reflect.TypeOf(rv).String())
 }
 
+func (e *cmpLtExpr) Detail() ExprEvalData {
+	return e.evalResult
+}
+
 type cmpLtEqExpr struct {
 	left, right Expr
+	evalResult  ExprEvalData
 }
 
 func (e *cmpLtEqExpr) Init(resolver resolve.CompositeResolver, root bool) error {
@@ -471,6 +538,14 @@ func (e *cmpLtEqExpr) Eval(scope data.Scope) (interface{}, error) {
 
 	if lv == nil || rv == nil {
 		return lv == nil && rv == nil, nil
+	}
+
+	leftValue, _ := coerce.ToString(lv)
+	rightValue, _ := coerce.ToString(rv)
+	e.evalResult = ExprEvalData{
+		ExpressionType:       "operator",
+		ExpressionName:       "less than equal to",
+		ExpressionEvaluation: leftValue + " <= " + rightValue,
 	}
 
 	rt := reflect.TypeOf(rv).Kind()
@@ -530,4 +605,8 @@ func (e *cmpLtEqExpr) Eval(scope data.Scope) (interface{}, error) {
 	}
 
 	return false, fmt.Errorf("cannot compare %s with %s", reflect.TypeOf(lv).String(), reflect.TypeOf(rv).String())
+}
+
+func (e *cmpLtEqExpr) Detail() ExprEvalData {
+	return e.evalResult
 }
