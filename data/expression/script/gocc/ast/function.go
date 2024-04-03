@@ -2,6 +2,7 @@ package ast
 
 import (
 	"fmt"
+	"github.com/project-flogo/core/data/coerce"
 	"strings"
 
 	"github.com/project-flogo/core/data"
@@ -39,8 +40,9 @@ func NewFuncExpr(name interface{}, args interface{}) (Expr, error) {
 }
 
 type funcExpr struct {
-	f      function.Function
-	params []Expr
+	f          function.Function
+	params     []Expr
+	evalResult ExprEvalData
 }
 
 func (e *funcExpr) Init(resolver resolve.CompositeResolver, root bool) error {
@@ -64,5 +66,17 @@ func (e *funcExpr) Eval(scope data.Scope) (interface{}, error) {
 		vals[idx] = v
 	}
 
-	return function.Eval(e.f, vals...)
+	evalResult := ExprEvalData{
+		ExpressionType: "function",
+		ExpressionName: e.f.Name(),
+	}
+
+	eval, err := function.Eval(e.f, vals...)
+	evalResult.ExpressionEvaluation, _ = coerce.ToString(eval)
+	e.evalResult = evalResult
+	return eval, err
+}
+
+func (e *funcExpr) Detail() ExprEvalData {
+	return e.evalResult
 }
