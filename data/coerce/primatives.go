@@ -268,7 +268,25 @@ func ToBool(val interface{}) (bool, error) {
 	switch t := val.(type) {
 	case bool:
 		return t, nil
-	case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64:
+	case int:
+		return t != 0, nil
+	case uint:
+		return t != 0, nil
+	case int8:
+		return t != 0, nil
+	case uint8:
+		return t != 0, nil
+	case int16:
+		return t != 0, nil
+	case uint16:
+		return t != 0, nil
+	case int32:
+		return t != 0, nil
+	case uint32:
+		return t != 0, nil
+	case int64:
+		return t != 0, nil
+	case uint64:
 		return t != 0, nil
 	case float64:
 		return t != 0.0, nil
