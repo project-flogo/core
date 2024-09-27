@@ -1,9 +1,11 @@
 package coerce
 
 import (
-	"github.com/stretchr/testify/assert"
 	"reflect"
 	"testing"
+
+	"github.com/project-flogo/core/support/spec"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCoerceToString(t *testing.T) {
@@ -298,4 +300,16 @@ func TestToDateTime(t *testing.T) {
 		assert.NotNil(t, dateTime)
 	}
 
+}
+
+func TestSpec(t *testing.T) {
+	var err error
+	specString := "spec://sampleSpec"
+	_, err = ToSpec(specString)
+	assert.NotNil(t, err)
+	spec.Register("sampleSpec", &spec.Def{Name: "sampleSpec", Type: "test", Value: "sampleContent"})
+
+	s, err := ToSpec(specString)
+	assert.Nil(t, err)
+	assert.Equal(t, "sampleContent", s.Value())
 }

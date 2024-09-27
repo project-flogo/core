@@ -24,6 +24,7 @@ import (
 	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/support/managed"
 	"github.com/project-flogo/core/support/service"
+	"github.com/project-flogo/core/support/spec"
 	"github.com/project-flogo/core/trigger"
 )
 
@@ -142,6 +143,15 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 	}
 
 	schema.ResolveSchemas()
+
+	for id, def := range config.Specs {
+		_, err := spec.Register(id, def)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	spec.ResolveSpecs()
 
 	for id, config := range config.Connections {
 		_, err := connection.NewSharedManager(id, config)

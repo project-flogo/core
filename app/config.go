@@ -9,6 +9,7 @@ import (
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/schema"
 	"github.com/project-flogo/core/support/connection"
+	"github.com/project-flogo/core/support/spec"
 	"github.com/project-flogo/core/trigger"
 )
 
@@ -32,6 +33,7 @@ type Config struct {
 	Resources   []*resource.Config            `json:"resources,omitempty"`
 	Actions     []*action.Config              `json:"actions,omitempty"`
 	Schemas     map[string]*schema.Def        `json:"schemas,omitempty"`
+	Specs       map[string]*spec.Def          `json:"specs,omitempty"`
 	Connections map[string]*connection.Config `json:"connections,omitempty"`
 }
 
