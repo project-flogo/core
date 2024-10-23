@@ -158,6 +158,8 @@ func newZapLogger(logFormat Format, level Level) (*zap.Logger, *zap.AtomicLevel,
 	cfg := zap.NewProductionConfig()
 	cfg.DisableCaller = true
 
+	cfg.OutputPaths = []string{"stdout"}
+	
 	eCfg := cfg.EncoderConfig
 	eCfg.TimeKey = "timestamp"
 	eCfg.EncodeTime = zapcore.ISO8601TimeEncoder
