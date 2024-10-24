@@ -32,6 +32,7 @@ const (
 
 	EnvKeyLogSeparator  = "FLOGO_LOG_SEPARATOR"
 	DefaultLogSeparator = "\t"
+	EnvLogConsoleStream = "FLOGO_LOG_CONSOLE_STREAM"
 )
 
 type Level int

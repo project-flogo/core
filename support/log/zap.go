@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+	"os"
 )
 
 var traceLogger *zap.SugaredLogger
@@ -158,8 +159,15 @@ func newZapLogger(logFormat Format, level Level) (*zap.Logger, *zap.AtomicLevel,
 	cfg := zap.NewProductionConfig()
 	cfg.DisableCaller = true
 
-	cfg.OutputPaths = []string{"stdout"}
-	
+	// change the default output paths for the logger if the env variable is set and has the supported values (stderr and stdout).
+	// Otherwise, the logger will use the default value of stderr.
+	logstream, ok := os.LookupEnv(EnvLogConsoleStream)
+	if ok {
+		if logstream == "stdout" || logstream == "stderr" {
+			cfg.OutputPaths = []string{logstream}
+		}
+	}
+
 	eCfg := cfg.EncoderConfig
 	eCfg.TimeKey = "timestamp"
 	eCfg.EncodeTime = zapcore.ISO8601TimeEncoder
