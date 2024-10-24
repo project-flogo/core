@@ -5,6 +5,7 @@ import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"os"
+	"strings"
 )
 
 var traceLogger *zap.SugaredLogger
@@ -163,8 +164,8 @@ func newZapLogger(logFormat Format, level Level) (*zap.Logger, *zap.AtomicLevel,
 	// Otherwise, the logger will use the default value of stderr.
 	logstream, ok := os.LookupEnv(EnvLogConsoleStream)
 	if ok {
-		if logstream == "stdout" || logstream == "stderr" {
-			cfg.OutputPaths = []string{logstream}
+		if strings.ToLower(logstream) == "stdout" || strings.ToLower(logstream) == "stderr" {
+			cfg.OutputPaths = []string{strings.ToLower(logstream)}
 		}
 	}
 
