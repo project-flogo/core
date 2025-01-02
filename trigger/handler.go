@@ -4,6 +4,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"runtime/debug"
+	"sync"
+	"time"
+
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/coerce"
@@ -11,8 +15,6 @@ import (
 	"github.com/project-flogo/core/data/mapper"
 	"github.com/project-flogo/core/data/property"
 	"github.com/project-flogo/core/support/log"
-	"runtime/debug"
-	"time"
 )
 
 var handlerLog = log.ChildLogger(log.RootLogger(), "handler")
@@ -30,6 +32,7 @@ type actImpl struct {
 	condition          expression.Expr
 	actionInputMapper  mapper.Mapper
 	actionOutputMapper mapper.Mapper
+	sequenceKey        mapper.Mapper
 }
 
 type handlerImpl struct {
@@ -79,6 +82,7 @@ func NewHandler(config *HandlerConfig, acts []action.Action, mf mapper.Factory, 
 
 	handler := &handlerImpl{config: config, acts: make([]actImpl, len(acts)), runner: runner, logger: handlerLogger}
 	var err error
+	var hasSequenceKey bool
 
 	//todo we could filter inputs/outputs based on the metadata, maybe make this an option
 	for i, act := range acts {
@@ -105,6 +109,22 @@ func NewHandler(config *HandlerConfig, acts []action.Action, mf mapper.Factory, 
 				return nil, err
 			}
 		}
+
+		if config.Actions[i].SequenceKey != "" {
+			hasSequenceKey = true
+			handler.logger.Infof("Handler [%s] is configured with sequence key [%s]", handler.Name(), config.Actions[i].SequenceKey)
+			mappings := map[string]interface{}{"key": config.Actions[i].SequenceKey}
+			sequenceKey, err := mf.NewMapper(mappings)
+			if err != nil {
+				return nil, err
+			}
+			handler.acts[i].sequenceKey = sequenceKey
+		}
+	}
+	if hasSequenceKey {
+		// Create a new handler with sequence key support
+		seqKeyHandler := &seqKeyHandlerImpl{config: handler.config, acts: handler.acts, runner: handler.runner, logger: handlerLogger, seqKeyChannelMap: sync.Map{}}
+		return seqKeyHandler, nil
 	}
 
 	return handler, nil

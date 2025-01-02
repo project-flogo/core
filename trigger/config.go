@@ -104,9 +104,9 @@ func (hc *HandlerConfig) UnmarshalJSON(d []byte) error {
 // ActionConfig is the configuration for the Action
 type ActionConfig struct {
 	*action.Config
-	If     string                 `json:"if,omitempty"`
-	Input  map[string]interface{} `json:"input,omitempty"`
-	Output map[string]interface{} `json:"output,omitempty"`
-
-	Act action.Action `json:"-,omitempty"`
+	If          string                 `json:"if,omitempty"`
+	Input       map[string]interface{} `json:"input,omitempty"`
+	Output      map[string]interface{} `json:"output,omitempty"`
+	SequenceKey string                 `json:"seqKey,omitempty"`
+	Act         action.Action          `json:"-,omitempty"`
 }
