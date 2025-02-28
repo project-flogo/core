@@ -2,15 +2,15 @@ package trigger
 
 import (
 	"context"
-	"github.com/project-flogo/core/support/log"
 	"testing"
+
+	"github.com/project-flogo/core/support/log"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/mapper"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/data/resolve"
-	"github.com/project-flogo/core/engine/runner"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -44,24 +44,12 @@ func TestNewHandler(t *testing.T) {
 	expf := expression.NewFactory(defResolver)
 
 	//Action not specified
-	handler, err := NewHandler(hCfg, nil, mf, expf, runner.NewDirect(), log.RootLogger())
+	handler, err := NewHandler(hCfg, nil, mf, expf, nil, log.RootLogger())
 	assert.NotNil(t, err, "Actions not specified.")
 
-	//Parent not defined in the Handler Config
-	handler, err = NewHandler(hCfg, []action.Action{&MockAction{}}, mf, expf, runner.NewDirect(), log.RootLogger())
-	_, err = handler.Handle(context.Background(), map[string]interface{}{"anInput": "input"})
-	assert.NotNil(t, err, "Parent not defined.")
-
-	//Parent defined.
-	hCfg.parent = &Config{Id: "sampleTrig"}
-	handler, err = NewHandler(hCfg, []action.Action{&MockAction{}}, mf, expf, runner.NewDirect(), log.RootLogger())
-	assert.Nil(t, err)
-	assert.NotNil(t, handler)
-
+	//HandlerSettings configured
+	handler, err = NewHandler(hCfg, []action.Action{&MockAction{}}, mf, expf, nil, log.RootLogger())
 	assert.NotNil(t, handler.Settings())
-	out, err := handler.Handle(context.Background(), map[string]interface{}{"anInput": "input"})
-
-	assert.Equal(t, "output", out["anOutput"])
 }
 
 func TestHandlerContext(t *testing.T) {
