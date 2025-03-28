@@ -125,7 +125,12 @@ func NewHandler(config *HandlerConfig, acts []action.Action, mf mapper.Factory, 
 		seqkeyQueueSize := 100
 		seqKeyQueueSizeVar := os.Getenv("FLOGO_SEQ_KEY_QUEUE_SIZE")
 		if seqKeyQueueSizeVar != "" {
-			seqkeyQueueSize, _ = coerce.ToInt(seqKeyQueueSizeVar)
+			qSize, err := coerce.ToInt(seqKeyQueueSizeVar)
+			if err != nil {
+				log.RootLogger().Errorf("Invalid value set for FLOGO_SEQ_KEY_QUEUE_SIZE: %s, using default value: %d", seqKeyQueueSizeVar, seqkeyQueueSize)
+			} else {
+				seqkeyQueueSize = qSize
+			}
 		}
 		seqKeyHandler := &seqKeyHandlerImpl{config: handler.config, acts: handler.acts, runner: handler.runner, logger: handlerLogger, seqKeyChannelMap: sync.Map{}, seqKeyChannleSize: seqkeyQueueSize}
 		return seqKeyHandler, nil
