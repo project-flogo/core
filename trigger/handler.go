@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"os"
 	"runtime/debug"
 	"sync"
 	"time"
@@ -16,8 +17,6 @@ import (
 	"github.com/project-flogo/core/data/property"
 	"github.com/project-flogo/core/support/log"
 )
-
-var handlerLog = log.ChildLogger(log.RootLogger(), "handler")
 
 type Handler interface {
 	Name() string
@@ -123,7 +122,12 @@ func NewHandler(config *HandlerConfig, acts []action.Action, mf mapper.Factory, 
 	}
 	if hasSequenceKey {
 		// Create a new handler with sequence key support
-		seqKeyHandler := &seqKeyHandlerImpl{config: handler.config, acts: handler.acts, runner: handler.runner, logger: handlerLogger, seqKeyChannelMap: sync.Map{}}
+		seqkeyQueueSize := 100
+		seqKeyQueueSizeVar := os.Getenv("FLOGO_SEQ_KEY_QUEUE_SIZE")
+		if seqKeyQueueSizeVar != "" {
+			seqkeyQueueSize, _ = coerce.ToInt(seqKeyQueueSizeVar)
+		}
+		seqKeyHandler := &seqKeyHandlerImpl{config: handler.config, acts: handler.acts, runner: handler.runner, logger: handlerLogger, seqKeyChannelMap: sync.Map{}, seqKeyChannleSize: seqkeyQueueSize}
 		return seqKeyHandler, nil
 	}
 

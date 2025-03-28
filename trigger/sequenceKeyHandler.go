@@ -24,6 +24,7 @@ type seqKeyHandlerImpl struct {
 	acts             []actImpl
 	eventData        map[string]string
 	seqKeyChannelMap sync.Map
+	seqKeyChannleSize int 
 }
 
 func (h *seqKeyHandlerImpl) Name() string {
@@ -139,7 +140,7 @@ func (h *seqKeyHandlerImpl) Handle(ctx context.Context, triggerData interface{})
 			runActionChannel, _ := h.seqKeyChannelMap.Load(sequenceKeyString)
 			if runActionChannel == nil {
 				// Create a new channel for the sequence key
-				runActionChannel = make(chan SeqKayActionWrapper, 100)
+				runActionChannel = make(chan SeqKayActionWrapper, h.seqKeyChannleSize)
 				h.seqKeyChannelMap.Store(sequenceKeyString, runActionChannel)
 				// Start a go routine to listen on the channel
 				go h.seqKeyActionListener(runActionChannel.(chan SeqKayActionWrapper), sequenceKeyString)
