@@ -41,7 +41,7 @@ func (rt RunnerTracker) WaitForRunnersCompletion(timeout time.Duration) bool {
 	}
 }
 
-func (rt RunnerTracker) gracefulStop() {
+func (rt RunnerTracker) gracefulStop() (runnercompleted bool) {
 	logger := log.RootLogger()
 	delayedStopInterval := app.GetDelayedStopInterval()
 	if delayedStopInterval != "" {
@@ -53,9 +53,11 @@ func (rt RunnerTracker) gracefulStop() {
 			if isTimeout := rt.WaitForRunnersCompletion(duration); isTimeout {
 				logger.Info("All actions not completed before engine shutdown")
 			} else {
+				runnercompleted = true
 				logger.Info("All actions completed before engine shutdown")
 			}
 		}
 
 	}
+	return
 }
