@@ -166,7 +166,7 @@ func getCtxFields() []Field {
 			ctxAttrs = strings.TrimSpace(ctxAttrs)
 			ctxAttrList := strings.Split(ctxAttrs, ",")
 			for _, attr := range ctxAttrList {
-				attrList := strings.Split(attr, ":")
+				attrList := strings.Split(attr, "=")
 				if len(attrList) == 2 {
 					key := strings.TrimSpace(attrList[0])
 					value := strings.TrimSpace(attrList[1])
@@ -225,7 +225,7 @@ func configureLogging() {
 			ctxAttrs = strings.TrimSpace(ctxAttrs)
 			ctxAttrList := strings.Split(ctxAttrs, ",")
 			for _, attr := range ctxAttrList {
-				attrList := strings.Split(attr, ":")
+				attrList := strings.Split(attr, "=")
 				if len(attrList) == 2 {
 					key := strings.TrimSpace(attrList[0])
 					value := strings.TrimSpace(attrList[1])
