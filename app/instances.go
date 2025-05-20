@@ -116,7 +116,7 @@ func (a *App) createTriggers(tConfigs []*trigger.Config, runner action.Runner) (
 		logger := trigger.GetLogger(ref)
 
 		if log.CtxLoggingEnabled() {
-			logger = log.ChildLoggerWithFields(logger, log.FieldString("trigger.id", tConfig.Id), log.FieldString("app.name", a.name), log.FieldString("app.version", a.version), log.FieldString("app.env", a.env))
+			logger = log.ChildLoggerWithFields(logger, log.FieldString("trigger.id", tConfig.Id), log.FieldString("app.name", a.name), log.FieldString("app.version", a.version), log.FieldString("deployment.environment", a.env))
 		}
 
 		initCtx := &initContext{logger: logger, handlers: make([]trigger.Handler, 0, len(tConfig.Handlers))}
