@@ -23,6 +23,7 @@ const (
 
 const (
 	EnvKeyLogCtx         = "FLOGO_LOG_CTX"
+	EnvKeyLogCtxAttrs    = "FLOGO_LOG_CTX_ATTRS"
 	EnvKeyLogDateFormat  = "FLOGO_LOG_DTFORMAT"
 	DefaultLogDateFormat = "2006-01-02 15:04:05.000"
 	EnvKeyLogLevel       = "FLOGO_LOG_LEVEL"
@@ -110,9 +111,7 @@ func ChildLoggerWithFields(logger Logger, fields ...Field) Logger {
 
 func CreateLoggerFromRef(logger Logger, contributionType, ref string) Logger {
 	ref = strings.TrimSpace(ref)
-	if strings.HasSuffix(ref, "/") {
-		ref = ref[:len(ref)-1]
-	}
+	ref = strings.TrimSuffix(ref, "/")
 	dirs := strings.Split(ref, "/")
 	if len(dirs) >= 3 {
 		name := dirs[len(dirs)-1]
@@ -139,7 +138,46 @@ func NewLogger(name string) Logger {
 	if name == "" {
 		name = "flogo.custom"
 	}
-	return &zapLoggerImpl{loggerLevel: lvl, mainLogger: zl.Named(name).Sugar()}
+	logger := &zapLoggerImpl{loggerLevel: lvl, mainLogger: zl.Named(name).Sugar()}
+	fields := getCtxFields()
+	if len(fields) > 0 {
+		// Add context attributes to the logger
+		logger.mainLogger = logger.mainLogger.With(fields...)
+	}
+	return logger
+}
+
+// NewLoggerWithFields will create a new zap logger with same log format as engine logger and add fields
+// to the logger
+func NewLoggerWithFields(name string, fields ...Field) Logger {
+	logger := NewLogger(name)
+	if len(fields) > 0 {
+		// Add context attributes to the logger
+		logger.(*zapLoggerImpl).mainLogger = logger.(*zapLoggerImpl).mainLogger.With(fields...)
+	}
+	return logger
+}
+
+func getCtxFields() []Field {
+	var fields []Field
+	if ctxLogging {
+		ctxAttrs := os.Getenv(EnvKeyLogCtxAttrs)
+		if len(ctxAttrs) > 0 {
+			ctxAttrs = strings.TrimSpace(ctxAttrs)
+			ctxAttrList := strings.Split(ctxAttrs, ",")
+			for _, attr := range ctxAttrList {
+				attrList := strings.Split(attr, ":")
+				if len(attrList) == 2 {
+					key := strings.TrimSpace(attrList[0])
+					value := strings.TrimSpace(attrList[1])
+					if len(key) > 0 && len(value) > 0 {
+						fields = append(fields, FieldString(key, value))
+					}
+				}
+			}
+		}
+	}
+	return fields
 }
 
 func Sync() {
@@ -180,6 +218,28 @@ func configureLogging() {
 	}
 
 	rootLogger = newZapRootLogger("flogo", logFormat, rootLogLevel)
+	if ctxLogging {
+		ctxAttrs := os.Getenv(EnvKeyLogCtxAttrs)
+		if len(ctxAttrs) > 0 {
+			var fields []Field
+			ctxAttrs = strings.TrimSpace(ctxAttrs)
+			ctxAttrList := strings.Split(ctxAttrs, ",")
+			for _, attr := range ctxAttrList {
+				attrList := strings.Split(attr, ":")
+				if len(attrList) == 2 {
+					key := strings.TrimSpace(attrList[0])
+					value := strings.TrimSpace(attrList[1])
+					if len(key) > 0 && len(value) > 0 {
+						fields = append(fields, FieldString(key, value))
+					}
+				}
+			}
+			if len(fields) > 0 {
+				// Add context attributes to the logger
+				rootLogger.(*zapLoggerImpl).mainLogger = rootLogger.(*zapLoggerImpl).mainLogger.With(fields...)
+			}
+		}
+	}
 	SetLogLevel(rootLogger, rootLogLevel)
 }
 

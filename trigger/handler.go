@@ -70,11 +70,7 @@ func NewHandler(config *HandlerConfig, acts []action.Action, mf mapper.Factory, 
 
 	var handlerLogger log.Logger
 	if log.CtxLoggingEnabled() {
-		if config.parent != nil {
-			handlerLogger = log.ChildLoggerWithFields(logger, log.FieldString("handlerName", config.Name), log.FieldString("triggerId", config.parent.Id))
-		} else {
-			handlerLogger = log.ChildLoggerWithFields(logger, log.FieldString("handlerName", config.Name))
-		}
+		handlerLogger = log.ChildLoggerWithFields(logger, log.FieldString("handler.name", config.Name))
 	} else {
 		handlerLogger = log.ChildLogger(logger, "handler")
 	}

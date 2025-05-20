@@ -45,11 +45,12 @@ type AppEvent interface {
 	AppName() string
 	AppVersion() string
 	AppStatus() Status
+	AppEnv() string
 }
 
 type appEvent struct {
-	status        Status
-	name, version string
+	status             Status
+	name, version, env string
 }
 
 func (ae *appEvent) AppName() string {
@@ -64,11 +65,15 @@ func (ae *appEvent) AppStatus() Status {
 	return ae.status
 }
 
+func (ae *appEvent) AppEnv() string {
+	return ae.env
+}
+
 var flogoImportPattern = regexp.MustCompile(`^(([^ ]*)[ ]+)?([^@:]*)@?([^:]*)?:?(.*)?$`) // extract import path even if there is an alias and/or a version
 
 func New(config *Config, runner action.Runner, options ...Option) (*App, error) {
 
-	app := &App{stopOnError: true, name: config.Name, version: config.Version}
+	app := &App{stopOnError: true, name: config.Name, version: config.Version, env: os.Getenv("FLOGO_ENV")}
 	if property.IsPropertyReconfigureEnabled() {
 		// Preserve original configuration and options
 		app.config, _ = json.Marshal(config)
@@ -255,6 +260,7 @@ func FinalizeProperties(processors ...property.PostProcessor) func(*App) error {
 type App struct {
 	name           string
 	version        string
+	env            string
 	propManager    *property.Manager
 	resManager     *resource.Manager
 	srvManager     *service.Manager
@@ -321,7 +327,7 @@ func (a *App) Start() error {
 		return fmt.Errorf("app already started")
 	}
 
-	logger := log.RootLogger()
+	logger := log.ChildLogger(log.RootLogger(), "engine")
 
 	managers := connection.Managers()
 

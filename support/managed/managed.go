@@ -2,8 +2,11 @@ package managed
 
 import (
 	"fmt"
+
 	"github.com/project-flogo/core/support/log"
 )
+
+var logger = log.ChildLogger(log.RootLogger(), "engine")
 
 // Managed is an interface that is implemented by an object that needs to be
 // managed via start/stop
@@ -51,7 +54,7 @@ func stop(managed Managed) (err error) {
 // Start starts a Managed object, handles panics and logs details
 func Start(name string, managed Managed) error {
 
-	log.RootLogger().Debugf("%s: Starting...", name)
+	logger.Debugf("%s: Starting...", name)
 	err := start(managed)
 
 	if err != nil {
@@ -59,14 +62,14 @@ func Start(name string, managed Managed) error {
 		return err
 	}
 
-	log.RootLogger().Infof("%s: Started", name)
+	logger.Infof("%s: Started", name)
 	return nil
 }
 
 // Stop stops a Managed object, handles panics and logs details
 func Stop(name string, managed Managed) error {
 
-	log.RootLogger().Debugf("%s: Stopping...", name)
+	logger.Debugf("%s: Stopping...", name)
 
 	err := stop(managed)
 
@@ -75,7 +78,7 @@ func Stop(name string, managed Managed) error {
 		return err
 	}
 
-	log.RootLogger().Infof("%s: Stopped", name)
+	logger.Infof("%s: Stopped", name)
 	return nil
 }
 

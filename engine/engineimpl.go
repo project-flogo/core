@@ -140,7 +140,6 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 
 	logger.Debugf("Creating app [ %s ] with version [ %s ]", appConfig.Name, appConfig.Version)
 	engine.flogoApp = flogoApp
-
 	return engine, nil
 }
 
@@ -162,7 +161,7 @@ func (e *engineImpl) App() *app.App {
 	return e.flogoApp
 }
 
-//Start initializes and starts the Triggers and initializes the Actions
+// Start initializes and starts the Triggers and initializes the Actions
 func (e *engineImpl) Start() error {
 
 	logger := e.logger

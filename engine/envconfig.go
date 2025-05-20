@@ -34,6 +34,7 @@ const (
 	EnvAppPropertyResolvers   = "FLOGO_APP_PROP_RESOLVERS"
 	EnvEnableSchemaSupport    = "FLOGO_SCHEMA_SUPPORT"
 	EnvEnableSchemaValidation = "FLOGO_SCHEMA_VALIDATION"
+	EnvKeyEnvName             = "FLOGO_ENV"
 
 	ValueRunnerTypePooled = "POOLED"
 	ValueRunnerTypeDirect = "DIRECT"
@@ -41,20 +42,17 @@ const (
 
 func IsSchemaSupportEnabled() bool {
 	schemaValidationEnv := os.Getenv(EnvEnableSchemaSupport)
-	if strings.EqualFold(schemaValidationEnv, "true") {
-		return true
-	}
-
-	return false
+	return strings.EqualFold(schemaValidationEnv, "true")
 }
 
 func IsSchemaValidationEnabled() bool {
 	schemaValidationEnv := os.Getenv(EnvEnableSchemaValidation)
-	if !strings.EqualFold(schemaValidationEnv, "true") {
-		return false
-	}
+	return strings.EqualFold(schemaValidationEnv, "true")
+}
 
-	return true
+// GetEnvName returns the name of the environment e.g. dev, test, prod
+func GetEnvName() string {
+	return os.Getenv(EnvKeyEnvName)
 }
 
 // GetFlogoAppConfigPath returns the flogo config path
