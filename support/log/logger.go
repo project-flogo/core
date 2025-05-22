@@ -23,7 +23,7 @@ const (
 
 const (
 	EnvKeyLogCtx         = "FLOGO_LOG_CTX"
-	EnvKeyLogCtxAttrs    = "FLOGO_LOG_CTX_ATTRS"
+	EnvKeyLogCtxAttrs    = "FLOGO_LOG_CTX_FIELDS"
 	EnvKeyLogDateFormat  = "FLOGO_LOG_DTFORMAT"
 	DefaultLogDateFormat = "2006-01-02 15:04:05.000"
 	EnvKeyLogLevel       = "FLOGO_LOG_LEVEL"
