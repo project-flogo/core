@@ -14,6 +14,7 @@ import (
 type Config struct {
 	Id       string                 `json:"id"`
 	Ref      string                 `json:"ref"`
+	Name     string                 `json:"name,omitempty"`
 	Settings map[string]interface{} `json:"settings"`
 	Handlers []*HandlerConfig       `json:"handlers"`
 
@@ -66,6 +67,7 @@ type HandlerConfig struct {
 	Name     string                 `json:"name,omitempty"`
 	Settings map[string]interface{} `json:"settings"`
 	Actions  []*ActionConfig        `json:"actions"`
+	Action   *ActionConfig          `json:"action"`
 	Schemas  *SchemaConfig          `json:"schemas,omitempty"`
 }
 
