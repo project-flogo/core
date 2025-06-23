@@ -143,6 +143,14 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 	return engine, nil
 }
 
+func DebugMode(debugMode bool, mockFile string) func(*engineImpl) error {
+	return func(e *engineImpl) error {
+		e.config.DebugMode = debugMode
+		e.config.MockFile = mockFile
+		return nil
+	}
+}
+
 func ConfigOption(engineJson string, compressed bool) func(*engineImpl) error {
 	return func(e *engineImpl) error {
 

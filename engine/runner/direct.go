@@ -5,10 +5,15 @@ import (
 	"errors"
 	"fmt"
 	"github.com/project-flogo/core/action"
+	"github.com/project-flogo/core/engine/runner/debugger"
+	"github.com/project-flogo/core/engine/runner/types"
+	"github.com/project-flogo/core/trigger"
 )
 
 // DirectRunner runs an action synchronously
 type DirectRunner struct {
+	debugMode bool
+	index     int
 }
 
 // NewDirectRunner create a new DirectRunner
@@ -37,6 +42,23 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 	if act == nil {
 		return nil, errors.New("action not specified")
 	}
+
+	config := inputs["handlerConfig"]
+	handlerConfig, _ := config.(*trigger.HandlerConfig)
+
+	delete(inputs, "handlerConfig")
+
+	tasks := []*types.TaskInterceptor{}
+	coverage := &types.Coverage{
+		ActivityCoverage:   make([]*types.ActivityCoverage, 0),
+		TransitionCoverage: make([]*types.TransitionCoverage, 0),
+		SubFlowCoverage:    make([]*types.SubFlowCoverage, 0),
+	}
+	interceptor := &types.Interceptor{TaskInterceptors: tasks, Coverage: coverage, CollectIO: true}
+
+	execOptions := &types.DebugExecOptions{Interceptor: interceptor}
+	ro := &types.DebugOptions{ExecOptions: execOptions}
+	inputs["_run_options"] = ro
 	trackDirectRunnerActions.AddRunner()
 	defer trackDirectRunnerActions.RemoveRunner()
 	if syncAct, ok := act.(action.SyncAction); ok {
@@ -52,6 +74,8 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 
 		<-handler.done
 
+		debugger.GenerateReport(handlerConfig, tasks, coverage, runner.index)
+		runner.index++
 		return handler.Result()
 	} else {
 		return nil, fmt.Errorf("unsupported action: %v", act)
