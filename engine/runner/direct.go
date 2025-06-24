@@ -7,6 +7,7 @@ import (
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/engine/runner/debugger"
 	"github.com/project-flogo/core/engine/runner/types"
+	"github.com/project-flogo/core/support"
 	"github.com/project-flogo/core/trigger"
 )
 
@@ -15,6 +16,8 @@ type DirectRunner struct {
 	debugMode bool
 	index     int
 }
+
+var idGenerator *support.Generator
 
 // NewDirectRunner create a new DirectRunner
 func NewDirect() *DirectRunner {
@@ -39,6 +42,9 @@ var trackDirectRunnerActions = NewRunnerTracker()
 // Execute implements action.Runner.Execute
 func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, inputs map[string]interface{}) (results map[string]interface{}, err error) {
 
+	if idGenerator == nil {
+		idGenerator, _ = support.NewGenerator()
+	}
 	if act == nil {
 		return nil, errors.New("action not specified")
 	}
@@ -57,7 +63,7 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 	interceptor := &types.Interceptor{TaskInterceptors: tasks, Coverage: coverage, CollectIO: true}
 
 	execOptions := &types.DebugExecOptions{Interceptor: interceptor}
-	ro := &types.DebugOptions{ExecOptions: execOptions}
+	ro := &types.DebugOptions{ExecOptions: execOptions, InstanceId: idGenerator.NextAsString()}
 	inputs["_run_options"] = ro
 	trackDirectRunnerActions.AddRunner()
 	defer trackDirectRunnerActions.RemoveRunner()
@@ -74,7 +80,8 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 
 		<-handler.done
 
-		debugger.GenerateReport(handlerConfig, tasks, coverage, runner.index)
+		outputs := handler.resultData
+		debugger.GenerateReport(handlerConfig, tasks, coverage, ro.InstanceId, inputs, outputs)
 		runner.index++
 		return handler.Result()
 	} else {

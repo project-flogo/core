@@ -14,11 +14,15 @@ type LinkReport struct {
 }
 
 type FlowReport struct {
-	Name             string                 `json:"testName,omitempty"`
+	Name             string                 `json:"flowName,omitempty"`
 	ActivityReport   []ActivityReport       `json:"activities"`
 	LinkReport       []LinkReport           `json:"links,omitempty"`
 	FlowErrorHandler FlowErrorHandler       `json:"errorHandler,omitempty"`
 	SubFlow          map[string]interface{} `json:"subFlow,omitempty"`
+}
+
+type OutputReport struct {
+	Report *Report `json:"report"`
 }
 
 type Report struct {
@@ -33,7 +37,9 @@ type Trigger struct {
 }
 
 type Handler struct {
-	FlowName string `json:"flow_name"`
+	FlowName string                 `json:"flowName,omitempty"`
+	Input    map[string]interface{} `json:"input,omitempty"`
+	Output   map[string]interface{} `json:"output,omitempty"`
 }
 
 type FlowErrorHandler struct {
@@ -42,15 +48,15 @@ type FlowErrorHandler struct {
 }
 
 type DebugOptions struct {
-	Op                  int
-	ReturnID            bool
-	FlowURI             string
-	PreservedInstanceId string
-	InitStepId          int
-	ExecOptions         *DebugExecOptions
-	Rerun               bool
-	OriginalInstanceId  string
-	DetachExecution     bool
+	Op                 int
+	ReturnID           bool
+	FlowURI            string
+	InstanceId         string
+	InitStepId         int
+	ExecOptions        *DebugExecOptions
+	Rerun              bool
+	OriginalInstanceId string
+	DetachExecution    bool
 }
 
 type DebugExecOptions struct {

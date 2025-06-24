@@ -108,6 +108,7 @@ func (runner *PooledRunner) Stop() error {
 // Execute implements action.Runner.Execute
 func (runner *PooledRunner) RunAction(ctx context.Context, act action.Action, inputs map[string]interface{}) (results map[string]interface{}, err error) {
 
+	delete(inputs, "handlerConfig")
 	logger := runner.logger
 
 	if act == nil {

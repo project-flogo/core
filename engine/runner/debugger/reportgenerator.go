@@ -7,12 +7,11 @@ import (
 	"github.com/project-flogo/core/trigger"
 	"io/ioutil"
 	"os"
-	"strconv"
 	"strings"
-	"time"
 )
 
-func GenerateReport(config *trigger.HandlerConfig, interceptors []*types.TaskInterceptor, coverage *types.Coverage, index int) {
+func GenerateReport(config *trigger.HandlerConfig, interceptors []*types.TaskInterceptor, coverage *types.Coverage, instanceID string, flowInputs map[string]interface{}, flowOutputs map[string]interface{}) {
+	finalReport := &types.OutputReport{}
 	report := &types.Report{}
 
 	ref := config.Parent.Ref
@@ -24,6 +23,8 @@ func GenerateReport(config *trigger.HandlerConfig, interceptors []*types.TaskInt
 
 	handler := types.Handler{
 		FlowName: config.Name,
+		Input:    flowInputs,
+		Output:   flowOutputs,
 	}
 
 	trigger.Handler = handler
@@ -31,19 +32,21 @@ func GenerateReport(config *trigger.HandlerConfig, interceptors []*types.TaskInt
 	report.Trigger = trigger
 
 	report.Flows = processFlowReport(config.Name, interceptors, coverage)
-	op, err := json.MarshalIndent(report, "", "    ")
+
+	fileName := ""
+	if ref == "#startuphook" {
+		fileName = "OnStartup-" + config.Name + ".json"
+	} else if ref == "#shutdownhook" {
+		fileName = "OnShutdown-" + config.Name + ".json"
+	} else {
+		fileName = config.Name + "-" + instanceID + ".json"
+	}
+	finalReport.Report = report
+	op, err := json.MarshalIndent(finalReport, "", "    ")
 	if err != nil {
 		fmt.Println("Error marshalling report ", err)
 	}
 
-	fileName := ""
-	if ref == "#startuphook" {
-		fileName = "OnStartup-" + config.Name + ".testresult"
-	} else if ref == "#shutdownhook" {
-		fileName = "OnShutdown-" + config.Name + ".testresult"
-	} else {
-		fileName = "Run-" + strconv.Itoa(index) + "-" + config.Parent.Id + "-" + time.Now().String() + ".json"
-	}
 	os.Remove(fileName)
 	err = ioutil.WriteFile(fileName, op, 777)
 
