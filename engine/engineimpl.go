@@ -145,6 +145,9 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 
 func DebugMode(debugMode bool, mockFile string) func(*engineImpl) error {
 	return func(e *engineImpl) error {
+		if e.config == nil {
+			e.config = &Config{}
+		}
 		e.config.DebugMode = debugMode
 		e.config.MockFile = mockFile
 		return nil
