@@ -92,6 +92,7 @@ type ObjectMapper struct {
 	foreach *foreachExpr
 	//For literal array mapping
 	literalArray []expression.Expr
+	variables    map[string]VariableMapping
 }
 
 type foreachExpr struct {
@@ -104,7 +105,8 @@ type foreachExpr struct {
 	// fields
 	fields map[string]expression.Expr
 	//Use to assign value
-	assign expression.Expr
+	assign    expression.Expr
+	variables map[string]VariableMapping
 }
 
 // assignAllExpr uses to indicate it is assign all.
@@ -122,6 +124,7 @@ func NewObjectMapper(mappings interface{}, exprF expression.Factory) (expr expre
 		switch t := mappings.(type) {
 		case map[string]interface{}:
 			objFields := make(map[string]expression.Expr)
+			variables := make(map[string]VariableMapping)
 			for mk, mv := range t {
 				//Root Level foreach
 				if strings.HasPrefix(mk, forEach) {
@@ -131,6 +134,21 @@ func NewObjectMapper(mappings interface{}, exprF expression.Factory) (expr expre
 					}
 					foreach.addFields(mv.(map[string]interface{}), exprF)
 					return foreach, nil
+				} else if strings.HasPrefix(mk, Variable) {
+					vars := mv.([]interface{})
+					for _, vv := range vars {
+						variable := vv.(map[string]interface{})
+						name := variable["name"].(string)
+						expr, err := newExpr(variable["value"].(string), exprF)
+						if err != nil {
+							return nil, err
+						}
+						variables[name] = VariableMapping{
+							Name:       name,
+							Type:       variable["type"].(string),
+							Expression: expr,
+						}
+					}
 				} else {
 					objFields[mk], err = NewObjectMapper(mv, exprF)
 					if err != nil {
@@ -140,6 +158,7 @@ func NewObjectMapper(mappings interface{}, exprF expression.Factory) (expr expre
 			}
 			return &ObjectMapper{
 				objectFields: objFields,
+				variables:    variables,
 			}, nil
 		case []interface{}:
 			//array with possible child object
@@ -174,6 +193,24 @@ func (f *foreachExpr) addFields(fields map[string]interface{}, exprF expression.
 				f.assign, err = newExpr(value, exprF)
 				if err != nil {
 					return err
+				}
+			}
+		} else if key == Variable {
+			vars := value.([]interface{})
+			for _, vv := range vars {
+				variable := vv.(map[string]interface{})
+				name := variable["name"].(string)
+				expr, err := newExpr(variable["value"].(string), exprF)
+				if err != nil {
+					return err
+				}
+				if f.variables == nil {
+					f.variables = make(map[string]VariableMapping)
+				}
+				f.variables[name] = VariableMapping{
+					Name:       name,
+					Type:       variable["type"].(string),
+					Expression: expr,
 				}
 			}
 		} else {
@@ -330,6 +367,27 @@ func getForeachIndex(str string) (int, int) {
 }
 
 func (obj *ObjectMapper) Eval(scope data.Scope) (value interface{}, err error) {
+
+	if obj.variables != nil {
+		if len(obj.variables) > 0 {
+			var deleteScope data.NeedsDelete
+			if _, ok := scope.(data.NeedsDelete); ok {
+				deleteScope = scope.(data.NeedsDelete)
+			}
+			for _, variable := range obj.variables {
+				result, err := variable.Expression.Eval(scope)
+				if err != nil {
+					return nil, err
+				}
+				scope.SetValue("_V."+variable.Name, result)
+				if deleteScope != nil {
+					defer func() {
+						deleteScope.Delete("_V." + variable.Name)
+					}()
+				}
+			}
+		}
+	}
 	if obj.foreach != nil {
 		return obj.foreach.Eval(scope)
 	} else if obj.literalArray != nil {
@@ -367,6 +425,7 @@ func (obj *ObjectMapper) Eval(scope data.Scope) (value interface{}, err error) {
 }
 
 func (f *foreachExpr) Eval(scope data.Scope) (interface{}, error) {
+
 	sourceAr, err := f.sourceFrom.Eval(scope)
 	if err != nil {
 		return nil, fmt.Errorf("foreach eval source array error, %s", err.Error())
@@ -390,6 +449,27 @@ func (f *foreachExpr) Eval(scope data.Scope) (interface{}, error) {
 		var skippedCount = 0
 		for i, sourceValue := range newSourceArray {
 			scope, err = newLoopScope(sourceValue, f.scopeName, i, scope)
+			if f.variables != nil {
+				var deleteScope data.NeedsDelete
+				if _, ok := scope.(data.NeedsDelete); ok {
+					deleteScope = scope.(data.NeedsDelete)
+				}
+				if len(f.variables) > 0 {
+					for _, variable := range f.variables {
+						result, err := variable.Expression.Eval(scope)
+						if err != nil {
+							return nil, err
+						}
+						scope.SetValue("_V."+variable.Name, result)
+						if deleteScope != nil {
+							defer func() {
+								deleteScope.Delete("_V." + variable.Name)
+							}()
+						}
+					}
+				}
+
+			}
 			if err != nil {
 				return nil, err
 			}

@@ -11,7 +11,7 @@ import (
 const (
 	Conditional = "@conditional"
 	Otherwise   = "@otherwise"
-	Variable    = "@variable"
+	Variable    = "@variables"
 )
 
 type ConditionalMapper struct {
@@ -52,7 +52,7 @@ type VariableMapper struct {
 func IsVariableMapping(value interface{}) bool {
 	switch t := value.(type) {
 	case map[string]interface{}:
-		for k, _ := range t {
+		for k := range t {
 			if strings.HasPrefix(k, Variable) {
 				return true
 			}
@@ -72,16 +72,14 @@ func IsVariableMapping(value interface{}) bool {
 
 }
 
-func createVariableMapper(value interface{}, ef expression.Factory) (expression.Expr, error) {
+func createVariableMapper(value interface{}, ef expression.Factory) (VariableMapping, error) {
 	switch t := value.(type) {
 	case map[string]interface{}:
 		//Not conditional mapper
 		fmt.Println(t)
-		return NewObjectMapper(value, ef)
-
-	default:
-		return NewObjectMapper(value, ef)
+		return VariableMapping{}, nil
 	}
+	return VariableMapping{}, nil
 }
 
 // IsConditionalMapping check to see if the mapping is an conditional mapping

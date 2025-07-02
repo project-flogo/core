@@ -70,7 +70,14 @@ func (mf *ExprMapperFactory) NewMapper(mappings map[string]interface{}) (Mapper,
 }
 
 type ExprMapper struct {
-	mappings map[string]expression.Expr
+	mappings  map[string]expression.Expr
+	variables map[string]VariableMapping
+}
+
+type VariableMapping struct {
+	Name       string
+	Type       string
+	Expression expression.Expr
 }
 
 func (m *ExprMapper) Apply(inputScope data.Scope) (map[string]interface{}, error) {

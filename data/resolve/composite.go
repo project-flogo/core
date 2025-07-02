@@ -9,8 +9,8 @@ import (
 )
 
 var defaultResolver = NewCompositeResolver(map[string]Resolver{
-	".":        &ScopeResolver{},
-	"env":      &EnvResolver{},
+	".":   &ScopeResolver{},
+	"env": &EnvResolver{},
 })
 
 func GetBasicResolver() CompositeResolver {
@@ -145,7 +145,7 @@ func (r *basicResolver) GetResolution(directive string) (Resolution, error) {
 	return &resolution{resolver: resolver, details: details}, nil
 }
 
-//staticResolution is a resolution that has a static value
+// staticResolution is a resolution that has a static value
 type staticResolution struct {
 	value interface{}
 }
@@ -185,6 +185,6 @@ func (r *resolution) GetValue(scope data.Scope) (interface{}, error) {
 			return nil, err
 		}
 	}
-
 	return value, nil
+
 }
