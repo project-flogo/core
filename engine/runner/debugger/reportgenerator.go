@@ -6,14 +6,15 @@ import (
 	"github.com/project-flogo/core/engine/support"
 	"github.com/project-flogo/core/trigger"
 	"os"
+	"path"
 	"reflect"
 	"strings"
 )
 
-func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskInterceptor, coverage *support.Coverage, instanceID string, flowInputs map[string]interface{}, flowOutputs map[string]interface{}, appName string, appVersion string) {
+func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskInterceptor, coverage *support.Coverage, instanceID string, flowInputs map[string]interface{}, flowOutputs map[string]interface{}) {
 	finalReport := &support.OutputReport{
-		AppName:    appName,
-		AppVersion: appVersion,
+		AppName:    getAppName(),
+		AppVersion: getAppVersion(),
 	}
 	report := &support.Report{}
 
@@ -48,6 +49,11 @@ func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskI
 	op, err := json.MarshalIndent(finalReport, "", "    ")
 	if err != nil {
 		fmt.Println("Error marshalling report ", err)
+	}
+
+	reportPath := os.Getenv("FLOW_EXECUTION_FILES")
+	if reportPath == "" {
+		reportPath = path.Join(os.TempDir(), "flow-executions", getAppName(), fileName)
 	}
 
 	err = os.WriteFile(fileName, op, 0777)

@@ -71,7 +71,7 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 			actionRunner = runner.NewPooled(NewPooledRunnerConfig())
 		} else if strings.EqualFold(ValueRunnerTypeDirect, runnerType) {
 			if engine.config.DebugMode {
-				actionRunner = runner.NewDirectWithDebug(engine.config.DebugMode, engine.config.MockFile, "", "")
+				actionRunner = runner.NewDirectWithDebug(engine.config.DebugMode, engine.config.MockFile)
 			} else {
 				actionRunner = runner.NewDirect()
 			}
