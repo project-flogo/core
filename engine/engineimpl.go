@@ -70,7 +70,11 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 		if strings.EqualFold(ValueRunnerTypePooled, runnerType) {
 			actionRunner = runner.NewPooled(NewPooledRunnerConfig())
 		} else if strings.EqualFold(ValueRunnerTypeDirect, runnerType) {
-			actionRunner = runner.NewDirect()
+			if engine.config.DebugMode {
+				actionRunner = runner.NewDirectWithDebug(engine.config.DebugMode, engine.config.MockFile, "", "")
+			} else {
+				actionRunner = runner.NewDirect()
+			}
 		} else {
 			return nil, fmt.Errorf("unknown runner type: %s", runnerType)
 		}
@@ -141,6 +145,17 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 	logger.Debugf("Creating app [ %s ] with version [ %s ]", appConfig.Name, appConfig.Version)
 	engine.flogoApp = flogoApp
 	return engine, nil
+}
+
+func DebugMode(debugMode bool, mockFile string) func(*engineImpl) error {
+	return func(e *engineImpl) error {
+		if e.config == nil {
+			e.config = &Config{}
+		}
+		e.config.DebugMode = debugMode
+		e.config.MockFile = mockFile
+		return nil
+	}
 }
 
 func ConfigOption(engineJson string, compressed bool) func(*engineImpl) error {

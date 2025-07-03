@@ -245,6 +245,11 @@ func ConfigViaEnv(e *engineImpl) {
 
 func DirectRunner(e *engineImpl) error {
 	e.logger.Debugf("Using 'DIRECT' Action Runner")
-	e.actionRunner = runner.NewDirect()
+	if e.config.DebugMode {
+		e.actionRunner = runner.NewDirectWithDebug(e.config.DebugMode, e.config.MockFile, "", "")
+	} else {
+		e.actionRunner = runner.NewDirect()
+	}
+
 	return nil
 }

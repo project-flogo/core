@@ -5,15 +5,36 @@ import (
 	"errors"
 	"fmt"
 	"github.com/project-flogo/core/action"
+	"github.com/project-flogo/core/engine/runner/debugger"
+	coreSupport "github.com/project-flogo/core/engine/support"
+	"github.com/project-flogo/core/support"
+	"github.com/project-flogo/core/trigger"
 )
 
 // DirectRunner runs an action synchronously
 type DirectRunner struct {
+	debugMode bool
+	mockFile  string
+	index     int
+	appName   string
+	appVer    string
 }
+
+var idGenerator *support.Generator
 
 // NewDirectRunner create a new DirectRunner
 func NewDirect() *DirectRunner {
 	return &DirectRunner{}
+}
+
+// NewDirectRunner create a new DirectRunner
+func NewDirectWithDebug(debugMode bool, mockFile string, appName string, appVer string) *DirectRunner {
+	return &DirectRunner{
+		debugMode: debugMode,
+		mockFile:  mockFile,
+		appName:   appName,
+		appVer:    appVer,
+	}
 }
 
 // Start will start the engine, by starting all of its workers
@@ -34,9 +55,35 @@ var trackDirectRunnerActions = NewRunnerTracker()
 // Execute implements action.Runner.Execute
 func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, inputs map[string]interface{}) (results map[string]interface{}, err error) {
 
+	if idGenerator == nil {
+		idGenerator, _ = support.NewGenerator()
+	}
 	if act == nil {
 		return nil, errors.New("action not specified")
 	}
+
+	config := inputs["_handler_config"]
+	handlerConfig, _ := config.(*trigger.HandlerConfig)
+
+	delete(inputs, "_handler_config")
+	var tasks []*coreSupport.TaskInterceptor
+	var coverage *coreSupport.Coverage
+	var ro *coreSupport.DebugOptions
+
+	if runner.debugMode {
+		tasks = []*coreSupport.TaskInterceptor{}
+		coverage = &coreSupport.Coverage{
+			ActivityCoverage:   make([]*coreSupport.ActivityCoverage, 0),
+			TransitionCoverage: make([]*coreSupport.TransitionCoverage, 0),
+			SubFlowCoverage:    make([]*coreSupport.SubFlowCoverage, 0),
+		}
+		interceptor := &coreSupport.Interceptor{TaskInterceptors: tasks, Coverage: coverage, CollectIO: true}
+
+		execOptions := &coreSupport.DebugExecOptions{Interceptor: interceptor}
+		ro = &coreSupport.DebugOptions{ExecOptions: execOptions, InstanceId: idGenerator.NextAsString()}
+		inputs["_run_options"] = ro
+	}
+
 	trackDirectRunnerActions.AddRunner()
 	defer trackDirectRunnerActions.RemoveRunner()
 	if syncAct, ok := act.(action.SyncAction); ok {
@@ -52,6 +99,13 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 
 		<-handler.done
 
+		if runner.debugMode {
+
+			outputs := handler.resultData
+			debugger.GenerateReport(handlerConfig, tasks, coverage, ro.InstanceId, inputs, outputs, runner.appName, runner.appVer)
+		}
+
+		runner.index++
 		return handler.Result()
 	} else {
 		return nil, fmt.Errorf("unsupported action: %v", act)

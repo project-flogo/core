@@ -14,12 +14,14 @@ type Config struct {
 	Type        string `json:"type"`
 	Description string `json:"description"`
 
-	StopEngineOnError bool `json:"stopEngineOnError,omitempty"`
+	StopEngineOnError bool   `json:"stopEngineOnError,omitempty"`
 	RunnerType        string `json:"runnerType,omitempty"`
 
 	Imports        []string                          `json:"imports,omitempty"`
 	ActionSettings map[string]map[string]interface{} `json:"actionSettings,omitempty"`
 	Services       []*ServiceConfig                  `json:"services,omitempty"`
+	DebugMode      bool                              `json:"debugMode"`
+	MockFile       string                            `json:"mockFile"`
 }
 
 // ServiceConfig is the configuration for Engine Services

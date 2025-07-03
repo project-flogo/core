@@ -18,13 +18,13 @@ import (
 type SeqKayActionWrapper func()
 
 type seqKeyHandlerImpl struct {
-	runner           action.Runner
-	logger           log.Logger
-	config           *HandlerConfig
-	acts             []actImpl
-	eventData        map[string]string
-	seqKeyChannelMap sync.Map
-	seqKeyChannleSize int 
+	runner            action.Runner
+	logger            log.Logger
+	config            *HandlerConfig
+	acts              []actImpl
+	eventData         map[string]string
+	seqKeyChannelMap  sync.Map
+	seqKeyChannleSize int
 }
 
 func (h *seqKeyHandlerImpl) Name() string {
@@ -56,7 +56,7 @@ func (h *seqKeyHandlerImpl) GetSetting(setting string) (interface{}, bool) {
 	val, exists := h.config.Settings[setting]
 
 	if !exists {
-		val, exists = h.config.parent.Settings[setting]
+		val, exists = h.config.Parent.Settings[setting]
 	}
 
 	return val, exists
@@ -193,7 +193,7 @@ func (h *seqKeyHandlerImpl) runAction(ctx context.Context, act actImpl, scope da
 		eventData = ctxEventData
 	}
 
-	PostHandlerEvent(STARTED, h.Name(), h.config.parent.Id, eventData)
+	PostHandlerEvent(STARTED, h.Name(), h.config.Parent.Id, eventData)
 	var inputMap map[string]interface{}
 
 	if act.actionInputMapper != nil {
@@ -230,11 +230,11 @@ func (h *seqKeyHandlerImpl) runAction(ctx context.Context, act actImpl, scope da
 
 	results, err = h.runner.RunAction(ctx, act.act, inputMap)
 	if err != nil {
-		PostHandlerEvent(FAILED, h.Name(), h.config.parent.Id, eventData)
+		PostHandlerEvent(FAILED, h.Name(), h.config.Parent.Id, eventData)
 		return nil, err
 	}
 
-	PostHandlerEvent(COMPLETED, h.Name(), h.config.parent.Id, eventData)
+	PostHandlerEvent(COMPLETED, h.Name(), h.config.Parent.Id, eventData)
 
 	if act.actionOutputMapper != nil {
 		outScope := data.NewSimpleScope(results, nil)
@@ -251,8 +251,8 @@ func (h *seqKeyHandlerImpl) runSeqKeyBasedAction(ctx context.Context, act actImp
 
 func (h *seqKeyHandlerImpl) String() string {
 	triggerId := ""
-	if h.config.parent != nil {
-		triggerId = h.config.parent.Id
+	if h.config.Parent != nil {
+		triggerId = h.config.Parent.Id
 	}
 	handlerId := "Handler"
 	if h.config.Name != "" {
