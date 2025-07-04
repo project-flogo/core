@@ -7,10 +7,10 @@ func SetAppInfo(name, version string) {
 	appVersion = version
 }
 
-func getAppName() string {
+func GetAppName() string {
 	return appName
 }
 
-func getAppVersion() string {
+func GetAppVersion() string {
 	return appVersion
 }

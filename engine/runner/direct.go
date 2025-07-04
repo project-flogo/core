@@ -8,7 +8,10 @@ import (
 	"github.com/project-flogo/core/engine/runner/debugger"
 	coreSupport "github.com/project-flogo/core/engine/support"
 	"github.com/project-flogo/core/support"
+	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/trigger"
+	"os"
+	"path"
 )
 
 // DirectRunner runs an action synchronously
@@ -35,7 +38,19 @@ func NewDirectWithDebug(debugMode bool, mockFile string) *DirectRunner {
 
 // Start will start the engine, by starting all of its workers
 func (runner *DirectRunner) Start() error {
-	//op-op
+	if runner.debugMode {
+		reportPath := os.Getenv("FLOW_EXECUTION_FILES")
+
+		if reportPath == "" {
+			reportPath = path.Join(os.TempDir(), "flow-executions", debugger.GetAppName())
+		} else {
+			reportPath = path.Join(reportPath, "flow-executions", debugger.GetAppName())
+		}
+
+		log.RootLogger().Infof("Generate Report for Flow Execution: %s", reportPath)
+
+		os.RemoveAll(reportPath)
+	}
 	return nil
 }
 

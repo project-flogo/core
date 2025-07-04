@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/project-flogo/core/engine/support"
+	"github.com/project-flogo/core/support/log"
 	"github.com/project-flogo/core/trigger"
 	"os"
 	"path"
@@ -13,12 +14,11 @@ import (
 
 func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskInterceptor, coverage *support.Coverage, instanceID string, flowInputs map[string]interface{}, flowOutputs map[string]interface{}) {
 	finalReport := &support.OutputReport{
-		AppName:    getAppName(),
-		AppVersion: getAppVersion(),
+		AppName:    GetAppName(),
+		AppVersion: GetAppVersion(),
+		InstanceID: instanceID,
 	}
 	report := &support.Report{}
-
-	ref := config.Parent.Ref
 
 	triggerNode := &support.Trigger{
 		ID:       config.Parent.Id,
@@ -37,14 +37,8 @@ func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskI
 
 	report.Flows = processFlowReport(config.Name, interceptors, coverage)
 
-	fileName := ""
-	if ref == "#startuphook" {
-		fileName = "OnStartup-" + config.Name + ".json"
-	} else if ref == "#shutdownhook" {
-		fileName = "OnShutdown-" + config.Name + ".json"
-	} else {
-		fileName = config.Name + "-" + instanceID + ".json"
-	}
+	fileName := config.Name + "-" + instanceID + ".json"
+
 	finalReport.Report = report
 	op, err := json.MarshalIndent(finalReport, "", "    ")
 	if err != nil {
@@ -54,11 +48,18 @@ func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskI
 	reportPath := os.Getenv("FLOW_EXECUTION_FILES")
 
 	if reportPath == "" {
-		reportPath = path.Join(os.TempDir(), "flow-executions", getAppName(), fileName)
+		reportPath = path.Join(os.TempDir(), "flow-executions", GetAppName(), fileName)
+	} else {
+		reportPath = path.Join(reportPath, "flow-executions", GetAppName(), fileName)
 	}
 
-	err = os.WriteFile(fileName, op, 0777)
+	log.RootLogger().Infof("Generate Report for Flow Execution: %s", reportPath)
 
+	os.MkdirAll(path.Dir(reportPath), os.ModePerm)
+	err = os.WriteFile(reportPath, op, 0777)
+	if err != nil {
+		fmt.Printf("Error writing report to file: %v", err)
+	}
 }
 
 func processFlowReport(mainFlow string, interceptors []*support.TaskInterceptor, coverage *support.Coverage) *support.FlowReport {

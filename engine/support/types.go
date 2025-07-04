@@ -24,6 +24,7 @@ type FlowReport struct {
 type OutputReport struct {
 	AppName    string  `json:"appName"`
 	AppVersion string  `json:"appVersion"`
+	InstanceID string  `json:"instanceId"`
 	Report     *Report `json:"report"`
 }
 
