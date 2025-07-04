@@ -16,8 +16,6 @@ type DirectRunner struct {
 	debugMode bool
 	mockFile  string
 	index     int
-	appName   string
-	appVer    string
 }
 
 var idGenerator *support.Generator
@@ -28,12 +26,10 @@ func NewDirect() *DirectRunner {
 }
 
 // NewDirectRunner create a new DirectRunner
-func NewDirectWithDebug(debugMode bool, mockFile string, appName string, appVer string) *DirectRunner {
+func NewDirectWithDebug(debugMode bool, mockFile string) *DirectRunner {
 	return &DirectRunner{
 		debugMode: debugMode,
 		mockFile:  mockFile,
-		appName:   appName,
-		appVer:    appVer,
 	}
 }
 
@@ -102,7 +98,7 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 		if runner.debugMode {
 
 			outputs := handler.resultData
-			debugger.GenerateReport(handlerConfig, tasks, coverage, ro.InstanceId, inputs, outputs, runner.appName, runner.appVer)
+			debugger.GenerateReport(handlerConfig, tasks, coverage, ro.InstanceId, inputs, outputs)
 		}
 
 		runner.index++

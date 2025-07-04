@@ -52,6 +52,7 @@ func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskI
 	}
 
 	reportPath := os.Getenv("FLOW_EXECUTION_FILES")
+
 	if reportPath == "" {
 		reportPath = path.Join(os.TempDir(), "flow-executions", getAppName(), fileName)
 	}
