@@ -22,6 +22,8 @@ type Config struct {
 	Services       []*ServiceConfig                  `json:"services,omitempty"`
 	DebugMode      bool                              `json:"debugMode"`
 	MockFile       string                            `json:"mockFile"`
+	GenMock        bool                              `json:"genMock"`
+	OutputPath     string                            `json:"outputPath,omitempty"`
 }
 
 // ServiceConfig is the configuration for Engine Services

@@ -8,11 +8,66 @@ import (
 	"github.com/project-flogo/core/trigger"
 	"os"
 	"path"
+	"path/filepath"
 	"reflect"
 	"strings"
 )
 
-func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskInterceptor, coverage *support.Coverage, instanceID string, flowInputs map[string]interface{}, flowOutputs map[string]interface{}) {
+func GenerateMock(coverage *support.Coverage, outputPath string) {
+	finalReport := &support.MockOutputReport{
+		AppName:    GetAppName(),
+		AppVersion: GetAppVersion(),
+	}
+
+	report := &support.MockReport{
+		Flows: make(map[string]*support.FlowMock),
+	}
+
+	for _, activity := range coverage.ActivityCoverage {
+		if _, ok := report.Flows[activity.FlowName]; !ok {
+			report.Flows[activity.FlowName] = &support.FlowMock{
+				Name:           activity.FlowName,
+				ActivityReport: make([]*support.ActivityMock, 0),
+			}
+		}
+		flowRep := report.Flows[activity.FlowName]
+		flowRep.ActivityReport = append(flowRep.ActivityReport, &support.ActivityMock{
+			ActivityName: activity.ActivityName,
+			MockType:     1,
+			Mock:         activity.Outputs,
+		})
+
+	}
+
+	finalReport.Mock = report
+
+	op, err := json.MarshalIndent(finalReport, "", "    ")
+	if err != nil {
+		fmt.Println("Error marshalling report ", err)
+	}
+
+	reportPath := outputPath
+	if outputPath == "" {
+		reportPath = os.Getenv("FLOW_EXECUTION_FILES")
+	}
+
+	if reportPath == "" {
+		reportPath = filepath.Join(os.TempDir(), "flow-executions", GetAppName(), "mock-"+GetAppName()+"-"+GetAppVersion()+".json")
+	} else {
+		reportPath = filepath.Join(reportPath, "mock-"+GetAppName()+"-"+GetAppVersion()+".json")
+	}
+
+	log.RootLogger().Infof("Generate Report for Flow Execution: %s", reportPath)
+
+	os.MkdirAll(filepath.Dir(reportPath), os.ModePerm)
+	err = os.WriteFile(reportPath, op, 0777)
+	if err != nil {
+		fmt.Printf("Error writing report to file: %v", err)
+	}
+
+}
+
+func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskInterceptor, coverage *support.Coverage, instanceID string, flowInputs map[string]interface{}, flowOutputs map[string]interface{}, outputPath string) {
 	finalReport := &support.OutputReport{
 		AppName:    GetAppName(),
 		AppVersion: GetAppVersion(),
@@ -45,18 +100,22 @@ func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskI
 		fmt.Println("Error marshalling report ", err)
 	}
 
-	reportPath := os.Getenv("FLOW_EXECUTION_FILES")
+	reportPath := outputPath
+	reportFile := fileName
+	if outputPath == "" {
+		reportPath = os.Getenv("FLOW_EXECUTION_FILES")
+	}
 
 	if reportPath == "" {
-		reportPath = path.Join(os.TempDir(), "flow-executions", GetAppName(), fileName)
-	} else {
-		reportPath = path.Join(reportPath, "flow-executions", GetAppName(), fileName)
+		reportPath = path.Join(os.TempDir(), "flow-executions", GetAppName())
 	}
+
+	reportFile = path.Join(reportPath, fileName)
 
 	log.RootLogger().Infof("Generate Report for Flow Execution: %s", reportPath)
 
-	os.MkdirAll(path.Dir(reportPath), os.ModePerm)
-	err = os.WriteFile(reportPath, op, 0777)
+	os.MkdirAll(path.Dir(reportFile), os.ModePerm)
+	err = os.WriteFile(reportFile, op, 0777)
 	if err != nil {
 		fmt.Printf("Error writing report to file: %v", err)
 	}

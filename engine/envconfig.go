@@ -246,7 +246,7 @@ func ConfigViaEnv(e *engineImpl) {
 func DirectRunner(e *engineImpl) error {
 	e.logger.Debugf("Using 'DIRECT' Action Runner")
 	if e.config.DebugMode {
-		e.actionRunner = runner.NewDirectWithDebug(e.config.DebugMode, e.config.MockFile)
+		e.actionRunner = runner.NewDirectWithDebug(e.config.DebugMode, e.config.MockFile, e.config.OutputPath, e.config.GenMock)
 	} else {
 		e.actionRunner = runner.NewDirect()
 	}

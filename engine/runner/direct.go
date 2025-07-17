@@ -2,6 +2,7 @@ package runner
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/project-flogo/core/action"
@@ -16,9 +17,12 @@ import (
 
 // DirectRunner runs an action synchronously
 type DirectRunner struct {
-	debugMode bool
-	mockFile  string
-	index     int
+	debugMode   bool
+	mockFile    string
+	genMockFile bool
+	outputPath  string
+	index       int
+	mockData    *coreSupport.MockReport
 }
 
 var idGenerator *support.Generator
@@ -29,10 +33,12 @@ func NewDirect() *DirectRunner {
 }
 
 // NewDirectRunner create a new DirectRunner
-func NewDirectWithDebug(debugMode bool, mockFile string) *DirectRunner {
+func NewDirectWithDebug(debugMode bool, mockFile string, outputPath string, genMock bool) *DirectRunner {
 	return &DirectRunner{
-		debugMode: debugMode,
-		mockFile:  mockFile,
+		debugMode:   debugMode,
+		mockFile:    mockFile,
+		genMockFile: genMock,
+		outputPath:  outputPath,
 	}
 }
 
@@ -51,6 +57,43 @@ func (runner *DirectRunner) Start() error {
 
 		os.RemoveAll(reportPath)
 	}
+
+	if runner.mockFile != "" {
+		content, err := os.ReadFile(runner.mockFile)
+		if err != nil {
+			return err
+		}
+		var report map[string]interface{}
+		if err := json.Unmarshal(content, &report); err != nil {
+			return err
+		}
+
+		var mockResult = report["mocks"].(map[string]interface{})
+
+		var flows = mockResult["flows"].(map[string]interface{})
+		mockReport := &coreSupport.MockReport{
+			make(map[string]*coreSupport.FlowMock),
+		}
+		for _, val := range flows {
+			flow := val.(map[string]interface{})
+			flowMock := &coreSupport.FlowMock{}
+			flowMock.Name = flow["flowName"].(string)
+			activities := flow["activities"].([]interface{})
+			actList := make([]*coreSupport.ActivityMock, 0)
+			for _, val := range activities {
+				actMap := val.(map[string]interface{})
+				activity := &coreSupport.ActivityMock{}
+				activity.ActivityName = actMap["name"].(string)
+				activity.MockType = 1
+				activity.Mock = actMap["mock"]
+				actList = append(actList, activity)
+			}
+			flowMock.ActivityReport = actList
+			mockReport.Flows[flowMock.Name] = flowMock
+		}
+		runner.mockData = mockReport
+	}
+
 	return nil
 }
 
@@ -88,6 +131,20 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 			TransitionCoverage: make([]*coreSupport.TransitionCoverage, 0),
 			SubFlowCoverage:    make([]*coreSupport.SubFlowCoverage, 0),
 		}
+
+		for _, flow := range runner.mockData.Flows {
+			for _, activity := range flow.ActivityReport {
+				interceptor := &coreSupport.TaskInterceptor{}
+				interceptor.ID = flow.Name + "-" + activity.ActivityName
+				interceptor.Type = coreSupport.MockActivity
+				interceptor.Skip = true
+				interceptor.SkipExecution = true
+				if activity.Mock != nil {
+					interceptor.Outputs = activity.Mock.(map[string]interface{})
+				}
+				tasks = append(tasks, interceptor)
+			}
+		}
 		interceptor := &coreSupport.Interceptor{TaskInterceptors: tasks, Coverage: coverage, CollectIO: true}
 
 		execOptions := &coreSupport.DebugExecOptions{Interceptor: interceptor}
@@ -113,7 +170,10 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 		if runner.debugMode {
 
 			outputs := handler.resultData
-			debugger.GenerateReport(handlerConfig, tasks, coverage, ro.InstanceId, inputs, outputs)
+			debugger.GenerateReport(handlerConfig, tasks, coverage, ro.InstanceId, inputs, outputs, runner.outputPath)
+		}
+		if runner.genMockFile {
+			debugger.GenerateMock(coverage, runner.outputPath)
 		}
 
 		runner.index++

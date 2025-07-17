@@ -7,6 +7,27 @@ type ActivityReport struct {
 	Error        map[string]interface{} `json:"error,omitempty"`
 }
 
+type ActivityMock struct {
+	ActivityName string      `json:"name"`
+	MockType     int         `json:"type"`
+	Mock         interface{} `json:"mock,omitempty"`
+}
+
+type FlowMock struct {
+	Name           string          `json:"flowName,omitempty"`
+	ActivityReport []*ActivityMock `json:"activities"`
+}
+
+type MockReport struct {
+	Flows map[string]*FlowMock `json:"flows"`
+}
+
+type MockOutputReport struct {
+	AppName    string      `json:"appName"`
+	AppVersion string      `json:"appVersion"`
+	Mock       *MockReport `json:"mocks"`
+}
+
 type LinkReport struct {
 	LinkName string `json:"linkName,omitempty"`
 	From     string `json:"from,omitempty"`
@@ -14,7 +35,7 @@ type LinkReport struct {
 }
 
 type FlowReport struct {
-	Name             string                 `json:"flowName,omitempty"`
+	Name             string                 `json:"flowId,omitempty"`
 	ActivityReport   []ActivityReport       `json:"activities"`
 	LinkReport       []LinkReport           `json:"links,omitempty"`
 	FlowErrorHandler FlowErrorHandler       `json:"errorHandler,omitempty"`
