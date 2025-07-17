@@ -44,7 +44,7 @@ func createVariableMapper(vars []interface{}, exprF expression.Factory) ([]Varia
 	for _, vv := range vars {
 		variable := vv.(map[string]interface{})
 		name := variable["name"].(string)
-		expr, err := newExpr(variable["value"].(string), exprF)
+		expr, err := newExpr(variable["value"], exprF)
 		if err != nil {
 			return nil, err
 		}
