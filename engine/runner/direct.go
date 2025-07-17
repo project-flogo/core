@@ -132,19 +132,22 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 			SubFlowCoverage:    make([]*coreSupport.SubFlowCoverage, 0),
 		}
 
-		for _, flow := range runner.mockData.Flows {
-			for _, activity := range flow.ActivityReport {
-				interceptor := &coreSupport.TaskInterceptor{}
-				interceptor.ID = flow.Name + "-" + activity.ActivityName
-				interceptor.Type = coreSupport.MockActivity
-				interceptor.Skip = true
-				interceptor.SkipExecution = true
-				if activity.Mock != nil {
-					interceptor.Outputs = activity.Mock.(map[string]interface{})
+		if runner.mockData != nil && runner.mockData.Flows != nil {
+			for _, flow := range runner.mockData.Flows {
+				for _, activity := range flow.ActivityReport {
+					interceptor := &coreSupport.TaskInterceptor{}
+					interceptor.ID = flow.Name + "-" + activity.ActivityName
+					interceptor.Type = coreSupport.MockActivity
+					interceptor.Skip = true
+					interceptor.SkipExecution = true
+					if activity.Mock != nil {
+						interceptor.Outputs = activity.Mock.(map[string]interface{})
+					}
+					tasks = append(tasks, interceptor)
 				}
-				tasks = append(tasks, interceptor)
 			}
 		}
+
 		interceptor := &coreSupport.Interceptor{TaskInterceptors: tasks, Coverage: coverage, CollectIO: true}
 
 		execOptions := &coreSupport.DebugExecOptions{Interceptor: interceptor}
