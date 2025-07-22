@@ -71,7 +71,7 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 			actionRunner = runner.NewPooled(NewPooledRunnerConfig())
 		} else if strings.EqualFold(ValueRunnerTypeDirect, runnerType) {
 			if engine.config.DebugMode {
-				actionRunner = runner.NewDirectWithDebug(engine.config.DebugMode, engine.config.MockFile, engine.config.OutputPath, engine.config.GenMock)
+				actionRunner = runner.NewDirectWithDebug(engine.config.DebugMode, engine.config.MockFile, engine.config.OutputPath, engine.config.GenMock, engine.config.AppPath)
 			} else {
 				actionRunner = runner.NewDirect()
 			}
@@ -147,7 +147,7 @@ func New(appConfig *app.Config, options ...Option) (Engine, error) {
 	return engine, nil
 }
 
-func DebugMode(debugMode bool, mockFile string, genMock bool, outputPath string) func(*engineImpl) error {
+func DebugMode(debugMode bool, mockFile string, genMock bool, outputPath string, appPath string) func(*engineImpl) error {
 	return func(e *engineImpl) error {
 		if e.config == nil {
 			e.config = &Config{}
@@ -156,6 +156,7 @@ func DebugMode(debugMode bool, mockFile string, genMock bool, outputPath string)
 		e.config.MockFile = mockFile
 		e.config.OutputPath = outputPath
 		e.config.GenMock = genMock
+		e.config.AppPath = appPath
 		return nil
 	}
 }

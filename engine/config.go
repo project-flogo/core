@@ -24,6 +24,7 @@ type Config struct {
 	MockFile       string                            `json:"mockFile"`
 	GenMock        bool                              `json:"genMock"`
 	OutputPath     string                            `json:"outputPath,omitempty"`
+	AppPath        string                            `json:"appPath"`
 }
 
 // ServiceConfig is the configuration for Engine Services

@@ -23,6 +23,7 @@ type DirectRunner struct {
 	outputPath  string
 	index       int
 	mockData    *coreSupport.MockReport
+	appPath     string
 }
 
 var idGenerator *support.Generator
@@ -33,12 +34,13 @@ func NewDirect() *DirectRunner {
 }
 
 // NewDirectRunner create a new DirectRunner
-func NewDirectWithDebug(debugMode bool, mockFile string, outputPath string, genMock bool) *DirectRunner {
+func NewDirectWithDebug(debugMode bool, mockFile string, outputPath string, genMock bool, appPath string) *DirectRunner {
 	return &DirectRunner{
 		debugMode:   debugMode,
 		mockFile:    mockFile,
 		genMockFile: genMock,
 		outputPath:  outputPath,
+		appPath:     appPath,
 	}
 }
 
@@ -130,23 +132,24 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 			ActivityCoverage:   make([]*coreSupport.ActivityCoverage, 0),
 			TransitionCoverage: make([]*coreSupport.TransitionCoverage, 0),
 			SubFlowCoverage:    make([]*coreSupport.SubFlowCoverage, 0),
+			SubFlowMap:         make(map[string]*coreSupport.SubFlowCoverage),
 		}
 
-		if runner.mockData != nil && runner.mockData.Flows != nil {
-			for _, flow := range runner.mockData.Flows {
-				for _, activity := range flow.ActivityReport {
-					interceptor := &coreSupport.TaskInterceptor{}
-					interceptor.ID = flow.Name + "-" + activity.ActivityName
-					interceptor.Type = coreSupport.MockActivity
-					interceptor.Skip = true
-					interceptor.SkipExecution = true
-					if activity.Mock != nil {
-						interceptor.Outputs = activity.Mock.(map[string]interface{})
-					}
-					tasks = append(tasks, interceptor)
-				}
-			}
-		}
+		//if runner.mockData != nil && runner.mockData.Flows != nil {
+		//	for _, flow := range runner.mockData.Flows {
+		//		for _, activity := range flow.ActivityReport {
+		//			interceptor := &coreSupport.TaskInterceptor{}
+		//			interceptor.ID = flow.Name + "-" + activity.ActivityName
+		//			interceptor.Type = coreSupport.MockActivity
+		//			interceptor.Skip = true
+		//			interceptor.SkipExecution = true
+		//			if activity.Mock != nil {
+		//				interceptor.Outputs = activity.Mock.(map[string]interface{})
+		//			}
+		//			tasks = append(tasks, interceptor)
+		//		}
+		//	}
+		//}
 
 		interceptor := &coreSupport.Interceptor{TaskInterceptors: tasks, Coverage: coverage, CollectIO: true}
 
@@ -173,7 +176,7 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 		if runner.debugMode {
 
 			outputs := handler.resultData
-			debugger.GenerateReport(handlerConfig, tasks, coverage, ro.InstanceId, inputs, outputs, runner.outputPath)
+			debugger.GenerateReport(handlerConfig, tasks, coverage, ro.InstanceId, inputs, outputs, runner.outputPath, runner.appPath)
 		}
 		if runner.genMockFile {
 			debugger.GenerateMock(coverage, runner.outputPath)

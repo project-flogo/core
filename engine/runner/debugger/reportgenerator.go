@@ -67,11 +67,13 @@ func GenerateMock(coverage *support.Coverage, outputPath string) {
 
 }
 
-func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskInterceptor, coverage *support.Coverage, instanceID string, flowInputs map[string]interface{}, flowOutputs map[string]interface{}, outputPath string) {
+func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskInterceptor, coverage *support.Coverage, instanceID string, flowInputs map[string]interface{}, flowOutputs map[string]interface{}, outputPath string, appPath string) {
 	finalReport := &support.OutputReport{
 		AppName:    GetAppName(),
 		AppVersion: GetAppVersion(),
 		InstanceID: instanceID,
+		Flow:       config.Name,
+		AppPath:    appPath,
 	}
 	report := &support.Report{}
 
@@ -123,18 +125,29 @@ func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskI
 
 func processFlowReport(mainFlow string, interceptors []*support.TaskInterceptor, coverage *support.Coverage) *support.FlowReport {
 
-	dataMap := getSubFlowDataMap(mainFlow, coverage)
+	mainFlowId := ""
+	subFlowMap := make(map[string]map[string]*support.SubFlowCoverage)
 
-	subFlowMap := make(map[string]map[string]string)
-	for _, subFlowCoverage := range coverage.SubFlowCoverage {
-		if val, ok := subFlowMap[subFlowCoverage.HostFlow]; ok {
-			val[subFlowCoverage.SubFlowActivity] = subFlowCoverage.SubFlowName
-		} else {
-			subFlowMap[subFlowCoverage.HostFlow] = make(map[string]string)
-			subFlowMap[subFlowCoverage.HostFlow][subFlowCoverage.SubFlowActivity] = subFlowCoverage.SubFlowName
+	subFlowActivityMap := make(map[string][]string)
+
+	for _, subFlowCoverage := range coverage.SubFlowMap {
+
+		executions := subFlowActivityMap[subFlowCoverage.HostFlowID+"-"+subFlowCoverage.SubFlowActivity]
+		executions = append(executions, subFlowCoverage.SubFlowID)
+		subFlowActivityMap[subFlowCoverage.HostFlowID+"-"+subFlowCoverage.SubFlowActivity] = executions
+
+		if subFlowCoverage.HostFlow == mainFlow {
+			mainFlowId = subFlowCoverage.HostFlowID
 		}
-
+		if val, ok := subFlowMap[subFlowCoverage.HostFlowID]; ok {
+			val[subFlowCoverage.SubFlowID] = subFlowCoverage
+		} else {
+			subFlowMap[subFlowCoverage.HostFlowID] = make(map[string]*support.SubFlowCoverage)
+			subFlowMap[subFlowCoverage.HostFlowID][subFlowCoverage.SubFlowID] = subFlowCoverage
+		}
 	}
+
+	dataMap := getSubFlowDataMap(mainFlow, coverage, subFlowActivityMap)
 
 	flowReport := &support.FlowReport{}
 	flowReport.Name = mainFlow
@@ -155,6 +168,7 @@ func processFlowReport(mainFlow string, interceptors []*support.TaskInterceptor,
 		if activity.FlowName != mainFlow {
 			continue
 		}
+
 		activityReport := &support.ActivityReport{}
 		activityReport.ActivityName = activity.ActivityName
 		activityReport.Inputs = activity.Inputs
@@ -164,6 +178,9 @@ func processFlowReport(mainFlow string, interceptors []*support.TaskInterceptor,
 			activityReport.Outputs = nil
 		}
 
+		if executions, ok := subFlowActivityMap[activity.FlowId+"-"+activity.ActivityName]; ok {
+			activityReport.Executions = executions
+		}
 		activityReport.Error = activity.Error
 
 		if activity.IsMainFlow {
@@ -212,19 +229,23 @@ func processFlowReport(mainFlow string, interceptors []*support.TaskInterceptor,
 		if val, ok := subFlowMap[k]; ok {
 			subMap := make(map[string]interface{})
 			for k1, v1 := range val {
-				if val, ok := dataMap[v1]; ok {
-					subMap[k1] = val
+				if val1, ok := dataMap[v1.SubFlowID]; ok {
+					val1.Inputs = v1.Inputs
+					val1.Outputs = v1.Outputs
+					subMap[k1] = val1
 				}
 			}
 			testReport.SubFlow = subMap
 		}
 	}
 
-	if _, ok := subFlowMap[mainFlow]; ok {
-		subFlow := subFlowMap[mainFlow]
+	if _, ok := subFlowMap[mainFlowId]; ok {
+		subFlow := subFlowMap[mainFlowId]
 		subMap := make(map[string]interface{})
 		for k, v := range subFlow {
-			if val, ok := dataMap[v]; ok {
+			if val, ok := dataMap[k]; ok {
+				val.Inputs = v.Inputs
+				val.Outputs = v.Outputs
 				subMap[k] = val
 			}
 		}
@@ -234,7 +255,7 @@ func processFlowReport(mainFlow string, interceptors []*support.TaskInterceptor,
 	return flowReport
 }
 
-func getSubFlowDataMap(mainFlow string, coverage *support.Coverage) map[string]*support.FlowReport {
+func getSubFlowDataMap(mainFlow string, coverage *support.Coverage, subFlowActivityMap map[string][]string) map[string]*support.FlowReport {
 	subFlowList := make(map[string]*support.FlowReport)
 
 	for _, activity := range coverage.ActivityCoverage {
@@ -249,8 +270,10 @@ func getSubFlowDataMap(mainFlow string, coverage *support.Coverage) map[string]*
 		activityReport.Inputs = activity.Inputs
 		activityReport.Outputs = &activity.Outputs
 		activityReport.Error = activity.Error
-
-		val, ok := subFlowList[activity.FlowName]
+		if executions, ok := subFlowActivityMap[activity.FlowId+"-"+activity.ActivityName]; ok {
+			activityReport.Executions = executions
+		}
+		val, ok := subFlowList[activity.FlowId]
 		if ok {
 			if activity.IsMainFlow {
 				val.ActivityReport = append(val.ActivityReport, *activityReport)
@@ -273,7 +296,7 @@ func getSubFlowDataMap(mainFlow string, coverage *support.Coverage) map[string]*
 			} else {
 				val.FlowErrorHandler.ActivityReport = append(val.FlowErrorHandler.ActivityReport, *activityReport)
 			}
-			subFlowList[activity.FlowName] = val
+			subFlowList[activity.FlowId] = val
 		}
 	}
 
@@ -287,7 +310,7 @@ func getSubFlowDataMap(mainFlow string, coverage *support.Coverage) map[string]*
 		linkReport.To = link.TransitionTo
 		linkReport.From = link.TransitionFrom
 
-		val, ok := subFlowList[link.FlowName]
+		val, ok := subFlowList[link.FlowId]
 		if ok {
 			if link.IsMainFlow {
 				val.LinkReport = append(val.LinkReport, *linkReport)

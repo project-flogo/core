@@ -5,6 +5,7 @@ type ActivityReport struct {
 	Inputs       map[string]interface{} `json:"input,omitempty"`
 	Outputs      *interface{}           `json:"output,omitempty"`
 	Error        map[string]interface{} `json:"error,omitempty"`
+	Executions   []string               `json:"executions,omitempty"`
 }
 
 type ActivityMock struct {
@@ -40,6 +41,8 @@ type FlowReport struct {
 	LinkReport       []LinkReport           `json:"links,omitempty"`
 	FlowErrorHandler FlowErrorHandler       `json:"errorHandler,omitempty"`
 	SubFlow          map[string]interface{} `json:"subFlow,omitempty"`
+	Inputs           map[string]interface{} `json:"inputs,omitempty"`
+	Outputs          map[string]interface{} `json:"outputs,omitempty"`
 }
 
 type OutputReport struct {
@@ -47,6 +50,8 @@ type OutputReport struct {
 	AppVersion string  `json:"appVersion"`
 	InstanceID string  `json:"instanceId"`
 	Report     *Report `json:"report"`
+	Flow       string  `json:"flow"`
+	AppPath    string  `json:"appPath"`
 }
 
 type Report struct {
