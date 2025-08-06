@@ -109,12 +109,13 @@ func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskI
 	}
 
 	if reportPath == "" {
-		reportPath = path.Join(os.TempDir(), "flow-executions", GetAppName())
+		reportPath = path.Join(os.TempDir(), "flow-executions")
 	}
+	reportPath = filepath.Join(reportPath, GetAppName())
 
 	reportFile = path.Join(reportPath, fileName)
 
-	log.RootLogger().Infof("Generate Report for Flow Execution: %s", reportFile)
+	log.RootLogger().Infof("Generated Report file for Flow Execution: %s", reportFile)
 
 	os.MkdirAll(path.Dir(reportFile), os.ModePerm)
 	err = os.WriteFile(reportFile, op, 0777)
@@ -133,7 +134,13 @@ func processFlowReport(mainFlow string, interceptors []*support.TaskInterceptor,
 	for _, subFlowCoverage := range coverage.SubFlowMap {
 
 		executions := subFlowActivityMap[subFlowCoverage.HostFlowID+"-"+subFlowCoverage.SubFlowActivity]
-		executions = append(executions, subFlowCoverage.SubFlowID)
+		execution := ""
+		if subFlowCoverage.IsLoop {
+			execution = subFlowCoverage.SubFlowActivity + "[" + subFlowCoverage.Index + "]-" + subFlowCoverage.SubFlowName
+		} else {
+			execution = subFlowCoverage.SubFlowActivity + "-" + subFlowCoverage.SubFlowName
+		}
+		executions = append(executions, execution)
 		subFlowActivityMap[subFlowCoverage.HostFlowID+"-"+subFlowCoverage.SubFlowActivity] = executions
 
 		if subFlowCoverage.HostFlow == mainFlow {
@@ -228,11 +235,17 @@ func processFlowReport(mainFlow string, interceptors []*support.TaskInterceptor,
 	for k, testReport := range dataMap {
 		if val, ok := subFlowMap[k]; ok {
 			subMap := make(map[string]interface{})
-			for k1, v1 := range val {
+			for _, v1 := range val {
 				if val1, ok := dataMap[v1.SubFlowID]; ok {
 					val1.Inputs = v1.Inputs
 					val1.Outputs = v1.Outputs
-					subMap[k1] = val1
+					execution := ""
+					if v1.IsLoop {
+						execution = v1.SubFlowActivity + "[" + v1.Index + "]-" + v1.SubFlowName
+					} else {
+						execution = v1.SubFlowActivity + "-" + v1.SubFlowName
+					}
+					subMap[execution] = val1
 				}
 			}
 			testReport.SubFlow = subMap
@@ -246,7 +259,13 @@ func processFlowReport(mainFlow string, interceptors []*support.TaskInterceptor,
 			if val, ok := dataMap[k]; ok {
 				val.Inputs = v.Inputs
 				val.Outputs = v.Outputs
-				subMap[k] = val
+				execution := ""
+				if v.IsLoop {
+					execution = v.SubFlowActivity + "[" + v.Index + "]-" + v.SubFlowName
+				} else {
+					execution = v.SubFlowActivity + "-" + v.SubFlowName
+				}
+				subMap[execution] = val
 			}
 		}
 		flowReport.SubFlow = subMap

@@ -63,6 +63,10 @@ func (pi *Interceptor) AddToSubFlowCoverage(coverage SubFlowCoverage) {
 }
 
 func (pi *Interceptor) AddToSubFlowCoverageMap(instanceId string, coverage *SubFlowCoverage) {
+	if pi.Coverage.SubFlowMap == nil {
+		pi.Coverage.SubFlowMap = make(map[string]*SubFlowCoverage)
+	}
+
 	pi.Coverage.SubFlowMap[instanceId] = coverage
 }
 
@@ -130,6 +134,8 @@ type SubFlowCoverage struct {
 	SubFlowID       string
 	Inputs          map[string]interface{} `json:"inputs,omitempty"`
 	Outputs         map[string]interface{} `json:"outputs,omitempty"`
+	IsLoop          bool
+	Index           string
 }
 
 type TransitionCoverage struct {
