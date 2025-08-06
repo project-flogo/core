@@ -13,6 +13,7 @@ import (
 	"github.com/project-flogo/core/trigger"
 	"os"
 	"path"
+	"path/filepath"
 )
 
 // DirectRunner runs an action synchronously
@@ -47,13 +48,15 @@ func NewDirectWithDebug(debugMode bool, mockFile string, outputPath string, genM
 // Start will start the engine, by starting all of its workers
 func (runner *DirectRunner) Start() error {
 	if runner.debugMode {
-		reportPath := os.Getenv("FLOW_EXECUTION_FILES")
+		reportPath := runner.outputPath
+		if reportPath == "" {
+			reportPath = os.Getenv("FLOW_EXECUTION_FILES")
+		}
 
 		if reportPath == "" {
-			reportPath = path.Join(os.TempDir(), "flow-executions", debugger.GetAppName())
-		} else {
-			reportPath = path.Join(reportPath, "flow-executions", debugger.GetAppName())
+			reportPath = path.Join(os.TempDir(), "flow-executions")
 		}
+		reportPath = filepath.Join(reportPath, debugger.GetAppName())
 
 		log.RootLogger().Infof("Generate Report for Flow Execution: %s", reportPath)
 
