@@ -29,20 +29,34 @@ type Error struct {
 	retriable     bool
 }
 
-// ErrorData is the data structure for error details reported by an activity
-type ErrorData struct {
-	Details string `json:"details,omitempty"`
-	Code    string `json:"code,omitempty"`
-}
-
 // NewActivityError creates a new activity error with the specified message, category, and details
-func NewActivityError(errorMsg string, errorCategory ErrorCategory, errorDetails ErrorData) *Error {
-	return &Error{errorStr: errorMsg, errorData: errorDetails, errorCode: errorDetails.Code, errorCategory: errorCategory, retriable: false}
+// This error is not retriable
+// errorMsg: the error message
+// errorCode: the error code
+// errorCategory: the error category (e.g., ConfigError, ActivityError)
+// errorData: any additional data associated with the error
+// Returns: a pointer to the created Error instance
+// Example usage:
+//
+//	err := NewActivityError("Failed to execute activity", "ACTIVITY-001", ConfigError, map[string]interface{}{"details": "Invalid input"})
+func NewActivityError(errorMsg string, errorCode string, errorCategory ErrorCategory, errorData interface{}) *Error {
+	return &Error{errorStr: errorMsg, errorData: errorData, errorCode: errorCode, errorCategory: errorCategory, retriable: false}
 }
 
 // NewRetriableActivityError creates a new retriable activity error with the specified message, category, and details
-func NewRetriableActivityError(errorMsg string, errorCategory ErrorCategory, errorDetails ErrorData) *Error {
-	return &Error{errorStr: errorMsg, errorData: errorDetails, errorCode: errorDetails.Code, errorCategory: errorCategory, retriable: true}
+// errorMsg: the error message
+// errorCode: the error code
+// errorCategory: the error category (e.g., ConfigError, ActivityError)
+// errorData: any additional data associated with the error
+// Returns: a pointer to the created Error instance
+// Example usage:
+//
+//	err := NewRetriableActivityError("Temporary failure, please retry", "ACTIVITY-002", ConnectionError, map[string]interface{}{"details": "Network issue"})
+//
+// This error indicates that the activity can be retried
+// and is suitable for scenarios where transient issues may occur, such as network failures or temporary unavailability of resources.
+func NewRetriableActivityError(errorMsg string, errorCode string, errorCategory ErrorCategory, errorData interface{}) *Error {
+	return &Error{errorStr: errorMsg, errorData: errorData, errorCode: errorCode, errorCategory: errorCategory, retriable: true}
 }
 
 func NewError(errorText string, code string, errorData interface{}) *Error {
@@ -71,11 +85,7 @@ func (e *Error) SetActivityName(name string) {
 // Data returns any associated error data
 func (e *Error) Data() interface{} {
 	if e.errorData == nil {
-		return ErrorData{Code: e.errorCode, Details: e.errorStr}
-	}
-
-	if err, ok := e.errorData.(error); ok {
-		return ErrorData{Details: err.Error(), Code: e.errorCode}
+		return map[string]interface{}{}
 	}
 	return e.errorData
 }
