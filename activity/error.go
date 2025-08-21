@@ -29,19 +29,19 @@ type Error struct {
 	retriable     bool
 }
 
-// ErrorDetails is the data structure for error details reported by an activity
-type ErrorDetails struct {
+// ErrorData is the data structure for error details reported by an activity
+type ErrorData struct {
 	Details string `json:"details,omitempty"`
 	Code    string `json:"code,omitempty"`
 }
 
 // NewActivityError creates a new activity error with the specified message, category, and details
-func NewActivityError(errorMsg string, errorCategory ErrorCategory, errorDetails ErrorDetails) *Error {
+func NewActivityError(errorMsg string, errorCategory ErrorCategory, errorDetails ErrorData) *Error {
 	return &Error{errorStr: errorMsg, errorData: errorDetails, errorCode: errorDetails.Code, errorCategory: errorCategory, retriable: false}
 }
 
 // NewRetriableActivityError creates a new retriable activity error with the specified message, category, and details
-func NewRetriableActivityError(errorMsg string, errorCategory ErrorCategory, errorDetails ErrorDetails) *Error {
+func NewRetriableActivityError(errorMsg string, errorCategory ErrorCategory, errorDetails ErrorData) *Error {
 	return &Error{errorStr: errorMsg, errorData: errorDetails, errorCode: errorDetails.Code, errorCategory: errorCategory, retriable: true}
 }
 
@@ -71,11 +71,11 @@ func (e *Error) SetActivityName(name string) {
 // Data returns any associated error data
 func (e *Error) Data() interface{} {
 	if e.errorData == nil {
-		return ErrorDetails{Code: e.errorCode, Details: e.errorStr}
+		return ErrorData{Code: e.errorCode, Details: e.errorStr}
 	}
 
 	if err, ok := e.errorData.(error); ok {
-		return ErrorDetails{Details: err.Error(), Code: e.errorCode}
+		return ErrorData{Details: err.Error(), Code: e.errorCode}
 	}
 	return e.errorData
 }
