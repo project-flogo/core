@@ -9,6 +9,12 @@ type Error struct {
 	retriable    bool
 }
 
+// ErrorData is the data structure for error details reported by an activity
+type ErrorData struct {
+	Details string `json:"details,omitempty"`
+	Reason  string `json:"reason,omitempty"`
+}
+
 func NewError(errorText string, code string, errorData interface{}) *Error {
 	return &Error{errorStr: errorText, errorData: errorData, errorCode: code, retriable: false}
 }
