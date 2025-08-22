@@ -91,15 +91,14 @@ func (e *Error) SetActivityName(name string) {
 
 // Data returns any associated error data
 func (e *Error) Data() interface{} {
-	if e.errorData == nil {
+	switch v := e.errorData.(type) {
+	case nil:
 		return ErrorData{}
+	case error:
+		return ErrorData{Details: v.Error()}
+	default:
+		return v
 	}
-	// If the errorData is of type error, return a structured ErrorData
-	// This allows for consistent handling of error messages
-	if err, ok := e.errorData.(error); ok {
-		return ErrorData{Details: err.Error()}
-	}
-	return e.errorData
 }
 
 // Code returns any associated error code
