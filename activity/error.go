@@ -29,6 +29,13 @@ type Error struct {
 	retriable     bool
 }
 
+// ErrorData is the structure for additional error data
+type ErrorData struct {
+	// Details provides additional information about the error
+	// This field can be used to provide context or specific details about the error
+	Details string `json:"details,omitempty"`
+}
+
 // NewActivityError creates a new activity error with the specified message, category, and details
 // This error is not retriable
 // errorMsg: the error message
@@ -85,7 +92,12 @@ func (e *Error) SetActivityName(name string) {
 // Data returns any associated error data
 func (e *Error) Data() interface{} {
 	if e.errorData == nil {
-		return map[string]interface{}{}
+		return ErrorData{}
+	}
+	// If the errorData is of type error, return a structured ErrorData
+	// This allows for consistent handling of error messages
+	if err, ok := e.errorData.(error); ok {
+		return ErrorData{Details: err.Error()}
 	}
 	return e.errorData
 }
