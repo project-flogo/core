@@ -1,6 +1,8 @@
 package test
 
 import (
+	"context"
+
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/mapper"
@@ -254,4 +256,8 @@ func (c *TestActivityContext) Logger() log.Logger {
 
 func (c *TestActivityContext) GetTracingContext() trace.TracingContext {
 	return nil
+}
+
+func (c *TestActivityContext) GetCancelContext() context.Context {
+	return context.TODO()
 }
