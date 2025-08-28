@@ -308,6 +308,10 @@ func (aCtx *activityContext) GetTracingContext() trace.TracingContext {
 	return nil
 }
 
+func (aCtx *activityContext) GetTimeOutContext() context.Context {
+	return nil
+}
+
 /////////////////////////////////////////
 // activity.Host Implementation
 
