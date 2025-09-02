@@ -7,6 +7,7 @@ import (
 
 	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/coerce"
+	"github.com/project-flogo/core/engine/secret"
 	"github.com/project-flogo/core/support/log"
 )
 
@@ -77,10 +78,17 @@ func ResolvePropertyExternally(propertyName string) (interface{}, bool) {
 		// Use resolver
 		value, resolved := resolver.LookupValue(propertyName)
 		if resolved {
+			if strValue, ok := value.(string); ok {
+				// Decrypt if encrypted
+				if strings.HasPrefix(strValue, "SECRET:") {
+					encodedValue := string(strValue[7:])
+					decodedValue, _ := secret.GetSecretValueHandler().DecodeValue(encodedValue)
+					return decodedValue, true
+				}
+			}
 			return value, true
 		}
 	}
-
 	return nil, false
 }
 
