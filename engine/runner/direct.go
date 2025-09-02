@@ -157,10 +157,12 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 		interceptor := &coreSupport.Interceptor{TaskInterceptors: tasks, Coverage: coverage, CollectIO: true}
 
 		execOptions := &coreSupport.DebugExecOptions{Interceptor: interceptor}
-		ro = &coreSupport.DebugOptions{ExecOptions: execOptions, InstanceId: idGenerator.NextAsString()}
+		instanceId := idGenerator.NextAsString()
+		ro = &coreSupport.DebugOptions{ExecOptions: execOptions, InstanceId: instanceId}
+
 		inputs["_run_options"] = ro
 	}
-
+	log.RootLogger().Infof("Executing flow with instanceId %s", ro.InstanceId)
 	trackDirectRunnerActions.AddRunner()
 	defer trackDirectRunnerActions.RemoveRunner()
 	if syncAct, ok := act.(action.SyncAction); ok {
@@ -177,6 +179,7 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 		<-handler.done
 
 		if runner.debugMode {
+			log.RootLogger().Infof("Flow execution completed for instanceId %s", ro.InstanceId)
 
 			outputs := handler.resultData
 			debugger.GenerateReport(handlerConfig, tasks, coverage, ro.InstanceId, inputs, outputs, runner.outputPath, runner.appPath)

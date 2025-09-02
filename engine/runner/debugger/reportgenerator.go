@@ -115,7 +115,7 @@ func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskI
 
 	reportFile = path.Join(reportPath, fileName)
 
-	log.RootLogger().Infof("Generated Report file for Flow Execution: %s", reportFile)
+	log.RootLogger().Infof("Generated Report file for Flow Execution Id %s at location : %s", instanceID, reportFile)
 
 	os.MkdirAll(path.Dir(reportFile), os.ModePerm)
 	err = os.WriteFile(reportFile, op, 0777)
