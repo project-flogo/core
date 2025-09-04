@@ -183,12 +183,13 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 			log.RootLogger().Infof("Flow execution completed for instanceId %s", ro.InstanceId)
 
 			var outputs map[string]interface{}
+			var flowErrors map[string]interface{}
 			if handler.resultData != nil {
 				outputs = handler.resultData
 			} else if handler.err != nil {
-				outputs = convertErrorToMap(handler.err)
+				flowErrors = convertErrorToMap(handler.err)
 			}
-			debugger.GenerateReport(handlerConfig, tasks, coverage, ro.InstanceId, inputs, outputs, runner.outputPath, runner.appPath)
+			debugger.GenerateReport(handlerConfig, tasks, coverage, ro.InstanceId, inputs, outputs, flowErrors, runner.outputPath, runner.appPath)
 		}
 		if runner.genMockFile {
 			debugger.GenerateMock(coverage, runner.outputPath)

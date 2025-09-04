@@ -69,6 +69,7 @@ type Handler struct {
 	FlowName string                 `json:"flowName,omitempty"`
 	Input    map[string]interface{} `json:"input,omitempty"`
 	Output   map[string]interface{} `json:"output,omitempty"`
+	Error    map[string]interface{} `json:"error,omitempty"`
 }
 
 type FlowErrorHandler struct {

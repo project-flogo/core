@@ -67,7 +67,7 @@ func GenerateMock(coverage *support.Coverage, outputPath string) {
 
 }
 
-func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskInterceptor, coverage *support.Coverage, instanceID string, flowInputs map[string]interface{}, flowOutputs map[string]interface{}, outputPath string, appPath string) {
+func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskInterceptor, coverage *support.Coverage, instanceID string, flowInputs map[string]interface{}, flowOutputs map[string]interface{}, flowError map[string]interface{}, outputPath string, appPath string) {
 	finalReport := &support.OutputReport{
 		AppName:    GetAppName(),
 		AppVersion: GetAppVersion(),
@@ -82,10 +82,19 @@ func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskI
 		Settings: config.Settings,
 	}
 
-	handler := support.Handler{
-		FlowName: config.Name,
-		Input:    flowInputs,
-		Output:   flowOutputs,
+	var handler support.Handler
+	if flowOutputs != nil {
+		handler = support.Handler{
+			FlowName: config.Name,
+			Input:    flowInputs,
+			Output:   flowOutputs,
+		}
+	} else if flowError != nil {
+		handler = support.Handler{
+			FlowName: config.Name,
+			Input:    flowInputs,
+			Error:    flowError,
+		}
 	}
 
 	triggerNode.Handler = handler
