@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/project-flogo/core/action"
+	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/engine/runner/debugger"
 	coreSupport "github.com/project-flogo/core/engine/support"
 	"github.com/project-flogo/core/support"
@@ -181,7 +182,12 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 		if runner.debugMode {
 			log.RootLogger().Infof("Flow execution completed for instanceId %s", ro.InstanceId)
 
-			outputs := handler.resultData
+			var outputs map[string]interface{}
+			if handler.resultData != nil {
+				outputs = handler.resultData
+			} else if handler.err != nil {
+				outputs = convertErrorToMap(handler.err)
+			}
 			debugger.GenerateReport(handlerConfig, tasks, coverage, ro.InstanceId, inputs, outputs, runner.outputPath, runner.appPath)
 		}
 		if runner.genMockFile {
@@ -192,6 +198,33 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 		return handler.Result()
 	} else {
 		return nil, fmt.Errorf("unsupported action: %v", act)
+	}
+}
+
+func convertErrorToMap(handlerErr error) map[string]interface{} {
+	if handlerErr == nil {
+		return nil
+	}
+
+	if activityErr, ok := handlerErr.(*activity.Error); ok {
+		return activityErrorToMap(activityErr)
+	}
+
+	return map[string]interface{}{
+		"error": handlerErr.Error(),
+		"type":  fmt.Sprintf("%T", handlerErr),
+	}
+}
+
+func activityErrorToMap(activityErr *activity.Error) map[string]interface{} {
+	return map[string]interface{}{
+		"error":        activityErr.Error(),
+		"activityName": activityErr.ActivityName(),
+		"errorCode":    activityErr.Code(),
+		"category":     activityErr.Category(),
+		"retriable":    activityErr.Retriable(),
+		"data":         activityErr.Data(),
+		"type":         fmt.Sprintf("%T", activityErr),
 	}
 }
 
