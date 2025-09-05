@@ -144,7 +144,7 @@ func (h *handlerImpl) GetSetting(setting string) (interface{}, bool) {
 	val, exists := h.config.Settings[setting]
 
 	if !exists {
-		val, exists = h.config.parent.Settings[setting]
+		val, exists = h.config.Parent.Settings[setting]
 	}
 
 	return val, exists
@@ -183,7 +183,7 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (resu
 	}
 
 	var triggerValues map[string]interface{}
-	PostHandlerEvent(STARTED, h.Name(), h.config.parent.Id, eventData)
+	PostHandlerEvent(STARTED, h.Name(), h.config.Parent.Id, eventData)
 
 	if triggerData == nil {
 		triggerValues = make(map[string]interface{})
@@ -258,13 +258,15 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (resu
 		inputMap["_PROPERTIES"] = propSnapShot
 	}
 
+	inputMap["_handler_config"] = h.config
+
 	results, err = h.runner.RunAction(newCtx, act.act, inputMap)
 	if err != nil {
-		PostHandlerEvent(FAILED, h.Name(), h.config.parent.Id, eventData)
+		PostHandlerEvent(FAILED, h.Name(), h.config.Parent.Id, eventData)
 		return nil, err
 	}
 
-	PostHandlerEvent(COMPLETED, h.Name(), h.config.parent.Id, eventData)
+	PostHandlerEvent(COMPLETED, h.Name(), h.config.Parent.Id, eventData)
 
 	if act.actionOutputMapper != nil {
 		outScope := data.NewSimpleScope(results, nil)
@@ -277,8 +279,8 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (resu
 func (h *handlerImpl) String() string {
 
 	triggerId := ""
-	if h.config.parent != nil {
-		triggerId = h.config.parent.Id
+	if h.config.Parent != nil {
+		triggerId = h.config.Parent.Id
 	}
 	handlerId := "Handler"
 	if h.config.Name != "" {

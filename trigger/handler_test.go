@@ -59,7 +59,7 @@ func TestHandlerContext(t *testing.T) {
 	actionCfgArr = append(actionCfgArr, actionCfg)
 
 	hCfg := &HandlerConfig{Name: "sampleConfig", Settings: map[string]interface{}{"aSetting": "aSetting"}, Actions: actionCfgArr}
-	hCfg.parent = &Config{Id: "sampleTrig"}
+	hCfg.Parent = &Config{Id: "sampleTrig"}
 
 	assert.NotNil(t, NewHandlerContext(context.Background(), hCfg))
 

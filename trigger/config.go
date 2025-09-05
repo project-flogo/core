@@ -40,7 +40,7 @@ func (c *Config) FixUp(md *Metadata, resolver resolve.CompositeResolver) error {
 
 	// fix up handler settings
 	for i, hc := range c.Handlers {
-		hc.parent = c
+		hc.Parent = c
 
 		if hc.Name == "" {
 			// Set name: <triggername>_handler<index+1> e.g. mytrigger_handler1
@@ -63,7 +63,7 @@ func (c *Config) FixUp(md *Metadata, resolver resolve.CompositeResolver) error {
 }
 
 type HandlerConfig struct {
-	parent   *Config
+	Parent   *Config
 	Name     string                 `json:"name,omitempty"`
 	Settings map[string]interface{} `json:"settings"`
 	Actions  []*ActionConfig        `json:"actions"`

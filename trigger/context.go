@@ -40,9 +40,9 @@ func newContext(parentCtx context.Context, config *HandlerConfig) context.Contex
 	name := "handler"
 	if config != nil && config.Name != "" {
 		name = config.Name
-	} else if config != nil && config.parent != nil && config.parent.Id != "" {
+	} else if config != nil && config.Parent != nil && config.Parent.Id != "" {
 		// Take trigger name if no handler name.
-		name = config.parent.Id
+		name = config.Parent.Id
 	}
 
 	value := parentCtx.Value(handlerKey)
