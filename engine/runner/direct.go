@@ -162,8 +162,9 @@ func (runner *DirectRunner) RunAction(ctx context.Context, act action.Action, in
 		ro = &coreSupport.DebugOptions{ExecOptions: execOptions, InstanceId: instanceId}
 
 		inputs["_run_options"] = ro
+		log.RootLogger().Infof("Executing flow with instanceId %s", ro.InstanceId)
+
 	}
-	log.RootLogger().Infof("Executing flow with instanceId %s", ro.InstanceId)
 	trackDirectRunnerActions.AddRunner()
 	defer trackDirectRunnerActions.RemoveRunner()
 	if syncAct, ok := act.(action.SyncAction); ok {
