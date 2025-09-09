@@ -2,6 +2,7 @@ package engine
 
 import (
 	"encoding/json"
+	"github.com/project-flogo/core/engine/runner/debugger"
 	"io/ioutil"
 	"os"
 
@@ -77,6 +78,8 @@ func LoadAppConfig(flogoJson string, compressed bool) (*app.Config, error) {
 
 	appName = appConfig.Name
 	appVersion = appConfig.Version
+
+	debugger.SetAppInfo(appName, appVersion)
 
 	return appConfig, nil
 }
