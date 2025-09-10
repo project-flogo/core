@@ -308,7 +308,7 @@ func (aCtx *activityContext) GetTracingContext() trace.TracingContext {
 	return nil
 }
 
-func (aCtx *activityContext) GetTimeOutContext() context.Context {
+func (aCtx *activityContext) GoContext() context.Context {
 	return nil
 }
 

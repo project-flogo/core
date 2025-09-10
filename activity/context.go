@@ -39,7 +39,7 @@ type Context interface {
 	// GetTracingContext returns tracing context associated with the activity
 	GetTracingContext() trace.TracingContext
 
-	GetTimeOutContext() context.Context
+	GoContext() context.Context
 }
 
 type Host interface {
