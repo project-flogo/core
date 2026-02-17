@@ -108,10 +108,17 @@ type Assertion struct {
 }
 
 type Coverage struct {
+	FlowCoverage       *FlowCoverage               `json:"flowCoverage,omitempty"`
 	ActivityCoverage   []*ActivityCoverage         `json:"activityCoverage,omitempty"`
 	TransitionCoverage []*TransitionCoverage       `json:"transitionCoverage,omitempty"`
 	SubFlowCoverage    []*SubFlowCoverage          `json:"subFlowCoverage,omitempty"`
 	SubFlowMap         map[string]*SubFlowCoverage `json:"subFlowMap,omitempty"`
+}
+
+type FlowCoverage struct {
+	FlowID   string                 `json:"flowId"`
+	FlowName string                 `json:"flowName"`
+	Error    map[string]interface{} `json:"error,omitempty"`
 }
 
 type ActivityCoverage struct {

@@ -17,6 +17,8 @@ const (
 	RetryError ErrorCategory = "RETRY-ERROR"
 	// ErrorCategory ConnectionError is the error category for connection errors
 	ConnectionError ErrorCategory = "CONNECTION-ERROR"
+	// ErrorCategory FlowError is the error category for flow errors
+	FlowError ErrorCategory = "FLOW-ERROR"
 )
 
 // Error is an activity error
