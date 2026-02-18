@@ -184,7 +184,7 @@ func processFlowReport(mainFlow string, interceptors []*support.TaskInterceptor,
 	flowReport := &support.FlowReport{}
 	flowReport.Name = mainFlow
 	var flowOpReport *support.ActivityReport
-	var activityReportList []support.ActivityReport
+	var activityReportList = make([]support.ActivityReport, 0)
 	var errorHandlerActivityReport = make([]support.ActivityReport, 0)
 	var linkReportList []support.LinkReport
 	var errorHandlerLinkReportList = make([]support.LinkReport, 0)
