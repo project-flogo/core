@@ -116,7 +116,7 @@ type Coverage struct {
 }
 
 type FlowCoverage struct {
-	FlowID   string                 `json:"flowId"`
+	FlowId   string                 `json:"flowId"`
 	FlowName string                 `json:"flowName"`
 	Error    map[string]interface{} `json:"error,omitempty"`
 }
