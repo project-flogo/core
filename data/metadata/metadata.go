@@ -47,8 +47,9 @@ func GetStructName(mdStruct interface{}) string {
 }
 
 type IOMetadata struct {
-	Input  map[string]data.TypedValue
-	Output map[string]data.TypedValue
+	Input      map[string]data.TypedValue
+	Output     map[string]data.TypedValue
+	FEMetadata map[string]interface{}
 }
 
 func (md *IOMetadata) MarshalJSON() ([]byte, error) {
@@ -78,8 +79,9 @@ func (md *IOMetadata) MarshalJSON() ([]byte, error) {
 func (md *IOMetadata) UnmarshalJSON(b []byte) error {
 
 	ser := &struct {
-		Input  []*data.Attribute `json:"input"`
-		Output []*data.Attribute `json:"output"`
+		Input      []*data.Attribute      `json:"input"`
+		Output     []*data.Attribute      `json:"output"`
+		FEMetadata map[string]interface{} `json:"fe_metadata"`
 	}{}
 
 	if err := json.Unmarshal(b, ser); err != nil {
@@ -96,6 +98,8 @@ func (md *IOMetadata) UnmarshalJSON(b []byte) error {
 	for _, attr := range ser.Output {
 		md.Output[attr.Name()] = attr
 	}
+
+	md.FEMetadata = ser.FEMetadata
 
 	return nil
 }

@@ -3,14 +3,15 @@ package debugger
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/project-flogo/core/engine/support"
-	"github.com/project-flogo/core/support/log"
-	"github.com/project-flogo/core/trigger"
 	"os"
 	"path"
 	"path/filepath"
 	"reflect"
 	"strings"
+
+	"github.com/project-flogo/core/engine/support"
+	"github.com/project-flogo/core/support/log"
+	"github.com/project-flogo/core/trigger"
 )
 
 func GenerateMock(coverage *support.Coverage, outputPath string) {
@@ -101,6 +102,8 @@ func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskI
 
 	report.Trigger = triggerNode
 
+	report.Trigger.Handler.Error = processTriggerHandlerError(coverage, flowError)
+
 	report.Flows = processFlowReport(config.Name, interceptors, coverage)
 
 	fileName := config.Name + "-" + instanceID + ".json"
@@ -131,6 +134,19 @@ func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskI
 	if err != nil {
 		fmt.Printf("Error writing report to file: %v", err)
 	}
+}
+
+func processTriggerHandlerError(coverage *support.Coverage, flowError map[string]interface{}) map[string]interface{} {
+	if coverage.FlowCoverage != nil {
+		return coverage.FlowCoverage.Error
+	} else {
+		for _, activity := range coverage.ActivityCoverage {
+			if activity.Error != nil {
+				return activity.Error
+			}
+		}
+	}
+	return flowError
 }
 
 func processFlowReport(mainFlow string, interceptors []*support.TaskInterceptor, coverage *support.Coverage) *support.FlowReport {
@@ -168,7 +184,7 @@ func processFlowReport(mainFlow string, interceptors []*support.TaskInterceptor,
 	flowReport := &support.FlowReport{}
 	flowReport.Name = mainFlow
 	var flowOpReport *support.ActivityReport
-	var activityReportList []support.ActivityReport
+	var activityReportList = make([]support.ActivityReport, 0)
 	var errorHandlerActivityReport = make([]support.ActivityReport, 0)
 	var linkReportList []support.LinkReport
 	var errorHandlerLinkReportList = make([]support.LinkReport, 0)
