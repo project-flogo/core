@@ -283,6 +283,14 @@ type triggerWrapper struct {
 	handlers []trigger.Handler
 }
 
+func (t triggerWrapper) GetStatus() *managed.StatusInfo {
+	status := trigger.TriggerStatus.GetStatus(t.id)
+	if status != "" {
+		return &managed.StatusInfo{Status: status}
+	}
+	return t.status
+}
+
 func (a *App) GetProperty(name string) (interface{}, bool) {
 	return a.propManager.GetProperty(name)
 }
@@ -315,7 +323,7 @@ func (a *App) Version() interface{} {
 func (a *App) TriggerStatuses() []*managed.StatusInfo {
 	statuses := make([]*managed.StatusInfo, 0, len(a.triggers))
 	for _, trg := range a.triggers {
-		statuses = append(statuses, trg.status)
+		statuses = append(statuses, trg.GetStatus())
 	}
 
 	return statuses
