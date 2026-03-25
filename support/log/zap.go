@@ -2,10 +2,11 @@ package log
 
 import (
 	"fmt"
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
 	"os"
 	"strings"
+
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
 var traceLogger *zap.SugaredLogger
@@ -13,6 +14,9 @@ var traceLogger *zap.SugaredLogger
 type zapLoggerImpl struct {
 	loggerLevel *zap.AtomicLevel
 	mainLogger  *zap.SugaredLogger
+	// FLOGO-17735: add traceID and spanID attributes to log message
+	tracePrefix  string
+	traceContext map[string]string
 }
 
 func (l *zapLoggerImpl) DebugEnabled() bool {
@@ -23,52 +27,108 @@ func (l *zapLoggerImpl) TraceEnabled() bool {
 	return traceEnabled && l.loggerLevel.Enabled(zapcore.DebugLevel)
 }
 
-func (l *zapLoggerImpl) Trace(args ...interface{}) {
+func (l *zapLoggerImpl) Trace(args ...any) {
 	if traceEnabled {
 		traceLogger.Debug(args...)
 	}
 }
 
-func (l *zapLoggerImpl) Debug(args ...interface{}) {
-	l.mainLogger.Debug(args...)
+func (l *zapLoggerImpl) Debug(args ...any) {
+	if l.tracePrefix != "" {
+		s := make([]any, 1, 1+len(args))
+		s[0] = l.tracePrefix
+		l.mainLogger.Debug(append(s, args...)...)
+	} else {
+		l.mainLogger.Debug(args...)
+	}
 }
 
-func (l *zapLoggerImpl) Info(args ...interface{}) {
-	l.mainLogger.Info(args...)
+func (l *zapLoggerImpl) Info(args ...any) {
+	if l.tracePrefix != "" {
+		s := make([]any, 1, 1+len(args))
+		s[0] = l.tracePrefix
+		l.mainLogger.Info(append(s, args...)...)
+	} else {
+		l.mainLogger.Info(args...)
+	}
 }
 
-func (l *zapLoggerImpl) Warn(args ...interface{}) {
-	l.mainLogger.Warn(args...)
+func (l *zapLoggerImpl) Warn(args ...any) {
+	if l.tracePrefix != "" {
+		s := make([]any, 1, 1+len(args))
+		s[0] = l.tracePrefix
+		l.mainLogger.Warn(append(s, args...)...)
+	} else {
+		l.mainLogger.Warn(args...)
+	}
 }
 
-func (l *zapLoggerImpl) Error(args ...interface{}) {
-	l.mainLogger.Error(args...)
+func (l *zapLoggerImpl) Error(args ...any) {
+	if l.tracePrefix != "" {
+		s := make([]any, 1, 1+len(args))
+		s[0] = l.tracePrefix
+		l.mainLogger.Error(append(s, args...)...)
+	} else {
+		l.mainLogger.Error(args...)
+	}
 }
 
-func (l *zapLoggerImpl) Tracef(template string, args ...interface{}) {
+func (l *zapLoggerImpl) Tracef(template string, args ...any) {
 	if traceEnabled {
 		traceLogger.Debugf(template, args...)
 	}
 }
 
-func (l *zapLoggerImpl) Debugf(template string, args ...interface{}) {
-	l.mainLogger.Debugf(template, args...)
+func (l *zapLoggerImpl) Debugf(template string, args ...any) {
+	if l.tracePrefix != "" {
+		l.mainLogger.Debugf(l.tracePrefix+template, args...)
+	} else {
+		l.mainLogger.Debugf(template, args...)
+	}
 }
 
-func (l *zapLoggerImpl) Infof(template string, args ...interface{}) {
-	l.mainLogger.Infof(template, args...)
+func (l *zapLoggerImpl) Infof(template string, args ...any) {
+	if l.tracePrefix != "" {
+		l.mainLogger.Infof(l.tracePrefix+template, args...)
+	} else {
+		l.mainLogger.Infof(template, args...)
+	}
 }
 
-func (l *zapLoggerImpl) Warnf(template string, args ...interface{}) {
-	l.mainLogger.Warnf(template, args...)
+func (l *zapLoggerImpl) Warnf(template string, args ...any) {
+	if l.tracePrefix != "" {
+		l.mainLogger.Warnf(l.tracePrefix+template, args...)
+	} else {
+		l.mainLogger.Warnf(template, args...)
+	}
 }
 
-func (l *zapLoggerImpl) Errorf(template string, args ...interface{}) {
-	l.mainLogger.Errorf(template, args...)
+func (l *zapLoggerImpl) Errorf(template string, args ...any) {
+	if l.tracePrefix != "" {
+		l.mainLogger.Errorf(l.tracePrefix+template, args...)
+	} else {
+		l.mainLogger.Errorf(template, args...)
+	}
 }
 
 func (l *zapLoggerImpl) Structured() StructuredLogger {
 	return &zapStructuredLoggerImpl{zl: l.mainLogger.Desugar()}
+}
+
+func (l *zapLoggerImpl) GetTracingContext() map[string]string {
+	return l.traceContext
+}
+
+func (l *zapLoggerImpl) SetTracingContext(traceContext map[string]string) {
+	if !traceContextLogging {
+		return
+	}
+	l.traceContext = traceContext
+	if traceContext != nil && traceContext[KeyTraceID] != "" {
+		l.tracePrefix = fmt.Sprintf("[%s: %s] [%s: %s] ", KeyTraceID, traceContext[KeyTraceID], KeySpanID, traceContext[KeySpanID])
+	} else {
+		l.tracePrefix = ""
+	}
 }
 
 type zapStructuredLoggerImpl struct {

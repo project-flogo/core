@@ -3,6 +3,7 @@ package log
 import (
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 )
 
@@ -31,9 +32,16 @@ const (
 	EnvKeyLogFormat      = "FLOGO_LOG_FORMAT"
 	DefaultLogFormat     = FormatConsole
 
-	EnvKeyLogSeparator  = "FLOGO_LOG_SEPARATOR"
-	DefaultLogSeparator = "\t"
-	EnvLogConsoleStream = "FLOGO_LOG_CONSOLE_STREAM"
+	EnvKeyLogSeparator              = "FLOGO_LOG_SEPARATOR"
+	DefaultLogSeparator             = "\t"
+	EnvLogConsoleStream             = "FLOGO_LOG_CONSOLE_STREAM"
+	EnvLogTracingContextEnabled     = "FLOGO_LOG_TRACE_CTX_ENABLED"
+	DefaultLogTracingContextEnabled = true
+)
+
+const (
+	KeyTraceID = "traceID"
+	KeySpanID  = "spanID"
 )
 
 type Level int
@@ -56,6 +64,9 @@ type Logger interface {
 	Errorf(template string, args ...interface{})
 
 	Structured() StructuredLogger
+	// FLOGO-17735: add traceID and spanID attributes to log message
+	GetTracingContext() map[string]string
+	SetTracingContext(traceContext map[string]string)
 }
 
 type StructuredLogger interface {
@@ -68,8 +79,9 @@ type StructuredLogger interface {
 type Field = interface{}
 
 var (
-	rootLogger Logger
-	ctxLogging bool
+	rootLogger          Logger
+	ctxLogging          bool
+	traceContextLogging bool
 )
 
 func init() {
@@ -191,6 +203,7 @@ func configureLogging() {
 	if strings.ToLower(envLogCtx) == "true" {
 		ctxLogging = true
 	}
+	traceContextLogging = getTraceCtxEnabled()
 
 	rootLogLevel := DefaultLogLevel
 
@@ -268,4 +281,16 @@ func getLogSeparator() string {
 		return v
 	}
 	return DefaultLogSeparator
+}
+
+func getTraceCtxEnabled() bool {
+	v, ok := os.LookupEnv(EnvLogTracingContextEnabled)
+	if !ok {
+		return DefaultLogTracingContextEnabled
+	}
+	enabled, err := strconv.ParseBool(v)
+	if err != nil {
+		return DefaultLogTracingContextEnabled
+	}
+	return enabled
 }
