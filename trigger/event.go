@@ -4,7 +4,38 @@ import (
 	"context"
 
 	"github.com/project-flogo/core/engine/event"
+	"github.com/project-flogo/core/support/managed"
 )
+
+type triggerStatus struct {
+	status map[string]managed.StatusInfo
+}
+
+var TriggerStatus = triggerStatus{
+	status: make(map[string]managed.StatusInfo),
+}
+
+func (t triggerStatus) GetStatus(triggerId string) managed.StatusInfo {
+	status, ok := t.status[triggerId]
+	if ok {
+		return status
+	} else {
+		return managed.StatusInfo{Name: triggerId}
+	}
+}
+
+func getManagedStatus(status Status) managed.Status {
+	switch status {
+	case STARTED:
+		return managed.StatusStarted
+	case STOPPED:
+		return managed.StatusStopped
+	case FAILED, INIT_FAILED:
+		return managed.StatusFailed
+	default:
+		return managed.Status(status)
+	}
+}
 
 type Status string
 
@@ -80,6 +111,22 @@ func (s Status) String() string {
 }
 
 func PostTriggerEvent(tStatus Status, name string) {
+	TriggerStatus.status[name] = managed.StatusInfo{
+		Name:   name,
+		Status: getManagedStatus(tStatus),
+	}
+	if event.HasListener(TriggerEventType) {
+		te := &triggerEvent{name: name, status: tStatus}
+		event.Post(TriggerEventType, te)
+	}
+}
+
+func PostTriggerErrorEvent(tStatus Status, name string, err error) {
+	TriggerStatus.status[name] = managed.StatusInfo{
+		Name:   name,
+		Status: getManagedStatus(tStatus),
+		Error:  err,
+	}
 	if event.HasListener(TriggerEventType) {
 		te := &triggerEvent{name: name, status: tStatus}
 		event.Post(TriggerEventType, te)

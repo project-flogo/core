@@ -39,3 +39,13 @@ func ExtractTracingContext(goCtx context.Context) TracingContext {
 	tc, _ := goCtx.Value(id).(TracingContext)
 	return tc
 }
+
+func GetContextForLogger(tracingContext TracingContext) map[string]string {
+	if tracingContext == nil {
+		return nil
+	}
+	return map[string]string{
+		log.KeyTraceID: tracingContext.TraceID(),
+		log.KeySpanID:  tracingContext.SpanID(),
+	}
+}
