@@ -23,7 +23,7 @@ const (
 	EnvKeyRunnerType         = "FLOGO_RUNNER_TYPE"
 	DefaultRunnerType        = ValueRunnerTypePooled
 	EnvKeyRunnerWorkers      = "FLOGO_RUNNER_WORKERS"
-	DefaultRunnerWorkers     = 5
+	DefaultRunnerWorkers     = 25
 
 	//Deprecated
 	EnvKeyRunnerQueueSizeLegacy = "FLOGO_RUNNER_QUEUE"
