@@ -104,7 +104,11 @@ func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskI
 
 	report.Trigger.Handler.Error = processTriggerHandlerError(coverage, flowError)
 
-	report.Flows = processFlowReport(config.Name, interceptors, coverage)
+	mainFlow := config.Name
+	if filepath.Ext(mainFlow) == ".fgflow" {
+		mainFlow = strings.TrimSuffix(filepath.Base(mainFlow), filepath.Ext(mainFlow))
+	}
+	report.Flows = processFlowReport(mainFlow, interceptors, coverage)
 
 	fileName := config.Name + "-" + instanceID + ".json"
 
