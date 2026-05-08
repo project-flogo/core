@@ -106,11 +106,11 @@ func GenerateReport(config *trigger.HandlerConfig, interceptors []*support.TaskI
 
 	mainFlow := config.Name
 	if filepath.Ext(mainFlow) == ".fgflow" {
-		mainFlow = strings.TrimSuffix(filepath.Base(mainFlow), filepath.Ext(mainFlow))
+		mainFlow = strings.TrimSuffix(mainFlow, filepath.Ext(mainFlow))
 	}
 	report.Flows = processFlowReport(mainFlow, interceptors, coverage)
-
-	fileName := config.Name + "-" + instanceID + ".json"
+	fileName := strings.ReplaceAll(config.Name+"-"+instanceID+".json", "/", "-")
+	fileName = strings.ReplaceAll(fileName, "\\", "-")
 
 	finalReport.Report = report
 	op, err := json.MarshalIndent(finalReport, "", "    ")
