@@ -68,6 +68,7 @@ type HandlerConfig struct {
 	Settings map[string]interface{} `json:"settings"`
 	Actions  []*ActionConfig        `json:"actions"`
 	Action   *ActionConfig          `json:"action"`
+	Reply    map[string]interface{} `json:"reply"`
 	Schemas  *SchemaConfig          `json:"schemas,omitempty"`
 }
 
@@ -83,6 +84,7 @@ func (hc *HandlerConfig) UnmarshalJSON(d []byte) error {
 		Settings map[string]interface{} `json:"settings"`
 		Actions  []*ActionConfig        `json:"actions"`
 		Action   *ActionConfig          `json:"action"`
+		Reply    map[string]interface{} `json:"reply"`
 		Schemas  *SchemaConfig          `json:"schemas,omitempty"`
 	}{}
 
@@ -92,6 +94,7 @@ func (hc *HandlerConfig) UnmarshalJSON(d []byte) error {
 
 	hc.Name = ser.Name
 	hc.Settings = ser.Settings
+	hc.Reply = ser.Reply
 	hc.Schemas = ser.Schemas
 
 	if ser.Action != nil {
