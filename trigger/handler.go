@@ -16,6 +16,7 @@ import (
 	"github.com/project-flogo/core/data/mapper"
 	"github.com/project-flogo/core/data/property"
 	"github.com/project-flogo/core/support/log"
+	"github.com/project-flogo/core/support/trace"
 )
 
 type Handler interface {
@@ -259,6 +260,10 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (resu
 	}
 
 	inputMap["_handler_config"] = h.config
+
+	if defs := h.config.TagDefs(); len(defs) > 0 {
+		inputMap["_trigger_tags"] = trace.ResolveTagDefs(defs, scope)
+	}
 
 	results, err = h.runner.RunAction(newCtx, act.act, inputMap)
 	if err != nil {

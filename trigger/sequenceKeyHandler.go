@@ -13,6 +13,7 @@ import (
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/property"
 	"github.com/project-flogo/core/support/log"
+	"github.com/project-flogo/core/support/trace"
 )
 
 type SeqKayActionWrapper func()
@@ -226,6 +227,10 @@ func (h *seqKeyHandlerImpl) runAction(ctx context.Context, act actImpl, scope da
 			propSnapShot[k] = v
 		}
 		inputMap["_PROPERTIES"] = propSnapShot
+	}
+
+	if defs := h.config.TagDefs(); len(defs) > 0 {
+		inputMap["_trigger_tags"] = trace.ResolveTagDefs(defs, scope)
 	}
 
 	results, err = h.runner.RunAction(ctx, act.act, inputMap)

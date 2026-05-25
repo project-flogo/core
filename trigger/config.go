@@ -8,6 +8,7 @@ import (
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/data/resolve"
+	"github.com/project-flogo/core/support/trace"
 )
 
 // Config is the configuration for a Trigger
@@ -57,6 +58,10 @@ func (c *Config) FixUp(md *Metadata, resolver resolve.CompositeResolver) error {
 				}
 			}
 		}
+
+		if hc.Tags != nil {
+			hc.tagDefs = trace.ParseTagDefs(hc.Tags, ef)
+		}
 	}
 
 	return nil
@@ -65,10 +70,17 @@ func (c *Config) FixUp(md *Metadata, resolver resolve.CompositeResolver) error {
 type HandlerConfig struct {
 	Parent   *Config
 	Name     string                 `json:"name,omitempty"`
+	Tags     interface{}            `json:"tags,omitempty"`
 	Settings map[string]interface{} `json:"settings"`
 	Actions  []*ActionConfig        `json:"actions"`
 	Action   *ActionConfig          `json:"action"`
 	Schemas  *SchemaConfig          `json:"schemas,omitempty"`
+
+	tagDefs []*trace.TagDef
+}
+
+func (hc *HandlerConfig) TagDefs() []*trace.TagDef {
+	return hc.tagDefs
 }
 
 type SchemaConfig struct {
@@ -80,6 +92,7 @@ type SchemaConfig struct {
 func (hc *HandlerConfig) UnmarshalJSON(d []byte) error {
 	ser := &struct {
 		Name     string                 `json:"name,omitempty"`
+		Tags     interface{}            `json:"tags,omitempty"`
 		Settings map[string]interface{} `json:"settings"`
 		Actions  []*ActionConfig        `json:"actions"`
 		Action   *ActionConfig          `json:"action"`
@@ -91,6 +104,7 @@ func (hc *HandlerConfig) UnmarshalJSON(d []byte) error {
 	}
 
 	hc.Name = ser.Name
+	hc.Tags = ser.Tags
 	hc.Settings = ser.Settings
 	hc.Schemas = ser.Schemas
 
