@@ -6,9 +6,10 @@ import (
 )
 
 type TagDef struct {
-	Name  string
-	Value string
-	expr  expression.Expr
+	Name     string
+	Value    string
+	nameExpr expression.Expr
+	expr     expression.Expr
 }
 
 // ParseTagDefs parses the nested tags configuration structure and compiles expression values.
@@ -47,6 +48,13 @@ func ParseTagDefs(raw interface{}, ef expression.Factory) []*TagDef {
 
 		td := &TagDef{Name: name, Value: value}
 
+		if len(name) > 0 && name[0] == '=' && ef != nil {
+			nameExpr, err := ef.NewExpr(name[1:])
+			if err == nil {
+				td.nameExpr = nameExpr
+			}
+		}
+
 		if len(value) > 0 && value[0] == '=' && ef != nil {
 			expr, err := ef.NewExpr(value[1:])
 			if err == nil {
@@ -68,14 +76,24 @@ func ResolveTagDefs(defs []*TagDef, scope data.Scope) map[string]interface{} {
 
 	result := make(map[string]interface{}, len(defs))
 	for _, td := range defs {
+		key := td.Name
+		if td.nameExpr != nil && scope != nil {
+			val, err := td.nameExpr.Eval(scope)
+			if err == nil {
+				if s, ok := val.(string); ok && s != "" {
+					key = s
+				}
+			}
+		}
+
 		if td.expr != nil && scope != nil {
 			val, err := td.expr.Eval(scope)
 			if err == nil {
-				result[td.Name] = val
+				result[key] = val
 				continue
 			}
 		}
-		result[td.Name] = td.Value
+		result[key] = td.Value
 	}
 
 	return result
