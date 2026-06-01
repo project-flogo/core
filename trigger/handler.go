@@ -33,6 +33,7 @@ type actImpl struct {
 	actionInputMapper  mapper.Mapper
 	actionOutputMapper mapper.Mapper
 	sequenceKey        mapper.Mapper
+	tagDefs            []*trace.TagDef
 }
 
 type handlerImpl struct {
@@ -83,6 +84,7 @@ func NewHandler(config *HandlerConfig, acts []action.Action, mf mapper.Factory, 
 	//todo we could filter inputs/outputs based on the metadata, maybe make this an option
 	for i, act := range acts {
 		handler.acts[i].act = act
+		handler.acts[i].tagDefs = config.Actions[i].TagDefs()
 
 		if config.Actions[i].If != "" {
 			condition, err := ef.NewExpr(config.Actions[i].If)
@@ -261,7 +263,7 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (resu
 
 	inputMap["_handler_config"] = h.config
 
-	if defs := h.config.TagDefs(); len(defs) > 0 {
+	if defs := act.tagDefs; len(defs) > 0 {
 		inputMap["_trigger_tags"] = trace.ResolveTagDefs(defs, scope)
 	}
 
