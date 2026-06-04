@@ -229,7 +229,7 @@ func (h *seqKeyHandlerImpl) runAction(ctx context.Context, act actImpl, scope da
 		inputMap["_PROPERTIES"] = propSnapShot
 	}
 
-	if defs := act.tagDefs; len(defs) > 0 {
+	if defs := act.tagDefs; !defs.IsEmpty() {
 		inputMap["_trigger_tags"] = trace.ResolveTagDefs(defs, scope)
 	}
 

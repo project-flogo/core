@@ -88,7 +88,8 @@ func TestParseTagDefs_EmptyTags(t *testing.T) {
 		},
 	}
 	result := ParseTagDefs(raw, &testExprFactory{})
-	assert.Nil(t, result)
+	assert.NotNil(t, result)
+	assert.True(t, result.IsEmpty())
 }
 
 func TestParseTagDefs_SkipsInvalidTagEntry(t *testing.T) {
@@ -100,7 +101,8 @@ func TestParseTagDefs_SkipsInvalidTagEntry(t *testing.T) {
 		},
 	}
 	result := ParseTagDefs(raw, &testExprFactory{})
-	assert.Nil(t, result)
+	assert.NotNil(t, result)
+	assert.True(t, result.IsEmpty())
 }
 
 func TestParseTagDefs_SkipsEmptyName(t *testing.T) {
@@ -112,7 +114,8 @@ func TestParseTagDefs_SkipsEmptyName(t *testing.T) {
 		},
 	}
 	result := ParseTagDefs(raw, &testExprFactory{})
-	assert.Nil(t, result)
+	assert.NotNil(t, result)
+	assert.True(t, result.IsEmpty())
 }
 
 func TestParseTagDefs_StaticTag(t *testing.T) {
@@ -124,11 +127,12 @@ func TestParseTagDefs_StaticTag(t *testing.T) {
 		},
 	}
 	result := ParseTagDefs(raw, &testExprFactory{})
-	assert.Equal(t, 1, len(result))
-	assert.Equal(t, "env", result[0].Name)
-	assert.Equal(t, "prod", result[0].Value)
-	assert.Nil(t, result[0].nameExpr)
-	assert.Nil(t, result[0].expr)
+	assert.False(t, result.IsEmpty())
+	assert.Equal(t, 1, len(result.staticDefs))
+	assert.Equal(t, "env", result.staticDefs[0].Name)
+	assert.Equal(t, "prod", result.staticDefs[0].Value)
+	assert.Nil(t, result.staticDefs[0].nameExpr)
+	assert.Nil(t, result.staticDefs[0].expr)
 }
 
 func TestParseTagDefs_MultipleTags(t *testing.T) {
@@ -142,10 +146,10 @@ func TestParseTagDefs_MultipleTags(t *testing.T) {
 		},
 	}
 	result := ParseTagDefs(raw, &testExprFactory{})
-	assert.Equal(t, 3, len(result))
-	assert.Equal(t, "k1", result[0].Name)
-	assert.Equal(t, "k2", result[1].Name)
-	assert.Equal(t, "k3", result[2].Name)
+	assert.Equal(t, 3, len(result.staticDefs))
+	assert.Equal(t, "k1", result.staticDefs[0].Name)
+	assert.Equal(t, "k2", result.staticDefs[1].Name)
+	assert.Equal(t, "k3", result.staticDefs[2].Name)
 }
 
 func TestParseTagDefs_ValueExpression(t *testing.T) {
@@ -157,11 +161,11 @@ func TestParseTagDefs_ValueExpression(t *testing.T) {
 		},
 	}
 	result := ParseTagDefs(raw, &testExprFactory{})
-	assert.Equal(t, 1, len(result))
-	assert.Equal(t, "region", result[0].Name)
-	assert.Equal(t, "=myVar", result[0].Value)
-	assert.Nil(t, result[0].nameExpr)
-	assert.NotNil(t, result[0].expr)
+	assert.Equal(t, 1, len(result.staticDefs))
+	assert.Equal(t, "region", result.staticDefs[0].Name)
+	assert.Equal(t, "=myVar", result.staticDefs[0].Value)
+	assert.Nil(t, result.staticDefs[0].nameExpr)
+	assert.NotNil(t, result.staticDefs[0].expr)
 }
 
 func TestParseTagDefs_NameExpression(t *testing.T) {
@@ -173,11 +177,11 @@ func TestParseTagDefs_NameExpression(t *testing.T) {
 		},
 	}
 	result := ParseTagDefs(raw, &testExprFactory{})
-	assert.Equal(t, 1, len(result))
-	assert.Equal(t, "=dynKey", result[0].Name)
-	assert.Equal(t, "staticVal", result[0].Value)
-	assert.NotNil(t, result[0].nameExpr)
-	assert.Nil(t, result[0].expr)
+	assert.Equal(t, 1, len(result.staticDefs))
+	assert.Equal(t, "=dynKey", result.staticDefs[0].Name)
+	assert.Equal(t, "staticVal", result.staticDefs[0].Value)
+	assert.NotNil(t, result.staticDefs[0].nameExpr)
+	assert.Nil(t, result.staticDefs[0].expr)
 }
 
 func TestParseTagDefs_BothExpressions(t *testing.T) {
@@ -189,9 +193,9 @@ func TestParseTagDefs_BothExpressions(t *testing.T) {
 		},
 	}
 	result := ParseTagDefs(raw, &testExprFactory{})
-	assert.Equal(t, 1, len(result))
-	assert.NotNil(t, result[0].nameExpr)
-	assert.NotNil(t, result[0].expr)
+	assert.Equal(t, 1, len(result.staticDefs))
+	assert.NotNil(t, result.staticDefs[0].nameExpr)
+	assert.NotNil(t, result.staticDefs[0].expr)
 }
 
 func TestParseTagDefs_NilFactory(t *testing.T) {
@@ -203,9 +207,9 @@ func TestParseTagDefs_NilFactory(t *testing.T) {
 		},
 	}
 	result := ParseTagDefs(raw, nil)
-	assert.Equal(t, 1, len(result))
-	assert.Nil(t, result[0].nameExpr)
-	assert.Nil(t, result[0].expr)
+	assert.Equal(t, 1, len(result.staticDefs))
+	assert.Nil(t, result.staticDefs[0].nameExpr)
+	assert.Nil(t, result.staticDefs[0].expr)
 }
 
 func TestParseTagDefs_FactoryError(t *testing.T) {
@@ -217,9 +221,9 @@ func TestParseTagDefs_FactoryError(t *testing.T) {
 		},
 	}
 	result := ParseTagDefs(raw, &failExprFactory{})
-	assert.Equal(t, 1, len(result))
-	assert.Nil(t, result[0].nameExpr)
-	assert.Nil(t, result[0].expr)
+	assert.Equal(t, 1, len(result.staticDefs))
+	assert.Nil(t, result.staticDefs[0].nameExpr)
+	assert.Nil(t, result.staticDefs[0].expr)
 }
 
 func TestParseTagDefs_MixedValidAndInvalid(t *testing.T) {
@@ -234,9 +238,9 @@ func TestParseTagDefs_MixedValidAndInvalid(t *testing.T) {
 		},
 	}
 	result := ParseTagDefs(raw, &testExprFactory{})
-	assert.Equal(t, 2, len(result))
-	assert.Equal(t, "valid", result[0].Name)
-	assert.Equal(t, "also_valid", result[1].Name)
+	assert.Equal(t, 2, len(result.staticDefs))
+	assert.Equal(t, "valid", result.staticDefs[0].Name)
+	assert.Equal(t, "also_valid", result.staticDefs[1].Name)
 }
 
 func TestParseTagDefs_TagWithNoValue(t *testing.T) {
@@ -248,9 +252,31 @@ func TestParseTagDefs_TagWithNoValue(t *testing.T) {
 		},
 	}
 	result := ParseTagDefs(raw, &testExprFactory{})
-	assert.Equal(t, 1, len(result))
-	assert.Equal(t, "myTag", result[0].Name)
-	assert.Equal(t, "", result[0].Value)
+	assert.Equal(t, 1, len(result.staticDefs))
+	assert.Equal(t, "myTag", result.staticDefs[0].Name)
+	assert.Equal(t, "", result.staticDefs[0].Value)
+}
+
+// --- TagDefs.IsEmpty tests ---
+
+func TestTagDefs_IsEmpty_Nil(t *testing.T) {
+	var td *TagDefs
+	assert.True(t, td.IsEmpty())
+}
+
+func TestTagDefs_IsEmpty_EmptyStatic(t *testing.T) {
+	td := &TagDefs{}
+	assert.True(t, td.IsEmpty())
+}
+
+func TestTagDefs_IsEmpty_WithStatic(t *testing.T) {
+	td := &TagDefs{staticDefs: []*TagDef{{Name: "k", Value: "v"}}}
+	assert.False(t, td.IsEmpty())
+}
+
+func TestTagDefs_IsEmpty_WithDynamic(t *testing.T) {
+	td := &TagDefs{dynamicExpr: &testExpr{str: "test"}}
+	assert.False(t, td.IsEmpty())
 }
 
 // --- ResolveTagDefs tests ---
@@ -261,16 +287,16 @@ func TestResolveTagDefs_NilDefs(t *testing.T) {
 }
 
 func TestResolveTagDefs_EmptyDefs(t *testing.T) {
-	result := ResolveTagDefs([]*TagDef{}, nil)
+	result := ResolveTagDefs(&TagDefs{}, nil)
 	assert.Nil(t, result)
 }
 
 func TestResolveTagDefs_StaticTags(t *testing.T) {
-	defs := []*TagDef{
+	td := &TagDefs{staticDefs: []*TagDef{
 		{Name: "env", Value: "prod"},
 		{Name: "region", Value: "us-east"},
-	}
-	result := ResolveTagDefs(defs, nil)
+	}}
+	result := ResolveTagDefs(td, nil)
 	assert.Equal(t, 2, len(result))
 	assert.Equal(t, "prod", result["env"])
 	assert.Equal(t, "us-east", result["region"])
@@ -281,10 +307,10 @@ func TestResolveTagDefs_ValueExpression(t *testing.T) {
 		"myVar": "resolved-value",
 	}, nil)
 
-	defs := []*TagDef{
+	td := &TagDefs{staticDefs: []*TagDef{
 		{Name: "key", Value: "=myVar", expr: &testExpr{str: "myVar"}},
-	}
-	result := ResolveTagDefs(defs, scope)
+	}}
+	result := ResolveTagDefs(td, scope)
 	assert.Equal(t, 1, len(result))
 	assert.Equal(t, "resolved-value", result["key"])
 }
@@ -294,10 +320,10 @@ func TestResolveTagDefs_NameExpression(t *testing.T) {
 		"dynKey": "resolved-key",
 	}, nil)
 
-	defs := []*TagDef{
+	td := &TagDefs{staticDefs: []*TagDef{
 		{Name: "=dynKey", Value: "staticVal", nameExpr: &testExpr{str: "dynKey"}},
-	}
-	result := ResolveTagDefs(defs, scope)
+	}}
+	result := ResolveTagDefs(td, scope)
 	assert.Equal(t, 1, len(result))
 	assert.Equal(t, "staticVal", result["resolved-key"])
 }
@@ -308,15 +334,15 @@ func TestResolveTagDefs_BothExpressions(t *testing.T) {
 		"dynVal": "resolved-value",
 	}, nil)
 
-	defs := []*TagDef{
+	td := &TagDefs{staticDefs: []*TagDef{
 		{
 			Name:     "=dynKey",
 			Value:    "=dynVal",
 			nameExpr: &testExpr{str: "dynKey"},
 			expr:     &testExpr{str: "dynVal"},
 		},
-	}
-	result := ResolveTagDefs(defs, scope)
+	}}
+	result := ResolveTagDefs(td, scope)
 	assert.Equal(t, 1, len(result))
 	assert.Equal(t, "resolved-value", result["resolved-key"])
 }
@@ -324,10 +350,10 @@ func TestResolveTagDefs_BothExpressions(t *testing.T) {
 func TestResolveTagDefs_ExprEvalError_FallsBackToStaticValue(t *testing.T) {
 	scope := data.NewSimpleScope(map[string]interface{}{}, nil)
 
-	defs := []*TagDef{
+	td := &TagDefs{staticDefs: []*TagDef{
 		{Name: "key", Value: "fallback", expr: &testExpr{str: "missing"}},
-	}
-	result := ResolveTagDefs(defs, scope)
+	}}
+	result := ResolveTagDefs(td, scope)
 	assert.Equal(t, 1, len(result))
 	assert.Equal(t, "fallback", result["key"])
 }
@@ -335,24 +361,24 @@ func TestResolveTagDefs_ExprEvalError_FallsBackToStaticValue(t *testing.T) {
 func TestResolveTagDefs_NameExprEvalError_UsesOriginalName(t *testing.T) {
 	scope := data.NewSimpleScope(map[string]interface{}{}, nil)
 
-	defs := []*TagDef{
+	td := &TagDefs{staticDefs: []*TagDef{
 		{Name: "originalKey", Value: "val", nameExpr: &testExpr{str: "missing"}},
-	}
-	result := ResolveTagDefs(defs, scope)
+	}}
+	result := ResolveTagDefs(td, scope)
 	assert.Equal(t, 1, len(result))
 	assert.Equal(t, "val", result["originalKey"])
 }
 
 func TestResolveTagDefs_NilScope_SkipsExpressions(t *testing.T) {
-	defs := []*TagDef{
+	td := &TagDefs{staticDefs: []*TagDef{
 		{
 			Name:     "=dynKey",
 			Value:    "=dynVal",
 			nameExpr: &testExpr{str: "dynKey"},
 			expr:     &testExpr{str: "dynVal"},
 		},
-	}
-	result := ResolveTagDefs(defs, nil)
+	}}
+	result := ResolveTagDefs(td, nil)
 	assert.Equal(t, 1, len(result))
 	assert.Equal(t, "=dynVal", result["=dynKey"])
 }
@@ -362,10 +388,10 @@ func TestResolveTagDefs_NameExprResolvesToEmpty_UsesOriginalName(t *testing.T) {
 		"dynKey": "",
 	}, nil)
 
-	defs := []*TagDef{
+	td := &TagDefs{staticDefs: []*TagDef{
 		{Name: "originalKey", Value: "val", nameExpr: &testExpr{str: "dynKey"}},
-	}
-	result := ResolveTagDefs(defs, scope)
+	}}
+	result := ResolveTagDefs(td, scope)
 	assert.Equal(t, 1, len(result))
 	assert.Equal(t, "val", result["originalKey"])
 }
@@ -375,12 +401,52 @@ func TestResolveTagDefs_NameExprResolvesToNonString_UsesOriginalName(t *testing.
 		"dynKey": 12345,
 	}, nil)
 
-	defs := []*TagDef{
+	td := &TagDefs{staticDefs: []*TagDef{
 		{Name: "originalKey", Value: "val", nameExpr: &testExpr{str: "dynKey"}},
-	}
-	result := ResolveTagDefs(defs, scope)
+	}}
+	result := ResolveTagDefs(td, scope)
 	assert.Equal(t, 1, len(result))
 	assert.Equal(t, "val", result["originalKey"])
+}
+
+// --- Dynamic tags (resolve) tests ---
+
+func TestResolveDynamicTags_ArrayResult(t *testing.T) {
+	dynamicResult := []interface{}{
+		map[string]interface{}{"name": "tag1", "value": "val1"},
+		map[string]interface{}{"name": "tag2", "value": "val2"},
+	}
+	td := &TagDefs{dynamicExpr: &staticResultExpr{result: dynamicResult}}
+
+	result := ResolveTagDefs(td, nil)
+	assert.Equal(t, 2, len(result))
+	assert.Equal(t, "val1", result["tag1"])
+	assert.Equal(t, "val2", result["tag2"])
+}
+
+func TestResolveDynamicTags_MapResult(t *testing.T) {
+	dynamicResult := map[string]interface{}{
+		"tag1": "val1",
+		"tag2": "val2",
+	}
+	td := &TagDefs{dynamicExpr: &staticResultExpr{result: dynamicResult}}
+
+	result := ResolveTagDefs(td, nil)
+	assert.Equal(t, 2, len(result))
+	assert.Equal(t, "val1", result["tag1"])
+	assert.Equal(t, "val2", result["tag2"])
+}
+
+func TestResolveDynamicTags_NilResult(t *testing.T) {
+	td := &TagDefs{dynamicExpr: &staticResultExpr{result: nil}}
+	result := ResolveTagDefs(td, nil)
+	assert.Nil(t, result)
+}
+
+func TestResolveDynamicTags_EvalError(t *testing.T) {
+	td := &TagDefs{dynamicExpr: &errorExpr{}}
+	result := ResolveTagDefs(td, nil)
+	assert.Nil(t, result)
 }
 
 // --- Integration: ParseTagDefs + ResolveTagDefs ---
@@ -397,8 +463,9 @@ func TestParseAndResolve_EndToEnd(t *testing.T) {
 	}
 
 	ef := &testExprFactory{}
-	defs := ParseTagDefs(raw, ef)
-	assert.Equal(t, 3, len(defs))
+	td := ParseTagDefs(raw, ef)
+	assert.False(t, td.IsEmpty())
+	assert.Equal(t, 3, len(td.staticDefs))
 
 	scope := data.NewSimpleScope(map[string]interface{}{
 		"myVar":  "world",
@@ -406,9 +473,25 @@ func TestParseAndResolve_EndToEnd(t *testing.T) {
 		"valVar": "resolved-val",
 	}, nil)
 
-	result := ResolveTagDefs(defs, scope)
+	result := ResolveTagDefs(td, scope)
 	assert.Equal(t, 3, len(result))
 	assert.Equal(t, "hello", result["static"])
 	assert.Equal(t, "world", result["dynamic"])
 	assert.Equal(t, "resolved-val", result["resolved-key"])
+}
+
+// --- Helper test types ---
+
+type staticResultExpr struct {
+	result interface{}
+}
+
+func (e *staticResultExpr) Eval(scope data.Scope) (interface{}, error) {
+	return e.result, nil
+}
+
+type errorExpr struct{}
+
+func (e *errorExpr) Eval(scope data.Scope) (interface{}, error) {
+	return nil, fmt.Errorf("eval error")
 }

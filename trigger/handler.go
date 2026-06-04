@@ -33,7 +33,7 @@ type actImpl struct {
 	actionInputMapper  mapper.Mapper
 	actionOutputMapper mapper.Mapper
 	sequenceKey        mapper.Mapper
-	tagDefs            []*trace.TagDef
+	tagDefs            *trace.TagDefs
 }
 
 type handlerImpl struct {
@@ -263,7 +263,7 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (resu
 
 	inputMap["_handler_config"] = h.config
 
-	if defs := act.tagDefs; len(defs) > 0 {
+	if defs := act.tagDefs; !defs.IsEmpty() {
 		inputMap["_trigger_tags"] = trace.ResolveTagDefs(defs, scope)
 	}
 

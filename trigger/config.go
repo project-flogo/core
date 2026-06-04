@@ -120,9 +120,9 @@ type ActionConfig struct {
 	Tags        interface{}            `json:"tags,omitempty"`
 	Act         action.Action          `json:"-,omitempty"`
 
-	tagDefs []*trace.TagDef
+	tagDefs *trace.TagDefs
 }
 
-func (ac *ActionConfig) TagDefs() []*trace.TagDef {
+func (ac *ActionConfig) TagDefs() *trace.TagDefs {
 	return ac.tagDefs
 }
