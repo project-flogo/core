@@ -16,6 +16,7 @@ import (
 	"github.com/project-flogo/core/data/mapper"
 	"github.com/project-flogo/core/data/property"
 	"github.com/project-flogo/core/support/log"
+	"github.com/project-flogo/core/support/trace"
 )
 
 type Handler interface {
@@ -32,6 +33,7 @@ type actImpl struct {
 	actionInputMapper  mapper.Mapper
 	actionOutputMapper mapper.Mapper
 	sequenceKey        mapper.Mapper
+	tagDefs            *trace.TagDefs
 }
 
 type handlerImpl struct {
@@ -82,6 +84,7 @@ func NewHandler(config *HandlerConfig, acts []action.Action, mf mapper.Factory, 
 	//todo we could filter inputs/outputs based on the metadata, maybe make this an option
 	for i, act := range acts {
 		handler.acts[i].act = act
+		handler.acts[i].tagDefs = config.Actions[i].TagDefs()
 
 		if config.Actions[i].If != "" {
 			condition, err := ef.NewExpr(config.Actions[i].If)
@@ -259,6 +262,10 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (resu
 	}
 
 	inputMap["_handler_config"] = h.config
+
+	if defs := act.tagDefs; !defs.IsEmpty() {
+		inputMap["_trigger_tags"] = trace.ResolveTagDefs(defs, scope)
+	}
 
 	results, err = h.runner.RunAction(newCtx, act.act, inputMap)
 	if err != nil {
