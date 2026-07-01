@@ -13,11 +13,12 @@ import (
 
 // Config is the configuration for a Trigger
 type Config struct {
-	Id       string                 `json:"id"`
-	Ref      string                 `json:"ref"`
-	Name     string                 `json:"name,omitempty"`
-	Settings map[string]interface{} `json:"settings"`
-	Handlers []*HandlerConfig       `json:"handlers"`
+	Id          string                 `json:"id"`
+	Ref         string                 `json:"ref"`
+	Name        string                 `json:"name,omitempty"`
+	Description string                 `json:"description,omitempty"`
+	Settings    map[string]interface{} `json:"settings"`
+	Handlers    []*HandlerConfig       `json:"handlers"`
 
 	//DEPRECATED
 	Type string `json:"type,omitempty"`
