@@ -21,6 +21,15 @@ func RegisterAlias(contribType, alias, ref string) error {
 	return nil
 }
 
+func AliasExists(contribType, alias string) bool {
+	aliasToRefMap, exists := aliases[contribType]
+	if !exists {
+		return false
+	}
+	_, exists = aliasToRefMap[alias]
+	return exists
+}
+
 func GetAliasRef(contribType, alias string) (string, bool) {
 
 	if alias == "" {
