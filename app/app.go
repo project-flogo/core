@@ -627,6 +627,7 @@ func registerImport(anImport string) error {
 
 	var alias string
 	var ref string
+	var explicitAlias bool
 	numParts := len(parts)
 	if numParts == 1 {
 		ref = parts[0]
@@ -634,6 +635,7 @@ func registerImport(anImport string) error {
 	} else if numParts == 2 {
 		alias = parts[0]
 		ref = parts[1]
+		explicitAlias = true
 	} else {
 		return fmt.Errorf("invalid import %s", anImport)
 	}
@@ -653,6 +655,11 @@ func registerImport(anImport string) error {
 	log.RootLogger().Debugf("Registering type alias '%s' for %s [%s]", alias, ct, ref)
 
 	err := support.RegisterAlias(ct, alias, ref)
+	if err != nil && !explicitAlias {
+		alias = resolveAliasConflict(ref, alias, ct)
+		log.RootLogger().Debugf("Auto-resolved alias collision, using '%s' for %s [%s]", alias, ct, ref)
+		err = support.RegisterAlias(ct, alias, ref)
+	}
 	if err != nil {
 		return err
 	}
@@ -662,6 +669,22 @@ func registerImport(anImport string) error {
 	}
 
 	return nil
+}
+
+func resolveAliasConflict(ref, baseAlias, contribType string) string {
+	grandparent := path.Base(path.Dir(path.Dir(ref)))
+	if grandparent != "." && grandparent != "" {
+		candidate := grandparent + "_" + baseAlias
+		if !support.AliasExists(contribType, candidate) {
+			return candidate
+		}
+	}
+	for i := 2; ; i++ {
+		candidate := fmt.Sprintf("%s_%d", baseAlias, i)
+		if !support.AliasExists(contribType, candidate) {
+			return candidate
+		}
+	}
 }
 
 func getContribType(ref string) string {

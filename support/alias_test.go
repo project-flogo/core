@@ -37,6 +37,16 @@ func TestGetAliasRef(t *testing.T) {
 	}
 }
 
+func TestAliasExists(t *testing.T) {
+	aliases = make(map[string]map[string]string)
+	aliases["activity"] = make(map[string]string)
+	aliases["activity"]["query"] = "github.com/tibco/wi-postgres/src/app/PostgreSQL/activity/query"
+
+	assert.True(t, AliasExists("activity", "query"))
+	assert.False(t, AliasExists("activity", "nonexistent"))
+	assert.False(t, AliasExists("connection", "query"))
+}
+
 func TestRegisterAlias(t *testing.T) {
 	aliases = make(map[string]map[string]string)
 
