@@ -26,6 +26,7 @@ func toAppConfig(a *App) *app.Config {
 	appCfg.Name = "app"
 	appCfg.Version = "1.0.0"
 	appCfg.Resources = a.resources
+	appCfg.Agents = a.agents
 
 	var triggerConfigs []*trigger.Config
 	for id, trg := range a.Triggers() {

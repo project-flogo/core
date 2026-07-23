@@ -20,6 +20,13 @@
             },
             "type": "array"
         },
+        "agents": {
+            "items": {
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "$ref": "#/definitions/resource.Config"
+            },
+            "type": "array"
+        },
         "channels": {
             "items": {
                 "type": "string"
@@ -87,6 +94,13 @@
                     "items": {
                         "$schema": "http://json-schema.org/draft-07/schema#",
                         "$ref": "#/definitions/action.Config"
+                    },
+                    "type": "array"
+                },
+                "agents": {
+                    "items": {
+                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "$ref": "#/definitions/resource.Config"
                     },
                     "type": "array"
                 },

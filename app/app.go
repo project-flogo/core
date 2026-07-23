@@ -160,7 +160,7 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 		}
 	}
 
-	resources := make(map[string]*resource.Resource, len(config.Resources))
+	resources := make(map[string]*resource.Resource, len(config.Resources)+len(config.Agents))
 	app.resManager = resource.NewManager(resources)
 
 	for ref, actionFactory := range action.Factories() {
@@ -199,6 +199,25 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 		}
 
 		resources[resConfig.ID] = res
+	}
+
+	for _, agentConfig := range config.Agents {
+		resType, err := resource.GetTypeFromID(agentConfig.ID)
+		if err != nil {
+			return nil, err
+		}
+
+		loader := resource.GetLoader(resType)
+		if loader == nil {
+			return nil, fmt.Errorf("resource loader for '%s' not registered", resType)
+		}
+
+		res, err := loader.LoadResource(agentConfig)
+		if err != nil {
+			return nil, err
+		}
+
+		resources[agentConfig.ID] = res
 	}
 
 	var err error
@@ -584,6 +603,7 @@ func (a *App) Reconfigure() error {
 	appConfig := &struct {
 		Triggers    []*trigger.Config             `json:"triggers"`
 		Resources   []*resource.Config            `json:"resources,omitempty"`
+		Agents      []*resource.Config            `json:"agents,omitempty"`
 		Connections map[string]*connection.Config `json:"connections,omitempty"`
 	}{}
 	err = json.Unmarshal(a.config, appConfig)
@@ -608,6 +628,12 @@ func (a *App) Reconfigure() error {
 
 	// Reconfigure resources e.g. flows
 	err = a.resManager.ReconfigureResources(appConfig.Resources)
+	if err != nil {
+		return err
+	}
+
+	// Reconfigure agents
+	err = a.resManager.ReconfigureResources(appConfig.Agents)
 	if err != nil {
 		return err
 	}

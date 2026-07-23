@@ -30,6 +30,7 @@ type Config struct {
 	Channels    []string                      `json:"channels,omitempty"`
 	Triggers    []*trigger.Config             `json:"triggers"`
 	Resources   []*resource.Config            `json:"resources,omitempty"`
+	Agents      []*resource.Config            `json:"agents,omitempty"`
 	Actions     []*action.Config              `json:"actions,omitempty"`
 	Schemas     map[string]*schema.Def        `json:"schemas,omitempty"`
 	Connections map[string]*connection.Config `json:"connections,omitempty"`

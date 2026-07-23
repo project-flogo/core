@@ -24,6 +24,7 @@ type App struct {
 	triggers   []*Trigger
 	actions    map[string]*Action
 	resources  []*resource.Config
+	agents     []*resource.Config
 
 	realApp    *app.App
 	actRunner  *runner.DirectRunner
@@ -124,6 +125,13 @@ func (a *App) AddResource(id string, data json.RawMessage) {
 
 	res := &resource.Config{ID: id, Data: data}
 	a.resources = append(a.resources, res)
+}
+
+// AddAgent adds a Flogo agent resource to the application
+func (a *App) AddAgent(id string, data json.RawMessage) {
+
+	agent := &resource.Config{ID: id, Data: data}
+	a.agents = append(a.agents, agent)
 }
 
 // Properties gets the shared properties of the application
