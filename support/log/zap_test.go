@@ -6,8 +6,7 @@ import (
 	"testing"
 )
 
-// TestSetTracingContext pins the observable behaviour of the trace prefix so the
-// atomic publication introduced for FLOGO-19401 cannot silently change it.
+// TestSetTracingContext pins the observable trace-prefix behaviour (FLOGO-19401).
 func TestSetTracingContext(t *testing.T) {
 	prev := traceContextLogging
 	traceContextLogging = true
@@ -48,8 +47,7 @@ func TestSetTracingContext(t *testing.T) {
 	}
 }
 
-// TestSetTracingContextDisabled covers FLOGO_LOG_TRACE_CTX_ENABLED=false, which
-// must leave the logger untouched.
+// TestSetTracingContextDisabled covers FLOGO_LOG_TRACE_CTX_ENABLED=false.
 func TestSetTracingContextDisabled(t *testing.T) {
 	prev := traceContextLogging
 	traceContextLogging = false
@@ -66,31 +64,14 @@ func TestSetTracingContextDisabled(t *testing.T) {
 	}
 }
 
-// TestSetTracingContextConcurrentWithLogging is the regression test for FLOGO-19401.
-//
-// A single logger is shared by every concurrently executing flow instance and
-// activity - flow/action.go does `instLogger := logger` and only replaces it with a
-// per-instance child when FLOGO_LOG_CTX=true, which is off by default. So
-// SetTracingContext (flow/action.go:355,392,397 and flow/instance/taskinst.go:349)
-// runs concurrently with log calls on that same logger.
-//
-// Before the fix the trace prefix was a plain string field. A Go string is a
-// two-word {data, len} value and assigning one is not atomic, so a racing reader
-// could observe {data: nil, len: N}: the `!= ""` guard passed because len was
-// non-zero, and the prefix concatenation then copied N bytes from address 0 and
-// segfaulted, taking the whole app down.
-//
-// Run with -race to catch the underlying data race deterministically. Without
-// -race this still exercises the crash, but only probabilistically.
+// TestSetTracingContextConcurrentWithLogging is the FLOGO-19401 regression test: SetTracingContext must be safe against concurrent log calls on a shared logger.
 func TestSetTracingContextConcurrentWithLogging(t *testing.T) {
 	prev := traceContextLogging
 	traceContextLogging = true
 	defer func() { traceContextLogging = prev }()
 
 	logger := NewLogger("flogo.test.tracingcontext.race")
-	// Keep the test output quiet. The prefix is an argument to Debugf/Infof, so it is
-	// still built on every call regardless of the level - that is exactly why a
-	// production app running at ERROR was still crashing inside Debugf.
+	// ERROR keeps the output quiet; the prefix is an argument so it is still built on every call.
 	SetLogLevel(logger, ErrorLevel)
 
 	traceCtx := map[string]string{KeyTraceID: "4bf92f3577b34da6a3ce929d0e0e4736", KeySpanID: "00f067aa0ba902b7"}

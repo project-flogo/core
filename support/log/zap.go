@@ -12,10 +12,7 @@ import (
 
 var traceLogger *zap.SugaredLogger
 
-// traceState is the immutable pair of values derived from a tracing context.
-//
-// FLOGO-19401: it is published as a whole through an atomic.Value so a reader can
-// never observe a half-updated value. Once stored it is never mutated.
+// traceState is an immutable snapshot of a tracing context, published atomically.
 type traceState struct {
 	prefix  string
 	context map[string]string
@@ -25,23 +22,11 @@ type zapLoggerImpl struct {
 	loggerLevel *zap.AtomicLevel
 	mainLogger  *zap.SugaredLogger
 	// FLOGO-17735: add traceID and spanID attributes to log message
-	//
-	// FLOGO-19401: one logger is shared by every concurrently executing flow instance
-	// and activity - flow/action.go does `instLogger := logger` and only replaces it
-	// with a per-instance child when FLOGO_LOG_CTX=true, which is off by default. So
-	// SetTracingContext (flow/action.go:355,392,397 and flow/instance/taskinst.go:349)
-	// races with every log call on this logger.
-	//
-	// These were previously plain `string` and `map[string]string` fields. A Go string
-	// is a two-word {data, len} value and assigning one is not atomic, so a racing
-	// reader could observe the torn combination {data: nil, len: N}: the `!= ""` guard
-	// passes because len is non-zero, and the following concatenation then copies N
-	// bytes from address 0 and segfaults. Publish both values atomically instead.
+	// FLOGO-19401: atomic because the logger is shared across concurrent flows, and a torn read of a plain string field segfaults
 	traceState atomic.Value // holds *traceState; never stored nil
 }
 
-// tracePrefix returns the current trace prefix, or "" when no tracing context has
-// been set on this logger.
+// tracePrefix returns the current trace prefix, or "" if no tracing context is set.
 func (l *zapLoggerImpl) tracePrefix() string {
 	if ts, ok := l.traceState.Load().(*traceState); ok {
 		return ts.prefix
