@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"sync/atomic"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -11,12 +12,41 @@ import (
 
 var traceLogger *zap.SugaredLogger
 
+// traceState is the immutable pair of values derived from a tracing context.
+//
+// FLOGO-19401: it is published as a whole through an atomic.Value so a reader can
+// never observe a half-updated value. Once stored it is never mutated.
+type traceState struct {
+	prefix  string
+	context map[string]string
+}
+
 type zapLoggerImpl struct {
 	loggerLevel *zap.AtomicLevel
 	mainLogger  *zap.SugaredLogger
 	// FLOGO-17735: add traceID and spanID attributes to log message
-	tracePrefix  string
-	traceContext map[string]string
+	//
+	// FLOGO-19401: one logger is shared by every concurrently executing flow instance
+	// and activity - flow/action.go does `instLogger := logger` and only replaces it
+	// with a per-instance child when FLOGO_LOG_CTX=true, which is off by default. So
+	// SetTracingContext (flow/action.go:355,392,397 and flow/instance/taskinst.go:349)
+	// races with every log call on this logger.
+	//
+	// These were previously plain `string` and `map[string]string` fields. A Go string
+	// is a two-word {data, len} value and assigning one is not atomic, so a racing
+	// reader could observe the torn combination {data: nil, len: N}: the `!= ""` guard
+	// passes because len is non-zero, and the following concatenation then copies N
+	// bytes from address 0 and segfaults. Publish both values atomically instead.
+	traceState atomic.Value // holds *traceState; never stored nil
+}
+
+// tracePrefix returns the current trace prefix, or "" when no tracing context has
+// been set on this logger.
+func (l *zapLoggerImpl) tracePrefix() string {
+	if ts, ok := l.traceState.Load().(*traceState); ok {
+		return ts.prefix
+	}
+	return ""
 }
 
 func (l *zapLoggerImpl) DebugEnabled() bool {
@@ -34,9 +64,9 @@ func (l *zapLoggerImpl) Trace(args ...any) {
 }
 
 func (l *zapLoggerImpl) Debug(args ...any) {
-	if l.tracePrefix != "" {
+	if prefix := l.tracePrefix(); prefix != "" {
 		s := make([]any, 1, 1+len(args))
-		s[0] = l.tracePrefix
+		s[0] = prefix
 		l.mainLogger.Debug(append(s, args...)...)
 	} else {
 		l.mainLogger.Debug(args...)
@@ -44,9 +74,9 @@ func (l *zapLoggerImpl) Debug(args ...any) {
 }
 
 func (l *zapLoggerImpl) Info(args ...any) {
-	if l.tracePrefix != "" {
+	if prefix := l.tracePrefix(); prefix != "" {
 		s := make([]any, 1, 1+len(args))
-		s[0] = l.tracePrefix
+		s[0] = prefix
 		l.mainLogger.Info(append(s, args...)...)
 	} else {
 		l.mainLogger.Info(args...)
@@ -54,9 +84,9 @@ func (l *zapLoggerImpl) Info(args ...any) {
 }
 
 func (l *zapLoggerImpl) Warn(args ...any) {
-	if l.tracePrefix != "" {
+	if prefix := l.tracePrefix(); prefix != "" {
 		s := make([]any, 1, 1+len(args))
-		s[0] = l.tracePrefix
+		s[0] = prefix
 		l.mainLogger.Warn(append(s, args...)...)
 	} else {
 		l.mainLogger.Warn(args...)
@@ -64,9 +94,9 @@ func (l *zapLoggerImpl) Warn(args ...any) {
 }
 
 func (l *zapLoggerImpl) Error(args ...any) {
-	if l.tracePrefix != "" {
+	if prefix := l.tracePrefix(); prefix != "" {
 		s := make([]any, 1, 1+len(args))
-		s[0] = l.tracePrefix
+		s[0] = prefix
 		l.mainLogger.Error(append(s, args...)...)
 	} else {
 		l.mainLogger.Error(args...)
@@ -80,32 +110,32 @@ func (l *zapLoggerImpl) Tracef(template string, args ...any) {
 }
 
 func (l *zapLoggerImpl) Debugf(template string, args ...any) {
-	if l.tracePrefix != "" {
-		l.mainLogger.Debugf(l.tracePrefix+template, args...)
+	if prefix := l.tracePrefix(); prefix != "" {
+		l.mainLogger.Debugf(prefix+template, args...)
 	} else {
 		l.mainLogger.Debugf(template, args...)
 	}
 }
 
 func (l *zapLoggerImpl) Infof(template string, args ...any) {
-	if l.tracePrefix != "" {
-		l.mainLogger.Infof(l.tracePrefix+template, args...)
+	if prefix := l.tracePrefix(); prefix != "" {
+		l.mainLogger.Infof(prefix+template, args...)
 	} else {
 		l.mainLogger.Infof(template, args...)
 	}
 }
 
 func (l *zapLoggerImpl) Warnf(template string, args ...any) {
-	if l.tracePrefix != "" {
-		l.mainLogger.Warnf(l.tracePrefix+template, args...)
+	if prefix := l.tracePrefix(); prefix != "" {
+		l.mainLogger.Warnf(prefix+template, args...)
 	} else {
 		l.mainLogger.Warnf(template, args...)
 	}
 }
 
 func (l *zapLoggerImpl) Errorf(template string, args ...any) {
-	if l.tracePrefix != "" {
-		l.mainLogger.Errorf(l.tracePrefix+template, args...)
+	if prefix := l.tracePrefix(); prefix != "" {
+		l.mainLogger.Errorf(prefix+template, args...)
 	} else {
 		l.mainLogger.Errorf(template, args...)
 	}
@@ -116,19 +146,21 @@ func (l *zapLoggerImpl) Structured() StructuredLogger {
 }
 
 func (l *zapLoggerImpl) GetTracingContext() map[string]string {
-	return l.traceContext
+	if ts, ok := l.traceState.Load().(*traceState); ok {
+		return ts.context
+	}
+	return nil
 }
 
 func (l *zapLoggerImpl) SetTracingContext(traceContext map[string]string) {
 	if !traceContextLogging {
 		return
 	}
-	l.traceContext = traceContext
+	ts := &traceState{context: traceContext}
 	if traceContext != nil && traceContext[KeyTraceID] != "" {
-		l.tracePrefix = fmt.Sprintf("[%s: %s] [%s: %s] ", KeyTraceID, traceContext[KeyTraceID], KeySpanID, traceContext[KeySpanID])
-	} else {
-		l.tracePrefix = ""
+		ts.prefix = fmt.Sprintf("[%s: %s] [%s: %s] ", KeyTraceID, traceContext[KeyTraceID], KeySpanID, traceContext[KeySpanID])
 	}
+	l.traceState.Store(ts)
 }
 
 type zapStructuredLoggerImpl struct {
