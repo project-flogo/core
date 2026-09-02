@@ -94,3 +94,34 @@ func Managers() map[string]Manager {
 
 	return ret
 }
+
+// GetId returns the shared-connection id `manager` was registered under, or "" when the
+// manager is not a shared connection (for example an inline connection config). It mirrors
+// IsShared, which already performs the same linear scan; `managers` holds one entry per app
+// connection, so the scan is single-digit.
+//
+// A map[Manager]string reverse index was deliberately rejected: indexing by a manager panics
+// with "hash of unhashable type" for a value-receiver manager over a struct holding a map or
+// slice, which would be an unrecoverable panic at app startup for every app in the org,
+// including apps that never use a transaction. The recover below closes the same pre-existing
+// hazard IsShared already carries.
+func GetId(manager Manager) (id string) {
+	if manager == nil {
+		return ""
+	}
+
+	defer func() {
+		if r := recover(); r != nil {
+			log.RootLogger().Debugf("connection.GetId: manager is not comparable: %v", r)
+			id = ""
+		}
+	}()
+
+	for cid, mgr := range managers {
+		if manager == mgr {
+			return cid
+		}
+	}
+
+	return ""
+}
