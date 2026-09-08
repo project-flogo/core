@@ -384,7 +384,7 @@ func (obj *ObjectMapper) Eval(scope data.Scope) (value interface{}, err error) {
 		for i, v := range obj.literalArray {
 			arrValue, err := v.Eval(scope)
 			if err != nil {
-				return nil, err
+				return err, nil
 			}
 			// Conditional array item: when no condition matched (and there is no @otherwise
 			// branch) the item evaluates to nil and must be omitted from the array, instead of
@@ -419,45 +419,10 @@ func (obj *ObjectMapper) Eval(scope data.Scope) (value interface{}, err error) {
 	}
 }
 
-// sourceNotFoundErrorStrs classifies the errors a source-array path expression
-// raises when it (or an ancestor segment) simply does not resolve — i.e. the
-// referenced attribute/variable/activity output is absent rather than genuinely
-// malformed. Kept in sync with the equivalent list used by @isDefined/getValue
-// (expression/script/gocc/ast/builtin.go), which is unexported there.
-var sourceNotFoundErrorStrs = []string{
-	"path not found",
-	"unable to evaluate path",
-	"failed to resolve variable",
-	"failed to resolve Environment Variable",
-	"failed to resolve Property",
-	"failed to resolve Loop",
-	"failed to resolve activity attr",
-	"failed to resolve activity value",
-	"not found in flow",
-}
-
-func isSourceNotFoundError(errStr string) bool {
-	for _, s := range sourceNotFoundErrorStrs {
-		if strings.Contains(errStr, s) {
-			return true
-		}
-	}
-	return false
-}
-
 func (f *foreachExpr) Eval(scope data.Scope) (interface{}, error) {
 
 	sourceAr, err := f.sourceFrom.Eval(scope)
 	if err != nil {
-		// A source-array path that resolves to nil/undefined must be treated as an
-		// empty iteration (returning no elements), not as a failure. Earlier releases
-		// masked this because ObjectMapper.Eval's literal-array branch swallowed the
-		// error (returned it in the value slot); once that was fixed to propagate
-		// errors, the previously-hidden not-found error started surfacing here. Restore
-		// the intended behavior explicitly rather than by re-masking real errors.
-		if isSourceNotFoundError(err.Error()) {
-			return []interface{}{}, nil
-		}
 		return nil, fmt.Errorf("foreach eval source array error, %s", err.Error())
 	}
 
