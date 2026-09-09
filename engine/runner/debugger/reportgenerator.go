@@ -338,7 +338,9 @@ func getSubFlowDataMap(mainFlow string, coverage *support.Coverage, subFlowActiv
 					LinkReport:     make([]support.LinkReport, 0),
 				},
 				SubFlow: make(map[string]interface{}),
+				LibPath: getLibPath(coverage.SubFlowMap, activity.FlowId),
 			}
+
 			if activity.IsMainFlow {
 				val.ActivityReport = append(val.ActivityReport, *activityReport)
 			} else {
@@ -370,4 +372,12 @@ func getSubFlowDataMap(mainFlow string, coverage *support.Coverage, subFlowActiv
 
 	return subFlowList
 
+}
+
+func getLibPath(subFlowMap map[string]*support.SubFlowCoverage, flowId string) string {
+	val, ok := subFlowMap[flowId]
+	if ok {
+		return val.LibPath
+	}
+	return ""
 }
