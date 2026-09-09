@@ -6,6 +6,7 @@ import (
 
 	_ "github.com/project-flogo/core/examples/action"
 	_ "github.com/project-flogo/core/examples/trigger"
+	"github.com/project-flogo/core/support"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -66,4 +67,61 @@ func TestApp(t *testing.T) {
 
 	err = app.Stop()
 	assert.Nil(t, err)
+}
+
+func TestResolveAliasConflict_GrandparentUnique(t *testing.T) {
+	ref := "github.com/org/contrib/activity/query"
+	result := resolveAliasConflict(ref, "query", "type1")
+	assert.Equal(t, "contrib_query", result)
+}
+
+func TestResolveAliasConflict_GrandparentAlsoTaken(t *testing.T) {
+	_ = support.RegisterAlias("type2", "contrib_query", "some/other/ref")
+
+	ref := "github.com/org/contrib/activity/query"
+	result := resolveAliasConflict(ref, "query", "type2")
+	assert.Equal(t, "query_2", result)
+}
+
+func TestResolveAliasConflict_NumericFallbackSkipsTaken(t *testing.T) {
+	_ = support.RegisterAlias("type3", "contrib_query", "some/other/ref")
+	_ = support.RegisterAlias("type3", "query_2", "another/ref")
+	_ = support.RegisterAlias("type3", "query_3", "yet/another/ref")
+
+	ref := "github.com/org/contrib/activity/query"
+	result := resolveAliasConflict(ref, "query", "type3")
+	assert.Equal(t, "query_4", result)
+}
+
+func TestResolveAliasConflict_ShallowRefNoGrandparent(t *testing.T) {
+	ref := "query"
+	result := resolveAliasConflict(ref, "query", "type4")
+	assert.Equal(t, "query_2", result)
+}
+
+func TestResolveAliasConflict_SingleSegmentParent(t *testing.T) {
+	ref := "activity/query"
+	result := resolveAliasConflict(ref, "query", "type5")
+	assert.Equal(t, "query_2", result)
+}
+
+func TestResolveAliasConflict_DifferentContribTypes(t *testing.T) {
+	_ = support.RegisterAlias("type6_other", "activity_log", "some/trigger/ref")
+
+	ref := "github.com/org/contrib/activity/log"
+	result := resolveAliasConflict(ref, "log", "type6")
+	assert.Equal(t, "contrib_log", result)
+}
+
+func TestResolveAliasConflict_NumericStartsAt2(t *testing.T) {
+	_ = support.RegisterAlias("type7", "contrib_query", "some/ref")
+
+	ref := "github.com/org/contrib/activity/query"
+	result := resolveAliasConflict(ref, "query", "type7")
+	assert.Equal(t, "query_2", result)
+}
+
+func TestResolveAliasConflict_EmptyRef(t *testing.T) {
+	result := resolveAliasConflict("", "query", "type8")
+	assert.Equal(t, "query_2", result)
 }

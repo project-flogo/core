@@ -8,15 +8,17 @@ import (
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/data/resolve"
+	"github.com/project-flogo/core/support/trace"
 )
 
 // Config is the configuration for a Trigger
 type Config struct {
-	Id       string                 `json:"id"`
-	Ref      string                 `json:"ref"`
-	Name     string                 `json:"name,omitempty"`
-	Settings map[string]interface{} `json:"settings"`
-	Handlers []*HandlerConfig       `json:"handlers"`
+	Id          string                 `json:"id"`
+	Ref         string                 `json:"ref"`
+	Name        string                 `json:"name,omitempty"`
+	Description string                 `json:"description,omitempty"`
+	Settings    map[string]interface{} `json:"settings"`
+	Handlers    []*HandlerConfig       `json:"handlers"`
 
 	//DEPRECATED
 	Type string `json:"type,omitempty"`
@@ -55,6 +57,12 @@ func (c *Config) FixUp(md *Metadata, resolver resolve.CompositeResolver) error {
 				if err != nil {
 					return err
 				}
+			}
+		}
+
+		for _, ac := range hc.Actions {
+			if ac.Tags != nil {
+				ac.tagDefs = trace.ParseTagDefs(ac.Tags, ef)
 			}
 		}
 	}
@@ -113,5 +121,12 @@ type ActionConfig struct {
 	Input       map[string]interface{} `json:"input,omitempty"`
 	Output      map[string]interface{} `json:"output,omitempty"`
 	SequenceKey string                 `json:"seqKey,omitempty"`
+	Tags        interface{}            `json:"tags,omitempty"`
 	Act         action.Action          `json:"-,omitempty"`
+
+	tagDefs *trace.TagDefs
+}
+
+func (ac *ActionConfig) TagDefs() *trace.TagDefs {
+	return ac.tagDefs
 }

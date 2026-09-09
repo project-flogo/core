@@ -92,7 +92,11 @@ type ObjectMapper struct {
 	foreach *foreachExpr
 	//For literal array mapping
 	literalArray []expression.Expr
-	variables    []VariableMapper
+	//literalArrayConditional[i] is true when literalArray[i] is a conditional (@conditional) item.
+	//Such an item is omitted from the resulting array when it evaluates to nil (no condition
+	//matched and no @otherwise branch), instead of being added as a null element.
+	literalArrayConditional []bool
+	variables               []VariableMapper
 }
 
 type foreachExpr struct {
@@ -160,15 +164,19 @@ func NewObjectMapper(mappings interface{}, exprF expression.Factory) (expr expre
 				return expression.NewLiteralExpr(t), nil
 			}
 			objArray := make([]expression.Expr, len(t))
+			conditionalFlags := make([]bool, len(t))
 			for i, element := range t {
 				var err error
+				//Track conditional items so unmatched ones can be skipped at eval time.
+				conditionalFlags[i] = IsConditionalMapping(element)
 				objArray[i], err = NewObjectMapper(element, exprF)
 				if err != nil {
 					return nil, err
 				}
 			}
 			return &ObjectMapper{
-				literalArray: objArray,
+				literalArray:            objArray,
+				literalArrayConditional: conditionalFlags,
 			}, nil
 		case interface{}:
 			return newExpr(t, exprF)
@@ -373,10 +381,16 @@ func (obj *ObjectMapper) Eval(scope data.Scope) (value interface{}, err error) {
 		return obj.foreach.Eval(scope)
 	} else if obj.literalArray != nil {
 		var array []interface{}
-		for _, v := range obj.literalArray {
+		for i, v := range obj.literalArray {
 			arrValue, err := v.Eval(scope)
 			if err != nil {
 				return err, nil
+			}
+			// Conditional array item: when no condition matched (and there is no @otherwise
+			// branch) the item evaluates to nil and must be omitted from the array, instead of
+			// being added as a null element.
+			if arrValue == nil && i < len(obj.literalArrayConditional) && obj.literalArrayConditional[i] {
+				continue
 			}
 			array = append(array, arrValue)
 		}
