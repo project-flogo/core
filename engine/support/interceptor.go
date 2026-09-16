@@ -143,6 +143,7 @@ type SubFlowCoverage struct {
 	Outputs         map[string]interface{} `json:"outputs,omitempty"`
 	IsLoop          bool
 	Index           string
+	LibPath         string
 }
 
 type TransitionCoverage struct {

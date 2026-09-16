@@ -43,6 +43,7 @@ type FlowReport struct {
 	SubFlow          map[string]interface{} `json:"subFlow,omitempty"`
 	Inputs           map[string]interface{} `json:"inputs,omitempty"`
 	Outputs          map[string]interface{} `json:"outputs,omitempty"`
+	LibPath          string                 `json:"libPath,omitempty"`
 }
 
 type OutputReport struct {
