@@ -110,7 +110,7 @@ NewApp creates a new Flogo application
 ```go
 func (a *App) Actions() map[string]*Action
 ```
-Triggers gets the Triggers of the application
+Actions gets the Actions of the application
 
 #### func (*App) AddAction
 
