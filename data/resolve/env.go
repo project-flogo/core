@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/project-flogo/core/data"
+	"github.com/project-flogo/core/engine/secret"
 )
 
 var envResolverInfo = NewResolverInfo(true, true)
@@ -25,5 +26,12 @@ func (*EnvResolver) Resolve(scope data.Scope, item string, field string) (interf
 		return "", err
 	}
 
-	return value, nil
+	// Engine variables marked as 'password' are injected as "SECRET:"-prefixed
+	// ciphertext; decrypt them transparently so callers get the plaintext value.
+	decoded, err := secret.Decode(value)
+	if err != nil {
+		return "", fmt.Errorf("failed to decrypt Environment Variable '%s': %w", item, err)
+	}
+
+	return decoded, nil
 }

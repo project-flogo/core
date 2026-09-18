@@ -30,6 +30,16 @@ func resolveSecretValue(encrypted string) (string, error) {
 	return decodedValue, nil
 }
 
+// Decode returns the plaintext for a "SECRET:"-prefixed value, decrypting it with
+// the configured SecretValueHandler. Values without the prefix are returned unchanged,
+// so it is safe to call on any value that may or may not be encrypted.
+func Decode(value string) (string, error) {
+	if !strings.HasPrefix(value, "SECRET:") {
+		return value, nil
+	}
+	return resolveSecretValue(value)
+}
+
 func PropertyProcessor(properties map[string]interface{}) error {
 
 	for key, value := range properties {

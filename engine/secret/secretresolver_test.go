@@ -46,3 +46,22 @@ func TestSecretKey(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, "mysecurepassword1", decoded)
 }
+
+func TestDecode(t *testing.T) {
+	defer func() {
+		SetSecretValueHandler(nil)
+	}()
+	SetSecretValueHandler(&KeyBasedSecretValueHandler{Key: "mysecretkey2"})
+
+	// Non SECRET: prefixed values are returned unchanged.
+	plain, err := Decode("plain-value")
+	assert.Nil(t, err)
+	assert.Equal(t, "plain-value", plain)
+
+	// SECRET: prefixed values are decrypted back to plaintext.
+	encoded, err := GetSecretValueHandler().EncodeValue("mysecurepassword1")
+	assert.Nil(t, err)
+	decoded, err := Decode("SECRET:" + encoded)
+	assert.Nil(t, err)
+	assert.Equal(t, "mysecurepassword1", decoded)
+}
