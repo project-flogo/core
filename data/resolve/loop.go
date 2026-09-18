@@ -16,7 +16,7 @@ func (*LoopResolver) GetResolverInfo() *ResolverInfo {
 	return loopResolverInfo
 }
 
-//LoopResolver Loop Resolver $Loop[item]
+// LoopResolver Loop Resolver $Loop[item]
 func (*LoopResolver) Resolve(scope data.Scope, item string, field string) (interface{}, error) {
 	var value interface{}
 	var exist bool
@@ -25,6 +25,13 @@ func (*LoopResolver) Resolve(scope data.Scope, item string, field string) (inter
 		if !exist {
 			return nil, fmt.Errorf("failed to resolve current Loop: '%s', ensure that Loop is configured in the application", field)
 		}
+	} else if item == "index" {
+		//To access the index value eg: $Loop[index]
+		value, exist = scope.GetValue("_loop")
+		if !exist {
+			return nil, fmt.Errorf("failed to resolve current Loop: '%s', ensure that Loop is configured in the application", field)
+		}
+		return path.GetValue(value, ".index")
 	} else {
 		value, exist = scope.GetValue(item)
 		if !exist {
