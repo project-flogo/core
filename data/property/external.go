@@ -73,7 +73,6 @@ func EnableExternalPropertyResolvers(resolverTypes string) error {
 }
 
 func ResolvePropertyExternally(propertyName string) (interface{}, bool) {
-
 	for _, resolver := range EnabledResolvers {
 		// Use resolver
 		value, resolved := resolver.LookupValue(propertyName)
@@ -107,7 +106,12 @@ func ExternalResolverProcessor(properties map[string]interface{}) error {
 		logger.Infof("Properties will be resolved with these resolvers (in decreasing order of priority): %v", enabledResolvers)
 	}
 
+	manager := DefaultManager()
 	for name := range properties {
+		if manager != nil && !manager.IsOverride(name) {
+			continue
+		}
+
 		newVal, found := ResolvePropertyExternally(name)
 
 		if !found {

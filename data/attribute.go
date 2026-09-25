@@ -7,7 +7,11 @@ import (
 )
 
 func NewAttribute(name string, dataType Type, value interface{}) *Attribute {
-	return &Attribute{name: name, dataType: dataType, value: value}
+	return &Attribute{name: name, dataType: dataType, override: true, value: value}
+}
+
+func NewAttributeWithOverride(name string, dataType Type, override bool, value interface{}) *Attribute {
+	return &Attribute{name: name, dataType: dataType, override: override, value: value}
 }
 
 func NewAttributeWithSchema(name string, dataType Type, value interface{}, schema schema.Schema) *Attribute {
@@ -18,6 +22,7 @@ func NewAttributeWithSchema(name string, dataType Type, value interface{}, schem
 type Attribute struct {
 	name     string
 	dataType Type
+	override bool
 	value    interface{}
 
 	//keyType  Type
@@ -32,6 +37,10 @@ func (a *Attribute) Name() string {
 
 func (a *Attribute) Type() Type {
 	return a.dataType
+}
+
+func (a *Attribute) Override() bool {
+	return a.override
 }
 
 func (a *Attribute) Value() interface{} {
@@ -60,15 +69,17 @@ func (a *Attribute) MarshalJSON() ([]byte, error) {
 	}
 
 	return json.Marshal(&struct {
-		Name   string      `json:"name"`
-		Type   string      `json:"type"`
-		Value  interface{} `json:"value,omitempty"`
-		Schema interface{} `json:"schema,omitempty"`
+		Name     string      `json:"name"`
+		Type     string      `json:"type"`
+		Override bool        `json:"override"`
+		Value    interface{} `json:"value,omitempty"`
+		Schema   interface{} `json:"schema,omitempty"`
 	}{
-		Name:   a.name,
-		Type:   a.dataType.String(),
-		Value:  val,
-		Schema: a.schema,
+		Name:     a.name,
+		Type:     a.dataType.String(),
+		Override: a.override,
+		Value:    val,
+		Schema:   a.schema,
 	})
 }
 
@@ -76,19 +87,21 @@ func (a *Attribute) MarshalJSON() ([]byte, error) {
 func (a *Attribute) UnmarshalJSON(data []byte) error {
 
 	ser := &struct {
-		Name   string      `json:"name"`
-		Type   string      `json:"type"`
-		Value  interface{} `json:"value,omitempty"`
-		Schema interface{} `json:"schema,omitempty"`
+		Name     string      `json:"name"`
+		Type     string      `json:"type"`
+		Override bool        `json:"override"`
+		Value    interface{} `json:"value,omitempty"`
+		Schema   interface{} `json:"schema,omitempty"`
 
 		//KeyType  string      `json:"keyType,omitempty"`
 		//ElemType string      `json:"elemType,omitempty"`
-	}{}
+	}{Override: true}
 
 	if err := json.Unmarshal(data, ser); err != nil {
 		return err
 	}
 	a.name = ser.Name
+	a.override = ser.Override
 
 	var err error
 	a.schema, err = getSchema(ser.Schema)

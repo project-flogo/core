@@ -82,11 +82,16 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 	}
 
 	properties := make(map[string]interface{}, len(config.Properties))
+	overrides := make(map[string]bool, len(config.Properties))
 	for _, attr := range config.Properties {
 		properties[attr.Name()] = attr.Value()
+		if attr.Override() {
+			overrides[attr.Name()] = true
+		}
 	}
 
 	app.propManager = property.NewManager(properties)
+	app.propManager.SetOverrides(overrides)
 	property.SetDefaultManager(app.propManager)
 
 	for _, option := range options {
