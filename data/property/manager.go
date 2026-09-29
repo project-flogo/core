@@ -22,18 +22,18 @@ func NewManager(properties map[string]interface{}) *Manager {
 
 type Manager struct {
 	properties map[string]interface{}
-	overrides  map[string]bool
+	overridables  map[string]bool
 }
 
-func (m *Manager) SetOverrides(overrides map[string]bool) {
-	m.overrides = overrides
+func (m *Manager) SetOverridables(overridables map[string]bool) {
+	m.overridables = overridables
 }
 
-func (m *Manager) IsOverride(name string) bool {
-	if m.overrides == nil {
+func (m *Manager) IsOverridable(name string) bool {
+	if m.overridables == nil {
 		return true
 	}
-	return m.overrides[name]
+	return m.overridables[name]
 }
 
 func (m *Manager) GetProperty(name string) (interface{}, bool) {

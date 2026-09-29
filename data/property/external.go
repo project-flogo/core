@@ -108,7 +108,7 @@ func ExternalResolverProcessor(properties map[string]interface{}) error {
 
 	manager := DefaultManager()
 	for name := range properties {
-		if manager != nil && !manager.IsOverride(name) {
+		if manager != nil && !manager.IsOverridable(name) {
 			continue
 		}
 
