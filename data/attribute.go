@@ -87,21 +87,25 @@ func (a *Attribute) MarshalJSON() ([]byte, error) {
 func (a *Attribute) UnmarshalJSON(data []byte) error {
 
 	ser := &struct {
-		Name       string      `json:"name"`
-		Type       string      `json:"type"`
-		Overridable bool        `json:"overridable"`
-		Value      interface{} `json:"value,omitempty"`
-		Schema     interface{} `json:"schema,omitempty"`
+		Name        string      `json:"name"`
+		Type        string      `json:"type"`
+		Overridable *bool       `json:"overridable,omitempty"`
+		Value       interface{} `json:"value,omitempty"`
+		Schema      interface{} `json:"schema,omitempty"`
 
 		//KeyType  string      `json:"keyType,omitempty"`
 		//ElemType string      `json:"elemType,omitempty"`
-	}{Overridable: true}
+	}{}
 
 	if err := json.Unmarshal(data, ser); err != nil {
 		return err
 	}
 	a.name = ser.Name
-	a.overridable = ser.Overridable
+	if ser.Overridable != nil {
+		a.overridable = *ser.Overridable
+	} else {
+		a.overridable = true
+	}
 
 	var err error
 	a.schema, err = getSchema(ser.Schema)
