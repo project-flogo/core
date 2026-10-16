@@ -1,7 +1,7 @@
 package property
 
 func init() {
-	SetDefaultManager(NewManager(make(map[string]interface{})))
+	SetDefaultManager(NewManager(make(map[string]Property)))
 }
 
 var defaultManager *Manager
@@ -14,29 +14,56 @@ func DefaultManager() *Manager {
 	return defaultManager
 }
 
-func NewManager(properties map[string]interface{}) *Manager {
+type Property struct {
+	Value       interface{}
+	Overridable bool
+}
 
+func NewManager(properties map[string]Property) *Manager {
 	manager := &Manager{properties: properties}
 	return manager
 }
 
 type Manager struct {
-	properties map[string]interface{}
+	properties map[string]Property
+}
+
+func (m *Manager) IsOverridable(name string) bool {
+	prop, exists := m.properties[name]
+	if !exists {
+		return true
+	}
+	return prop.Overridable
 }
 
 func (m *Manager) GetProperty(name string) (interface{}, bool) {
-	val, exists := m.properties[name]
-	return val, exists
+	prop, exists := m.properties[name]
+	return prop.Value, exists
 }
 
 func (m *Manager) GetProperties() map[string]interface{} {
-	return m.properties
+	result := make(map[string]interface{}, len(m.properties))
+	for k, v := range m.properties {
+		result[k] = v.Value
+	}
+	return result
 }
 
 func (m *Manager) Finalize(processors ...PostProcessor) error {
+	valueMap := make(map[string]interface{}, len(m.properties))
+	for k, v := range m.properties {
+		valueMap[k] = v.Value
+	}
 
 	for _, processor := range processors {
-		_ = processor(m.properties)
+		_ = processor(valueMap)
+	}
+
+	for k, v := range valueMap {
+		if prop, exists := m.properties[k]; exists {
+			prop.Value = v
+			m.properties[k] = prop
+		}
 	}
 
 	return nil

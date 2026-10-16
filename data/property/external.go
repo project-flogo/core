@@ -107,7 +107,12 @@ func ExternalResolverProcessor(properties map[string]interface{}) error {
 		logger.Infof("Properties will be resolved with these resolvers (in decreasing order of priority): %v", enabledResolvers)
 	}
 
+	manager := DefaultManager()
 	for name := range properties {
+		if manager != nil && !manager.IsOverridable(name) {
+			continue
+		}
+
 		newVal, found := ResolvePropertyExternally(name)
 
 		if !found {

@@ -7,7 +7,11 @@ import (
 )
 
 func NewAttribute(name string, dataType Type, value interface{}) *Attribute {
-	return &Attribute{name: name, dataType: dataType, value: value}
+	return &Attribute{name: name, dataType: dataType, overridable: true, value: value}
+}
+
+func NewAttributeWithOverridable(name string, dataType Type, overridable bool, value interface{}) *Attribute {
+	return &Attribute{name: name, dataType: dataType, overridable: overridable, value: value}
 }
 
 func NewAttributeWithSchema(name string, dataType Type, value interface{}, schema schema.Schema) *Attribute {
@@ -16,9 +20,10 @@ func NewAttributeWithSchema(name string, dataType Type, value interface{}, schem
 
 // Attribute is a simple structure used to define a data Attribute/property
 type Attribute struct {
-	name     string
-	dataType Type
-	value    interface{}
+	name        string
+	dataType    Type
+	overridable bool
+	value       interface{}
 
 	//keyType  Type
 	//elemType Type
@@ -32,6 +37,10 @@ func (a *Attribute) Name() string {
 
 func (a *Attribute) Type() Type {
 	return a.dataType
+}
+
+func (a *Attribute) Overridable() bool {
+	return a.overridable
 }
 
 func (a *Attribute) Value() interface{} {
@@ -60,15 +69,17 @@ func (a *Attribute) MarshalJSON() ([]byte, error) {
 	}
 
 	return json.Marshal(&struct {
-		Name   string      `json:"name"`
-		Type   string      `json:"type"`
-		Value  interface{} `json:"value,omitempty"`
-		Schema interface{} `json:"schema,omitempty"`
+		Name        string      `json:"name"`
+		Type        string      `json:"type"`
+		Overridable bool        `json:"overridable"`
+		Value       interface{} `json:"value,omitempty"`
+		Schema      interface{} `json:"schema,omitempty"`
 	}{
-		Name:   a.name,
-		Type:   a.dataType.String(),
-		Value:  val,
-		Schema: a.schema,
+		Name:        a.name,
+		Type:        a.dataType.String(),
+		Overridable: a.overridable,
+		Value:       val,
+		Schema:      a.schema,
 	})
 }
 
@@ -76,10 +87,11 @@ func (a *Attribute) MarshalJSON() ([]byte, error) {
 func (a *Attribute) UnmarshalJSON(data []byte) error {
 
 	ser := &struct {
-		Name   string      `json:"name"`
-		Type   string      `json:"type"`
-		Value  interface{} `json:"value,omitempty"`
-		Schema interface{} `json:"schema,omitempty"`
+		Name        string      `json:"name"`
+		Type        string      `json:"type"`
+		Overridable *bool       `json:"overridable,omitempty"`
+		Value       interface{} `json:"value,omitempty"`
+		Schema      interface{} `json:"schema,omitempty"`
 
 		//KeyType  string      `json:"keyType,omitempty"`
 		//ElemType string      `json:"elemType,omitempty"`
@@ -89,6 +101,11 @@ func (a *Attribute) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	a.name = ser.Name
+	if ser.Overridable != nil {
+		a.overridable = *ser.Overridable
+	} else {
+		a.overridable = true
+	}
 
 	var err error
 	a.schema, err = getSchema(ser.Schema)
