@@ -1,5 +1,11 @@
 package property
 
+import (
+	"strings"
+
+	"github.com/project-flogo/core/support/log"
+)
+
 func init() {
 	SetDefaultManager(NewManager(make(map[string]Property)))
 }
@@ -21,6 +27,17 @@ type Property struct {
 
 func NewManager(properties map[string]Property) *Manager {
 	manager := &Manager{properties: properties}
+
+	var readOnly []string
+	for name, prop := range properties {
+		if !prop.Overridable {
+			readOnly = append(readOnly, name)
+		}
+	}
+	if len(readOnly) > 0 {
+		log.RootLogger().Infof("Non-overridable (read-only) properties: [%s]", strings.Join(readOnly, ", "))
+	}
+
 	return manager
 }
 
