@@ -81,9 +81,12 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 		app.actionRunner = runner
 	}
 
-	properties := make(map[string]interface{}, len(config.Properties))
+	properties := make(map[string]property.Property, len(config.Properties))
 	for _, attr := range config.Properties {
-		properties[attr.Name()] = attr.Value()
+		properties[attr.Name()] = property.Property{
+			Value:       attr.Value(),
+			Overridable: attr.Overridable(),
+		}
 	}
 
 	app.propManager = property.NewManager(properties)
