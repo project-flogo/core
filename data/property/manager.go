@@ -46,12 +46,8 @@ func NewManager(properties map[string]Property) *Manager {
 	return manager
 }
 
-// Manager holds the app properties. It is safe for concurrent use.
-//
-// The properties live in a snapshot map that is never modified once published. Readers take no lock, and
-// Finalize publishes a new snapshot in one step, so a reader never sees a half-applied refresh (two separate
-// reads may still straddle one). Property values are not deep-copied: a map or slice value is shared by every
-// snapshot and every GetProperties result, so callers must not modify it.
+// Manager is safe for concurrent use. Each read sees one whole snapshot, which is never modified once published;
+// values are not deep-copied, so callers must not modify a map or slice value.
 type Manager struct {
 	mu         sync.Mutex   // serialises Finalize; readers never take it
 	properties atomic.Value // the current snapshot, a map[string]Property
@@ -86,10 +82,8 @@ func (m *Manager) GetProperties() map[string]interface{} {
 	return result
 }
 
-// Finalize runs the processors, in order, on a copy of the current values, then publishes the new values of the
-// existing properties: keys that a processor adds are ignored, and keys that it removes keep their value.
-// Processor errors are ignored. Calls run one at a time; a processor may read the Manager but must not call
-// Finalize.
+// Finalize runs the processors in order on a copy of the values, ignoring their errors and any key they add or
+// remove, then publishes the result. Calls run one at a time.
 func (m *Manager) Finalize(processors ...PostProcessor) error {
 	m.mu.Lock()
 	defer m.mu.Unlock()
@@ -116,8 +110,6 @@ func (m *Manager) Finalize(processors ...PostProcessor) error {
 	return nil
 }
 
-// PostProcessor transforms the property values during Finalize. It receives a private copy of the current values and
-// may change that map in place; only keys that already exist are kept. It may read the Manager, but it must not call
-// Finalize, which would deadlock, and it must not modify a value itself in place: a map or slice value is shared with
-// the published snapshot.
+// PostProcessor may change the map it receives, a private copy, but not a map or slice value in it: the published
+// snapshot shares those. It may read the Manager but must not call Finalize, which would deadlock.
 type PostProcessor func(properties map[string]interface{}) error

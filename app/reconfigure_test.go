@@ -23,8 +23,7 @@ const (
 	refreshMaxIter  = 500
 )
 
-// newReconfigurableApp creates and starts an app with refresh enabled. When the test ends it stops the app and
-// restores the default property manager that New replaced.
+// newReconfigurableApp starts an app with refresh enabled, and restores the default property manager New replaces.
 func newReconfigurableApp(t *testing.T, props []*data.Attribute, options ...Option) *App {
 	t.Setenv(property.EnvAppPropertyReconfigure, "true")
 	previous := property.DefaultManager()
@@ -121,13 +120,10 @@ func allEqual(prefix string, want int) func(map[string]interface{}) error {
 	}
 }
 
-// TestApp_ReconfigureWhileReadingProperties reproduces FLOGO-19663 through App.Reconfigure, the method that a host's
-// config-refresh endpoint calls. Flows keep resolving $property[...] while the refresh re-runs FinalizeProperties.
-// Without the fix, the race detector reports a data race, and without -race the Go runtime aborts the process with
-// "fatal error: concurrent map read and map write".
+// TestApp_ReconfigureWhileReadingProperties resolves properties while a config refresh re-runs FinalizeProperties
+// through App.Reconfigure. A race there aborts the process: "concurrent map read and map write".
 func TestApp_ReconfigureWhileReadingProperties(t *testing.T) {
-	// refresh stands in for an external resolver: each run gives every property a new value. Only the test
-	// goroutine runs it (through New and Reconfigure), so gen needs no synchronisation.
+	// Only the test goroutine runs refresh (through New and Reconfigure), so gen needs no synchronisation.
 	gen := 0
 	refresh := func(properties map[string]interface{}) error {
 		gen++
@@ -164,9 +160,8 @@ func (r *genResolver) LookupValue(key string) (interface{}, bool) {
 	return "v" + strconv.FormatInt(atomic.LoadInt64(&r.gen), 10), true
 }
 
-// TestApp_ReconfigureWithEngineProcessors runs the processor chain that engine.New installs (external resolvers,
-// then secrets) under concurrent reads: overridable properties change together, read-only ones and a decoded
-// secret never change.
+// TestApp_ReconfigureWithEngineProcessors reads during refreshes by engine.New's processors (external resolvers,
+// then secrets): overridable properties change together; read-only ones and a decoded secret never change.
 func TestApp_ReconfigureWithEngineProcessors(t *testing.T) {
 	resolver := &genResolver{}
 	previous := property.EnabledResolvers
@@ -211,9 +206,8 @@ func TestApp_ReconfigureWithEngineProcessors(t *testing.T) {
 	assert.Equal(t, "read-only", v)
 }
 
-// TestApp_ConcurrentReconfigure covers two config refreshes that overlap, for example a client that retries while the
-// first refresh still runs: the endpoint serves each request on its own goroutine. The app gets the options that
-// engine.New passes (ContinueOnError, FinalizeProperties, EngineSettings), and Reconfigure re-runs all of them.
+// TestApp_ConcurrentReconfigure overlaps two config refreshes, as a retrying client can: the endpoint serves each
+// request on its own goroutine. The app gets the options engine.New passes, and Reconfigure re-runs all of them.
 func TestApp_ConcurrentReconfigure(t *testing.T) {
 	var gen int64
 	refresh := func(properties map[string]interface{}) error {

@@ -8,8 +8,7 @@ import (
 	"time"
 )
 
-// The benchmarks measure the read path before and after FLOGO-19663. They use only the exported API, so the same
-// file runs against the code from before the fix.
+// The benchmarks use only the exported API, so the same file can benchmark an older version of the package.
 
 var (
 	benchValue interface{}
@@ -35,9 +34,8 @@ func BenchmarkManager_GetProperty(b *testing.B) {
 	}
 }
 
-// readParallel calls read b.N times in total, split over GOMAXPROCS goroutines. It does not use b.RunParallel:
-// RunParallel's per-goroutine counters (testing.PB, written on every iteration) can share a cache line, which makes
-// its results bimodal on some machines.
+// readParallel calls read b.N times in total over GOMAXPROCS goroutines. It avoids b.RunParallel, whose
+// per-goroutine counters can share a cache line and make its results bimodal on some machines.
 func readParallel(b *testing.B, read func() bool) {
 	procs := runtime.GOMAXPROCS(0)
 	var wg sync.WaitGroup
@@ -73,8 +71,8 @@ func BenchmarkManager_GetPropertyParallel(b *testing.B) {
 	})
 }
 
-// BenchmarkManager_GetPropertyParallelDuringRefresh reads while a refresh runs every millisecond. Before the fix
-// this crashes the process, so it has no base value.
+// BenchmarkManager_GetPropertyParallelDuringRefresh reads while a refresh runs every millisecond; a Manager that
+// updates its map in place crashes here.
 func BenchmarkManager_GetPropertyParallelDuringRefresh(b *testing.B) {
 	m := newBenchManager()
 	stop := make(chan struct{})

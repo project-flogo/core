@@ -20,8 +20,6 @@ const (
 	raceTestMaxIter  = 5000
 )
 
-// newRaceTestManager returns a manager with raceTestProps properties, all set to "v0". Even-numbered
-// properties are overridable, odd-numbered ones are read-only.
 func newRaceTestManager() *Manager {
 	props := make(map[string]Property, raceTestProps)
 	for i := 0; i < raceTestProps; i++ {
@@ -56,16 +54,14 @@ func checkSnapshot(snapshot map[string]interface{}) error {
 	return nil
 }
 
-// useDefaultManager makes m the default manager until the test ends.
 func useDefaultManager(t *testing.T, m *Manager) {
 	previous := DefaultManager()
 	SetDefaultManager(m)
 	t.Cleanup(func() { SetDefaultManager(previous) })
 }
 
-// TestManager_FinalizeWhileReading reproduces FLOGO-19663: a config refresh re-runs Finalize while flows read
-// properties. Without the fix, the race detector reports a data race, and without -race the Go runtime aborts
-// the process with "fatal error: concurrent map read and map write".
+// TestManager_FinalizeWhileReading reads properties while a config refresh re-runs Finalize. A race there aborts
+// the process: "concurrent map read and map write".
 func TestManager_FinalizeWhileReading(t *testing.T) {
 	m := newRaceTestManager()
 
@@ -138,9 +134,7 @@ func (c *overlapCounter) enter() {
 
 func (c *overlapCounter) leave() { atomic.AddInt32(&c.running, -1) }
 
-// TestManager_ConcurrentFinalize covers two config refreshes that overlap: the refresh endpoint serves each
-// request on its own goroutine. Without the fix, the two Finalize calls write the same map at once
-// ("fatal error: concurrent map writes").
+// TestManager_ConcurrentFinalize overlaps two config refreshes, as two concurrent refresh requests do.
 func TestManager_ConcurrentFinalize(t *testing.T) {
 	m := newRaceTestManager()
 
@@ -238,9 +232,8 @@ func TestManager_FinalizeReleasesLockOnPanic(t *testing.T) {
 	assert.Equal(t, "b", v)
 }
 
-// TestManager_FinalizeProcessorReadsManager checks that a processor may read the Manager it runs in, as
-// ExternalResolverProcessor does through DefaultManager().IsOverridable, and that it sees the values from before
-// the Finalize.
+// TestManager_FinalizeProcessorReadsManager checks that a processor may read the Manager, as
+// ExternalResolverProcessor does through DefaultManager(), and sees the values from before the Finalize.
 func TestManager_FinalizeProcessorReadsManager(t *testing.T) {
 	m := NewManager(map[string]Property{"p1": {Value: "a", Overridable: true}})
 	useDefaultManager(t, m)

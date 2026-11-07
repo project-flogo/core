@@ -9,8 +9,7 @@ import (
 
 const fuzzKeys = 8
 
-// referenceFinalize is Finalize as it was before FLOGO-19663 (single-threaded, in place): the model that
-// Finalize must still match.
+// referenceFinalize is the original single-threaded, in-place Finalize: the model that Finalize must still match.
 func referenceFinalize(properties map[string]Property, processors ...PostProcessor) {
 	valueMap := make(map[string]interface{}, len(properties))
 	for k, v := range properties {
@@ -35,9 +34,8 @@ func fuzzInitial() map[string]Property {
 	return props
 }
 
-// fuzzProcessors turns ops into up to 3 processors. Each op is a byte pair (code, arg). Bits 0-1 of code pick the
-// action (set an existing key, add a new key, delete a key, set a key to nil), bits 2-3 the processor, and bit 4
-// makes that processor return an error after its actions.
+// fuzzProcessors turns ops, byte pairs (code, arg), into up to 3 processors. Bits 0-1 of code pick the action (set,
+// add, delete, set nil), bits 2-3 the processor, and bit 4 makes that processor return an error after its actions.
 func fuzzProcessors(ops []byte) []PostProcessor {
 	type action struct{ code, arg byte }
 	var actions [3][]action

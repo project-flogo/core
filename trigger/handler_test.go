@@ -66,7 +66,6 @@ func TestHandlerContext(t *testing.T) {
 
 }
 
-// captureRunner records the inputs of the last action it ran.
 type captureRunner struct {
 	inputs map[string]interface{}
 }
