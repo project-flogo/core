@@ -253,12 +253,8 @@ func (h *handlerImpl) Handle(ctx context.Context, triggerData interface{}) (resu
 		if inputMap == nil {
 			inputMap = make(map[string]interface{})
 		}
-		// Take snapshot of current app properties
-		propSnapShot := make(map[string]interface{}, len(property.DefaultManager().GetProperties()))
-		for k, v := range property.DefaultManager().GetProperties() {
-			propSnapShot[k] = v
-		}
-		inputMap["_PROPERTIES"] = propSnapShot
+		// Take snapshot of current app properties: GetProperties returns a copy that the action owns
+		inputMap["_PROPERTIES"] = property.DefaultManager().GetProperties()
 	}
 
 	inputMap["_handler_config"] = h.config

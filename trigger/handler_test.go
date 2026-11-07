@@ -10,6 +10,7 @@ import (
 	"github.com/project-flogo/core/data/expression"
 	"github.com/project-flogo/core/data/mapper"
 	"github.com/project-flogo/core/data/metadata"
+	"github.com/project-flogo/core/data/property"
 	"github.com/project-flogo/core/data/resolve"
 	"github.com/stretchr/testify/assert"
 )
@@ -63,4 +64,46 @@ func TestHandlerContext(t *testing.T) {
 
 	assert.NotNil(t, NewHandlerContext(context.Background(), hCfg))
 
+}
+
+type captureRunner struct {
+	inputs map[string]interface{}
+}
+
+func (r *captureRunner) RunAction(ctx context.Context, act action.Action, inputs map[string]interface{}) (map[string]interface{}, error) {
+	r.inputs = inputs
+	return nil, nil
+}
+
+func TestHandler_PropertySnapshot(t *testing.T) {
+	t.Setenv(property.EnvAppPropertySnapshotEnabled, "true")
+	previous := property.DefaultManager()
+	t.Cleanup(func() { property.SetDefaultManager(previous) })
+	property.SetDefaultManager(property.NewManager(map[string]property.Property{
+		"p1": {Value: "a", Overridable: true},
+		"p2": {Value: 2},
+	}))
+
+	mf := mapper.NewFactory(defResolver)
+	expf := expression.NewFactory(defResolver)
+	for name, seqKey := range map[string]string{"handler": "", "sequence-key handler": "k1"} {
+		t.Run(name, func(t *testing.T) {
+			hCfg := &HandlerConfig{Name: "h", Actions: []*ActionConfig{{SequenceKey: seqKey}}, Parent: &Config{Id: "t"}}
+			runner := &captureRunner{}
+			handler, err := NewHandler(hCfg, []action.Action{&MockAction{}}, mf, expf, runner, log.RootLogger())
+			assert.NoError(t, err)
+			_, isSeqKeyHandler := handler.(*seqKeyHandlerImpl)
+			assert.Equal(t, seqKey != "", isSeqKeyHandler)
+
+			_, err = handler.Handle(context.Background(), map[string]interface{}{})
+			assert.NoError(t, err)
+
+			snapshot, ok := runner.inputs["_PROPERTIES"].(map[string]interface{})
+			assert.True(t, ok)
+			assert.Equal(t, map[string]interface{}{"p1": "a", "p2": 2}, snapshot)
+			snapshot["p1"] = "changed"
+			v, _ := property.DefaultManager().GetProperty("p1")
+			assert.Equal(t, "a", v, "the action's snapshot must be its own copy")
+		})
+	}
 }

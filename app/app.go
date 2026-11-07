@@ -8,6 +8,7 @@ import (
 	"regexp"
 	"runtime/debug"
 	"strings"
+	"sync"
 
 	"github.com/project-flogo/core/action"
 	"github.com/project-flogo/core/activity"
@@ -276,6 +277,7 @@ type App struct {
 	config         []byte
 	options        []Option
 	actionRunner   action.Runner
+	reconfigureMu  sync.Mutex // serialises Reconfigure
 }
 
 type triggerWrapper struct {
@@ -572,8 +574,11 @@ func (a *App) Stop() error {
 	return nil
 }
 
-// Reconfigure function restarts the app
+// Reconfigure function restarts the app. Calls run one at a time: an overlapping call waits for the running one.
 func (a *App) Reconfigure() error {
+	a.reconfigureMu.Lock()
+	defer a.reconfigureMu.Unlock()
+
 	logger := log.RootLogger()
 	if !a.started {
 		return fmt.Errorf("app is not started")
