@@ -69,6 +69,24 @@ type Logger interface {
 	SetTracingContext(traceContext map[string]string)
 }
 
+// TracingContextLogger is implemented by loggers that can derive a copy carrying a tracing context.
+type TracingContextLogger interface {
+	WithTracingContext(traceContext map[string]string) Logger
+}
+
+// WithTracingContext returns a logger that writes like logger and carries traceContext; logger is not modified.
+// A logger that cannot derive a copy gets the context through SetTracingContext and is returned as is.
+func WithTracingContext(logger Logger, traceContext map[string]string) Logger {
+	if logger == nil {
+		return nil
+	}
+	if l, ok := logger.(TracingContextLogger); ok {
+		return l.WithTracingContext(traceContext)
+	}
+	logger.SetTracingContext(traceContext)
+	return logger
+}
+
 type StructuredLogger interface {
 	Debug(msg string, fields ...Field)
 	Info(msg string, fields ...Field)
