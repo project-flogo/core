@@ -49,6 +49,9 @@ func (l *zapLoggerImpl) Trace(args ...any) {
 }
 
 func (l *zapLoggerImpl) Debug(args ...any) {
+	if !l.loggerLevel.Enabled(zapcore.DebugLevel) {
+		return
+	}
 	if prefix := l.tracePrefix(); prefix != "" {
 		s := make([]any, 1, 1+len(args))
 		s[0] = prefix
@@ -59,6 +62,9 @@ func (l *zapLoggerImpl) Debug(args ...any) {
 }
 
 func (l *zapLoggerImpl) Info(args ...any) {
+	if !l.loggerLevel.Enabled(zapcore.InfoLevel) {
+		return
+	}
 	if prefix := l.tracePrefix(); prefix != "" {
 		s := make([]any, 1, 1+len(args))
 		s[0] = prefix
@@ -69,6 +75,9 @@ func (l *zapLoggerImpl) Info(args ...any) {
 }
 
 func (l *zapLoggerImpl) Warn(args ...any) {
+	if !l.loggerLevel.Enabled(zapcore.WarnLevel) {
+		return
+	}
 	if prefix := l.tracePrefix(); prefix != "" {
 		s := make([]any, 1, 1+len(args))
 		s[0] = prefix
@@ -79,6 +88,9 @@ func (l *zapLoggerImpl) Warn(args ...any) {
 }
 
 func (l *zapLoggerImpl) Error(args ...any) {
+	if !l.loggerLevel.Enabled(zapcore.ErrorLevel) {
+		return
+	}
 	if prefix := l.tracePrefix(); prefix != "" {
 		s := make([]any, 1, 1+len(args))
 		s[0] = prefix
@@ -95,6 +107,9 @@ func (l *zapLoggerImpl) Tracef(template string, args ...any) {
 }
 
 func (l *zapLoggerImpl) Debugf(template string, args ...any) {
+	if !l.loggerLevel.Enabled(zapcore.DebugLevel) {
+		return
+	}
 	if prefix := l.tracePrefix(); prefix != "" {
 		l.mainLogger.Debugf(prefix+template, args...)
 	} else {
@@ -103,6 +118,9 @@ func (l *zapLoggerImpl) Debugf(template string, args ...any) {
 }
 
 func (l *zapLoggerImpl) Infof(template string, args ...any) {
+	if !l.loggerLevel.Enabled(zapcore.InfoLevel) {
+		return
+	}
 	if prefix := l.tracePrefix(); prefix != "" {
 		l.mainLogger.Infof(prefix+template, args...)
 	} else {
@@ -111,6 +129,9 @@ func (l *zapLoggerImpl) Infof(template string, args ...any) {
 }
 
 func (l *zapLoggerImpl) Warnf(template string, args ...any) {
+	if !l.loggerLevel.Enabled(zapcore.WarnLevel) {
+		return
+	}
 	if prefix := l.tracePrefix(); prefix != "" {
 		l.mainLogger.Warnf(prefix+template, args...)
 	} else {
@@ -119,6 +140,9 @@ func (l *zapLoggerImpl) Warnf(template string, args ...any) {
 }
 
 func (l *zapLoggerImpl) Errorf(template string, args ...any) {
+	if !l.loggerLevel.Enabled(zapcore.ErrorLevel) {
+		return
+	}
 	if prefix := l.tracePrefix(); prefix != "" {
 		l.mainLogger.Errorf(prefix+template, args...)
 	} else {
@@ -141,11 +165,25 @@ func (l *zapLoggerImpl) SetTracingContext(traceContext map[string]string) {
 	if !traceContextLogging {
 		return
 	}
+	l.traceState.Store(newTraceState(traceContext))
+}
+
+// WithTracingContext implements TracingContextLogger.
+func (l *zapLoggerImpl) WithTracingContext(traceContext map[string]string) Logger {
+	if !traceContextLogging || (traceContext == nil && l.GetTracingContext() == nil) {
+		return l
+	}
+	child := &zapLoggerImpl{loggerLevel: l.loggerLevel, mainLogger: l.mainLogger}
+	child.traceState.Store(newTraceState(traceContext))
+	return child
+}
+
+func newTraceState(traceContext map[string]string) *traceState {
 	ts := &traceState{context: traceContext}
 	if traceContext != nil && traceContext[KeyTraceID] != "" {
 		ts.prefix = fmt.Sprintf("[%s: %s] [%s: %s] ", KeyTraceID, traceContext[KeyTraceID], KeySpanID, traceContext[KeySpanID])
 	}
-	l.traceState.Store(ts)
+	return ts
 }
 
 type zapStructuredLoggerImpl struct {

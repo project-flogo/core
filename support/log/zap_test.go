@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"sync"
 	"testing"
+
+	"go.uber.org/zap/zapcore"
 )
 
 // TestSetTracingContext pins the observable trace-prefix behaviour (FLOGO-19401).
@@ -66,15 +68,10 @@ func TestSetTracingContextDisabled(t *testing.T) {
 
 // TestSetTracingContextConcurrentWithLogging is the FLOGO-19401 regression test: SetTracingContext must be safe against concurrent log calls on a shared logger.
 func TestSetTracingContextConcurrentWithLogging(t *testing.T) {
-	prev := traceContextLogging
-	traceContextLogging = true
-	defer func() { traceContextLogging = prev }()
+	// DEBUG: a call below the enabled level returns before it reads the trace prefix.
+	logger := newDiscardLogger(t, zapcore.DebugLevel, false)
 
-	logger := NewLogger("flogo.test.tracingcontext.race")
-	// ERROR keeps the output quiet; the prefix is an argument so it is still built on every call.
-	SetLogLevel(logger, ErrorLevel)
-
-	traceCtx := map[string]string{KeyTraceID: "4bf92f3577b34da6a3ce929d0e0e4736", KeySpanID: "00f067aa0ba902b7"}
+	traceCtx := map[string]string{KeyTraceID: "4bf92f3577b34da6a3ce929d0e0e4736", KeySpanID: "00f067aa0ba902b7"} // gitleaks:allow
 
 	const (
 		writers    = 2
