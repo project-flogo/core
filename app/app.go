@@ -86,7 +86,7 @@ func New(config *Config, runner action.Runner, options ...Option) (*App, error) 
 	for _, attr := range config.Properties {
 		properties[attr.Name()] = property.Property{
 			Value:       attr.Value(),
-			Overridable: attr.Overridable(),
+			Overridable: !attr.ReadOnly(),
 		}
 	}
 

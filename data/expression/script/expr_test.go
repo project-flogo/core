@@ -255,7 +255,7 @@ func TestLitExprStaticRef(t *testing.T) {
 }
 
 func TestPropertyName(t *testing.T) {
-	property.SetDefaultManager(property.NewManager(map[string]interface{}{"Marketo.Connection.client_id.secret-id": "abc"}))
+	property.SetDefaultManager(property.NewManager(map[string]property.Property{"Marketo.Connection.client_id.secret-id": {Value: "abc", Overridable: true}}))
 	expr, err := factory.NewExpr(`$property["Marketo.Connection.client_id.secret-id"]`)
 	assert.Nil(t, err)
 	assert.NotNil(t, expr)

@@ -38,7 +38,7 @@ func NewManager(properties map[string]Property) *Manager {
 		}
 	}
 	if len(readOnly) > 0 {
-		log.RootLogger().Infof("Non-overridable (read-only) properties: [%s]", strings.Join(readOnly, ", "))
+		log.RootLogger().Infof("Read-only app properties: [%s]", strings.Join(readOnly, ", "))
 	}
 
 	manager := &Manager{}
