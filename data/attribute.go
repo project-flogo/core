@@ -2,16 +2,23 @@ package data
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/project-flogo/core/data/schema"
 )
 
 func NewAttribute(name string, dataType Type, value interface{}) *Attribute {
-	return &Attribute{name: name, dataType: dataType, overridable: true, value: value}
+	return &Attribute{name: name, dataType: dataType, value: value}
 }
 
+// NewAttributeWithReadOnly creates an attribute; a read-only app property keeps the app's value and ignores overrides.
+func NewAttributeWithReadOnly(name string, dataType Type, readOnly bool, value interface{}) *Attribute {
+	return &Attribute{name: name, dataType: dataType, readOnly: readOnly, value: value}
+}
+
+// Deprecated: use NewAttributeWithReadOnly.
 func NewAttributeWithOverridable(name string, dataType Type, overridable bool, value interface{}) *Attribute {
-	return &Attribute{name: name, dataType: dataType, overridable: overridable, value: value}
+	return NewAttributeWithReadOnly(name, dataType, !overridable, value)
 }
 
 func NewAttributeWithSchema(name string, dataType Type, value interface{}, schema schema.Schema) *Attribute {
@@ -20,10 +27,10 @@ func NewAttributeWithSchema(name string, dataType Type, value interface{}, schem
 
 // Attribute is a simple structure used to define a data Attribute/property
 type Attribute struct {
-	name        string
-	dataType    Type
-	overridable bool
-	value       interface{}
+	name     string
+	dataType Type
+	readOnly bool
+	value    interface{}
 
 	//keyType  Type
 	//elemType Type
@@ -39,8 +46,13 @@ func (a *Attribute) Type() Type {
 	return a.dataType
 }
 
+func (a *Attribute) ReadOnly() bool {
+	return a.readOnly
+}
+
+// Deprecated: use ReadOnly.
 func (a *Attribute) Overridable() bool {
-	return a.overridable
+	return !a.readOnly
 }
 
 func (a *Attribute) Value() interface{} {
@@ -69,17 +81,17 @@ func (a *Attribute) MarshalJSON() ([]byte, error) {
 	}
 
 	return json.Marshal(&struct {
-		Name        string      `json:"name"`
-		Type        string      `json:"type"`
-		Overridable bool        `json:"overridable"`
-		Value       interface{} `json:"value,omitempty"`
-		Schema      interface{} `json:"schema,omitempty"`
+		Name     string      `json:"name"`
+		Type     string      `json:"type"`
+		ReadOnly bool        `json:"readOnly,omitempty"`
+		Value    interface{} `json:"value,omitempty"`
+		Schema   interface{} `json:"schema,omitempty"`
 	}{
-		Name:        a.name,
-		Type:        a.dataType.String(),
-		Overridable: a.overridable,
-		Value:       val,
-		Schema:      a.schema,
+		Name:     a.name,
+		Type:     a.dataType.String(),
+		ReadOnly: a.readOnly,
+		Value:    val,
+		Schema:   a.schema,
 	})
 }
 
@@ -89,6 +101,7 @@ func (a *Attribute) UnmarshalJSON(data []byte) error {
 	ser := &struct {
 		Name        string      `json:"name"`
 		Type        string      `json:"type"`
+		ReadOnly    *bool       `json:"readOnly,omitempty"`
 		Overridable *bool       `json:"overridable,omitempty"`
 		Value       interface{} `json:"value,omitempty"`
 		Schema      interface{} `json:"schema,omitempty"`
@@ -98,14 +111,10 @@ func (a *Attribute) UnmarshalJSON(data []byte) error {
 	}{}
 
 	if err := json.Unmarshal(data, ser); err != nil {
-		return err
+		return attributeError(data, err)
 	}
 	a.name = ser.Name
-	if ser.Overridable != nil {
-		a.overridable = *ser.Overridable
-	} else {
-		a.overridable = true
-	}
+	a.readOnly = isReadOnly(ser.ReadOnly, ser.Overridable)
 
 	var err error
 	a.schema, err = getSchema(ser.Schema)
@@ -144,6 +153,23 @@ func (a *Attribute) UnmarshalJSON(data []byte) error {
 	}
 
 	return nil
+}
+
+// attributeError names the attribute, so a bad entry among an app's properties or metadata can be found.
+func attributeError(data []byte, err error) error {
+	var named struct {
+		Name string `json:"name"`
+	}
+	_ = json.Unmarshal(data, &named)
+	return fmt.Errorf("attribute %q: %w", named.Name, err)
+}
+
+// isReadOnly applies the lock rule: readOnly decides; without it, only the legacy overridable: false locks.
+func isReadOnly(readOnly, overridable *bool) bool {
+	if readOnly != nil {
+		return *readOnly
+	}
+	return overridable != nil && !*overridable
 }
 
 func getSchema(schemaDef interface{}) (schema.Schema, error) {
